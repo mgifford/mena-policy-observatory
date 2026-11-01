@@ -1,0 +1,25 @@
+{
+  "id": "EXAMPLE-NOT-A-LEGAL-PROVISION",
+  "jurisdiction": "SA",
+  "domain": "digital_accessibility",
+  "status": "research_placeholder",
+  "source": {
+    "url": null,
+    "issuer": null,
+    "instrument_title": null,
+    "instrument_type": "unknown",
+    "publication_date": null,
+    "effective_from": null,
+    "source_language": null,
+    "original_text_markdown_path": null,
+    "locator": null,
+    "retrieved_at": null,
+    "sha256": null,
+    "reproduction_rights": "not_checked"
+  },
+  "translation": {"language": "en", "status": "not_available", "reviewer": null},
+  "interpretations": [],
+  "related_documents": [],
+  "legal_effect": "not_assessed",
+  "rules_as_code": {"status": "not_encoded", "engine": "axiom", "tests": []}
+}
