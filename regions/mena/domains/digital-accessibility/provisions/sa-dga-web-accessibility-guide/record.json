@@ -1,0 +1,39 @@
+{
+  "id": "sa-dga-web-accessibility-guide-scope-001",
+  "policy_id": "sa-dga-web-accessibility-guide",
+  "country": "SA",
+  "domain": "digital_accessibility",
+  "topic": "scope_and_technical_reference",
+  "legal_text": {
+    "status": "not_transcribed",
+    "original_language": "unverified",
+    "original_excerpt": null,
+    "official_url": "https://dga.gov.sa/sites/default/files/2022-12/The%20Guideline%20for%20Web%20Accessibility%20of%20Government%20Websites%20%E2%80%93%20V1.0_1.pdf",
+    "source_section": null
+  },
+  "binding_status": "not_legally_assessed",
+  "effective_date": null,
+  "applicability": null,
+  "exceptions": null,
+  "interpretation_status": "blocked_pending_legal_review",
+  "machine_readable_status": "not_approved",
+  "test_status": "not_run",
+  "research_questions": [
+    "Which requirements in the DGA document are guidance versus enforceable policy?",
+    "What is the source of the WCAG 2.1 AA assertion?",
+    "Are mobile applications covered under a separate instrument?"
+  ],
+  "related_documents": [
+    {
+      "title": "DGA accessibility guideline PDF",
+      "url": "https://dga.gov.sa/sites/default/files/2022-12/The%20Guideline%20for%20Web%20Accessibility%20of%20Government%20Websites%20%E2%80%93%20V1.0_1.pdf",
+      "relationship": "primary_document"
+    },
+    {
+      "title": "W3C WCAG 2.1",
+      "url": "https://www.w3.org/TR/WCAG21/",
+      "relationship": "technical_standard"
+    }
+  ],
+  "notes": "DGA guideline located and its definitions reviewed; precise obligations and legal force still require clause-level review."
+}

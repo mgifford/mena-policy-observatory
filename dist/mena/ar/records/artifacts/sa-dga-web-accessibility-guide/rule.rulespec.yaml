@@ -1,0 +1,13 @@
+# Axiom RuleSpec v1 source scaffold for sa-dga-web-accessibility-guide
+# STATUS: NON-EXECUTABLE POLICY ENCODING: no substantive rules have been approved.
+# This is a schema-shaped module starter, not a determination of legal compliance.
+# Country: SA; source: https://dga.gov.sa/sites/default/files/2022-12/The%20Guideline%20for%20Web%20Accessibility%20of%20Government%20Websites%20%E2%80%93%20V1.0_1.pdf
+# Legal status: not_legally_assessed
+# Do not invent effective_from dates or turn ambiguous language into booleans.
+# Unresolved interpretation issues (also in INTERPRETATION.md):
+#   SA-01 [high] Legal force and relation to binding digital government rules remain unverified.
+#   SA-02 [high] Verify the exact clause and version in the primary guideline before encoding an obligation.
+format: rulespec/v1
+module:
+  title: "Guideline for Web Accessibility of Government Websites, v1.0 - unapproved source scaffold"
+rules: []

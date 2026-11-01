@@ -1,0 +1,34 @@
+{
+  "id": "mena",
+  "title": {
+    "en": "MENA Policy Observatory",
+    "ar": "مرصد سياسات الشرق الأوسط وشمال أفريقيا"
+  },
+  "languages": [
+    "en",
+    "ar"
+  ],
+  "domain_labels": {
+    "digital_accessibility": {
+      "en": "Digital accessibility",
+      "ar": "إمكانية الوصول الرقمي"
+    },
+    "physical_accessibility": {
+      "en": "Physical accessibility",
+      "ar": "إمكانية الوصول المادي"
+    },
+    "disability_inclusion": {
+      "en": "Disability inclusion",
+      "ar": "إدماج الأشخاص ذوي الإعاقة"
+    },
+    "immigration": {
+      "en": "Immigration",
+      "ar": "الهجرة"
+    },
+    "srhr": {
+      "en": "Sexual and reproductive health and rights",
+      "ar": "الصحة والحقوق الجنسية والإنجابية"
+    }
+  },
+  "editorial_status": "research_not_authoritative"
+}

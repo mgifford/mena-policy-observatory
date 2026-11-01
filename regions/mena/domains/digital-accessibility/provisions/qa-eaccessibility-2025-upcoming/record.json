@@ -1,0 +1,44 @@
+{
+  "id": "qa-eaccessibility-2025-upcoming-scope-001",
+  "policy_id": "qa-eaccessibility-2025-upcoming",
+  "country": "QA",
+  "domain": "digital_accessibility",
+  "topic": "scope_and_technical_reference",
+  "legal_text": {
+    "status": "not_transcribed",
+    "original_language": "unverified",
+    "original_excerpt": null,
+    "official_url": "https://www.mcit.gov.qa/wp-content/uploads/sites/4/2025/04/P006_ICTAccessibility_v.2.0.1_en.pdf",
+    "source_section": null
+  },
+  "binding_status": "draft_not_confirmed_in_force",
+  "effective_date": null,
+  "applicability": null,
+  "exceptions": null,
+  "interpretation_status": "blocked_pending_legal_review",
+  "machine_readable_status": "not_approved",
+  "test_status": "not_run",
+  "research_questions": [
+    "Has the document been formally adopted?",
+    "Does the proposed wording make Level AAA conditional?",
+    "Does a successor supersede all or only some 2011 provisions?"
+  ],
+  "related_documents": [
+    {
+      "title": "Mada recommended digital standards",
+      "url": "https://ictaccess.mada.org.qa/en/standards/",
+      "relationship": "current_recommendation"
+    },
+    {
+      "title": "Mada Qatar evaluation reports",
+      "url": "https://ictaccess.mada.org.qa/en/qatar/",
+      "relationship": "monitoring_evidence"
+    },
+    {
+      "title": "W3C WCAG 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "relationship": "technical_standard"
+    }
+  ],
+  "notes": "The earlier starter labels this as an upcoming policy. Do not treat it as enacted without fresh formal confirmation."
+}

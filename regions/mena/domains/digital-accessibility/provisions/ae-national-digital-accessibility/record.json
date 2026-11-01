@@ -1,0 +1,34 @@
+{
+  "id": "ae-national-digital-accessibility-scope-001",
+  "policy_id": "ae-national-digital-accessibility",
+  "country": "AE",
+  "domain": "digital_accessibility",
+  "topic": "scope_and_technical_reference",
+  "legal_text": {
+    "status": "not_transcribed",
+    "original_language": "unverified",
+    "original_excerpt": null,
+    "official_url": "https://dgov.tdra.gov.ae/en/publications/national-digital-accessibility-policy",
+    "source_section": null
+  },
+  "binding_status": "not_legally_assessed",
+  "effective_date": null,
+  "applicability": null,
+  "exceptions": null,
+  "interpretation_status": "blocked_pending_legal_review",
+  "machine_readable_status": "not_approved",
+  "test_status": "not_run",
+  "research_questions": [
+    "Which institutions and contractors are included?",
+    "Does the policy incorporate WCAG as binding obligations or technical guidance?",
+    "What are the exact effective dates and exceptions?"
+  ],
+  "related_documents": [
+    {
+      "title": "W3C WCAG 2.1",
+      "url": "https://www.w3.org/TR/WCAG21/",
+      "relationship": "technical_standard"
+    }
+  ],
+  "notes": "Source URL carried over from the earlier starter; primary text and annex must be independently inspected before approving extracted obligations."
+}

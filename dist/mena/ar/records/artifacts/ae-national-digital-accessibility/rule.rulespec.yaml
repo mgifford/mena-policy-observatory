@@ -1,0 +1,14 @@
+# Axiom RuleSpec v1 source scaffold for ae-national-digital-accessibility
+# STATUS: NON-EXECUTABLE POLICY ENCODING: no substantive rules have been approved.
+# This is a schema-shaped module starter, not a determination of legal compliance.
+# Country: AE; source: https://dgov.tdra.gov.ae/en/publications/national-digital-accessibility-policy
+# Legal status: not_legally_assessed
+# Do not invent effective_from dates or turn ambiguous language into booleans.
+# Unresolved interpretation issues (also in INTERPRETATION.md):
+#   AE-01 [high] Scope of public service sites and whether annex language establishes a binding legal obligation need legal review.
+#   AE-02 [high] Whether separate built-in text-to-speech is mandatory or technology-neutral alternatives satisfy the requirement is not resolved.
+#   AE-03 [high] It is unclear which user journeys, media types and service channels require each feature.
+format: rulespec/v1
+module:
+  title: "National Digital Accessibility Policy - unapproved source scaffold"
+rules: []

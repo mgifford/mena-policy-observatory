@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mgifford/mena-policy-as-code/blob/main/schemas/policy-record.schema.json",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "topic",
+    "country",
+    "status",
+    "authority",
+    "source_url",
+    "notes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "topic": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "illustrative_only",
+        "identified",
+        "source_verified",
+        "encoded_unverified",
+        "tested",
+        "expert_reviewed"
+      ]
+    },
+    "authority": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "source_title": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "reviewed_on": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rule_spec": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "standard": {
+      "type": "string"
+    },
+    "instrument_type": {
+      "enum": [
+        "national_policy",
+        "government_guideline",
+        "draft_policy",
+        "legislation",
+        "regulation",
+        "agency_policy"
+      ]
+    },
+    "legal_effect": {
+      "enum": [
+        "not_legally_assessed",
+        "current_status_requires_confirmation",
+        "draft_not_confirmed_in_force",
+        "binding_confirmed",
+        "nonbinding_confirmed"
+      ]
+    },
+    "scope": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "primary_source": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,149 @@
+[
+  {
+    "code": "DZ",
+    "name": "Algeria",
+    "group": "Northern Africa",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "EG",
+    "name": "Egypt",
+    "group": "Northern Africa",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "LY",
+    "name": "Libya",
+    "group": "Northern Africa",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "MA",
+    "name": "Morocco",
+    "group": "Northern Africa",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "SD",
+    "name": "Sudan",
+    "group": "Northern Africa",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "TN",
+    "name": "Tunisia",
+    "group": "Northern Africa",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "BH",
+    "name": "Bahrain",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "IQ",
+    "name": "Iraq",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "IL",
+    "name": "Israel",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "JO",
+    "name": "Jordan",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "KW",
+    "name": "Kuwait",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "LB",
+    "name": "Lebanon",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "OM",
+    "name": "Oman",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "PS",
+    "name": "State of Palestine",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "QA",
+    "name": "Qatar",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 2
+  },
+  {
+    "code": "SA",
+    "name": "Saudi Arabia",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 1
+  },
+  {
+    "code": "SY",
+    "name": "Syrian Arab Republic",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "AE",
+    "name": "United Arab Emirates",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 1
+  },
+  {
+    "code": "YE",
+    "name": "Yemen",
+    "group": "Western Asia",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "DJ",
+    "name": "Djibouti",
+    "group": "Regional additions",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  },
+  {
+    "code": "MR",
+    "name": "Mauritania",
+    "group": "Regional additions",
+    "status": "not_assessed",
+    "reviewed_policy_records": 0
+  }
+]
