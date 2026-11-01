@@ -17,7 +17,7 @@ jobs:
       - run: python framework/validate.py
       - run: python framework/build.py --region mena
       - run: python framework/check_html.py
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '22'
       - run: npm install --no-audit --no-fund
