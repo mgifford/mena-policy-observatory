@@ -30,6 +30,7 @@ def build(region):
    ct=sum(1 for record in policies if record.get('country')==country['code'])
    intro+='<tr><th scope="row">'+esc(country['name'])+'</th><td>'+str(ct)+'</td><td>'+ (('مصادر أولية، مراجعة قانونية معلقة' if ar else 'Source leads; legal review pending') if ct else ('لم يبدأ البحث' if ar else 'Not yet researched')) +'</td></tr>'
   intro+='</tbody></table></div>'
+  intro+='<h2>'+('مصادر مقارنة إضافية' if ar else 'Additional comparative resources')+'</h2><p><a href="https://www.unescwa.org/sites/default/files/pubs/pdf/technical-guidelines-digital-accessibility-empower-older-persons-english.pdf">UN ESCWA digital accessibility guidance and regional comparison (2025)</a>. '+('هذه دراسة ثانوية وليست تشريعاً ملزماً.' if ar else 'This is a secondary research source, not binding legislation.')+'</p>'
   intro+='<h2>'+('مجالات السياسة' if ar else 'Policy domains')+'</h2><ul>' 
   for v in cfg['domain_labels'].values():intro+='<li>'+esc(v[lang])+'</li>'
   intro+='</ul>'
@@ -40,8 +41,9 @@ def build(region):
    body='<p><a href="../index.html">'+('العودة إلى المقارنة' if ar else 'Back to comparison')+'</a></p><h1>'+esc(rec.get('title',id))+'</h1>'
    body+='<dl><dt>'+('الجهة' if ar else 'Authority')+'</dt><dd>'+esc(rec.get('authority','Not verified'))+'</dd><dt>'+('حالة المراجعة' if ar else 'Legal review')+'</dt><dd>'+esc(rec.get('legal_effect','Not assessed'))+'</dd><dt>'+('المصدر الرسمي المبلغ عنه' if ar else 'Reported official source')+'</dt><dd><a href="'+esc(rec.get('source_url','#'))+'">'+esc(rec.get('source_title','Source'))+'</a></dd></dl>'
    body+='<p>'+('الملفات أدناه مواد بحثية وغير معتمدة قانونيًا.' if ar else 'The files below are research artifacts, not legally approved executable requirements.')+'</p>'
+   body+='<h2>'+('نطاق الوثيقة' if ar else 'Instrument scope')+'</h2><p>'+esc(rec.get('scope','Not verified'))+'</p><h2>'+('نوع الوثيقة' if ar else 'Instrument type')+'</h2><p>'+esc(rec.get('instrument_type','Not classified'))+'</p><h2>'+('الأسئلة المفتوحة' if ar else 'Open interpretation issues')+'</h2><p>'+str(rec.get('unresolved_interpretations',0))+' '+('مسائل تتطلب مراجعة' if ar else 'issues require review')+'</p>'
    body+='<h2>'+('الملخص وحدود الأدلة' if ar else 'Research summary and limits')+'</h2><p>'+esc(rec.get('notes','No source analysis completed.'))+'</p><p><strong>'+('حالة القواعد' if ar else 'Rule status')+':</strong> '+esc(rec.get('execution_status','not encoded'))+'</p>'
-   for file,label in [('SOURCE.md','Source Markdown'),('INTERPRETATION.md','Interpretation and ambiguity'),('RELATED.md','Related documents'),('rule.rulespec.yaml','Axiom RuleSpec scaffold'),('manifest.json','Manifest')]:
+   for file,label in [('PROVISIONS.md','Provision-by-provision research'),('SOURCE.md','Source Markdown'),('INTERPRETATION.md','Interpretation and ambiguity'),('RELATED.md','Related documents'),('rule.rulespec.yaml','Axiom RuleSpec scaffold'),('manifest.json','Manifest')]:
     if (ref/file).exists():
      body+='<section><h2>'+esc(label)+'</h2><p><a href="artifacts/'+esc(id)+'/'+esc(file)+'">'+('عرض الملف الأصلي' if ar else 'Open source file')+'</a></p></section>'
    (pdir/'records'/f'{id}.html').write_text(page(lang,title,body,2),encoding='utf-8')

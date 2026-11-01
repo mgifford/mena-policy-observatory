@@ -1,0 +1,7 @@
+# Research-only scaffold: ae-mof-accessibility
+# No enforceable rule is encoded because legal interpretation and source scope are not approved.
+# Ambiguities: AE-MOF-ACCESSIBILITY-01, AE-MOF-ACCESSIBILITY-02
+format: rulespec/v1
+module:
+  title: "UAE Ministry of Finance Digital Accessibility Policy (unapproved)"
+rules: []

@@ -1,0 +1,11 @@
+{
+  "id": "sa-mep-accessibility",
+  "source_url": "https://mep.gov.sa/en/accessibilitypolicy",
+  "legal_review": "pending",
+  "rule_status": "not_encoded",
+  "ambiguities": [
+    "SA-MEP-ACCESSIBILITY-01",
+    "SA-MEP-ACCESSIBILITY-02",
+    "SA-MEP-ACCESSIBILITY-03"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "ae-moe-accessibility",
+  "source_url": "https://www.moe.gov.ae/en/digital-participation/policies/pages/digital-accessibility-policy.aspx",
+  "legal_review": "pending",
+  "rule_status": "not_encoded",
+  "ambiguities": [
+    "AE-MOE-ACCESSIBILITY-01",
+    "AE-MOE-ACCESSIBILITY-02",
+    "AE-MOE-ACCESSIBILITY-03"
+  ]
+}
