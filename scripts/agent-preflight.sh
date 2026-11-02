@@ -16,6 +16,7 @@ for file in README.md framework/build.py framework/validate.py .github/workflows
   if [ ! -f "$file" ]; then echo "ERROR: missing $file" >&2; exit 4; fi
 done
 python3 framework/validate.py
+python3 -m unittest discover -s tests -p 'test_*.py'
 python3 framework/build.py --region mena
 python3 framework/check_html.py
 if [ -f framework/validate_provisions.py ]; then python3 framework/validate_provisions.py; else echo 'INFO: provision validator is not present yet.'; fi

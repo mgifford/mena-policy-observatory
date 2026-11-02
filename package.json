@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "pretest:a11y": "python3 framework/build.py --region mena",
     "test:a11y": "playwright test"
   },
   "devDependencies": {

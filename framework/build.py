@@ -54,9 +54,13 @@ def build(region):
    src=base/'policies'/rec['id']
    if src.exists():import shutil;shutil.copytree(src,art/rec['id'])
  print(f'Built {region}: {len(policies)} research records')
-if __name__=='__main__':
- parser=argparse.ArgumentParser();parser.add_argument('--region',choices=['mena','europe','all'],default='all');a=parser.parse_args()
- for r in (['mena'] if a.region=='all' else [a.region]):build(r)
+def build_root():
+ (ROOT/'dist').mkdir(parents=True,exist_ok=True)
+ (ROOT/'dist'/'index.html').write_text('<!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MENA Policy Observatory</title><link rel="stylesheet" href="mena/assets/site.css"></head><body><a class="skip" href="#main">Skip to main content</a><main id="main"><h1>MENA Policy Observatory</h1><p>Research and comparison, not binding legal advice.</p><ul><li><a href="mena/en/">English</a></li><li><a href="mena/ar/" lang="ar">العربية</a></li></ul></main></body></html>',encoding='utf-8')
 
-# Standalone regional landing page
-(ROOT/'dist'/'index.html').write_text('<!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MENA Policy Observatory</title><link rel="stylesheet" href="mena/assets/site.css"></head><body><a class="skip" href="#main">Skip to main content</a><main id="main"><h1>MENA Policy Observatory</h1><p>Research and comparison, not binding legal advice.</p><ul><li><a href="mena/en/">English</a></li><li><a href="mena/ar/" lang="ar">العربية</a></li></ul></main></body></html>',encoding='utf-8')
+def main():
+ parser=argparse.ArgumentParser();parser.add_argument('--region',choices=['mena','all'],default='all');a=parser.parse_args()
+ for region in (['mena'] if a.region=='all' else [a.region]):build(region)
+ build_root()
+
+if __name__=='__main__':main()
