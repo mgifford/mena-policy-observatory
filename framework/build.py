@@ -10,6 +10,11 @@ import html
 import json
 import shutil
 
+try:  # imported as framework.build
+    from .research import RESEARCH_FILENAME, load_research
+except ImportError:  # run as a script
+    from research import RESEARCH_FILENAME, load_research
+
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_URL = 'https://github.com/mgifford/mena-policy-observatory'
 WORKFLOW_URL = REPOSITORY_URL + '/blob/main/docs/WORKFLOW.md'
@@ -37,6 +42,10 @@ INSTRUMENT_KEYS = {
     'government_guideline': 'instrument.government_guideline',
     'draft_policy': 'instrument.draft_policy',
     'agency_policy': 'instrument.agency_policy',
+    'legislation': 'instrument.legislation',
+    'regulation': 'instrument.regulation',
+    'technical_standard': 'instrument.technical_standard',
+    'other': 'instrument.other',
 }
 ARTIFACT_KEYS = {
     'PROVISIONS.md': 'artifact.provisions',
@@ -45,6 +54,65 @@ ARTIFACT_KEYS = {
     'RELATED.md': 'artifact.related',
     'rule.rulespec.yaml': 'artifact.rulespec',
     'manifest.json': 'artifact.manifest',
+    'research.json': 'artifact.research',
+}
+EFFECT_KEYS = {
+    'not_assessed': 'record.effect.not_assessed',
+    'draft_not_in_force': 'record.effect.draft_not_in_force',
+    'in_force_confirmed': 'record.effect.in_force_confirmed',
+    'not_in_force_confirmed': 'record.effect.not_in_force_confirmed',
+    'indeterminate': 'record.effect.indeterminate',
+}
+ENCODING_KEYS = {
+    'blocked': 'record.encoding.blocked',
+    'candidate': 'record.encoding.candidate',
+    'tested': 'record.encoding.tested',
+    'reviewed': 'record.encoding.reviewed',
+}
+RISK_KEYS = {
+    'critical': 'record.risk.critical',
+    'high': 'record.risk.high',
+    'medium': 'record.risk.medium',
+    'low': 'record.risk.low',
+    'unknown': 'record.risk.unknown',
+}
+QUESTION_STATUS_KEYS = {
+    'unresolved': 'record.status.unresolved',
+    'resolved': 'record.status.resolved',
+}
+REQUIRES_KEYS = {
+    'qualified_legal_review': 'record.requires.qualified_legal_review',
+    'qualified_accessibility_review': 'record.requires.qualified_accessibility_review',
+    'source_capture': 'record.requires.source_capture',
+    'authority_confirmation': 'record.requires.authority_confirmation',
+    'translation_review': 'record.requires.translation_review',
+}
+RELATION_KEYS = {
+    'cites': 'record.relation.cites',
+    'amends': 'record.relation.amends',
+    'supersedes': 'record.relation.supersedes',
+    'transposes': 'record.relation.transposes',
+    'implements': 'record.relation.implements',
+    'incorporates': 'record.relation.incorporates',
+    'guidance_for': 'record.relation.guidance_for',
+}
+RELATION_REVIEW_KEYS = {
+    'unreviewed': 'record.relation_review.unreviewed',
+    'reviewed': 'record.relation_review.reviewed',
+}
+AUTHORITATIVE_KEYS = {
+    'yes': 'record.source.authoritative.yes',
+    'no': 'record.source.authoritative.no',
+    'unknown': 'record.source.authoritative.unknown',
+}
+TRANSLATION_KEYS = {
+    'not_translated': 'record.translation.not_translated',
+    'draft': 'record.translation.draft',
+    'complete': 'record.translation.complete',
+}
+TRANSLATION_REVIEW_KEYS = {
+    'not_reviewed': 'record.translation.not_reviewed',
+    'native_reviewed': 'record.translation.native_reviewed',
 }
 
 
@@ -91,7 +159,7 @@ def foreign(value, page_lang, value_lang='en'):
     text = esc(value)
     if page_lang == value_lang:
         return text
-    return f'<span lang="{value_lang}" dir="ltr">{text}</span>'
+    return f'<span lang="{value_lang}" dir="{direction(value_lang)}">{text}</span>'
 
 
 def other_language(lang):
@@ -290,7 +358,183 @@ def home_body(catalogues, lang, cfg, policies, countries):
     return '\n'.join(parts)
 
 
-def record_body(catalogues, lang, record, base):
+def source_sections(strings, lang, research):
+    """Render recorded source metadata and permitted excerpts."""
+    sources = research.get('sources') or []
+    if not sources:
+        return []
+    items = []
+    for source in sources:
+        title = foreign(source.get('title', ''), lang)
+        url = source.get('url')
+        heading = f'<a href="{esc(url)}">{title}</a>' if url else title
+        language = source.get('language', '')
+        publication = source.get('publication_date')
+        effective = source.get('effective_date')
+        version = source.get('document_version')
+        capture = source.get('capture') or {}
+        translation = source.get('translation') or {}
+        archival = source.get('archival_url')
+
+        def date_value(value):
+            if not value or value == 'unknown':
+                return esc(strings['record.source.unknown'])
+            return f'<span lang="en" dir="ltr">{esc(value)}</span>'
+
+        if archival:
+            archival_html = (f'<a href="{esc(archival)}">{esc(strings["record.source.archival"])}: '
+                             f'{title}</a>')
+        else:
+            archival_html = esc(strings['record.source.not_recorded'])
+
+        if capture.get('bytes_stored') and capture.get('sha256'):
+            capture_html = t(
+                strings, 'record.source.capture_detail',
+                date=esc(capture.get('captured_at') or strings['record.source.not_recorded']),
+                sha=esc(capture['sha256'][:12]),
+            )
+        else:
+            capture_html = esc(strings['record.source.capture_none'])
+
+        rows = [
+            f'<dt>{esc(strings["record.source.issuer"])}</dt>'
+            f'<dd>{foreign(source.get("issuer") or strings["record.source.not_recorded"], lang)}</dd>',
+            f'<dt>{esc(strings["record.source.jurisdiction"])}</dt>'
+            f'<dd><span lang="en" dir="ltr"><code>{esc(source.get("jurisdiction", ""))}</code></span></dd>',
+            f'<dt>{esc(strings["record.source.instrument"])}</dt>'
+            f'<dd>{esc(label(strings, INSTRUMENT_KEYS, source.get("instrument_type"), "record.not_classified"))}</dd>',
+            f'<dt>{esc(strings["record.source.language"])}</dt>'
+            f'<dd><span lang="en" dir="ltr"><code>{esc(language)}</code></span> — '
+            f'{esc(strings["record.source.authoritative"])}: '
+            f'{esc(label(strings, AUTHORITATIVE_KEYS, source.get("authoritative_language"), "record.source.authoritative.unknown"))}</dd>',
+            f'<dt>{esc(strings["record.source.publication"])}</dt><dd>{date_value(publication)}</dd>',
+            f'<dt>{esc(strings["record.source.effective"])}</dt><dd>{date_value(effective)}</dd>',
+            f'<dt>{esc(strings["record.source.version"])}</dt><dd>{foreign(version, lang) if version else esc(strings["record.source.not_recorded"])}</dd>',
+            f'<dt>{esc(strings["record.source.archival"])}</dt><dd>{archival_html}</dd>',
+            f'<dt>{esc(strings["record.source.capture"])}</dt><dd>{capture_html}</dd>',
+            f'<dt>{esc(strings["record.source.translation"])}</dt>'
+            f'<dd>{esc(label(strings, TRANSLATION_KEYS, translation.get("status"), "record.source.not_recorded"))} — '
+            f'{esc(label(strings, TRANSLATION_REVIEW_KEYS, translation.get("review_state"), "record.source.not_recorded"))}</dd>',
+        ]
+
+        excerpt = source.get('excerpt')
+        if isinstance(excerpt, dict):
+            excerpt_lang = excerpt.get('language', 'en')
+            excerpt_html = (
+                f'<h4>{esc(strings["record.source.excerpt"])}</h4>'
+                f'<blockquote lang="{esc(excerpt_lang)}" dir="{direction(excerpt_lang)}">'
+                f'<p>{esc(excerpt.get("text", ""))}</p></blockquote>'
+                f'<p class="meta"><strong>{esc(strings["record.source.excerpt_locator"])}:</strong> '
+                f'{foreign(excerpt.get("locator", ""), lang, excerpt_lang)} — '
+                f'{esc(strings["record.source.excerpt_note"])} '
+                f'<code lang="en" dir="ltr">{esc(excerpt.get("artifact", ""))}</code></p>'
+            )
+        else:
+            excerpt_html = (f'<h4>{esc(strings["record.source.excerpt"])}</h4>'
+                            f'<p>{esc(strings["record.source.excerpt_none"])}</p>')
+
+        items.append(f'<article><h3>{heading}</h3><dl>{"".join(rows)}</dl>{excerpt_html}</article>')
+
+    return [
+        f'<section><h2>{esc(strings["record.sources_heading"])}</h2>'
+        f'<p class="notice">{esc(strings["record.sources_notice"])}</p>'
+        f'{"".join(items)}</section>'
+    ]
+
+
+def research_sections(strings, lang, research):
+    """Render the structured research fields. Nothing here is a legal finding."""
+    if not research:
+        return []
+    parts = source_sections(strings, lang, research)
+
+    provisions = research.get('provisions') or []
+    rows = []
+    for provision in provisions:
+        locator = (provision.get('locator') or {}).get('value', '')
+        rows.append(
+            f'<tr><th scope="row"><code lang="en" dir="ltr">{esc(provision.get("id", ""))}</code> '
+            f'{foreign(provision.get("heading", ""), lang)}</th>'
+            f'<td>{foreign(locator, lang)}</td>'
+            f'<td>{foreign(provision.get("summary", ""), lang)}</td>'
+            f'<td>{esc(label(strings, EFFECT_KEYS, provision.get("effect_assessment")))}</td>'
+            f'<td>{esc(label(strings, ENCODING_KEYS, provision.get("encoding_status")))}</td></tr>'
+        )
+    if rows:
+        parts.append(
+            f'<section><h2>{esc(strings["record.provisions_heading"])}</h2>'
+            f'<p class="notice">{esc(strings["record.provisions_notice"])}</p>'
+            f'<div class="table-scroll" role="region" aria-label="{esc(strings["record.provisions_heading"])}" tabindex="0">'
+            f'<table><caption>{esc(strings["record.provisions_caption"])}</caption><thead><tr>'
+            f'<th scope="col">{esc(strings["record.table.provision"])}</th>'
+            f'<th scope="col">{esc(strings["record.table.locator"])}</th>'
+            f'<th scope="col">{esc(strings["record.table.interpretation"])}</th>'
+            f'<th scope="col">{esc(strings["record.table.legal_effect"])}</th>'
+            f'<th scope="col">{esc(strings["record.table.encoding"])}</th>'
+            f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div></section>'
+        )
+    else:
+        parts.append(f'<section><h2>{esc(strings["record.provisions_heading"])}</h2>'
+                     f'<p>{esc(strings["record.provisions_none"])}</p></section>')
+
+    questions = research.get('interpretations') or []
+    items = []
+    for question in questions:
+        meta = [
+            f'{esc(strings["record.question_risk"])}: {esc(label(strings, RISK_KEYS, question.get("risk")))}',
+            f'{esc(strings["record.question_status"])}: {esc(label(strings, QUESTION_STATUS_KEYS, question.get("status")))}',
+            f'{esc(strings["record.question_requires"])}: {esc(label(strings, REQUIRES_KEYS, question.get("requires")))}',
+        ]
+        category = question.get('category')
+        if category and category != 'unknown':
+            meta.append(f'{esc(strings["record.question_category"])}: '
+                        f'<span lang="en" dir="ltr"><code>{esc(category)}</code></span>')
+        items.append(
+            f'<li><strong><code lang="en" dir="ltr">{esc(question.get("id", ""))}</code></strong> '
+            f'<span>{foreign(question.get("statement", ""), lang)}</span>'
+            f'<p class="meta">{"; ".join(meta)}</p></li>'
+        )
+    parts.append(
+        f'<section><h2>{esc(strings["record.questions_heading"])}</h2>'
+        + (f'<ul class="questions">{"".join(items)}</ul>' if items
+           else f'<p>{esc(strings["record.questions_none"])}</p>')
+        + '</section>'
+    )
+
+    relations = research.get('relations') or []
+    rows = []
+    for relation in relations:
+        target = relation.get('target') or {}
+        title = foreign(target.get('title', ''), lang)
+        if target.get('kind') == 'internal_record':
+            target_html = (f'<a href="{esc(target.get("record_id", ""))}.html">{title}</a> '
+                           f'<span class="meta">({esc(strings["record.relations_internal"])})</span>')
+        else:
+            target_html = f'<a href="{esc(target.get("url") or "")}">{title}</a>'
+        if relation.get('relation') == 'unspecified':
+            relation_html = (f'<span lang="en" dir="ltr"><code>{esc(relation.get("recorded_label") or "")}</code></span>'
+                             f' — {esc(strings["record.relation.unspecified"])}')
+        else:
+            relation_html = esc(label(strings, RELATION_KEYS, relation.get('relation')))
+        review = esc(label(strings, RELATION_REVIEW_KEYS, relation.get('review_state')))
+        rows.append(f'<tr><th scope="row">{target_html}</th><td>{relation_html}</td><td>{review}</td></tr>')
+    if rows:
+        parts.append(
+            f'<section><h2>{esc(strings["record.relations_heading"])}</h2>'
+            f'<div class="table-scroll" role="region" aria-label="{esc(strings["record.relations_heading"])}" tabindex="0">'
+            f'<table><caption>{esc(strings["record.relations_caption"])}</caption><thead><tr>'
+            f'<th scope="col">{esc(strings["record.table.target"])}</th>'
+            f'<th scope="col">{esc(strings["record.table.relation"])}</th>'
+            f'<th scope="col">{esc(strings["record.table.review_state"])}</th>'
+            f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div></section>'
+        )
+    else:
+        parts.append(f'<section><h2>{esc(strings["record.relations_heading"])}</h2>'
+                     f'<p>{esc(strings["record.relations_none"])}</p></section>')
+    return parts
+
+
+def record_body(catalogues, lang, record, base, research=None):
     strings = catalogues[lang]
     record_id = record['id']
     record_lang = record.get('language', 'en')
@@ -328,8 +572,8 @@ def record_body(catalogues, lang, record, base):
         f'<h2>{esc(strings["record.summary"])}</h2>'
         f'<p>{foreign(record.get("notes") or strings["record.no_summary"], lang, record_lang)}</p>',
         f'<p><strong>{esc(strings["record.rule_status"])}:</strong> {esc(rule_status)}</p>',
-        f'<p>{esc(strings["record.artifacts_notice"])}</p>',
     ]
+    parts.extend(research_sections(strings, lang, research))
 
     artifacts = []
     for filename, key in ARTIFACT_KEYS.items():
@@ -340,6 +584,7 @@ def record_body(catalogues, lang, record, base):
             )
     if artifacts:
         parts.append(f'<section><h2>{esc(strings["record.artifacts_heading"])}</h2>'
+                     f'<p>{esc(strings["record.artifacts_notice"])}</p>'
                      f'<ul class="artifacts">{"".join(artifacts)}</ul></section>')
     parts.append(f'<p><a href="../index.html">{esc(strings["record.back"])}</a></p>')
     return '\n'.join(parts)
@@ -375,6 +620,9 @@ def build(region):
         for record in policies:
             record_id = record['id']
             record_lang = record.get('language', 'en')
+            policy_dir = base / 'policies' / record_id
+            research = (load_research(policy_dir)
+                        if (policy_dir / RESEARCH_FILENAME).is_file() else None)
             crumb = breadcrumb_html(
                 strings, '../index.html', record.get('title', record_id), lang != record_lang)
             description = (record.get('notes') if lang == record_lang
@@ -383,7 +631,7 @@ def build(region):
                 page(
                     catalogues, lang,
                     f'{record.get("title", record_id)} — {title}',
-                    record_body(catalogues, lang, record, base),
+                    record_body(catalogues, lang, record, base, research),
                     2,
                     f'../../{other_language(lang)}/records/{record_id}.html',
                     description,

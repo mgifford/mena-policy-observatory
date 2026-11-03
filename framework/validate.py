@@ -8,6 +8,11 @@ from pathlib import Path
 import json
 import sys
 
+try:  # imported as framework.validate
+    from .research import validate_region as validate_region_research
+except ImportError:  # run as a script
+    from research import validate_region as validate_region_research
+
 REGIONS = ('mena',)
 REQUIRED_FILES = ('SOURCE.md', 'INTERPRETATION.md', 'RELATED.md', 'rule.rulespec.yaml')
 ALLOWED_EXECUTION_STATUS = ('not_implemented', 'scaffold', 'not_encoded', None)
@@ -48,6 +53,7 @@ def main() -> int:
     errors: list[str] = []
     for region in REGIONS:
         errors.extend(validate_region(root, region))
+        errors.extend(validate_region_research(root / 'regions' / region, region))
 
     if errors:
         print('\n'.join(errors), file=sys.stderr)

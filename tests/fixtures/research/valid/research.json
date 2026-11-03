@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "fixture-record",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-fixture-source",
+      "title": "Fixture source document",
+      "url": "https://example.org/fixture-source",
+      "jurisdiction": "AA",
+      "issuer": "Fixture issuer",
+      "instrument_type": "other",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": null,
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "recorded",
+      "excerpt": {
+        "text": "The fixture sentence appears here verbatim.",
+        "language": "en",
+        "locator": "Section 1",
+        "artifact": "SOURCE.md"
+      },
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Fixture provision",
+      "locator": {
+        "kind": "section",
+        "value": "Section 1"
+      },
+      "source_ids": ["src-fixture-source"],
+      "summary": "A fixture interpretation recorded for tests.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["FX-01"]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "FX-01",
+      "provision_id": "P-01",
+      "statement": "A fixture question that remains unresolved.",
+      "observation": "A fixture observation.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "fixture_category",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-fixture-standard",
+      "target": {
+        "kind": "external_document",
+        "title": "Fixture standard",
+        "url": "https://example.org/fixture-standard",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "technical_standard",
+      "review_state": "unreviewed",
+      "note": null
+    }
+  ]
+}
