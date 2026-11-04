@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "qa-eaccessibility-2025-upcoming",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-qa-ict-accessibility-2025",
+      "title": "Upcoming National ICT Accessibility Policy, v2.0.1",
+      "url": "https://www.mcit.gov.qa/wp-content/uploads/sites/4/2025/04/P006_ICTAccessibility_v.2.0.1_en.pdf",
+      "jurisdiction": "QA",
+      "issuer": "Qatar Ministry of Communications and Information Technology",
+      "instrument_type": "draft_policy",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": "v2.0.1",
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "not_recorded",
+      "excerpt": null,
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Draft status",
+      "locator": {
+        "kind": "document",
+        "value": "Document title and version"
+      },
+      "source_ids": ["src-qa-ict-accessibility-2025"],
+      "summary": "The source is labelled upcoming. Do not treat as in force.",
+      "effect_assessment": "draft_not_in_force",
+      "encoding_status": "blocked",
+      "interpreting_questions": []
+    },
+    {
+      "id": "P-02",
+      "heading": "Qualified conformance",
+      "locator": {
+        "kind": "section",
+        "value": "Technical conformance provisions"
+      },
+      "source_ids": ["src-qa-ict-accessibility-2025"],
+      "summary": "Where possible/applicable leaves scope and exceptions unresolved.",
+      "effect_assessment": "draft_not_in_force",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["QA-25-01"]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "QA-25-01",
+      "provision_id": "P-02",
+      "statement": "The terms where possible and where applicable require a published decision process; cannot be reduced to an unconditional Boolean.",
+      "observation": "Draft discusses WCAG 2.2 AAA where possible or applicable.",
+      "alternatives": [],
+      "risk": "critical",
+      "category": "exception_and_discretion",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "QA-25-02",
+      "provision_id": null,
+      "statement": "No effective date or triggering enactment confirmed; do not calculate compliance deadlines from publication date.",
+      "observation": "Draft summary refers to a 24-month adoption period.",
+      "alternatives": [],
+      "risk": "critical",
+      "category": "temporal_uncertainty",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "authority_confirmation",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-qa-2025-previous-policy",
+      "target": {
+        "kind": "internal_record",
+        "title": "Qatar eAccessibility Policy 2011",
+        "url": null,
+        "record_id": "qa-eaccessibility-2011"
+      },
+      "relation": "unspecified",
+      "recorded_label": "previous_policy",
+      "review_state": "unreviewed",
+      "note": null
+    },
+    {
+      "id": "rel-qa-2025-wcag22",
+      "target": {
+        "kind": "external_document",
+        "title": "WCAG 2.2",
+        "url": "https://www.w3.org/TR/WCAG22/",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "technical_standard",
+      "review_state": "unreviewed",
+      "note": null
+    }
+  ]
+}

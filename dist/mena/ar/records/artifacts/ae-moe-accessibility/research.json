@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "ae-moe-accessibility",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-ae-moe-policy",
+      "title": "UAE Ministry of Education Digital Accessibility Policy",
+      "url": "https://www.moe.gov.ae/en/digital-participation/policies/pages/digital-accessibility-policy.aspx",
+      "jurisdiction": "AE",
+      "issuer": "UAE Ministry of Education",
+      "instrument_type": "agency_policy",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": null,
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "not_recorded",
+      "excerpt": null,
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Technical commitment",
+      "locator": {
+        "kind": "section",
+        "value": "Section 2"
+      },
+      "source_ids": ["src-ae-moe-policy"],
+      "summary": "The ministry claims WCAG 2.1 and 2.2 AA as minimum targets; self-description is not verified conformance.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["AE-MOE-ACCESSIBILITY-01", "AE-MOE-ACCESSIBILITY-03"]
+    },
+    {
+      "id": "P-02",
+      "heading": "Legacy materials",
+      "locator": {
+        "kind": "section",
+        "value": "Section 6"
+      },
+      "source_ids": ["src-ae-moe-policy"],
+      "summary": "Older/archived content may not meet standards; scope and remedies require human assessment.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["AE-MOE-ACCESSIBILITY-02"]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "AE-MOE-ACCESSIBILITY-01",
+      "provision_id": "P-01",
+      "statement": "Scope is ministry-specific; do not generalize to all UAE organizations.",
+      "observation": null,
+      "alternatives": [],
+      "risk": "unknown",
+      "category": "unknown",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-MOE-ACCESSIBILITY-02",
+      "provision_id": "P-02",
+      "statement": "Legacy-content exception has no documented sunset or objective decision criteria in this record.",
+      "observation": null,
+      "alternatives": [],
+      "risk": "unknown",
+      "category": "unknown",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-MOE-ACCESSIBILITY-03",
+      "provision_id": "P-01",
+      "statement": "The use of an accessibility overlay does not establish WCAG conformance.",
+      "observation": null,
+      "alternatives": [],
+      "risk": "unknown",
+      "category": "unknown",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_accessibility_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": []
+}

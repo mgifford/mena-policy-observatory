@@ -28,6 +28,14 @@ npm run test:a11y
 
 Interface and homepage strings live in `regions/mena/i18n/en.json` and `regions/mena/i18n/ar.json`. The build fails if the two catalogues declare different keys, and unit tests check placeholders and value hygiene. Arabic page copy is a draft pending native-speaker review. Policy record fields have no Arabic translation; on Arabic pages they are shown in English with `lang`/`dir` marking and an explicit notice.
 
+## Structured research data
+
+Each policy directory contains a `research.json` alongside its Markdown artifacts. The file records sources, candidate provisions, interpretation questions and instrument relations in a machine-readable form. It never replaces the Markdown research notes, and it never records a legal conclusion: unknown values stay `"unknown"` or `null`, and unresolved questions stay unresolved.
+
+`framework/validate.py` checks the file against `regions/mena/schemas/research-record.schema.json` and then applies semantic checks that a schema cannot express: reference integrity, ISO dates, excerpt and summary attribution to the Markdown artifacts, capture/checksum consistency, translation provenance, and review-state gates. Valid and invalid fixtures live in `tests/fixtures/research/`. See `docs/RESEARCH-MODEL.md`.
+
+Record pages render the structured fields: recorded source metadata (issuer, jurisdiction, dates, version, capture state and translation state), any permitted excerpt with its locator, a provisions table with recorded locators, effect assessment and encoding status; the open interpretation questions with risk and what review they need; and recorded related instruments with their review state.
+
 ## Evidence limits
 
 Country scope does not imply reviewed law. Source identification does not establish binding legal effect. RuleSpec files are non-executable research scaffolds with empty rule arrays. No conformance or legal-certification claims are made. Translations are research drafts pending qualified review. See `docs/BASELINE-AUDIT.md` for the current repository audit.

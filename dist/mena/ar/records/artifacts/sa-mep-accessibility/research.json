@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "sa-mep-accessibility",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-sa-mep-policy",
+      "title": "Saudi Ministry of Economy and Planning Accessibility Policy",
+      "url": "https://mep.gov.sa/en/accessibilitypolicy",
+      "jurisdiction": "SA",
+      "issuer": "Saudi Ministry of Economy and Planning",
+      "instrument_type": "agency_policy",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": null,
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "not_recorded",
+      "excerpt": null,
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Qualifier ambiguity",
+      "locator": {
+        "kind": "clause",
+        "value": "Clauses 5-8"
+      },
+      "source_ids": ["src-sa-mep-policy"],
+      "summary": "\"To the extent possible\" complicates automated conformance decisions.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["SA-MEP-ACCESSIBILITY-01"]
+    },
+    {
+      "id": "P-02",
+      "heading": "Scope and exclusions",
+      "locator": {
+        "kind": "clause",
+        "value": "Clause 4"
+      },
+      "source_ids": ["src-sa-mep-policy"],
+      "summary": "External sites linked from ministry platforms are excluded from agency-specific policy.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["SA-MEP-ACCESSIBILITY-03"]
+    },
+    {
+      "id": "P-03",
+      "heading": "Delegated technical level",
+      "locator": {
+        "kind": "clause",
+        "value": "Clause 6"
+      },
+      "source_ids": ["src-sa-mep-policy"],
+      "summary": "WCAG 2.1 level depends on authorities and regulatory requirements.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["SA-MEP-ACCESSIBILITY-02"]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "SA-MEP-ACCESSIBILITY-01",
+      "provision_id": "P-01",
+      "statement": "\"To the extent possible\" does not identify an objective threshold.",
+      "observation": null,
+      "alternatives": [],
+      "risk": "unknown",
+      "category": "unknown",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "SA-MEP-ACCESSIBILITY-02",
+      "provision_id": "P-03",
+      "statement": "The adopted WCAG conformance level is deferred to competent authorities.",
+      "observation": null,
+      "alternatives": [],
+      "risk": "unknown",
+      "category": "unknown",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "authority_confirmation",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "SA-MEP-ACCESSIBILITY-03",
+      "provision_id": "P-02",
+      "statement": "External linked platforms are excluded from the ministry policy scope.",
+      "observation": null,
+      "alternatives": [],
+      "risk": "unknown",
+      "category": "unknown",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": []
+}

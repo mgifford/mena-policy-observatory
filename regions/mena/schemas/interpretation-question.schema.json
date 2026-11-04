@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mgifford.github.io/mena-policy-observatory/schemas/interpretation-question.schema.json",
+  "title": "Interpretation question",
+  "description": "A recorded ambiguity. 'unresolved' is not a negative legal finding; it means the research has not settled the question.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "provision_id",
+    "statement",
+    "observation",
+    "alternatives",
+    "risk",
+    "category",
+    "status",
+    "resolution",
+    "requires",
+    "reviewer",
+    "reviewed_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9-]+$"
+    },
+    "provision_id": {
+      "type": ["string", "null"]
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observation": {
+      "type": ["string", "null"]
+    },
+    "alternatives": {
+      "description": "Enumerated readings. An empty array means no alternatives have been written down yet.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "review_state"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "review_state": {
+            "enum": ["unreviewed", "reviewed"]
+          }
+        }
+      }
+    },
+    "risk": {
+      "enum": ["critical", "high", "medium", "low", "unknown"]
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": ["unresolved", "resolved"]
+    },
+    "resolution": {
+      "type": ["string", "null"]
+    },
+    "requires": {
+      "enum": [
+        "qualified_legal_review",
+        "qualified_accessibility_review",
+        "source_capture",
+        "authority_confirmation",
+        "translation_review"
+      ]
+    },
+    "reviewer": {
+      "type": ["string", "null"]
+    },
+    "reviewed_at": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    }
+  }
+}

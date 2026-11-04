@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mgifford.github.io/mena-policy-observatory/schemas/instrument-relation.schema.json",
+  "title": "Instrument relation",
+  "description": "A recorded link between this instrument and another document. An unverified label is stored separately from the legal relation vocabulary.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "target", "relation", "recorded_label", "review_state", "note"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^rel-[a-z0-9-]+$"
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "title", "url", "record_id"],
+      "properties": {
+        "kind": {
+          "enum": ["internal_record", "external_document"]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": ["string", "null"],
+          "pattern": "^https://"
+        },
+        "record_id": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "relation": {
+      "description": "Assert a legal relation only after review. 'unspecified' means the label has not been mapped to this vocabulary.",
+      "enum": [
+        "cites",
+        "amends",
+        "supersedes",
+        "transposes",
+        "implements",
+        "incorporates",
+        "guidance_for",
+        "unspecified"
+      ]
+    },
+    "recorded_label": {
+      "type": ["string", "null"]
+    },
+    "review_state": {
+      "enum": ["unreviewed", "reviewed"]
+    },
+    "note": {
+      "type": ["string", "null"]
+    }
+  }
+}

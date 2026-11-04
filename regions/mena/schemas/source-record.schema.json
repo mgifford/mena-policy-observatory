@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mgifford.github.io/mena-policy-observatory/schemas/source-record.schema.json",
+  "title": "Source record",
+  "description": "One document the research cites. Unknown values stay 'unknown' or null. A recorded source is not evidence of legal effect.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "url",
+    "jurisdiction",
+    "issuer",
+    "instrument_type",
+    "language",
+    "authoritative_language",
+    "publication_date",
+    "effective_date",
+    "document_version",
+    "archival_url",
+    "capture",
+    "excerpt_status",
+    "excerpt",
+    "translation"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^src-[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "url": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "issuer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "instrument_type": {
+      "enum": [
+        "national_policy",
+        "government_guideline",
+        "draft_policy",
+        "agency_policy",
+        "legislation",
+        "regulation",
+        "technical_standard",
+        "other"
+      ]
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z]{2}$"
+    },
+    "authoritative_language": {
+      "description": "Whether the consulted copy is the authoritative version. 'unknown' means it has not been established.",
+      "enum": ["yes", "no", "unknown"]
+    },
+    "publication_date": {
+      "$ref": "#/$defs/date"
+    },
+    "effective_date": {
+      "$ref": "#/$defs/date"
+    },
+    "document_version": {
+      "type": ["string", "null"]
+    },
+    "archival_url": {
+      "type": ["string", "null"],
+      "pattern": "^https://"
+    },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["captured_at", "bytes_stored", "sha256"],
+      "properties": {
+        "captured_at": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        },
+        "bytes_stored": {
+          "description": "True only when captured source bytes exist in this repository.",
+          "type": "boolean"
+        },
+        "sha256": {
+          "description": "Recorded only when bytes_stored is true; never a checksum of an unheld copy.",
+          "type": ["string", "null"],
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "excerpt_status": {
+      "enum": ["recorded", "not_recorded", "not_permitted"]
+    },
+    "excerpt": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["text", "language", "locator", "artifact"],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "language": {
+              "type": "string",
+              "pattern": "^[a-z]{2}$"
+            },
+            "locator": {
+              "type": "string",
+              "minLength": 1
+            },
+            "artifact": {
+              "description": "Repository file the excerpt is copied from and checked against.",
+              "type": "string",
+              "pattern": "^[A-Z-]+\\.md$"
+            }
+          }
+        }
+      ]
+    },
+    "translation": {
+      "description": "Translation state is separate from source authentication and from legal-effect verification.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_language", "status", "provenance", "review_state"],
+      "properties": {
+        "target_language": {
+          "type": ["string", "null"],
+          "pattern": "^[a-z]{2}$"
+        },
+        "status": {
+          "enum": ["not_translated", "draft", "complete"]
+        },
+        "provenance": {
+          "type": ["string", "null"]
+        },
+        "review_state": {
+          "enum": ["not_reviewed", "native_reviewed"]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "date": {
+      "description": "ISO date, or 'unknown' when no date has been established.",
+      "type": "string",
+      "pattern": "^(unknown|[0-9]{4}-[0-9]{2}-[0-9]{2})$"
+    }
+  }
+}

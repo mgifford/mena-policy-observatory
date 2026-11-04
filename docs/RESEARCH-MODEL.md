@@ -1,0 +1,89 @@
+# Structured research model
+
+This document describes the machine-readable research layer added in Phase 2. It is a research record, not a legal opinion and not an executable rule set.
+
+## Why it exists
+
+The Markdown artifacts (`SOURCE.md`, `PROVISIONS.md`, `INTERPRETATION.md`, `RELATED.md`) remain the narrative research record. They are written for people and are hard to check mechanically. `research.json` adds a parallel, structured form so the site can render provisions, open questions and related instruments, and so the validator can detect breakage.
+
+Nothing is migrated out of the Markdown. The JSON points at it, and the validator requires that quoted material still appears there verbatim.
+
+## Files
+
+- `regions/mena/policies/<record-id>/research.json` — one file per policy record. The validator requires one for every record listed in `data/policies.json`.
+- `regions/mena/schemas/source-record.schema.json`
+- `regions/mena/schemas/provision.schema.json`
+- `regions/mena/schemas/interpretation-question.schema.json`
+- `regions/mena/schemas/instrument-relation.schema.json`
+- `regions/mena/schemas/research-record.schema.json` — combines the four.
+- `framework/schema_lite.py` — dependency-free JSON Schema subset.
+- `framework/research.py` — semantic checks beyond schema shape.
+- `tests/test_research.py` and `tests/fixtures/research/` — positive and mutation fixtures.
+
+`research-record.schema.json` declares `additionalProperties: false` throughout, so an accidental new field fails validation rather than being silently ignored.
+
+## Sources
+
+A source record carries the fields the phase requires: title, official URL, jurisdiction, issuer, instrument type, language, whether the consulted copy is the authoritative language (`yes`/`no`/`unknown`), publication and effective dates, document version, archival URL, capture information, excerpt, and translation state.
+
+Deliberate limits:
+
+- **Dates** are an ISO date or the literal `"unknown"`. Free text such as "sometime in 2011" is rejected. An unknown date is not treated as absent, late or invalid law.
+- **Capture** records `bytes_stored`. A SHA-256 is only allowed when captured bytes actually exist in the repository, and stored bytes require a checksum and timestamp. No checksum is invented for a document that was only linked.
+- **Excerpts** are copied from one of the declared Markdown artifacts, and the validator requires the exact text to still occur in that file. `excerpt_status` must agree with whether an excerpt is present: `recorded`, `not_recorded` or `not_permitted`.
+- **Translation** is a separate axis with its own status and review state. A source can be authenticated and still untranslated, or translated and still not legally reviewed. A named translation needs recorded provenance; `native_reviewed` without provenance is rejected.
+
+A recorded source means the research located the document. It does not mean the legal effect was verified.
+
+## Provisions
+
+A provision has a stable ID (`P-01`), heading, locator (section, article, clause, page, paragraph, annex, document, or `unknown`), one or more source IDs, a recorded interpretation, an effect assessment and an encoding status.
+
+- `effect_assessment` is one of `not_assessed`, `draft_not_in_force`, `in_force_confirmed`, `not_in_force_confirmed`, `indeterminate`. "Not assessed" and "indeterminate" are distinct from any negative finding.
+- `encoding_status` is one of `blocked`, `candidate`, `tested`, `reviewed`.
+- `reviewed` is refused unless the effect assessment is a confirmed one and every linked question is resolved.
+
+Provision IDs, headings and recorded interpretations must match `PROVISIONS.md`: an entry in either place without the other is an error, and the interpretation text must appear in the file verbatim.
+
+## Interpretation questions
+
+Each question has a persistent ID, an optional provision link, a statement, the recorded observation, alternatives, risk, category, status, resolution, what review it needs, and reviewer metadata.
+
+- `unresolved` is not a negative legal finding. It means this research has not settled the question.
+- A resolved question requires a resolution, a reviewer and a review date.
+- A resolution without `status: resolved` is rejected, so the two cannot drift apart.
+- An alternative cannot claim `reviewed` yet, because no separate evidence trail for alternatives is recorded. The validator rejects the claim rather than accepting an unsupported one.
+
+Question IDs and statements must match `INTERPRETATION.md` in the same way as provisions.
+
+## Instrument relations
+
+Relations use the vocabulary `cites`, `amends`, `supersedes`, `transposes`, `implements`, `incorporates` and `guidance_for`.
+
+Existing manifest labels such as `normative_annex`, `technical_standard` or `proposed_successor` are kept as `recorded_label`, with `relation: "unspecified"` and `review_state: "unreviewed"`. Mapping those labels onto the legal vocabulary would be a new interpretation, so it is not done automatically.
+
+- An asserted relation requires `review_state: "reviewed"`.
+- `unspecified` requires a recorded label.
+- An internal target must resolve to a known record, must not point at its own record, and must not also carry a URL.
+- An external target must carry a URL.
+- Internal `amends` and `supersedes` relations are checked for cycles. Cycles in citations are ordinary and are not flagged.
+
+## Running the checks
+
+```sh
+python3 framework/validate.py
+python3 -m unittest discover -s tests -p 'test_*.py'
+```
+
+`framework/validate.py` keeps its existing record-structure checks and now also runs the research checks for every record in the region. Unit tests cover duplicate IDs, unknown references, impossible dates, invented checksums, excerpt and summary attribution, review-state gates and unsupported schema keywords.
+
+If `schema_lite.py` meets a schema keyword it does not implement, it raises instead of ignoring it. That keeps the check honest when a schema grows.
+
+## What this layer does not do
+
+- It does not confirm that a provision is in force, binding or correctly interpreted.
+- It does not verify that a source URL still resolves or that a captured copy matches the official text.
+- It does not translate legal text, and it does not check translation accuracy.
+- It does not decide whether a case of `cites` or `guidance_for` is legally correct, only whether a reviewed relation is recorded consistently.
+- It does not compile or execute Axiom RuleSpec files.
+- It does not replace independent legal, accessibility or native-language review.
