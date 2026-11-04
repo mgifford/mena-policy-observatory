@@ -22,7 +22,11 @@ npx playwright install chromium
 npm run test:a11y
 ```
 
-`npm run test:a11y` rebuilds `dist/` first and covers the two MENA landing pages only. See `ACCESSIBILITY.md` for remaining gaps.
+`npm run test:a11y` rebuilds `dist/` first and checks every generated HTML page: axe-core, keyboard skip-link focus, 320 CSS pixel reflow, unique titles, `hreflang` alternates, and language-switch equivalence. See `ACCESSIBILITY.md` for remaining gaps.
+
+## Bilingual content
+
+Interface and homepage strings live in `regions/mena/i18n/en.json` and `regions/mena/i18n/ar.json`. The build fails if the two catalogues declare different keys, and unit tests check placeholders and value hygiene. Arabic page copy is a draft pending native-speaker review. Policy record fields have no Arabic translation; on Arabic pages they are shown in English with `lang`/`dir` marking and an explicit notice.
 
 ## Evidence limits
 
