@@ -108,15 +108,18 @@ class CoverageRegistryTests(unittest.TestCase):
         self.assertTrue(any('unknown source lead' in error
                             for error in validate_coverage(data)))
 
-    def test_countries_carry_provisional_arabic_labels(self):
+    def test_countries_carry_provisional_arabic_and_french_labels(self):
         for country in self.data.countries:
-            self.assertTrue(country['group_ar'], country['code'])
-            self.assertEqual(country['group_ar_status'], 'provisional', country['code'])
-            self.assertTrue(country['scope_note_ar'], country['code'])
-            self.assertEqual(country['scope_note_ar_status'], 'provisional', country['code'])
-            if country.get('jurisdiction_note'):
-                self.assertTrue(country.get('jurisdiction_note_ar'), country['code'])
-                self.assertEqual(country.get('jurisdiction_note_ar_status'), 'provisional')
+            for language in ('ar', 'fr'):
+                self.assertTrue(country[f'name_{language}'], country['code'])
+                self.assertEqual(country[f'name_{language}_status'], 'provisional', country['code'])
+                self.assertTrue(country[f'group_{language}'], country['code'])
+                self.assertEqual(country[f'group_{language}_status'], 'provisional', country['code'])
+                self.assertTrue(country[f'scope_note_{language}'], country['code'])
+                self.assertEqual(country[f'scope_note_{language}_status'], 'provisional', country['code'])
+                if country.get('jurisdiction_note'):
+                    self.assertTrue(country.get(f'jurisdiction_note_{language}'), country['code'])
+                    self.assertEqual(country.get(f'jurisdiction_note_{language}_status'), 'provisional')
 
     def test_missing_arabic_group_label_is_rejected(self):
         data = copy.deepcopy(self.data)
@@ -124,6 +127,13 @@ class CoverageRegistryTests(unittest.TestCase):
             if country['code'] == 'EH':
                 country.pop('group_ar')
         self.assertTrue(any('group_ar' in error for error in validate_coverage(data)))
+
+    def test_missing_french_group_label_is_rejected(self):
+        data = copy.deepcopy(self.data)
+        for country in data.countries:
+            if country['code'] == 'EH':
+                country.pop('group_fr')
+        self.assertTrue(any('group_fr' in error for error in validate_coverage(data)))
 
     def test_jurisdiction_note_without_arabic_is_rejected(self):
         data = copy.deepcopy(self.data)

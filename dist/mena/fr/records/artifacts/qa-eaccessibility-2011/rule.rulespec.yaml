@@ -1,0 +1,13 @@
+# Axiom RuleSpec v1 source scaffold for qa-eaccessibility-2011
+# STATUS: NON-EXECUTABLE POLICY ENCODING: no substantive rules have been approved.
+# This is a schema-shaped module starter, not a determination of legal compliance.
+# Country: QA; source: https://www.mcit.gov.qa/wp-content/uploads/sites/4/2025/04/Qatar-e-Accessibility-Policy-2011.pdf
+# Legal status: current_status_requires_confirmation
+# Do not invent effective_from dates or turn ambiguous language into booleans.
+# Unresolved interpretation issues (also in INTERPRETATION.md):
+#   QA-11-01 [high] Exact applicability, exceptions and current standing relative to a later policy require authority confirmation.
+#   QA-11-02 [high] A website-only WCAG rule cannot represent kiosks, telecommunications or broadcasting accessibility.
+format: rulespec/v1
+module:
+  title: "Qatar eAccessibility Policy (2011) - unapproved source scaffold"
+rules: []

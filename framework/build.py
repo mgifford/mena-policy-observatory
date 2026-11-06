@@ -176,7 +176,7 @@ def load(path):
     return json.loads(path.read_text(encoding='utf-8'))
 
 
-def load_i18n(base, languages=('en', 'ar')):
+def load_i18n(base, languages=('en', 'fr', 'ar')):
     """Load locale catalogues and fail loudly on asymmetric keys."""
     catalogues = {}
     for lang in languages:
@@ -214,8 +214,12 @@ def foreign(value, page_lang, value_lang='en'):
     return f'<span lang="{value_lang}" dir="{direction(value_lang)}">{text}</span>'
 
 
-def other_language(lang):
-    return 'ar' if lang == 'en' else 'en'
+LANGUAGES = ('en', 'fr', 'ar')
+LANGUAGE_NAMES = {'en': 'English', 'fr': 'Français', 'ar': 'العربية'}
+
+
+def other_languages(lang):
+    return [code for code in LANGUAGES if code != lang]
 
 
 def direction(lang):
@@ -310,44 +314,51 @@ def relation_text(strings, value):
 
 
 def country_text(country, lang):
-    if lang == 'ar' and country.get('name_ar'):
-        return country['name_ar']
+    if lang != 'en' and country.get(f'name_{lang}'):
+        return country[f'name_{lang}']
     return country.get('name', '')
 
 
 def domain_text(domain, lang):
-    if lang == 'ar' and domain.get('label_ar'):
-        return domain['label_ar']
+    if lang != 'en' and domain.get(f'label_{lang}'):
+        return domain[f'label_{lang}']
     return domain.get('label_en', '')
 
 
 def country_name(country, lang):
-    """Prefer the registry's Arabic name on Arabic pages; mark English elsewhere."""
-    if lang == 'ar' and country.get('name_ar'):
-        return esc(country['name_ar'])
+    """Prefer the registry's localized name; mark English on other locales."""
+    if lang != 'en' and country.get(f'name_{lang}'):
+        return esc(country[f'name_{lang}'])
     return foreign(country.get('name', ''), lang)
 
 
 def domain_name(domain, lang):
-    if lang == 'ar' and domain.get('label_ar'):
-        return esc(domain['label_ar'])
+    if lang != 'en' and domain.get(f'label_{lang}'):
+        return esc(domain[f'label_{lang}'])
     return foreign(domain.get('label_en', ''), lang)
 
 
+def localized_label(item, lang):
+    """Render a localized label from a group or subtopic entry."""
+    if lang != 'en' and item.get(f'label_{lang}'):
+        return esc(item[f'label_{lang}'])
+    return foreign(item.get('label_en', ''), lang)
+
+
 def country_group(country, lang):
-    """Prefer the registry's provisional Arabic group label on Arabic pages."""
-    if lang == 'ar' and country.get('group_ar'):
-        return esc(country['group_ar'])
+    """Prefer the registry's provisional localized group label."""
+    if lang != 'en' and country.get(f'group_{lang}'):
+        return esc(country[f'group_{lang}'])
     return foreign(country.get('group', ''), lang)
 
 
 def country_note(country, key, lang):
-    """Render an editorial note, preferring its provisional Arabic rendering."""
+    """Render an editorial note, preferring its provisional localization."""
     english = country.get(key, '')
     if not english:
         return ''
-    if lang == 'ar' and country.get(f'{key}_ar'):
-        return esc(country[f'{key}_ar'])
+    if lang != 'en' and country.get(f'{key}_{lang}'):
+        return esc(country[f'{key}_{lang}'])
     return foreign(english, lang)
 
 
@@ -368,14 +379,22 @@ def breadcrumb_trail(items):
     return '<ol>' + ''.join(parts) + '</ol>'
 
 
-def page(catalogues, lang, title, body, depth, alt_href, description,
+def page(catalogues, lang, title, body, depth, alt_hrefs, description,
          breadcrumb_html=''):
     strings = catalogues[lang]
     prefix = '../' * depth
     local = '../' * (depth - 1)
     home_href = local + 'index.html'
     root_href = prefix + '../index.html'
-    lang_other = other_language(lang)
+    alternates = ''.join(
+        f'<link rel="alternate" hreflang="{code}" href="{esc(href)}">\n'
+        for code, href in alt_hrefs.items()
+    )
+    language_links = ''.join(
+        f'<li><a href="{esc(href)}" hreflang="{code}" lang="{code}" '
+        f'dir="{direction(code)}">{esc(LANGUAGE_NAMES[code])}</a></li>'
+        for code, href in alt_hrefs.items()
+    )
     breadcrumb = ''
     if breadcrumb_html:
         breadcrumb = (f'<nav class="breadcrumb" aria-label="{esc(strings["breadcrumb.label"])}">'
@@ -387,8 +406,7 @@ def page(catalogues, lang, title, body, depth, alt_href, description,
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
-<link rel="alternate" hreflang="{lang_other}" href="{esc(alt_href)}">
-<link rel="alternate" hreflang="x-default" href="{esc(root_href)}">
+{alternates}<link rel="alternate" hreflang="x-default" href="{esc(root_href)}">
 <link rel="stylesheet" href="{prefix}assets/site.css">
 </head>
 <body>
@@ -409,7 +427,7 @@ def page(catalogues, lang, title, body, depth, alt_href, description,
 </ul>
 </nav>
 <nav class="language" aria-label="{esc(strings['nav.language'])}">
-<a href="{esc(alt_href)}" hreflang="{lang_other}" lang="{lang_other}" dir="{direction(lang_other)}">{esc(strings['nav.language_other'])}</a>
+<ul>{language_links}</ul>
 </nav>
 </header>
 <main id="main" tabindex="-1">
@@ -842,7 +860,7 @@ def countries_index_body(catalogues, lang, view):
         f'<th scope="col">{esc(strings["countries.table.tasks"])}</th>'
         f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>',
     ]
-    if lang == 'ar':
+    if lang != 'en':
         parts.append(f'<p class="notice">{esc(strings["countries.translation_note"])}</p>')
     parts.append(f'<p><a href="../index.html">{esc(strings["countries.back"])}</a></p>')
     return '\n'.join(parts)
@@ -857,7 +875,7 @@ def country_body(catalogues, lang, view, country):
     ]
     if country.get('jurisdiction_note'):
         parts.append(f'<p class="notice">{country_note(country, "jurisdiction_note", lang)}</p>')
-    if lang == 'ar':
+    if lang != 'en':
         parts.append(f'<p class="notice">{esc(strings["countries.translation_note"])}</p>')
 
     latest_review = country.get('latest_review') or strings['country.not_recorded']
@@ -996,8 +1014,7 @@ def domains_index_body(catalogues, lang, view):
             f'<td>{len(domain["tasks"])}</td></tr>'
             for domain in domains
         )
-        group_label = (esc(group['label_ar']) if lang == 'ar' and group.get('label_ar')
-                       else foreign(group.get('label_en', ''), lang))
+        group_label = localized_label(group, lang)
         parts.append(
             f'<section><h2>{group_label}</h2>'
             f'<div class="table-scroll" role="region" aria-label="{group_label}" tabindex="0">'
@@ -1009,7 +1026,7 @@ def domains_index_body(catalogues, lang, view):
             f'<th scope="col">{esc(strings["domains.table.tasks"])}</th>'
             f'</tr></thead><tbody>{rows}</tbody></table></div></section>'
         )
-    if lang == 'ar':
+    if lang != 'en':
         parts.append(f'<p class="notice">{esc(strings["domains.translation_note"])}</p>')
     parts.append(f'<p><a href="../index.html">{esc(strings["domains.back"])}</a></p>')
     return '\n'.join(parts)
@@ -1024,10 +1041,9 @@ def domain_body(catalogues, lang, view, domain):
     ]
     group = next((item for item in view['groups'] if item['id'] == domain.get('group')), None)
     if group:
-        group_label = (esc(group['label_ar']) if lang == 'ar' and group.get('label_ar')
-                       else foreign(group.get('label_en', ''), lang))
+        group_label = localized_label(group, lang)
         parts.append(f'<p>{esc(strings["domain.group"])}: {group_label}</p>')
-    if lang == 'ar':
+    if lang != 'en':
         parts.append(f'<p class="notice">{esc(strings["domains.translation_note"])}</p>')
 
     parts.append(
@@ -1040,7 +1056,7 @@ def domain_body(catalogues, lang, view, domain):
 
     if domain.get('subtopics'):
         items = ''.join(
-            f'<li>{(esc(subtopic["label_ar"]) if lang == "ar" and subtopic.get("label_ar") else foreign(subtopic.get("label_en", ""), lang))}</li>'
+            f'<li>{localized_label(subtopic, lang)}</li>'
             for subtopic in domain['subtopics']
         )
         parts.append(f'<section><h2>{esc(strings["domain.subtopics_heading"])}</h2>'
@@ -1410,11 +1426,11 @@ def build(region):
         lang_dir.mkdir()
         title = cfg['title'][lang]
         strings = catalogues[lang]
-        other = other_language(lang)
-        alt_href = f'../{other}/'
+        others = other_languages(lang)
+        alt_hrefs = {code: f'../{code}/' for code in others}
         body = home_body(catalogues, lang, cfg, policies, view)
         (lang_dir / 'index.html').write_text(
-            page(catalogues, lang, strings['home.title'], body, 1, alt_href,
+            page(catalogues, lang, strings['home.title'], body, 1, alt_hrefs,
                  strings['home.description']),
             encoding='utf-8',
         )
@@ -1432,7 +1448,7 @@ def build(region):
         def write_section(name, suffix, body_html, description):
             section_dir = lang_dir / name
             section_dir.mkdir(exist_ok=True)
-            section_alt = f'../../{other}/{name}/{suffix}'
+            section_alt = {code: f'../../{code}/{name}/{suffix}' for code in others}
             crumb = breadcrumb_trail([
                 home_crumb,
                 (None, esc(body_label[name]), True),
@@ -1473,7 +1489,7 @@ def build(region):
                 page(catalogues, lang,
                      f'{country_text(country, lang)} — {title}',
                      country_body(catalogues, lang, view, country), 2,
-                     f'../../{other}/countries/{country_code}.html',
+                     {code: f'../../{code}/countries/{country_code}.html' for code in others},
                      strings['country.description'], crumb),
                 encoding='utf-8',
             )
@@ -1489,7 +1505,7 @@ def build(region):
                 page(catalogues, lang,
                      f'{domain_text(domain, lang)} — {title}',
                      domain_body(catalogues, lang, view, domain), 2,
-                     f'../../{other}/domains/{domain_id}.html',
+                     {code: f'../../{code}/domains/{domain_id}.html' for code in others},
                      strings['domain.description'], crumb),
                 encoding='utf-8',
             )
@@ -1511,7 +1527,7 @@ def build(region):
                     f'{record.get("title", record_id)} — {title}',
                     record_body(catalogues, lang, record, base, research),
                     2,
-                    f'../../{other_language(lang)}/records/{record_id}.html',
+                    {code: f'../../{code}/records/{record_id}.html' for code in others},
                     description,
                     crumb,
                 ),
@@ -1532,7 +1548,7 @@ def build_root(region='mena'):
     base = ROOT / 'regions' / region
     cfg = load(base / 'region.json')
     catalogues = load_i18n(base, tuple(cfg['languages']))
-    en, ar = catalogues['en'], catalogues['ar']
+    en, fr, ar = catalogues['en'], catalogues['fr'], catalogues['ar']
     (ROOT / 'dist').mkdir(parents=True, exist_ok=True)
     (ROOT / 'dist' / 'index.html').write_text(f"""<!doctype html>
 <html lang="en" dir="ltr">
@@ -1542,6 +1558,7 @@ def build_root(region='mena'):
 <title>{esc(en['root.title'])}</title>
 <meta name="description" content="{esc(en['site.description'])}">
 <link rel="alternate" hreflang="en" href="mena/en/">
+<link rel="alternate" hreflang="fr" href="mena/fr/">
 <link rel="alternate" hreflang="ar" href="mena/ar/">
 <link rel="stylesheet" href="mena/assets/site.css">
 </head>
@@ -1558,7 +1575,10 @@ def build_root(region='mena'):
 </ul>
 </nav>
 <nav class="language" aria-label="{esc(en['nav.language'])}">
-<a href="mena/ar/" hreflang="ar" lang="ar" dir="rtl">{esc(en['nav.language_other'])}</a>
+<ul>
+<li><a href="mena/fr/" hreflang="fr" lang="fr" dir="ltr">Français</a></li>
+<li><a href="mena/ar/" hreflang="ar" lang="ar" dir="rtl">العربية</a></li>
+</ul>
 </nav>
 </header>
 <main id="main" tabindex="-1">
@@ -1566,6 +1586,11 @@ def build_root(region='mena'):
 <p class="lede">{esc(en['root.summary'])}</p>
 <h2>{esc(en['root.choose'])}</h2>
 <p><a href="mena/en/">{esc(en['root.continue_english'])}</a></p>
+<section lang="fr" dir="ltr">
+<h2>{esc(fr['root.h1'])}</h2>
+<p>{esc(fr['root.summary'])}</p>
+<p><a href="mena/fr/">{esc(fr['root.continue_french'])}</a></p>
+</section>
 <section lang="ar" dir="rtl">
 <h2>{esc(ar['root.h1'])}</h2>
 <p>{esc(ar['root.summary'])}</p>

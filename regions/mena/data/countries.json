@@ -12,7 +12,13 @@
     "group_ar": "شمال أفريقيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Algérie",
+    "name_fr_status": "provisional",
+    "group_fr": "Afrique du Nord",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "EG",
@@ -27,7 +33,13 @@
     "group_ar": "شمال أفريقيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Égypte",
+    "name_fr_status": "provisional",
+    "group_fr": "Afrique du Nord",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "LY",
@@ -42,7 +54,13 @@
     "group_ar": "شمال أفريقيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Libye",
+    "name_fr_status": "provisional",
+    "group_fr": "Afrique du Nord",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "MA",
@@ -57,7 +75,13 @@
     "group_ar": "شمال أفريقيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Maroc",
+    "name_fr_status": "provisional",
+    "group_fr": "Afrique du Nord",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "SD",
@@ -72,7 +96,13 @@
     "group_ar": "شمال أفريقيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Soudan",
+    "name_fr_status": "provisional",
+    "group_fr": "Afrique du Nord",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "TN",
@@ -87,7 +117,13 @@
     "group_ar": "شمال أفريقيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Tunisie",
+    "name_fr_status": "provisional",
+    "group_fr": "Afrique du Nord",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "BH",
@@ -102,7 +138,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Bahreïn",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "IQ",
@@ -117,7 +159,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Irak",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "IL",
@@ -132,7 +180,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Israël",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "JO",
@@ -147,7 +201,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Jordanie",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "KW",
@@ -162,7 +222,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Koweït",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "LB",
@@ -177,7 +243,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Liban",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "OM",
@@ -192,7 +264,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Oman",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "PS",
@@ -211,7 +289,15 @@
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
     "scope_note_ar_status": "provisional",
     "jurisdiction_note_ar": "يتبع الاسم الإنجليزي التسمية القائمة في المستودع. وإدراج هذه الولاية القضائية لا يحسم السلطة القانونية ولا تطبيق أي وثيقة.",
-    "jurisdiction_note_ar_status": "provisional"
+    "jurisdiction_note_ar_status": "provisional",
+    "name_fr": "État de Palestine",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional",
+    "jurisdiction_note_fr": "Le nom anglais suit la désignation existante du dépôt. Le fait de lister cette juridiction ne tranche pas l'autorité juridique ni l'application d'un instrument.",
+    "jurisdiction_note_fr_status": "provisional"
   },
   {
     "code": "QA",
@@ -226,7 +312,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Qatar",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "SA",
@@ -241,7 +333,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Arabie saoudite",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "SY",
@@ -257,7 +355,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "République arabe syrienne",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "AE",
@@ -272,7 +376,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Émirats arabes unis",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "YE",
@@ -287,7 +397,13 @@
     "group_ar": "غرب آسيا",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Yémen",
+    "name_fr_status": "provisional",
+    "group_fr": "Asie de l'Ouest",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "DJ",
@@ -302,7 +418,13 @@
     "group_ar": "إضافات إقليمية",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Djibouti",
+    "name_fr_status": "provisional",
+    "group_fr": "Ajouts régionaux",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "MR",
@@ -317,7 +439,13 @@
     "group_ar": "إضافات إقليمية",
     "group_ar_status": "provisional",
     "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
-    "scope_note_ar_status": "provisional"
+    "scope_note_ar_status": "provisional",
+    "name_fr": "Mauritanie",
+    "name_fr_status": "provisional",
+    "group_fr": "Ajouts régionaux",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Périmètre éditorial MENA uniquement ; ne constitue pas une affirmation sur le droit applicable.",
+    "scope_note_fr_status": "provisional"
   },
   {
     "code": "IR",
@@ -335,7 +463,15 @@
     "scope_note_ar": "إضافة تحريرية مقترحة لعام 2026 إلى النطاق الجغرافي؛ ولم تُسجَّل أي نتيجة بحثية.",
     "scope_note_ar_status": "provisional",
     "jurisdiction_note_ar": "إدراج جغرافي فقط. ولا يُدَّعى وجود أي وثيقة قانونية أو سلطة أو سريان.",
-    "jurisdiction_note_ar_status": "provisional"
+    "jurisdiction_note_ar_status": "provisional",
+    "name_fr": "Iran",
+    "name_fr_status": "provisional",
+    "group_fr": "Ajouts régionaux",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Ajout éditorial proposé au périmètre géographique pour 2026 ; aucun résultat de recherche n'est consigné.",
+    "scope_note_fr_status": "provisional",
+    "jurisdiction_note_fr": "Inclusion géographique uniquement. Aucun instrument juridique, aucune autorité et aucune applicabilité ne sont affirmés.",
+    "jurisdiction_note_fr_status": "provisional"
   },
   {
     "code": "SO",
@@ -353,7 +489,15 @@
     "scope_note_ar": "إضافة تحريرية مقترحة لعام 2026 إلى النطاق الجغرافي؛ ولم تُسجَّل أي نتيجة بحثية.",
     "scope_note_ar_status": "provisional",
     "jurisdiction_note_ar": "إدراج جغرافي فقط. ولا يُدَّعى وجود أي وثيقة قانونية أو سلطة أو سريان.",
-    "jurisdiction_note_ar_status": "provisional"
+    "jurisdiction_note_ar_status": "provisional",
+    "name_fr": "Somalie",
+    "name_fr_status": "provisional",
+    "group_fr": "Ajouts régionaux",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Ajout éditorial proposé au périmètre géographique pour 2026 ; aucun résultat de recherche n'est consigné.",
+    "scope_note_fr_status": "provisional",
+    "jurisdiction_note_fr": "Inclusion géographique uniquement. Aucun instrument juridique, aucune autorité et aucune applicabilité ne sont affirmés.",
+    "jurisdiction_note_fr_status": "provisional"
   },
   {
     "code": "EH",
@@ -372,6 +516,14 @@
     "scope_note_ar": "إضافة تحريرية مقترحة لعام 2026 إلى النطاق الجغرافي؛ ولم تُسجَّل أي نتيجة بحثية.",
     "scope_note_ar_status": "provisional",
     "jurisdiction_note_ar": "إقليم لم تُحسم سيادته. والإدراج جغرافي فقط، ولا يُدَّعى سلطة قانونية معينة ولا سريان أي وثيقة.",
-    "jurisdiction_note_ar_status": "provisional"
+    "jurisdiction_note_ar_status": "provisional",
+    "name_fr": "Sahara occidental",
+    "name_fr_status": "provisional",
+    "group_fr": "Ajouts régionaux",
+    "group_fr_status": "provisional",
+    "scope_note_fr": "Ajout éditorial proposé au périmètre géographique pour 2026 ; aucun résultat de recherche n'est consigné.",
+    "scope_note_fr_status": "provisional",
+    "jurisdiction_note_fr": "Territoire dont la souveraineté n'est pas tranchée. L'inclusion est uniquement géographique et n'affirme ni autorité juridique particulière ni applicabilité d'un instrument.",
+    "jurisdiction_note_fr_status": "provisional"
   }
 ]

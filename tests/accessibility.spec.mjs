@@ -59,28 +59,38 @@ test('document titles are unique and descriptive', async ({ page }) => {
   expect(seen.size).toBe(pages.length);
 });
 
-test('language switch reaches the equivalent page', async ({ page, request }) => {
+test('language switch reaches every equivalent page', async ({ page, request }) => {
+  const languages = ['en', 'fr', 'ar'];
   for (const path of pages) {
+    const parts = path.split('/');
+    const current = parts[1] === 'mena' ? parts[2] : 'en';
+    expect(languages, `${path} has an unknown locale`).toContain(current);
+    const expected = languages.filter((language) => language !== current);
     await page.goto(path);
-    const switchHref = await page.locator('.language a').getAttribute('href');
-    expect(switchHref, `${path} needs a language switch`).toBeTruthy();
+    const pageUrl = page.url();
+    const switchLinks = await page.locator('.language a').evaluateAll((nodes) =>
+      nodes.map((node) => ({ lang: node.getAttribute('hreflang'), href: node.getAttribute('href') })),
+    );
+    expect(switchLinks.map((link) => link.lang).sort(), `${path} needs both other languages`).toEqual(expected.slice().sort());
     const alternates = await page.locator('link[rel="alternate"][hreflang]').evaluateAll((nodes) =>
       nodes.map((node) => ({ hreflang: node.getAttribute('hreflang'), href: node.getAttribute('href') })),
     );
-    const expected = path.includes('/ar/') ? 'en' : 'ar';
-    const alternate = alternates.find((item) => item.hreflang === expected);
-    expect(alternate, `${path} needs hreflang=${expected}`).toBeTruthy();
-    const switchUrl = new URL(switchHref, page.url()).href;
-    expect(switchUrl, `${path} language link does not match the alternate`).toBe(
-      new URL(alternate.href, page.url()).href,
-    );
-    const response = await request.get(switchUrl);
-    expect(response.ok(), `${switchUrl} is not reachable`).toBeTruthy();
-    await page.goto(switchUrl);
-    await expect(page.locator('html')).toHaveAttribute('lang', expected);
-    if (path.includes('/records/')) {
-      const recordFile = path.split('/').pop();
-      expect(page.url(), `${path} loses the record on language switch`).toContain(`/records/${recordFile}`);
+    for (const language of expected) {
+      const alternate = alternates.find((item) => item.hreflang === language);
+      expect(alternate, `${path} needs hreflang=${language}`).toBeTruthy();
+      const link = switchLinks.find((item) => item.lang === language);
+      const switchUrl = new URL(link.href, pageUrl).href;
+      expect(switchUrl, `${path} ${language} link does not match the alternate`).toBe(
+        new URL(alternate.href, pageUrl).href,
+      );
+      const response = await request.get(switchUrl);
+      expect(response.ok(), `${switchUrl} is not reachable`).toBeTruthy();
+      await page.goto(switchUrl);
+      await expect(page.locator('html')).toHaveAttribute('lang', language);
+      if (path.includes('/records/')) {
+        const recordFile = path.split('/').pop();
+        expect(page.url(), `${path} loses the record on language switch`).toContain(`/records/${recordFile}`);
+      }
     }
   }
 });

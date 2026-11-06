@@ -1,0 +1,53 @@
+{
+  "policy_id": "qa-eaccessibility-2011",
+  "source_document": "https://www.mcit.gov.qa/wp-content/uploads/sites/4/2025/04/Qatar-e-Accessibility-Policy-2011.pdf",
+  "source_markdown": "SOURCE.md",
+  "rulespec": "rule.rulespec.yaml",
+  "rule_status": "no_approved_executable_rules",
+  "original_text_status": "excerpt_or_source_link_only",
+  "ambiguity_register": "INTERPRETATION.md",
+  "related_documents": "RELATED.md",
+  "reviewed_on": "2026-10-31",
+  "interpretation_issues": [
+    {
+      "id": "QA-11-01",
+      "section": "Section 5.3.1.1 (reported citation)",
+      "observation": "2011 policy refers to WCAG 2.0 AA for public sector websites.",
+      "ambiguity": "Exact applicability, exceptions and current standing relative to a later policy require authority confirmation.",
+      "severity": "high",
+      "category": "temporal_and_scope",
+      "status": "unresolved"
+    },
+    {
+      "id": "QA-11-02",
+      "section": "Other technology channels",
+      "observation": "Policy covers ICT beyond websites.",
+      "ambiguity": "A website-only WCAG rule cannot represent kiosks, telecommunications or broadcasting accessibility.",
+      "severity": "high",
+      "category": "domain_mismatch",
+      "status": "unresolved"
+    }
+  ],
+  "related": [
+    {
+      "title": "Mada copy of 2011 eAccessibility Policy",
+      "url": "https://mada.org.qa/wp-content/uploads/2020/01/Qatar-e-Accessibility-Policy-2011.pdf",
+      "relation": "alternate_copy"
+    },
+    {
+      "title": "Upcoming Qatar ICT Accessibility Policy 2025",
+      "url": "https://www.mcit.gov.qa/wp-content/uploads/sites/4/2025/04/P006_ICTAccessibility_v.2.0.1_en.pdf",
+      "relation": "proposed_successor"
+    },
+    {
+      "title": "Mada policy catalogue",
+      "url": "https://mada.org.qa/policy-advocacy/ict-accessibility-policies/local-ict-accessibility-policies/",
+      "relation": "related_policy_catalogue"
+    },
+    {
+      "title": "WCAG 2.0",
+      "url": "https://www.w3.org/TR/WCAG20/",
+      "relation": "technical_standard"
+    }
+  ]
+}

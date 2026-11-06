@@ -1,0 +1,7 @@
+# Research-only scaffold: ae-moe-accessibility
+# No enforceable rule is encoded because legal interpretation and source scope are not approved.
+# Ambiguities: AE-MOE-ACCESSIBILITY-01, AE-MOE-ACCESSIBILITY-02, AE-MOE-ACCESSIBILITY-03
+format: rulespec/v1
+module:
+  title: "UAE Ministry of Education Digital Accessibility Policy (unapproved)"
+rules: []

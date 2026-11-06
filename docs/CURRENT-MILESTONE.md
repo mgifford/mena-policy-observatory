@@ -2,7 +2,7 @@
 
 **Status:** In progress\
 **Priority:** P0\
-**Working branch:** `feat/evidence-currency-foundation` (verify before use)\
+**Working branch:** `feat/french-interface` (verify before use)\
 **Previous milestone:** MENA research coverage integration — implementation complete on `main` at `4b3c13a` (see git history and `docs/ROADMAP.md`)\
 **Later milestones:** public digital policy research, then reviewed Rules as Code. Neither is authorized.
 
@@ -44,9 +44,9 @@ Do not:
 
 ## Work packages
 
-1. **Publisher registry and source-health records** — delivered (PR #14): registry of 25 cited hosts, one `not_checked` record per candidate, validator and bilingual display.
-2. **Instrument identity and version metadata** — delivered in this work package: reported type/number/year, explicit null authority and version dates, captured-version state, validator and bilingual display.
-3. **French interface foundation** — next: third locale, navigation, language switching, three-locale tests.
+1. **Publisher registry and source-health records** — delivered (PR #14): registry of 25 cited hosts, one `not_checked` record per candidate, validator and trilingual display.
+2. **Instrument identity and version metadata** — delivered in this work package: reported type/number/year, explicit null authority and version dates, captured-version state, validator and trilingual display.
+3. **French interface foundation** — delivered in this work package: French catalogue, localized country/domain labels, three-language navigation and language switching, 139-page build and three-locale tests; WP4 (translation provenance and terminology) is next.
 4. **Translation provenance and terminology** — states, provenance, reviewed glossary.
 5. **Source-change review workflow** — change events, review tasks, stale-source warnings.
 
@@ -57,9 +57,9 @@ Do not:
 - [ ] Freshness and stale states are derived from recorded checks and a fixed `as_of` date.
 - [ ] Instrument identity and version metadata are recorded where evidence exists.
 - [ ] Change events and review tasks exist for detected changes.
-- [ ] English, French and Arabic navigation works; French and Arabic copy is marked provisional.
+- [x] English, French and Arabic navigation works; French and Arabic copy is marked provisional.
 - [ ] Translation states and provenance are recorded per text.
-- [ ] Automated accessibility tests pass for all three locales.
+- [x] Automated accessibility tests pass for all three locales.
 - [ ] Python validation, unit tests and the reproducible build pass.
 - [ ] Documentation matches the implementation.
 - [ ] Work-package pull requests are prepared for human review.

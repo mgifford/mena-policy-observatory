@@ -96,7 +96,7 @@ class ValidateRegionTests(unittest.TestCase):
     def test_current_repository_passes(self):
         errors, output = run_validation(REPO_ROOT)
         self.assertEqual(errors, [])
-        self.assertIn('records; language variants en,ar', output)
+        self.assertIn('records; language variants en,fr,ar', output)
 
 
 if __name__ == '__main__':

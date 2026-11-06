@@ -1,0 +1,52 @@
+{
+  "policy_id": "ae-national-digital-accessibility",
+  "source_document": "https://dgov.tdra.gov.ae/en/publications/national-digital-accessibility-policy",
+  "source_markdown": "SOURCE.md",
+  "rulespec": "rule.rulespec.yaml",
+  "rule_status": "no_approved_executable_rules",
+  "original_text_status": "excerpt_or_source_link_only",
+  "ambiguity_register": "INTERPRETATION.md",
+  "related_documents": "RELATED.md",
+  "reviewed_on": "2026-10-31",
+  "interpretation_issues": [
+    {
+      "id": "AE-01",
+      "section": "Technical annex, section 1",
+      "observation": "The annex says public service sites must comply with WCAG 2.1 AA.",
+      "ambiguity": "Scope of public service sites and whether annex language establishes a binding legal obligation need legal review.",
+      "severity": "high",
+      "category": "scope_and_normativity",
+      "status": "unresolved"
+    },
+    {
+      "id": "AE-02",
+      "section": "Technical annex, text reader provision",
+      "observation": "A text-reader feature is explicitly described.",
+      "ambiguity": "Whether separate built-in text-to-speech is mandatory or technology-neutral alternatives satisfy the requirement is not resolved.",
+      "severity": "high",
+      "category": "technology_specific_obligation",
+      "status": "unresolved"
+    },
+    {
+      "id": "AE-03",
+      "section": "Technical annex, sign language and speech recognition",
+      "observation": "The annex discusses sign-language and speech recognition features.",
+      "ambiguity": "It is unclear which user journeys, media types and service channels require each feature.",
+      "severity": "high",
+      "category": "applicability",
+      "status": "unresolved"
+    }
+  ],
+  "related": [
+    {
+      "title": "UAE technical annex (same official policy PDF)",
+      "url": "https://dgov.tdra.gov.ae/-/media/dgov/pdfs/publications/national-digital-accessibility-policy-en.pdf",
+      "relation": "normative_annex"
+    },
+    {
+      "title": "WCAG 2.1",
+      "url": "https://www.w3.org/TR/WCAG21/",
+      "relation": "technical_standard"
+    }
+  ]
+}

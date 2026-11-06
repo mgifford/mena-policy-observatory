@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "qa-eaccessibility-2011",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-qa-eaccessibility-2011",
+      "title": "Qatar eAccessibility Policy, 2011",
+      "url": "https://www.mcit.gov.qa/wp-content/uploads/sites/4/2025/04/Qatar-e-Accessibility-Policy-2011.pdf",
+      "jurisdiction": "QA",
+      "issuer": "Qatar Ministry of Communications and Information Technology (historical publisher: ictQATAR)",
+      "instrument_type": "national_policy",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": null,
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "not_recorded",
+      "excerpt": null,
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Historical provision",
+      "locator": {
+        "kind": "section",
+        "value": "Section 5.3.1.1"
+      },
+      "source_ids": ["src-qa-eaccessibility-2011"],
+      "summary": "The 2011 eAccessibility policy references WCAG 2.0 AA for public-sector websites; confirm current legal continuity.",
+      "effect_assessment": "indeterminate",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["QA-11-01"]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "QA-11-01",
+      "provision_id": "P-01",
+      "statement": "Exact applicability, exceptions and current standing relative to a later policy require authority confirmation.",
+      "observation": "2011 policy refers to WCAG 2.0 AA for public sector websites.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "temporal_and_scope",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "authority_confirmation",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "QA-11-02",
+      "provision_id": null,
+      "statement": "A website-only WCAG rule cannot represent kiosks, telecommunications or broadcasting accessibility.",
+      "observation": "Policy covers ICT beyond websites.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "domain_mismatch",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_accessibility_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-qa-2011-alternate-copy",
+      "target": {
+        "kind": "external_document",
+        "title": "Mada copy of 2011 eAccessibility Policy",
+        "url": "https://mada.org.qa/wp-content/uploads/2020/01/Qatar-e-Accessibility-Policy-2011.pdf",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "alternate_copy",
+      "review_state": "unreviewed",
+      "note": null
+    },
+    {
+      "id": "rel-qa-2011-proposed-successor",
+      "target": {
+        "kind": "internal_record",
+        "title": "Upcoming Qatar ICT Accessibility Policy 2025",
+        "url": null,
+        "record_id": "qa-eaccessibility-2025-upcoming"
+      },
+      "relation": "unspecified",
+      "recorded_label": "proposed_successor",
+      "review_state": "unreviewed",
+      "note": null
+    },
+    {
+      "id": "rel-qa-2011-mada-catalogue",
+      "target": {
+        "kind": "external_document",
+        "title": "Mada policy catalogue",
+        "url": "https://mada.org.qa/policy-advocacy/ict-accessibility-policies/local-ict-accessibility-policies/",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "related_policy_catalogue",
+      "review_state": "unreviewed",
+      "note": null
+    },
+    {
+      "id": "rel-qa-2011-wcag20",
+      "target": {
+        "kind": "external_document",
+        "title": "WCAG 2.0",
+        "url": "https://www.w3.org/TR/WCAG20/",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "technical_standard",
+      "review_state": "unreviewed",
+      "note": null
+    }
+  ]
+}

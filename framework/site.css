@@ -11,6 +11,7 @@ header.site-header,footer{padding:1rem max(1rem,calc((100vw - 76rem)/2))}
 .site-nav ul{display:flex;flex-wrap:wrap;gap:.25rem 1rem;list-style:none;margin:0;padding:0}
 .site-nav a,.language a{display:inline-block;padding-block:.15rem}
 .language{margin:0}
+.language ul{display:flex;flex-wrap:wrap;gap:.25rem 1rem;list-style:none;margin:0;padding:0}
 main{max-width:76rem;margin:auto;padding:1.5rem 1rem 3rem}
 h1,h2,h3{line-height:1.25}
 .lede{font-size:1.15rem;max-width:62ch}

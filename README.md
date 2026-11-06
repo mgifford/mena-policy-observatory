@@ -1,6 +1,6 @@
 # MENA Policy Observatory
 
-Bilingual (English/Arabic), GitHub Pages-ready static research catalogue.
+Trilingual (English/French/Arabic), GitHub Pages-ready static research catalogue.
 
 ## Run
 
@@ -31,13 +31,13 @@ npm run test:a11y
 
 `npm run test:a11y` rebuilds `dist/` first and checks every generated HTML page: axe-core, keyboard skip-link focus, 320 CSS pixel reflow, unique titles, `hreflang` alternates, and language-switch equivalence. See `ACCESSIBILITY.md` for remaining gaps.
 
-## Bilingual content
+## Trilingual content
 
-Interface and homepage strings live in `regions/mena/i18n/en.json` and `regions/mena/i18n/ar.json`. The build fails if the two catalogues declare different keys, and unit tests check placeholders and value hygiene. Arabic page copy is a draft pending native-speaker review. Policy record fields have no Arabic translation; on Arabic pages they are shown in English with `lang`/`dir` marking and an explicit notice.
+Interface and homepage strings live in `regions/mena/i18n/en.json`, `fr.json` and `ar.json`. The build fails if the three catalogues declare different keys, and unit tests check placeholders and value hygiene. French and Arabic page copy are drafts pending native-speaker review. Policy record fields have no French or Arabic translation; on those pages they are shown in their source language with `lang`/`dir` marking and an explicit notice.
 
 ## Research coverage views
 
-The site publishes bilingual (EN/AR) coverage views generated from recorded evidence only. Tranche 02 is imported through `research-toolkit/scripts/import_tranche.py`, which is deterministic and idempotent and writes a reconciliation report:
+The site publishes trilingual (EN/FR/AR) coverage views generated from recorded evidence only. Tranche 02 is imported through `research-toolkit/scripts/import_tranche.py`, which is deterministic and idempotent and writes a reconciliation report:
 
 - **Jurisdictions** (`countries.json`): the 24-entry geographic scope registry, with provisional Arabic names, group labels and scope notes, and reconciled aliases.
 - **Policy areas** (`domains.json`): eight research domains grouped into five themes, with subtopics. English identifiers are canonical; Arabic labels are provisional drafts.

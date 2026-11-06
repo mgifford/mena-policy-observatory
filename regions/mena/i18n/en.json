@@ -1,6 +1,6 @@
 {
   "site.title": "MENA Policy Observatory",
-  "site.description": "A bilingual research catalogue of public policies affecting digital accessibility in the Middle East and North Africa. Research only, not legal advice.",
+  "site.description": "A trilingual research catalogue of public policies affecting digital accessibility in the Middle East and North Africa. Research only, not legal advice.",
   "skip": "Skip to main content",
   "nav.label": "Main navigation",
   "nav.home": "Home",
@@ -13,7 +13,6 @@
   "nav.sources": "Candidate sources",
   "nav.repository": "Repository",
   "nav.language": "Language",
-  "nav.language_other": "العربية",
   "breadcrumb.label": "Breadcrumb",
   "footer.note": "Independent research, not legal advice or an official interpretation.",
   "footer.repo": "Source code and research notes",
@@ -71,7 +70,7 @@
   "home.status.coverage": "{covered} of {total} listed jurisdictions have at least one record.",
   "home.status.rules": "{encoded} of {records} records have an encoded rule; every RuleSpec file is an empty scaffold.",
   "home.status.review": "{reviewed} of {records} records have a confirmed legal-effect finding.",
-  "home.status.arabic": "Arabic page text is a draft pending native review. Policy record fields are shown in their source language with language marking.",
+  "home.status.arabic": "Arabic and French page text is a draft pending native review. Policy record fields are shown in their source language with language marking.",
   "home.comparison.heading": "Policy records",
   "home.comparison.intro": "Each row links to a research record. The table records what a source says, not whether it is binding.",
   "home.table.document": "Document",
@@ -110,7 +109,7 @@
   "countries.note": "Research status is derived from recorded policy records, candidate source leads and queued tasks. A jurisdiction with no record has not been researched here; that is not evidence that no law exists.",
   "countries.caption": "Jurisdictions in scope and the evidence recorded for each",
   "countries.description": "Jurisdiction list with derived research status, policy records, candidate source leads and queued tasks.",
-  "countries.translation_note": "Arabic jurisdiction names and interface labels are provisional drafts. They have not been reviewed by a native Arabic reviewer.",
+  "countries.translation_note": "Arabic and French jurisdiction names and interface labels are provisional drafts. They have not been reviewed by a native reviewer.",
   "countries.back": "Back to the research home",
   "countries.table.jurisdiction": "Jurisdiction",
   "countries.table.status": "Research status",
@@ -151,7 +150,7 @@
   "domains.note": "A domain status aggregates recorded evidence across the listed jurisdictions. Candidate source leads have not been captured, verified or interpreted.",
   "domains.caption": "Policy areas grouped by research theme",
   "domains.description": "Policy-area registry grouped by research theme, with derived research status and recorded evidence.",
-  "domains.translation_note": "Arabic policy-area and subtopic labels are provisional drafts. English identifiers remain the reference.",
+  "domains.translation_note": "Arabic and French policy-area and subtopic labels are provisional drafts. English identifiers remain the reference.",
   "domains.back": "Back to the research home",
   "domains.table.domain": "Policy area",
   "domains.table.status": "Research status",
@@ -468,5 +467,6 @@
   "source.version.repeal": "Repeal",
   "source.captured_version": "Captured version",
   "source.captured_version.none": "Not captured",
-  "sources.instrument_notice": "Instrument types and numbers are parsed from reported titles and are not verified. Version dates and captured items are shown only where documented."
+  "sources.instrument_notice": "Instrument types and numbers are parsed from reported titles and are not verified. Version dates and captured items are shown only where documented.",
+  "root.continue_french": "Continuer en français"
 }

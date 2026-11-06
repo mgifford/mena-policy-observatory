@@ -1,0 +1,43 @@
+{
+  "policy_id": "sa-dga-web-accessibility-guide",
+  "source_document": "https://dga.gov.sa/sites/default/files/2022-12/The%20Guideline%20for%20Web%20Accessibility%20of%20Government%20Websites%20%E2%80%93%20V1.0_1.pdf",
+  "source_markdown": "SOURCE.md",
+  "rulespec": "rule.rulespec.yaml",
+  "rule_status": "no_approved_executable_rules",
+  "original_text_status": "excerpt_or_source_link_only",
+  "ambiguity_register": "INTERPRETATION.md",
+  "related_documents": "RELATED.md",
+  "reviewed_on": "2026-10-31",
+  "interpretation_issues": [
+    {
+      "id": "SA-01",
+      "section": "Government web accessibility guidance",
+      "observation": "The document is a governmental guideline relating to web accessibility.",
+      "ambiguity": "Legal force and relation to binding digital government rules remain unverified.",
+      "severity": "high",
+      "category": "normativity",
+      "status": "unresolved"
+    },
+    {
+      "id": "SA-02",
+      "section": "WCAG reference",
+      "observation": "WCAG 2.1 AA is attributed to related government statements.",
+      "ambiguity": "Verify the exact clause and version in the primary guideline before encoding an obligation.",
+      "severity": "high",
+      "category": "source_mapping",
+      "status": "unresolved"
+    }
+  ],
+  "related": [
+    {
+      "title": "Saudi DGA guidelines (source document)",
+      "url": "https://dga.gov.sa/sites/default/files/2022-12/The%20Guideline%20for%20Web%20Accessibility%20of%20Government%20Websites%20%E2%80%93%20V1.0_1.pdf",
+      "relation": "source"
+    },
+    {
+      "title": "WCAG 2.1",
+      "url": "https://www.w3.org/TR/WCAG21/",
+      "relation": "technical_standard"
+    }
+  ]
+}

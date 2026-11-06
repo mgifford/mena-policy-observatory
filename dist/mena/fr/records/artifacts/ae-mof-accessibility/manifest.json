@@ -1,0 +1,10 @@
+{
+  "id": "ae-mof-accessibility",
+  "source_url": "https://mof.gov.ae/en/digital-participation/digital-accessibility-policy/",
+  "legal_review": "pending",
+  "rule_status": "not_encoded",
+  "ambiguities": [
+    "AE-MOF-ACCESSIBILITY-01",
+    "AE-MOF-ACCESSIBILITY-02"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "ae-mof-accessibility",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-ae-mof-policy",
+      "title": "UAE Ministry of Finance Digital Accessibility Policy",
+      "url": "https://mof.gov.ae/en/digital-participation/digital-accessibility-policy/",
+      "jurisdiction": "AE",
+      "issuer": "UAE Ministry of Finance",
+      "instrument_type": "agency_policy",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": null,
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "not_recorded",
+      "excerpt": null,
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "WCAG version unspecified",
+      "locator": {
+        "kind": "document",
+        "value": "Policy statement"
+      },
+      "source_ids": ["src-ae-mof-policy"],
+      "summary": "WCAG is mentioned but without a clear version or level on the page.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["AE-MOF-ACCESSIBILITY-01", "AE-MOF-ACCESSIBILITY-02"]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "AE-MOF-ACCESSIBILITY-01",
+      "provision_id": "P-01",
+      "statement": "The source does not establish the precise WCAG version/level.",
+      "observation": null,
+      "alternatives": [],
+      "risk": "unknown",
+      "category": "unknown",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "source_capture",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-MOF-ACCESSIBILITY-02",
+      "provision_id": null,
+      "statement": "Agency pledge should not be conflated with national legal enforceability.",
+      "observation": null,
+      "alternatives": [],
+      "risk": "unknown",
+      "category": "unknown",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": []
+}
