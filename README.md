@@ -9,6 +9,10 @@ python3 framework/validate.py
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 framework/build.py --region mena
 python3 framework/check_html.py
+python3 research-toolkit/scripts/validate_packets.py research-toolkit/examples/valid-packet.json
+python3 -m unittest discover -s research-toolkit/tests -p 'test_*.py' -v
+python3 research-toolkit/scripts/report_queue.py research-toolkit/backlog/tasks.jsonl research-toolkit/backlog/cross-domain-tasks.jsonl
+python3 research-toolkit/scripts/manifest.py research-toolkit --output research-toolkit/MANIFEST.json --check
 python3 -m http.server 8000 --directory dist
 ```
 
@@ -27,6 +31,21 @@ npm run test:a11y
 ## Bilingual content
 
 Interface and homepage strings live in `regions/mena/i18n/en.json` and `regions/mena/i18n/ar.json`. The build fails if the two catalogues declare different keys, and unit tests check placeholders and value hygiene. Arabic page copy is a draft pending native-speaker review. Policy record fields have no Arabic translation; on Arabic pages they are shown in English with `lang`/`dir` marking and an explicit notice.
+
+## Research coverage views
+
+The site publishes bilingual (EN/AR) coverage views generated from recorded evidence only:
+
+- **Jurisdictions** (`countries.json`): the 24-entry geographic scope registry, with provisional Arabic names and reconciled aliases.
+- **Policy areas** (`domains.json`): eight research domains grouped into five themes, with subtopics. English identifiers are canonical; Arabic labels are provisional drafts.
+- **Coverage matrix**: one cell per jurisdiction and policy area, showing derived research status.
+- **Research queue**: discovery and review tasks from `research-toolkit/backlog/`.
+- **Candidate sources**: unreviewed discovery leads from `research-toolkit/sources/candidate-sources.json`, shown as link-and-metadata only.
+- **Comparison**: recorded provisions flattened for side-by-side reading.
+
+`framework/coverage.py` loads and validates the registries, derives every status from recorded evidence, and separates candidate discovery from source verification. Status vocabulary is about research activity, not compliance: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`. An empty or not-started cell means this repository has not researched the combination; it is not evidence that no law or policy exists.
+
+A candidate source lead is never promoted to a verified source or a legal finding by a successful build. Public pages mark every lead as an unreviewed discovery lead, link only, with no source text reproduced. Human review of all nine current leads is still pending.
 
 ## Structured research data
 

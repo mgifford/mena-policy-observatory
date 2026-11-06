@@ -68,6 +68,21 @@ Existing manifest labels such as `normative_annex`, `technical_standard` or `pro
 - An external target must carry a URL.
 - Internal `amends` and `supersedes` relations are checked for cycles. Cycles in citations are ordinary and are not flagged.
 
+## Coverage layer
+
+`framework/coverage.py` joins the research records with the toolkit's discovery inventory. It loads four registries:
+
+- `regions/mena/data/countries.json` — the geographic scope, reconciled with the toolkit's proposed 24-entry list.
+- `regions/mena/data/domains.json` — eight policy areas in five research themes, with subtopics.
+- `research-toolkit/backlog/tasks.jsonl` and `cross-domain-tasks.jsonl` — 40 queued discovery tasks.
+- `research-toolkit/sources/candidate-sources.json` — nine candidate source leads.
+
+Every research status is derived from recorded evidence; it is never stored as an independent legal conclusion. The vocabulary describes research activity only: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`.
+
+The layers stay separate. A listed jurisdiction is not a legal finding. A queued task is not evidence about the law. A candidate source lead is not a captured or verified source, and it is not a finding about legal effect. Candidate leads appear publicly only when the source URL passes a conservative HTTPS check and a recorded display review covers the required checks; even then the page labels every lead as unreviewed and reproduces no source text. Human review is still pending for all nine current leads.
+
+The validator rejects a candidate that asserts a confirmed legal effect, a captured source without capture metadata, an unknown domain or task stage, a duplicate logical task ID after separator normalization, or a public display record missing a required check.
+
 ## Running the checks
 
 ```sh
