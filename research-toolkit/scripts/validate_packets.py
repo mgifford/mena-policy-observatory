@@ -17,6 +17,8 @@ def validate(o):
     if o.get('schema_version')!='1.0':errors.append('schema_version must be 1.0')
     if not isinstance(o.get('task_id'),str) or len(o['task_id'])<4:errors.append('task_id must be nonempty')
     if not re.fullmatch(r'[A-Z]{2}',str(o.get('jurisdiction',''))):errors.append('jurisdiction must be two uppercase letters')
+    domain=o.get('domain')
+    if not isinstance(domain,str) or len(domain)<3:errors.append('domain must be a string of at least 3 characters')
     if not isinstance(o.get('question'),str) or len(o['question'])<12:errors.append('question too short')
     if o.get('stage') not in ('candidate','captured','transcribed','interpreted','challenged'):errors.append('invalid stage')
     s=o.get('source')
@@ -25,6 +27,7 @@ def validate(o):
     for x in sorted(set(s)-SOURCE):errors.append('source unknown '+x)
     url=s.get('official_url')
     if url is not None and (not isinstance(url,str) or urlparse(url).scheme!='https' or not urlparse(url).netloc):errors.append('official_url must be https URL or null')
+    if s.get('source_type') not in ('unknown','official_instrument','official_index','official_summary','secondary'):errors.append('invalid source_type')
     sha=s.get('sha256'); cap=s.get('capture_path'); timestamp=s.get('captured_at')
     if sha is not None and not re.fullmatch(r'[0-9a-f]{64}',str(sha)):errors.append('sha256 is not 64 lowercase hex digits')
     if bool(sha)!=bool(cap) or bool(sha)!=bool(timestamp):errors.append('captured bytes require sha256, path and timestamp together')
@@ -33,9 +36,11 @@ def validate(o):
     if not isinstance(e,dict): errors.append('evidence must be object');e={}
     if e.get('verified_against_source') is not False:errors.append('candidate packet may not assert verified_against_source')
     if not isinstance(e.get('license_checked'),bool):errors.append('license_checked boolean required')
+    if e.get('exact_excerpt') is not None and not isinstance(e.get('exact_excerpt'),str):errors.append('exact_excerpt must be string or null')
     i=o.get('interpretation')
     if not isinstance(i,dict):errors.append('interpretation must be object');i={}
     if i.get('legal_effect')!='not_assessed':errors.append('legal_effect cannot be promoted in candidate packet')
+    if i.get('proposed') is not None and not isinstance(i.get('proposed'),str):errors.append('proposed must be string or null')
     for k in ('alternatives','open_questions'):
         if not isinstance(i.get(k),list):errors.append(k+' must be an array')
     r=o.get('review')

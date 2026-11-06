@@ -16,6 +16,13 @@ jobs:
           python-version: '3.13'
       - name: Validate record structure
         run: python framework/validate.py
+      - name: Validate toolkit packets, queues and tests
+        run: |
+          python research-toolkit/scripts/validate_packets.py research-toolkit/examples/valid-packet.json
+          python -m unittest discover -s research-toolkit/tests -p "test_*.py" -v
+          python research-toolkit/scripts/report_queue.py research-toolkit/backlog/tasks.jsonl research-toolkit/backlog/cross-domain-tasks.jsonl
+      - name: Check research-toolkit manifest is current
+        run: python research-toolkit/scripts/manifest.py research-toolkit --output research-toolkit/MANIFEST.json --check
       - name: Run validator unit tests
         run: python -m unittest discover -s tests -p "test_*.py" -v
       - name: Build site

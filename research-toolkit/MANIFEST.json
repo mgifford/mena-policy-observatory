@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "CHANGELOG.md",
-      "size": 761,
-      "sha256": "28a6fbff332dd5ac7c2ecd91f7bdcd2a4de8f0b09e32ff9ffabbbe0fb3b01813"
+      "size": 1859,
+      "sha256": "83fac1ec40b78191206f141f0561b9e5eec0f8c1e295578e2745bf28bb67f009"
     },
     {
       "path": "LICENSE-NOTE.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "size": 3110,
-      "sha256": "30451e54029c4a5dbad13919149211e8b4bd9589ea5596a47660cf420bf48c80"
+      "size": 3597,
+      "sha256": "f32cbedfefb929bce32b16976d69e2f8482d0fd5d07baf8d4a6f6c11ba380406"
     },
     {
       "path": "agents/00-controller.md",
@@ -74,8 +74,8 @@
     },
     {
       "path": "backlog/cross-domain-tasks.jsonl",
-      "size": 6090,
-      "sha256": "4e06c40fe21188ad9905827c353837ba1612bc17f71d7a200be1ea27f17a2ea5"
+      "size": 5422,
+      "sha256": "c22d8fb7868008b86057d22ef64ff27dc230bb5f7905e60d236058d74f1f1158"
     },
     {
       "path": "backlog/domains.json",
@@ -129,8 +129,8 @@
     },
     {
       "path": "docs/REPO-INTEGRATION.md",
-      "size": 2902,
-      "sha256": "c5317d71dc21387c167e1b07f3e184b9d461ae774c23dda4e85c052bb8c64ca5"
+      "size": 4354,
+      "sha256": "120d6fce6ac5f723b445ce26fb5b5d67e9ac24b19ae4de2311792c5392a9f682"
     },
     {
       "path": "docs/RESEARCH-METHOD.md",
@@ -169,18 +169,18 @@
     },
     {
       "path": "scripts/manifest.py",
-      "size": 1015,
-      "sha256": "6f340a4b2760514e90a2a5eb8ded00d25b32b2e1bf0b4eba56047ded63b77fa2"
+      "size": 1515,
+      "sha256": "e9506f3187c31ca4c6be178be65f80c0b90281971b56312e5c8bf528e1778ffe"
     },
     {
       "path": "scripts/report_queue.py",
-      "size": 660,
-      "sha256": "41ec70215dee761f0854dc8b30f06ae5d7246a77d24713ed0a407f3293ef2fad"
+      "size": 2174,
+      "sha256": "f9bac0da038a8b840f0ccab4a1cfb792aa1939b64f698e6351a0e646eb3b6d8d"
     },
     {
       "path": "scripts/validate_packets.py",
-      "size": 4194,
-      "sha256": "33fbf9a676198a6178d06b306297d12c9dd3f8389eb51d38b9675d9eb056f50b"
+      "size": 4763,
+      "sha256": "c07332b946eff302eaf84518d88e898ed033fca3e941d4fbaa9c563673def1b4"
     },
     {
       "path": "sources/START-HERE.md",
@@ -189,8 +189,8 @@
     },
     {
       "path": "sources/candidate-sources.json",
-      "size": 6573,
-      "sha256": "211d384c9545b33a5788eb46915c35faab1ae461aecee8776e3bd57a65efbdc3"
+      "size": 9384,
+      "sha256": "047487b8ffce01db21b7deceb4eb6258b6e9ebfdd25677d49556ca9bea3050e1"
     },
     {
       "path": "templates/AGENT-REPORT.md",
@@ -244,8 +244,8 @@
     },
     {
       "path": "tests/test_toolkit.py",
-      "size": 1314,
-      "sha256": "95bd82625eb24ee55dbe837dfcf260aadd033feddd58eb72577defe442bf5c63"
+      "size": 4525,
+      "sha256": "282724d22c158c954209cb7d5e7aac47879e79388ca6349112bfa07c97884db0"
     }
   ],
   "note": "Hash inventory only, not proof of authenticity or legal correctness"
