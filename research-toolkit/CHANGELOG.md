@@ -1,5 +1,10 @@
 # Toolkit change record
 
+## v7 (2026-11-06)
+- Source records may carry optional language expressions with kind, BCP47 language, original language, authority, method, review state/date/role and uncertainty notes; existing records are unchanged.
+- Validator rejects mismatched references, duplicate expressions, unauthorised review promotion and incomplete reviewed metadata.
+- Added the draft terminology registry and validator; no concept or translation is marked reviewed.
+
 ## v6 (2026-11-06)
 - Split the source-check model into retrieval outcome, freshness inputs and legal verification (`source-checks.json` version 2); legacy records migrate automatically.
 - `registry.py` preserves an earlier successful retrieval when a later attempt fails and never promotes legal verification.

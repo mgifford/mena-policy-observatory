@@ -22,6 +22,14 @@ PROVISION_HEADING = re.compile(r'^## (P-[0-9]{2}):[ \t]*(.+?)[ \t]*$', re.MULTIL
 QUESTION_HEADING = re.compile(
     r'^#{2,3} ([A-Z]{2}[A-Z0-9-]*)[ \t]*(?::|\|)[ \t]*(.+?)[ \t]*$', re.MULTILINE)
 ISO_DATE = re.compile(r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+BCP47 = re.compile(r'^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$')
+EXPRESSION_KINDS = (
+    'original_authoritative', 'additional_authoritative', 'official_translation',
+    'research_translation', 'machine_assisted_draft', 'translation_pending',
+    'translation_unavailable', 'authority_unresolved',
+)
+EXPRESSION_REVIEW_STATES = ('unreviewed', 'in_review', 'reviewed', 'native_reviewed', 'disputed')
+REVIEWED_EXPRESSION_STATES = ('reviewed', 'native_reviewed')
 CONFIRMED_EFFECT = ('in_force_confirmed', 'not_in_force_confirmed')
 ACYCLIC_RELATIONS = {'amends', 'supersedes'}
 
@@ -143,12 +151,14 @@ def validate_record(policy_dir, record_id, validator, known_record_ids=None,
     provision_ids = {provision.get('id') for provision in provisions if isinstance(provision, dict)}
     interpretation_ids = {item.get('id') for item in interpretations if isinstance(item, dict)}
 
+    expression_ids = set()
     for source in sources:
         if not isinstance(source, dict):
             continue
         _check_dates(source, prefix, errors, warnings)
         _check_excerpt(source, prefix, policy_dir, artifact_text, errors)
         _check_translation(source, prefix, errors)
+        _check_expressions(source, record_id, prefix, errors, expression_ids)
 
     for provision in provisions:
         if not isinstance(provision, dict):
@@ -253,6 +263,91 @@ def _check_excerpt(source, prefix, policy_dir, artifact_text, errors):
         errors.append(prefix + f'source {source.get("id")}: excerpt artifact {artifact!r} is not declared in artifacts')
     elif excerpt.get('text') not in text:
         errors.append(prefix + f'source {source.get("id")}: excerpt text is not found verbatim in {artifact}')
+
+
+def _check_expressions(source, record_id, prefix, errors, expression_ids):
+    expressions = source.get('expressions')
+    if expressions is None:
+        return
+    if not isinstance(expressions, list):
+        errors.append(prefix + f'source {source.get("id")}: expressions must be an array')
+        return
+    source_id = source.get('id')
+    originals = 0
+    seen_pairs = set()
+    for expression in expressions:
+        if not isinstance(expression, dict):
+            errors.append(prefix + f'source {source_id}: each expression must be an object')
+            continue
+        expression_id = expression.get('id')
+        label = f'source {source_id} expression {expression_id!r}'
+        if not expression_id:
+            errors.append(prefix + f'source {source_id}: an expression needs an id')
+        elif expression_id in expression_ids:
+            errors.append(prefix + f'{label}: duplicate expression id')
+        else:
+            expression_ids.add(expression_id)
+        kind = expression.get('kind')
+        if kind not in EXPRESSION_KINDS:
+            errors.append(prefix + f'{label}: unknown kind {kind!r}')
+        if expression.get('source_id') != source_id:
+            errors.append(prefix + f'{label}: source_id must match the parent source')
+        if expression.get('instrument_id') != record_id:
+            errors.append(prefix + f'{label}: instrument_id must match the record id')
+        language = expression.get('language')
+        original_language = expression.get('original_language')
+        for field, value in (('language', language), ('original_language', original_language)):
+            if not isinstance(value, str) or not BCP47.match(value):
+                errors.append(prefix + f'{label}: {field} must be a BCP47 language tag')
+        review_status = expression.get('review_status')
+        if review_status not in EXPRESSION_REVIEW_STATES:
+            errors.append(prefix + f'{label}: unknown review_status {review_status!r}')
+        url = expression.get('url')
+        if url is not None and (not isinstance(url, str) or not url.startswith('https://')):
+            errors.append(prefix + f'{label}: url must be an https URL or null')
+        authority = expression.get('authority')
+        if authority is not None and (not isinstance(authority, str) or not authority.strip()):
+            errors.append(prefix + f'{label}: authority must be a nonempty string or null')
+        if kind in ('official_translation', 'additional_authoritative') and not authority:
+            errors.append(prefix + f'{label}: {kind} needs a recorded authority')
+        if kind in ('translation_pending', 'translation_unavailable'):
+            if url is not None or authority is not None:
+                errors.append(prefix + f'{label}: {kind} may not record a URL or authority')
+            if review_status in REVIEWED_EXPRESSION_STATES:
+                errors.append(prefix + f'{label}: {kind} may not claim review')
+        if kind == 'authority_unresolved' and review_status in REVIEWED_EXPRESSION_STATES:
+            errors.append(prefix + f'{label}: an unresolved authority may not claim review')
+        if kind == 'machine_assisted_draft':
+            if expression.get('translation_method') != 'machine_assisted':
+                errors.append(prefix + f'{label}: a machine-assisted draft must use that method')
+            if review_status in REVIEWED_EXPRESSION_STATES:
+                errors.append(prefix + f'{label}: a machine-assisted draft may not claim review')
+        if kind == 'original_authoritative':
+            originals += 1
+            if originals > 1:
+                errors.append(prefix + f'source {source_id}: more than one original expression')
+            if isinstance(language, str) and isinstance(source.get('language'), str):
+                source_language = source['language'].lower()
+                if source_language != 'unknown' and language.lower() != source_language:
+                    errors.append(prefix + f'{label}: original language does not match the '
+                                           'source language')
+        if review_status in REVIEWED_EXPRESSION_STATES:
+            if _iso(expression.get('reviewed_at')) is None:
+                errors.append(prefix + f'{label}: reviewed status needs an ISO reviewed_at')
+            if not isinstance(expression.get('reviewer_role'), str) or \
+                    not expression['reviewer_role'].strip():
+                errors.append(prefix + f'{label}: reviewed status needs a reviewer_role')
+            if expression.get('translation_method') not in ('human', None):
+                errors.append(prefix + f'{label}: reviewed status needs a human method')
+        if expression.get('reviewed_at') is not None and _iso(expression.get('reviewed_at')) is None:
+            errors.append(prefix + f'{label}: reviewed_at must be a valid ISO date or null')
+        if review_status == 'unreviewed' and (expression.get('reviewed_at') is not None
+                                              or expression.get('reviewer_role') is not None):
+            errors.append(prefix + f'{label}: unreviewed status may not carry review metadata')
+        pair = (language, kind)
+        if pair in seen_pairs:
+            errors.append(prefix + f'{label}: duplicate language and kind')
+        seen_pairs.add(pair)
 
 
 def _check_translation(source, prefix, errors):
