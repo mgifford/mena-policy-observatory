@@ -284,9 +284,9 @@ def breadcrumb_trail(items):
             content = f'<span aria-current="page">{label_html}</span>'
         else:
             content = f'<a href="{esc(href)}">{label_html}</a>'
-        if index:
-            parts.append('<span aria-hidden="true">/</span>')
-        parts.append(f'<li>{content}</li>')
+        separator = ('<span class="breadcrumb-separator" aria-hidden="true">/</span>'
+                     if index else '')
+        parts.append(f'<li>{separator}{content}</li>')
     return '<ol>' + ''.join(parts) + '</ol>'
 
 

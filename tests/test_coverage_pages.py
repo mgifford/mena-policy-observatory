@@ -1,12 +1,14 @@
 import json
 import sys
 import unittest
+from html.parser import HTMLParser
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
 from framework.build import (
+    breadcrumb_trail,
     build_view,
     comparison_body,
     countries_index_body,
@@ -101,6 +103,36 @@ class CoveragePageTests(unittest.TestCase):
                      'tasks/index.html', 'sources/index.html', 'comparison/index.html'):
             self.assertIn(f'href="{path}"', body)
         self.assertIn('href="countries/AE.html"', body)
+
+    def test_breadcrumb_lists_contain_only_list_items(self):
+        class ListChildCheck(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.stack = []
+                self.invalid = []
+
+            def handle_starttag(self, tag, attrs):
+                if self.stack and self.stack[-1] in ('ol', 'ul') and tag not in (
+                        'li', 'script', 'template', 'style'):
+                    self.invalid.append(tag)
+                if tag not in ('area', 'base', 'br', 'col', 'embed', 'hr', 'img',
+                               'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'):
+                    self.stack.append(tag)
+
+            def handle_endtag(self, tag):
+                if tag in self.stack:
+                    while self.stack:
+                        if self.stack.pop() == tag:
+                            break
+
+        markup = breadcrumb_trail([
+            ('../index.html', 'Home', False),
+            ('index.html', 'Coverage', False),
+            (None, 'Current', True),
+        ])
+        check = ListChildCheck()
+        check.feed(markup)
+        self.assertEqual(check.invalid, [])
 
 
 if __name__ == '__main__':

@@ -18,6 +18,7 @@ p,li{max-width:76ch}
 section{border-block-start:1px solid GrayText;margin-block-start:1.75rem;padding-block-start:1rem}
 .breadcrumb ol{display:flex;flex-wrap:wrap;gap:.25rem .5rem;list-style:none;margin:0 0 1rem;padding:0}
 .breadcrumb [aria-current]{font-weight:700}
+.breadcrumb-separator{margin-inline-end:.5rem}
 .notice{border:1px solid CanvasText;padding:.75rem 1rem;max-width:76ch}
 .record-id{margin-block-start:0}
 code{font-family:ui-monospace,monospace;overflow-wrap:anywhere}

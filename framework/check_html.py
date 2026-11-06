@@ -11,6 +11,9 @@ import sys
 
 HEADINGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 EXTERNAL_SCHEMES = ('http', 'https', 'mailto', 'tel', 'data')
+LIST_CHILDREN = ('li', 'script', 'template', 'style')
+VOID_ELEMENTS = ('area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
+                 'link', 'meta', 'param', 'source', 'track', 'wbr')
 
 
 class PageChecker(HTMLParser):
@@ -33,9 +36,14 @@ class PageChecker(HTMLParser):
         self.links: list[dict] = []
         self.skip_link_count = 0
         self.foreign_without_direction = 0
+        self.tag_stack: list[str] = []
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
+        if self.tag_stack and self.tag_stack[-1] in ('ol', 'ul') and tag not in LIST_CHILDREN:
+            self.errors.append(f'list contains non-list-item child: {tag}')
+        if tag not in VOID_ELEMENTS:
+            self.tag_stack.append(tag)
         element_id = attributes.get('id')
         if element_id:
             if element_id in self.ids:
@@ -73,6 +81,10 @@ class PageChecker(HTMLParser):
             self.foreign_without_direction += 1
 
     def handle_endtag(self, tag):
+        if tag in self.tag_stack:
+            while self.tag_stack:
+                if self.tag_stack.pop() == tag:
+                    break
         if tag == 'title':
             self.in_title = False
         if tag == 'a' and self.open_links:
