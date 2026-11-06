@@ -1,0 +1,157 @@
+{
+  "research_date": "2026-11-05",
+  "publication_status": "candidate_source_inventory_not_legal_review",
+  "schema_note": "Discovery interchange only. Map into existing research.json after source capture and reviewer validation.",
+  "records": [
+    {
+      "id": "om-national-digital-accessibility",
+      "jurisdiction": "OM",
+      "domains": [
+        "digital_accessibility",
+        "disability_inclusion"
+      ],
+      "instrument_title": "National Digital Accessibility Policy",
+      "source_url": "https://www.mtcit.gov.om/library-3/legislations-policies-8/policies-73/the-national-digital-accessibility-policy-649",
+      "source_type": "official_ministry_policy_listing",
+      "published_date_reported": "2022-08-01",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "high",
+      "research_question": "Confirm applicability to government agencies, technical standards, exemptions and whether later policies supersede the 2022 instrument."
+    },
+    {
+      "id": "jo-digital-inclusion-2025",
+      "jurisdiction": "JO",
+      "domains": [
+        "digital_accessibility",
+        "disability_inclusion",
+        "digital_rights"
+      ],
+      "instrument_title": "Jordanian Digital Inclusion Policy 2025",
+      "source_url": "https://modee.gov.jo/EN/List/Legislation_and_policies",
+      "source_type": "official_ministry_policy_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "high",
+      "research_question": "Capture policy and determine accessibility-specific provisions and scope."
+    },
+    {
+      "id": "jo-personal-data-2023",
+      "jurisdiction": "JO",
+      "domains": [
+        "digital_rights",
+        "artificial_intelligence",
+        "immigration",
+        "reproductive_health_rights"
+      ],
+      "instrument_title": "Personal Data Protection Law No. 24 of 2023",
+      "source_url": "https://www.modee.gov.jo/EN/Pages/FAQs",
+      "source_type": "official_ministry_explainer",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "high",
+      "research_question": "Capture Arabic authoritative legislation and distinguish effective date, transition period and exceptions."
+    },
+    {
+      "id": "ma-disability-97-13",
+      "jurisdiction": "MA",
+      "domains": [
+        "digital_accessibility",
+        "physical_accessibility",
+        "disability_inclusion"
+      ],
+      "instrument_title": "Framework Law 97-13 on Rights of Persons with Disabilities",
+      "source_url": "https://www.sgg.gov.ma/Portals/0/lois/Dahir_1.16.52_fr.pdf?ver=2016-12-14-124649-343",
+      "source_type": "official_legislative_publication",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "high",
+      "research_question": "Identify accessibility and implementation provisions and later implementing instruments."
+    },
+    {
+      "id": "ma-personal-data-09-08",
+      "jurisdiction": "MA",
+      "domains": [
+        "digital_rights",
+        "artificial_intelligence"
+      ],
+      "instrument_title": "Law 09-08 on Personal Data Protection",
+      "source_url": "https://www.cndp.ma/textes-et-lois/",
+      "source_type": "official_regulator_legal_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "high",
+      "research_question": "Capture original law, implementing decree, exclusions, transfer rules and amendments."
+    },
+    {
+      "id": "bh-personal-data-30-2018",
+      "jurisdiction": "BH",
+      "domains": [
+        "digital_rights",
+        "artificial_intelligence",
+        "digital_infrastructure"
+      ],
+      "instrument_title": "Law No. 30 of 2018 with Respect to Personal Data Protection",
+      "source_url": "https://www.lloc.gov.bh/En/Legislation/id/K3018",
+      "source_type": "official_legislation_index",
+      "published_date_reported": "2018-07-19",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "high",
+      "research_question": "Compare Arabic and English versions and verify implementing decisions and amendments."
+    },
+    {
+      "id": "eg-disability-law-10-2018",
+      "jurisdiction": "EG",
+      "domains": [
+        "physical_accessibility",
+        "disability_inclusion",
+        "digital_accessibility"
+      ],
+      "instrument_title": "Law No. 10 of 2018 on Rights of Persons with Disabilities",
+      "source_url": "https://sis.gov.eg/en/egypt/society/people-of-determination-s-care/people-of-determination-in-constitution-and-law",
+      "source_type": "official_government_explainer_not_statute",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "medium",
+      "research_question": "Locate gazetted Arabic law and implementing regulations; do not derive website mandates from secondary summary."
+    },
+    {
+      "id": "tn-personal-data-2004-63",
+      "jurisdiction": "TN",
+      "domains": [
+        "digital_rights",
+        "artificial_intelligence"
+      ],
+      "instrument_title": "Organic Law No. 2004-63 on Personal Data Protection",
+      "source_url": "https://www.justice.gov.tn/index.php?L=3&id=265",
+      "source_type": "official_ministry_explainer_not_statute",
+      "published_date_reported": "2004-07-27",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "medium",
+      "research_question": "Retrieve full gazetted law, current amendments, powers of regulator and relevant decisions."
+    },
+    {
+      "id": "bh-government-web-accessibility-example",
+      "jurisdiction": "BH",
+      "domains": [
+        "digital_accessibility"
+      ],
+      "instrument_title": "Ministry of Education Accessibility Statement",
+      "source_url": "https://moe.gov.bh/en//accessibility",
+      "source_type": "official_agency_accessibility_statement",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "priority": "medium",
+      "research_question": "Distinguish ministry claim of WCAG 2.1 AA from independent testing and national requirements."
+    }
+  ],
+  "toolkit_status": "Unverified candidate leads from prior research, not re-fetched or authenticated in this package."
+}

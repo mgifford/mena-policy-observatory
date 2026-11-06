@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Unreviewed source discovery packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "jurisdiction",
+    "domain",
+    "question",
+    "stage",
+    "source",
+    "evidence",
+    "interpretation",
+    "review",
+    "rules_as_code"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 4
+    },
+    "jurisdiction": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "domain": {
+      "type": "string",
+      "minLength": 3
+    },
+    "question": {
+      "type": "string",
+      "minLength": 12
+    },
+    "stage": {
+      "enum": [
+        "candidate",
+        "captured",
+        "transcribed",
+        "interpreted",
+        "challenged"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "official_url",
+        "document_id",
+        "provision_locator",
+        "source_language",
+        "captured_at",
+        "sha256",
+        "capture_path",
+        "source_type"
+      ],
+      "properties": {
+        "official_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://"
+        },
+        "document_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "provision_locator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "captured_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "capture_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_type": {
+          "enum": [
+            "unknown",
+            "official_instrument",
+            "official_index",
+            "official_summary",
+            "secondary"
+          ]
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact_excerpt",
+        "verified_against_source",
+        "license_checked"
+      ],
+      "properties": {
+        "exact_excerpt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "verified_against_source": {
+          "const": false
+        },
+        "license_checked": {
+          "type": "boolean"
+        }
+      }
+    },
+    "interpretation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proposed",
+        "alternatives",
+        "open_questions",
+        "legal_effect"
+      ],
+      "properties": {
+        "proposed": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "open_questions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "legal_effect": {
+          "const": "not_assessed"
+        }
+      }
+    },
+    "rules_as_code": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engine",
+        "status"
+      ],
+      "properties": {
+        "engine": {
+          "const": "axiom"
+        },
+        "status": {
+          "enum": [
+            "blocked",
+            "not_assessed",
+            "candidate_scaffold"
+          ]
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_verified",
+        "legal_reviewed",
+        "translation_reviewed"
+      ],
+      "properties": {
+        "source_verified": {
+          "const": false
+        },
+        "legal_reviewed": {
+          "const": false
+        },
+        "translation_reviewed": {
+          "const": false
+        }
+      }
+    }
+  }
+}

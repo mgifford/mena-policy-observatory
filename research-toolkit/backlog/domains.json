@@ -1,0 +1,74 @@
+[
+  {
+    "id": "digital_accessibility",
+    "name": {
+      "en": "Digital accessibility",
+      "ar": "إمكانية الوصول الرقمي"
+    },
+    "research_status": "not_assessed",
+    "cross_domain_references": []
+  },
+  {
+    "id": "physical_accessibility",
+    "name": {
+      "en": "Physical accessibility",
+      "ar": "إمكانية الوصول المادي"
+    },
+    "research_status": "not_assessed",
+    "cross_domain_references": []
+  },
+  {
+    "id": "disability_inclusion",
+    "name": {
+      "en": "Disability inclusion",
+      "ar": "إدماج الأشخاص ذوي الإعاقة"
+    },
+    "research_status": "not_assessed",
+    "cross_domain_references": []
+  },
+  {
+    "id": "digital_rights",
+    "name": {
+      "en": "Digital rights and freedom of expression",
+      "ar": "الحقوق الرقمية وحرية التعبير"
+    },
+    "research_status": "not_assessed",
+    "cross_domain_references": []
+  },
+  {
+    "id": "ai_governance",
+    "name": {
+      "en": "Artificial intelligence governance",
+      "ar": "حوكمة الذكاء الاصطناعي"
+    },
+    "research_status": "not_assessed",
+    "cross_domain_references": []
+  },
+  {
+    "id": "data_centres",
+    "name": {
+      "en": "Data centres and digital infrastructure",
+      "ar": "مراكز البيانات والبنية التحتية الرقمية"
+    },
+    "research_status": "not_assessed",
+    "cross_domain_references": []
+  },
+  {
+    "id": "immigration",
+    "name": {
+      "en": "Immigration",
+      "ar": "الهجرة"
+    },
+    "research_status": "not_assessed",
+    "cross_domain_references": []
+  },
+  {
+    "id": "srhr",
+    "name": {
+      "en": "Sexual and reproductive health and rights",
+      "ar": "الصحة والحقوق الجنسية والإنجابية"
+    },
+    "research_status": "not_assessed",
+    "cross_domain_references": []
+  }
+]
