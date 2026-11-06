@@ -1,0 +1,238 @@
+{
+  "version": "1",
+  "as_of": "2026-11-06",
+  "stale_after_days": 180,
+  "policy": "A check records retrieval health only. It does not establish that a source is current, that an instrument is in force, or that its content was reviewed. A missing check is not evidence of absence.",
+  "checks": [
+    {
+      "candidate_id": "bh-government-web-accessibility-example",
+      "publisher_id": "moe-gov-bh",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "bh-personal-data-30-2018",
+      "publisher_id": "www-lloc-gov-bh",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "eg-disability-law-10-2018",
+      "publisher_id": "sis-gov-eg",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "jo-digital-inclusion-2025",
+      "publisher_id": "modee-gov-jo",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "jo-personal-data-2023",
+      "publisher_id": "www-modee-gov-jo",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "ma-disability-97-13",
+      "publisher_id": "www-sgg-gov-ma",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "ma-personal-data-09-08",
+      "publisher_id": "www-cndp-ma",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-001",
+      "publisher_id": "droit-mjustice-gov-dz",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-002",
+      "publisher_id": "www-joradp-dz",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-003",
+      "publisher_id": "moj-gov-iq",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-004",
+      "publisher_id": "natlex-ilo-org",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-005",
+      "publisher_id": "www-pada-gov-kw",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-006",
+      "publisher_id": "www-bdl-gov-lb",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-007",
+      "publisher_id": "natlex-ilo-org",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-008",
+      "publisher_id": "dpa-gov-so",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-009",
+      "publisher_id": "dpa-gov-so",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-010",
+      "publisher_id": "mjr-ogb-gov-ps",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-011",
+      "publisher_id": "www-journalofficiel-dj",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-012",
+      "publisher_id": "www-journalofficiel-dj",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-013",
+      "publisher_id": "www-journalofficiel-dj",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "mena-t02-014",
+      "publisher_id": "mcpp-gov-ly",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "om-national-digital-accessibility",
+      "publisher_id": "www-mtcit-gov-om",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    },
+    {
+      "candidate_id": "tn-personal-data-2004-63",
+      "publisher_id": "www-justice-gov-tn",
+      "status": "not_checked",
+      "checked_at": null,
+      "http_status": null,
+      "final_url": null,
+      "content_type": null,
+      "notes": "No source check has been recorded."
+    }
+  ]
+}

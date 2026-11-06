@@ -81,6 +81,24 @@ python3 research-toolkit/scripts/import_tranche.py --check
 
 CI runs the package validator and the `--check` command, so a stale import or a package whose checksums no longer match fails the build.
 
+## Evidence currency (work package 1)
+
+The next milestone's first work package adds an explicit currency layer without fetching anything.
+
+- `research-toolkit/sources/publishers.json` derives one entry per host cited by a candidate or policy record. Publisher name, authority type and verification status stay `null`/`unknown`/`unverified` until a human records them; the generator preserves human values.
+- `research-toolkit/sources/source-checks.json` derives one check per candidate, initially `not_checked` with no date, HTTP status, final URL or content type. A check records retrieval health only.
+- `research-toolkit/scripts/registry.py` regenerates both files deterministically and supports `--check`; CI runs it.
+- Freshness is computed from the fixed `as_of` and `stale_after_days`, never from the build date, so generated output stays reproducible. A source without a recorded check is `not_checked`, not stale and not current.
+- The sources page publishes publisher host, registry status, health state and last check date, with a notice that currency is unknown. Arabic labels are provisional.
+- Out of scope for this package: live retrieval, change detection, instrument versions, French interface. Those remain separate work packages.
+
+Run:
+
+```sh
+python3 research-toolkit/scripts/registry.py
+python3 research-toolkit/scripts/registry.py --check
+```
+
 ## CI recommendation
 Add an isolated job for toolkit validator and unit tests, then fold selected checks into the repository's existing build after review. Do not make incomplete candidate sources appear as published legal records.
 

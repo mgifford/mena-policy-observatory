@@ -265,6 +265,29 @@ VERIFICATION_KEYS = {
 }
 
 
+PUBLISHER_STATUS_KEYS = {
+    'unverified': 'source.registry.unverified',
+    'reviewed': 'source.registry.reviewed',
+    'disputed': 'source.registry.disputed',
+}
+CHECK_STATUS_KEYS = {
+    status: f'source.health.{status}'
+    for status in (
+        'not_checked', 'reachable', 'unchanged', 'changed', 'blocked', 'failed', 'unknown',
+    )
+}
+
+
+def publisher_status_text(strings, value):
+    key = PUBLISHER_STATUS_KEYS.get(value)
+    return strings[key] if key else strings['source.registry.unverified']
+
+
+def check_status_text(strings, value):
+    key = CHECK_STATUS_KEYS.get(value)
+    return strings[key] if key else strings['source.health.unknown']
+
+
 def legal_review_text(strings, value):
     key = LEGAL_REVIEW_KEYS.get(value)
     return strings[key] if key else strings['source.legal_review.not_assessed']
@@ -1194,6 +1217,27 @@ def sources_body(catalogues, lang, view):
              else esc(strings['source.not_recorded'])),
             (strings['source.source_type'],
              esc(source_type_text(strings, candidate.get('source_type')))),
+        ]
+        publisher = candidate.get('publisher')
+        if publisher:
+            details.append((strings['source.publisher'], code(publisher.get('host', ''))))
+            details.append((strings['source.registry'],
+                            esc(publisher_status_text(strings, publisher.get('verification_status')))))
+        else:
+            details.append((strings['source.publisher'], esc(strings['source.not_recorded'])))
+            details.append((strings['source.registry'], esc(strings['source.not_recorded'])))
+        check = candidate.get('source_check')
+        if check:
+            checked_at = (code(check['checked_at']) if check.get('checked_at')
+                          else esc(strings['source.not_recorded']))
+            health = (f'{esc(check_status_text(strings, check.get("status")))} — '
+                      f'{esc(strings["source.health.last_checked"])}: {checked_at}')
+            if candidate.get('check_state') == 'stale':
+                health += f' — {esc(strings["source.health.stale"])}'
+        else:
+            health = esc(strings['source.not_recorded'])
+        details.append((strings['source.health'], health))
+        details += [
             (strings['source.published'], recorded_html),
             (strings['source.research_status'],
              esc(status_text(strings, 'candidate_sources_identified'))),
@@ -1263,6 +1307,7 @@ def sources_body(catalogues, lang, view):
         f'<p class="notice">{esc(strings["source.discovery_notice"])}</p>',
         f'<p class="notice">{esc(strings["source.candidate_notice"])}</p>',
         f'<p class="notice">{esc(strings["sources.pending_review"])}</p>',
+        f'<p class="notice">{esc(strings["sources.currency_notice"])}</p>',
         f'<p>{esc(count_line)}</p>',
         '\n'.join(sections),
         f'<p><a href="../index.html">{esc(strings["sources.back"])}</a></p>',

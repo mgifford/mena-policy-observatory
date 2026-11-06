@@ -1,0 +1,463 @@
+{
+  "version": "1",
+  "as_of": "2026-11-06",
+  "note": "Publisher identities are recorded from cited URLs only. This registry does not verify authority, coverage or currency.",
+  "publishers": [
+    {
+      "id": "dga-gov-sa",
+      "host": "dga.gov.sa",
+      "url": "https://dga.gov.sa/",
+      "jurisdictions": [
+        "SA"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "sa-dga-web-accessibility-guide"
+      ]
+    },
+    {
+      "id": "dgov-tdra-gov-ae",
+      "host": "dgov.tdra.gov.ae",
+      "url": "https://dgov.tdra.gov.ae/",
+      "jurisdictions": [
+        "AE"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "ae-national-digital-accessibility"
+      ]
+    },
+    {
+      "id": "dpa-gov-so",
+      "host": "dpa.gov.so",
+      "url": "https://dpa.gov.so/",
+      "jurisdictions": [
+        "SO"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-008",
+        "mena-t02-009"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "droit-mjustice-gov-dz",
+      "host": "droit.mjustice.gov.dz",
+      "url": "https://droit.mjustice.gov.dz/",
+      "jurisdictions": [
+        "DZ"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-001"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "mcpp-gov-ly",
+      "host": "mcpp.gov.ly",
+      "url": "https://mcpp.gov.ly/",
+      "jurisdictions": [
+        "LY"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-014"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "mep-gov-sa",
+      "host": "mep.gov.sa",
+      "url": "https://mep.gov.sa/",
+      "jurisdictions": [
+        "SA"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "sa-mep-accessibility"
+      ]
+    },
+    {
+      "id": "mjr-ogb-gov-ps",
+      "host": "mjr.ogb.gov.ps",
+      "url": "https://mjr.ogb.gov.ps/",
+      "jurisdictions": [
+        "PS"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-010"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "modee-gov-jo",
+      "host": "modee.gov.jo",
+      "url": "https://modee.gov.jo/",
+      "jurisdictions": [
+        "JO"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "jo-digital-inclusion-2025"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "moe-gov-bh",
+      "host": "moe.gov.bh",
+      "url": "https://moe.gov.bh/",
+      "jurisdictions": [
+        "BH"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "bh-government-web-accessibility-example"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "mof-gov-ae",
+      "host": "mof.gov.ae",
+      "url": "https://mof.gov.ae/",
+      "jurisdictions": [
+        "AE"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "ae-mof-accessibility"
+      ]
+    },
+    {
+      "id": "moj-gov-iq",
+      "host": "moj.gov.iq",
+      "url": "https://moj.gov.iq/",
+      "jurisdictions": [
+        "IQ"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-003"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "natlex-ilo-org",
+      "host": "natlex.ilo.org",
+      "url": "https://natlex.ilo.org/",
+      "jurisdictions": [
+        "IQ",
+        "MR"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-004",
+        "mena-t02-007"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "sis-gov-eg",
+      "host": "sis.gov.eg",
+      "url": "https://sis.gov.eg/",
+      "jurisdictions": [
+        "EG"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "eg-disability-law-10-2018"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-bdl-gov-lb",
+      "host": "www.bdl.gov.lb",
+      "url": "https://www.bdl.gov.lb/",
+      "jurisdictions": [
+        "LB"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-006"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-cndp-ma",
+      "host": "www.cndp.ma",
+      "url": "https://www.cndp.ma/",
+      "jurisdictions": [
+        "MA"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "ma-personal-data-09-08"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-joradp-dz",
+      "host": "www.joradp.dz",
+      "url": "https://www.joradp.dz/",
+      "jurisdictions": [
+        "DZ"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-002"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-journalofficiel-dj",
+      "host": "www.journalofficiel.dj",
+      "url": "https://www.journalofficiel.dj/",
+      "jurisdictions": [
+        "DJ"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-011",
+        "mena-t02-012",
+        "mena-t02-013"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-justice-gov-tn",
+      "host": "www.justice.gov.tn",
+      "url": "https://www.justice.gov.tn/",
+      "jurisdictions": [
+        "TN"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "tn-personal-data-2004-63"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-lloc-gov-bh",
+      "host": "www.lloc.gov.bh",
+      "url": "https://www.lloc.gov.bh/",
+      "jurisdictions": [
+        "BH"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "bh-personal-data-30-2018"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-mcit-gov-qa",
+      "host": "www.mcit.gov.qa",
+      "url": "https://www.mcit.gov.qa/",
+      "jurisdictions": [
+        "QA"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "qa-eaccessibility-2011",
+        "qa-eaccessibility-2025-upcoming"
+      ]
+    },
+    {
+      "id": "www-modee-gov-jo",
+      "host": "www.modee.gov.jo",
+      "url": "https://www.modee.gov.jo/",
+      "jurisdictions": [
+        "JO"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "jo-personal-data-2023"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-moe-gov-ae",
+      "host": "www.moe.gov.ae",
+      "url": "https://www.moe.gov.ae/",
+      "jurisdictions": [
+        "AE"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "ae-moe-accessibility"
+      ]
+    },
+    {
+      "id": "www-mtcit-gov-om",
+      "host": "www.mtcit.gov.om",
+      "url": "https://www.mtcit.gov.om/",
+      "jurisdictions": [
+        "OM"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "om-national-digital-accessibility"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-pada-gov-kw",
+      "host": "www.pada.gov.kw",
+      "url": "https://www.pada.gov.kw/",
+      "jurisdictions": [
+        "KW"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "mena-t02-005"
+      ],
+      "cited_by_records": []
+    },
+    {
+      "id": "www-sgg-gov-ma",
+      "host": "www.sgg.gov.ma",
+      "url": "https://www.sgg.gov.ma/",
+      "jurisdictions": [
+        "MA"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [
+        "ma-disability-97-13"
+      ],
+      "cited_by_records": []
+    }
+  ]
+}

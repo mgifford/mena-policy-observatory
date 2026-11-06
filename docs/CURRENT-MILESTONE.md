@@ -1,146 +1,73 @@
-# Current Milestone: MENA Research Coverage Integration
+# Current Milestone: Legal Evidence Currency and Multilingual Support
 
-**Status:** Implementation complete — manual and professional review outstanding\
-**Working branch:** delivered on `main` (commit `4b3c13a`); see the completion record below\
+**Status:** In progress\
 **Priority:** P0\
-**Next milestone:** legal evidence currency and multilingual support (proposed in `docs/ROADMAP.md`; not authorized)
+**Working branch:** `feat/evidence-currency-foundation` (verify before use)\
+**Previous milestone:** MENA research coverage integration — implementation complete on `main` at `4b3c13a` (see git history and `docs/ROADMAP.md`)\
+**Later milestones:** public digital policy research, then reviewed Rules as Code. Neither is authorized.
 
 ## Objective
 
-Complete the existing research coverage integration and incorporate Research Tranche 02 into the MENA Policy Observatory.
+Make recorded legal evidence explicitly current (or explicitly not checked), traceable to an official publisher and version, and readable across English, French and Arabic — without starting Rules as Code.
 
-Deliver a reproducible, accessible, bilingual research coverage interface with validated candidate sources, research tasks, and accurate status reporting.
-
-This milestone is focused on completing existing work, not expanding project functionality.
+The milestone is delivered in bounded work packages. Each package needs its own reviewable pull request; no package may promote a candidate lead to verified law or infer a legal effect.
 
 ## Authorized work
 
-- Complete country and domain coverage implementation.
-- Integrate `research-toolkit/incoming/tranche-02/`.
-- Reconcile duplicate candidate sources and research tasks.
-- Preserve source provenance and original research artifacts.
-- Validate jurisdiction and domain identifiers.
-- Display candidate sources and research status accurately.
-- Maintain English and Arabic navigation.
-- Fix implementation defects.
-- Complete automated tests.
-- Document manual accessibility and translation review requirements.
-- Prepare the implementation for human review.
+### Legal evidence currency
 
-## Prohibited work during this milestone
+- A registry of official publishers cited by existing candidate leads and published records, recording host, jurisdiction, authority type, languages, verification status, monitoring state and retrieval notes. Unknown values stay unknown.
+- Source-check records per candidate: retrieval status, last checked date, HTTP status, final URL and content type where a check exists. A check records retrieval health only.
+- Explicit freshness and stale-source reporting derived from recorded checks, with a fixed `as_of` date so the static build stays deterministic.
+- Instrument identity and version metadata (work, expression, captured item; publication, commencement, repeal and consolidation dates) only where documented, with unknown values preserved.
+- Immutable change events and human review tasks for detected or suspected changes. No automated legal-effect change.
+
+### Multilingual support
+
+- English, French and Arabic interface support on the existing internationalisation infrastructure. No parallel site.
+- Source language separated from interface language; translation states (original, official translation, human-reviewed research translation, machine-assisted draft, pending, unavailable, unresolved) and translation provenance.
+- Terminology governance for recurring legal and technical concepts.
+- Accessible LTR/RTL layouts, mixed-direction text, keyboard operation and reflow in all three locales. French and Arabic copy remains provisional until native review.
+
+## Prohibited work
 
 Do not:
 
-- Implement new executable Axiom RuleSpec.
-- Introduce new Axiom runtime dependencies.
-- Build policy simulation or impact modeling functionality.
-- Conduct unrelated new legal research.
-- Add unrelated policy domains.
-- Refactor unrelated infrastructure.
-- Invent legal interpretations, translations, review approvals, or source metadata.
-- Treat candidate sources as verified legal findings.
-- Merge PRs autonomously.
-- Begin the next milestone without authorization.
+- Implement executable Axiom RuleSpec, Axiom runtime dependencies, rules engines or policy simulation.
+- Conduct new legal research beyond re-checking the existing 23 candidate leads.
+- Add policy domains, countries or jurisdictions.
+- Add automated legal-effect, in-force or compliance determinations.
+- Crawl broadly, bypass access controls, or store copyrighted full text or personal data.
+- Invent publisher identities, authority types, dates, translations or review approvals.
+- Merge pull requests autonomously.
+- Begin the research-expansion or Rules as Code milestones.
 
-Existing research evidence and non-executable RuleSpec scaffolds must be preserved.
+## Work packages
 
-## Research integration requirements
+1. **Publisher registry and source-health records** — registry derived from existing candidate and record URLs; one check record per candidate; explicit `not_checked` state; validator, bilingual display and tests. *(Current package.)*
+2. **Instrument identity and version metadata** — work/expression/captured-item identifiers and documented dates.
+3. **French interface foundation** — third locale, navigation, language switching, three-locale tests.
+4. **Translation provenance and terminology** — states, provenance, reviewed glossary.
+5. **Source-change review workflow** — change events, review tasks, stale-source warnings.
 
-Research Tranche 02 contains 14 unreviewed source leads and 14 tasks across nine jurisdictions.
+## Completion criteria
 
-The package is located at:
-
-`research-toolkit/incoming/tranche-02/`
-
-Validate it using:
-
-```bash
-python3 research-toolkit/incoming/tranche-02/validate.py
-```
-
-Integrate candidate sources without changing their legal-review status.
-
-The integration must be idempotent. Repeated imports must not create duplicates.
-
-Maintain separate status dimensions for:
-
-- Research progress.
-- Source verification.
-- Legal effect.
-- Translation review.
-- Provision extraction.
-- Rules as Code implementation.
-
-Unknown or unreviewed values must not be converted into negative legal findings.
-
-## Accessibility requirements
-
-Target WCAG 2.2 AA.
-
-Required automated checks include:
-
-- Semantic HTML structure.
-- Correct document languages and text direction.
-- Keyboard skip links.
-- Unique page titles.
-- Accessible tables.
-- Reflow.
-- English/Arabic navigation equivalence.
-- Automated axe-core checks.
-
-Manual keyboard, screen-reader, zoom, forced-colour, and Arabic-language reviews must be documented separately.
-
-Automated tests do not establish full WCAG conformance.
-
-## Completion checklist
-
-- [x] Current implementation functionality completed.
-- [x] Country registry reconciled.
-- [x] Domain registry validated.
-- [x] Tranche 02 integrated.
-- [x] Duplicate source and task handling tested.
-- [x] Candidate sources remain unreviewed.
-- [x] Existing published research records preserved.
-- [x] Country and domain coverage pages generated.
-- [x] Research statuses displayed accurately.
-- [x] English and Arabic navigation works.
-- [x] Automated accessibility tests pass.
-- [x] Python validation and unit tests pass.
-- [x] Static site builds reproducibly.
-- [x] Documentation matches implemented behavior.
-- [x] Pull request prepared for human review and merged.
-
-## Implementation completion record
-
-- **Completed:** 2026-11-06.
-- **`main` commit:** `4b3c13a` (merge of PR #12).
-- **Delivered by:** PR #8 (coverage layer), PR #9 (review gate and Arabic labels), PR #10 (tranche 02), promoted to `main` by PR #12; PR #11 committed these instructions.
-- **Research data:** 23 candidate leads (14 imported from tranche 02, all unreviewed), 54 queued tasks, 3 unreviewed reported relationships.
-- **Generated site:** 93 HTML pages; `research-toolkit/MANIFEST.json` covers 59 files.
-- **Verification on `main`:** tranche-02 validator PASS; `framework/validate.py` exit 0; 124 repository tests and 15 toolkit tests pass; `import_tranche.py --check` current; `build.py` and `check_html.py` pass for all 93 pages; Playwright/axe 281 pass; rebuilding leaves `dist/` unchanged.
-- **Deployment:** GitHub Pages run `42259556896` succeeded; sampled English and Arabic pages are byte-identical to committed `dist/`. Two earlier `main` runs (for #11 and #8) failed in `actions/deploy-pages@v5` after successful builds; the final deployment succeeded.
-- **Not claimed:** legal effect, source verification, translation quality or WCAG conformance.
-
-## Outstanding manual and professional review
-
-These are release conditions, not implementation gaps. Ticking the checklist above does not satisfy them.
-
-- [ ] Manual keyboard-only walkthrough.
-- [ ] Screen reader: NVDA/Firefox and VoiceOver/Safari, including table and description-list navigation.
-- [ ] Browser zoom 200% and 400%; text spacing and reflow.
-- [ ] Forced colours, reduced motion and touch targets.
-- [ ] Native-Arabic review of interface strings, including the new candidate metadata labels.
-- [ ] Human verification of all 23 candidate leads: official source, issuing authority, legal scope, authoritative language and publication permissions.
-
-## Next milestone
-
-Proposed in `docs/ROADMAP.md`: **legal evidence currency and multilingual support**. It combines a bounded official-publisher registry, legal-instrument versions and source-change review with English, French and Arabic interface support and translation provenance.
-
-It is not authorized by this milestone and must not begin without an explicit instruction. It does not start Axiom, RuleSpec, executable rules or policy simulation; those remain deferred to the final roadmap milestone.
+- [ ] Publisher registry covers every host cited by candidates and records, with explicit unknowns.
+- [ ] Every candidate has a source-check record; no check is fabricated.
+- [ ] Freshness and stale states are derived from recorded checks and a fixed `as_of` date.
+- [ ] Instrument identity and version metadata are recorded where evidence exists.
+- [ ] Change events and review tasks exist for detected changes.
+- [ ] English, French and Arabic navigation works; French and Arabic copy is marked provisional.
+- [ ] Translation states and provenance are recorded per text.
+- [ ] Automated accessibility tests pass for all three locales.
+- [ ] Python validation, unit tests and the reproducible build pass.
+- [ ] Documentation matches the implementation.
+- [ ] Work-package pull requests are prepared for human review.
 
 ## Required verification commands
 
 ```bash
+python3 research-toolkit/scripts/registry.py --check
 python3 research-toolkit/incoming/tranche-02/validate.py
 python3 framework/validate.py
 python3 -m unittest discover -s tests -p 'test_*.py' -v
@@ -151,32 +78,8 @@ npm run test:a11y
 git diff --check
 ```
 
-Report any checks that could not be completed.
-
-## Deliverables
-
-The final report must include:
-
-1. Baseline commit and branch.
-2. Completed implementation work.
-3. Files changed and why.
-4. Source and research task reconciliation results.
-5. Data migrations and compatibility concerns.
-6. Test results.
-7. Accessibility review status.
-8. Translation limitations.
-9. Legal claims changed, if any.
-10. Outstanding blockers.
-11. Pull request URL.
-12. Rollback instructions.
-13. Recommended next milestone.
+Manual keyboard, screen-reader, zoom, forced-colour and native-language review must be recorded separately. Automated tests do not establish WCAG conformance.
 
 ## Stop condition
 
-Once implementation and validation are complete, prepare the PR and stop.
-
-Do not begin Rules as Code, policy simulation, new legal research, or another implementation phase.
-
-Wait for explicit authorization.
-
-**Success means a complete, reviewable implementation, not a larger quantity of unverified research.**
+Complete and validate one work package at a time, prepare a reviewable pull request, and stop. Do not start the next work package or a later milestone without an explicit instruction.
