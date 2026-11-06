@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "CHANGELOG.md",
-      "size": 2667,
-      "sha256": "d843f74ed963dd79b2fa83bf218a3f64b65f7a5d6d224cc3ae4a174b5c7ad0ad"
+      "size": 3326,
+      "sha256": "594e571e176cb6a7d07f470c13046ed66ebc6c8e04c30e107507c51f9bc9d40a"
     },
     {
       "path": "LICENSE-NOTE.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "size": 4052,
-      "sha256": "e397842a03590faccd4d87ec32ba64487c35e6461d81ee9dec5fa1084db8c3c8"
+      "size": 4238,
+      "sha256": "4d4e4a48fd406282c8ed62a76d463aa63a51128fc799e2b5cb35cf89430af392"
     },
     {
       "path": "agents/00-controller.md",
@@ -134,8 +134,8 @@
     },
     {
       "path": "docs/REPO-INTEGRATION.md",
-      "size": 6758,
-      "sha256": "98686e2c096a9b3ed0e4decd2a9c03107e41c0469b69b02dac37dc86134176d2"
+      "size": 8123,
+      "sha256": "68ee0c687e8fb4978cb542af1d21e845454b88ec678730b0e0d3e06bd001245f"
     },
     {
       "path": "docs/RESEARCH-METHOD.md",
@@ -223,6 +223,11 @@
       "sha256": "e9506f3187c31ca4c6be178be65f80c0b90281971b56312e5c8bf528e1778ffe"
     },
     {
+      "path": "scripts/registry.py",
+      "size": 8093,
+      "sha256": "eff989accb419a76343c81f2a23e389b04b862eec21a77ecebcfcc5bc599fd28"
+    },
+    {
       "path": "scripts/report_queue.py",
       "size": 2174,
       "sha256": "f9bac0da038a8b840f0ccab4a1cfb792aa1939b64f698e6351a0e646eb3b6d8d"
@@ -241,6 +246,16 @@
       "path": "sources/candidate-sources.json",
       "size": 36188,
       "sha256": "fecef7a729bf018488f44caa56cef417a88d7b0c1fd6309a5bac1ba84301d3de"
+    },
+    {
+      "path": "sources/publishers.json",
+      "size": 14973,
+      "sha256": "1136f08cc0d5737cf7a9f1d70d2e1d6c5d0f91a4e50b16fc9381213f15abb05e"
+    },
+    {
+      "path": "sources/source-checks.json",
+      "size": 6879,
+      "sha256": "351be94f93fad5ad0020ce4fc6dfb69335fb50f3f2045a80d0e489a3fb88c026"
     },
     {
       "path": "templates/AGENT-REPORT.md",

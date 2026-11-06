@@ -1,5 +1,12 @@
 # Toolkit change record
 
+## v4 (2026-11-06)
+- Added `sources/publishers.json`: 25 cited hosts with jurisdiction, citation links and explicit unknown publisher identity.
+- Added `sources/source-checks.json`: one `not_checked` health record per candidate; no check is inferred.
+- Added `scripts/registry.py`: deterministic derivation of both files with `--check`; preserves human-entered publisher fields and recorded checks.
+- Coverage validates publisher identity, citation integrity, check vocabulary and date rules; the sources page shows publisher host, registry status and source health.
+- CI checks that the registry is current. No legal effect or currency claim is introduced.
+
 ## v3 (2026-11-06)
 - Added `scripts/import_tranche.py`: deterministic, idempotent import for unreviewed discovery packages with URL, instrument-number and title duplicate detection.
 - Integrated tranche 02: 14 candidate leads and 14 verification tasks. The canonical inventory now holds 23 candidates and the combined queue 54 tasks.

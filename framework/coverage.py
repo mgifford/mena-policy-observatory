@@ -69,6 +69,16 @@ VERIFICATION_REQUIREMENTS = (
 )
 CANDIDATE_RELATIONS = ('amends', 'related', 'implements', 'consolidates')
 TASK_FILES = ('tasks.jsonl', 'cross-domain-tasks.jsonl', 'tasks-tranche-02.jsonl')
+PUBLISHER_AUTHORITY_TYPES = (
+    'unknown', 'gazette', 'legislation_portal', 'parliament', 'ministry',
+    'regulator', 'intergovernmental_index', 'standards_body', 'other',
+)
+PUBLISHER_VERIFICATION_STATUSES = ('unverified', 'reviewed', 'disputed')
+PUBLISHER_MONITORING_STATES = ('not_configured', 'manual', 'scheduled')
+SOURCE_CHECK_STATUSES = (
+    'not_checked', 'reachable', 'unchanged', 'changed', 'blocked', 'failed', 'unknown',
+)
+DEFAULT_STALE_AFTER_DAYS = 180
 CONFIRMED_LEGAL_EFFECT = ('binding_confirmed', 'nonbinding_confirmed')
 LEGACY_RECORD_STATUSES = ('not_assessed', 'source_verified', 'source_identified', 'identified')
 REQUIRED_DISPLAY_CHECKS = (
@@ -105,6 +115,10 @@ class CoverageData:
     tasks: list[dict]
     candidate_inventory: dict
     proposed_scope: dict
+    publishers: list[dict] = field(default_factory=list)
+    source_checks: list[dict] = field(default_factory=list)
+    registry_as_of: str = ''
+    stale_after_days: int = DEFAULT_STALE_AFTER_DAYS
     extra: dict = field(default_factory=dict)
 
 
@@ -136,6 +150,10 @@ def load_coverage(base=DEFAULT_BASE, toolkit=DEFAULT_TOOLKIT) -> CoverageData:
         for task in _read_jsonl(toolkit / 'backlog' / name):
             tasks.append(task)
     candidate_inventory = _read_json(toolkit / 'sources' / 'candidate-sources.json')
+    publishers_doc = _read_json(toolkit / 'sources' / 'publishers.json') \
+        if (toolkit / 'sources' / 'publishers.json').is_file() else {'publishers': []}
+    checks_doc = _read_json(toolkit / 'sources' / 'source-checks.json') \
+        if (toolkit / 'sources' / 'source-checks.json').is_file() else {'checks': []}
     proposed_path = toolkit / 'backlog' / 'jurisdictions-proposed.json'
     proposed_scope = _read_json(proposed_path) if proposed_path.is_file() else {'entries': []}
     return CoverageData(
@@ -150,6 +168,10 @@ def load_coverage(base=DEFAULT_BASE, toolkit=DEFAULT_TOOLKIT) -> CoverageData:
         tasks=tasks,
         candidate_inventory=candidate_inventory,
         proposed_scope=proposed_scope,
+        publishers=publishers_doc.get('publishers', []),
+        source_checks=checks_doc.get('checks', []),
+        registry_as_of=str(checks_doc.get('as_of') or ''),
+        stale_after_days=checks_doc.get('stale_after_days', DEFAULT_STALE_AFTER_DAYS),
         extra={'domain_registry': domain_registry},
     )
 
@@ -172,6 +194,16 @@ def safe_url(value) -> bool:
     if not host or re.fullmatch(r'[0-9.]+', host) or ':' in host:
         return False
     return True
+
+
+def _host_of(url) -> str:
+    if not isinstance(url, str):
+        return ''
+    return (urlparse(url).hostname or '').lower()
+
+
+def publisher_slug(host: str) -> str:
+    return re.sub(r'[^a-z0-9]+', '-', str(host).lower()).strip('-')
 
 
 def _iso_date(value):
@@ -335,6 +367,22 @@ def build_view(data: CoverageData) -> dict:
             tasks_by_candidate.setdefault(lead, []).append(str(task.get('task_id')))
     for candidate in candidates:
         candidate['task_ids'] = sorted(tasks_by_candidate.get(candidate.get('id'), []))
+    publishers_by_host = {publisher.get('host'): publisher for publisher in data.publishers}
+    checks_by_candidate = {check.get('candidate_id'): check for check in data.source_checks}
+    as_of = _iso_date(data.registry_as_of)
+    for candidate in candidates:
+        host = (urlparse(str(candidate.get('source_url') or '')).hostname or '').lower()
+        check = checks_by_candidate.get(candidate.get('id'))
+        candidate['publisher'] = publishers_by_host.get(host)
+        candidate['source_check'] = check
+        state = 'not_checked'
+        if check and check.get('status') not in (None, 'not_checked'):
+            checked = _iso_date(check.get('checked_at'))
+            if checked and as_of and (as_of - checked).days > data.stale_after_days:
+                state = 'stale'
+            else:
+                state = 'checked'
+        candidate['check_state'] = state
 
     records_view = []
     for policy in data.policies:
@@ -407,12 +455,16 @@ def build_view(data: CoverageData) -> dict:
         'records': records_view,
         'tasks': tasks,
         'candidates': candidates,
+        'registry_as_of': data.registry_as_of,
+        'stale_after_days': data.stale_after_days,
         'totals': {
             'countries': len(country_views),
             'domains': len(domain_views),
             'records': len(records_view),
             'candidates': len(candidates),
             'tasks': len(tasks),
+            'publishers': len(data.publishers),
+            'source_checks': len(data.source_checks),
             'unresolved_questions': sum(len(item['open_questions']) for item in country_views),
         },
     }
@@ -730,6 +782,155 @@ def validate_coverage(data: CoverageData) -> list[str]:
         if status not in RESEARCH_STATUSES:
             _error(errors, f'country {code}: unknown derived research status {status!r}')
 
+    errors.extend(validate_evidence_currency(data))
+    return errors
+
+
+def validate_evidence_currency(data: CoverageData) -> list[str]:
+    """Validate the publisher registry and source-check records.
+
+    Currency is unknown unless a check is recorded. The validator never infers
+    a check, a date or a publisher identity.
+    """
+    errors: list[str] = []
+    country_codes = {country.get('code') for country in data.countries}
+    candidate_map = {candidate.get('id'): candidate
+                     for candidate in data.candidate_inventory.get('records', [])}
+    record_map = {record.get('id'): record for record in data.policies}
+    as_of = _iso_date(data.registry_as_of)
+    if as_of is None:
+        _error(errors, f'registry: as_of must be an ISO date, got {data.registry_as_of!r}')
+    if not isinstance(data.stale_after_days, int) or data.stale_after_days <= 0:
+        _error(errors, 'registry: stale_after_days must be a positive integer')
+
+    publisher_map = {}
+    for publisher in data.publishers:
+        publisher_id = publisher.get('id')
+        host = publisher.get('host')
+        label = publisher_id or host or 'unknown'
+        if not publisher_id:
+            _error(errors, 'publisher: missing id')
+        if not isinstance(host, str) or not host:
+            _error(errors, f'publisher {label}: host must be a nonempty string')
+            continue
+        if host in publisher_map:
+            _error(errors, f'publisher {label}: duplicate host {host!r}')
+        publisher_map[host] = publisher
+        if publisher_id != publisher_slug(host):
+            _error(errors, f'publisher {label}: id must be the host slug {publisher_slug(host)!r}')
+        url = publisher.get('url')
+        if not safe_url(url):
+            _error(errors, f'publisher {label}: url must be a safe https URL')
+        elif _host_of(url) != host:
+            _error(errors, f'publisher {label}: url host does not match {host!r}')
+        jurisdictions = publisher.get('jurisdictions')
+        if not isinstance(jurisdictions, list) or not jurisdictions:
+            _error(errors, f'publisher {label}: jurisdictions must be a nonempty array')
+        else:
+            for code in jurisdictions:
+                if code not in country_codes:
+                    _error(errors, f'publisher {label}: unknown jurisdiction {code!r}')
+        if publisher.get('authority_type') not in PUBLISHER_AUTHORITY_TYPES:
+            _error(errors, f'publisher {label}: unknown authority_type '
+                           f'{publisher.get("authority_type")!r}')
+        if publisher.get('verification_status') not in PUBLISHER_VERIFICATION_STATUSES:
+            _error(errors, f'publisher {label}: unknown verification_status '
+                           f'{publisher.get("verification_status")!r}')
+        if publisher.get('monitoring') not in PUBLISHER_MONITORING_STATES:
+            _error(errors, f'publisher {label}: unknown monitoring state '
+                           f'{publisher.get("monitoring")!r}')
+        name = publisher.get('publisher_name')
+        if name is not None and (not isinstance(name, str) or not name.strip()):
+            _error(errors, f'publisher {label}: publisher_name must be a nonempty string or null')
+        languages = publisher.get('languages')
+        if not isinstance(languages, list):
+            _error(errors, f'publisher {label}: languages must be an array')
+        else:
+            for language in languages:
+                if not isinstance(language, str) or len(language.strip()) != 2:
+                    _error(errors, f'publisher {label}: invalid language tag {language!r}')
+        cited_candidates = publisher.get('cited_by_candidates')
+        if not isinstance(cited_candidates, list):
+            _error(errors, f'publisher {label}: cited_by_candidates must be an array')
+            cited_candidates = []
+        for candidate_id in cited_candidates:
+            candidate = candidate_map.get(candidate_id)
+            if candidate is None:
+                _error(errors, f'publisher {label}: cites unknown candidate {candidate_id!r}')
+            elif _host_of(candidate.get('source_url')) != host:
+                _error(errors, f'publisher {label}: candidate {candidate_id} has a different host')
+        cited_records = publisher.get('cited_by_records')
+        if not isinstance(cited_records, list):
+            _error(errors, f'publisher {label}: cited_by_records must be an array')
+            cited_records = []
+        for record_id in cited_records:
+            record = record_map.get(record_id)
+            if record is None:
+                _error(errors, f'publisher {label}: cites unknown record {record_id!r}')
+            elif _host_of(record.get('source_url')) != host:
+                _error(errors, f'publisher {label}: record {record_id} has a different host')
+        if not cited_candidates and not cited_records:
+            _error(errors, f'publisher {label}: must cite at least one candidate or record')
+
+    host_sources = {}
+    for candidate in data.candidate_inventory.get('records', []):
+        host_sources.setdefault(_host_of(candidate.get('source_url')), set()).add(
+            f'candidate {candidate.get("id")}')
+    for record in data.policies:
+        host_sources.setdefault(_host_of(record.get('source_url')), set()).add(
+            f'record {record.get("id")}')
+    for host, sources in sorted(host_sources.items()):
+        if host not in publisher_map:
+            _error(errors, f'registry: no publisher entry for host {host!r} '
+                           f'({", ".join(sorted(sources))})')
+    for host in sorted(set(publisher_map) - set(host_sources)):
+        _error(errors, f'registry: publisher {host!r} is not cited by any candidate or record')
+
+    check_map = {}
+    for check in data.source_checks:
+        candidate_id = check.get('candidate_id')
+        label = f'check {candidate_id!r}'
+        if not candidate_id:
+            _error(errors, 'check: missing candidate_id')
+            continue
+        if candidate_id in check_map:
+            _error(errors, f'{label}: duplicate check')
+        check_map[candidate_id] = check
+        candidate = candidate_map.get(candidate_id)
+        if candidate is None:
+            _error(errors, f'{label}: unknown candidate')
+            continue
+        host = _host_of(candidate.get('source_url'))
+        publisher = publisher_map.get(host) or {}
+        if check.get('publisher_id') != publisher.get('id'):
+            _error(errors, f'{label}: publisher_id does not match the candidate host')
+        status = check.get('status')
+        if status not in SOURCE_CHECK_STATUSES:
+            _error(errors, f'{label}: unknown status {status!r}')
+            continue
+        details = ('checked_at', 'http_status', 'final_url', 'content_type')
+        if status == 'not_checked':
+            present = [key for key in details if check.get(key) is not None]
+            if present:
+                _error(errors, f'{label}: a not_checked record may not carry {present}')
+            continue
+        if _iso_date(check.get('checked_at')) is None:
+            _error(errors, f'{label}: a {status} check needs an ISO checked_at')
+        http_status = check.get('http_status')
+        if http_status is not None and (not isinstance(http_status, int)
+                                        or isinstance(http_status, bool)
+                                        or not 100 <= http_status <= 599):
+            _error(errors, f'{label}: http_status must be an integer HTTP status or null')
+        final_url = check.get('final_url')
+        if final_url is not None and not safe_url(final_url):
+            _error(errors, f'{label}: final_url must be a safe https URL or null')
+        content_type = check.get('content_type')
+        if content_type is not None and (not isinstance(content_type, str)
+                                         or not content_type.strip()):
+            _error(errors, f'{label}: content_type must be a nonempty string or null')
+    for candidate_id in candidate_map:
+        if candidate_id not in check_map:
+            _error(errors, f'check: candidate {candidate_id!r} has no source-check record')
     return errors
 
 

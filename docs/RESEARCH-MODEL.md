@@ -118,9 +118,23 @@ A `review` entry with `status: "pending"` records intent only and never counts a
 
 The review entry records that a review happened and what it covered. It is not a legal approval, and the schema does not verify the reviewer's independence.
 
+### Evidence currency
+
+Two files record what is known about source currency, separately from legal effect:
+
+- `research-toolkit/sources/publishers.json`: one entry per host cited by a candidate or published record. It records the host, jurisdictions, citation links and explicit unknowns. `publisher_name`, `authority_type`, `languages` and `verification_status` are human-supplied; the generator preserves them but never invents them. An entry is `unverified` until a reviewer records otherwise.
+- `research-toolkit/sources/source-checks.json`: one check per candidate. Statuses are `not_checked`, `reachable`, `unchanged`, `changed`, `blocked`, `failed` and `unknown`. A `not_checked` record may not carry a date, HTTP status, final URL or content type. Any other status requires an ISO `checked_at`.
+
+A check records retrieval health only. It does not establish that a source is current, that an instrument is in force, or that its content was reviewed. A missing check is not evidence of absence.
+
+Freshness is derived from the fixed `as_of` date and `stale_after_days`, not from the build date, so the static output is deterministic. A recorded check older than the threshold is reported as `stale`; without a recorded check the state is `not_checked`, not `stale`.
+
+`research-toolkit/scripts/registry.py` derives both files from the existing URLs, preserves recorded checks and human-entered publisher fields, and supports `--check`. The validator rejects a cited host without a publisher, an uncited publisher, a publisher whose id does not match its host, unknown vocabularies, duplicate or unknown checks, `not_checked` records carrying dates, recorded statuses without a date, and a candidate without a check.
+
 ## Running the checks
 
 ```sh
+python3 research-toolkit/scripts/registry.py --check
 python3 framework/validate.py
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```

@@ -26,6 +26,8 @@ jobs:
         run: python research-toolkit/scripts/manifest.py research-toolkit --output research-toolkit/MANIFEST.json --check
       - name: Check tranche integration is current
         run: python research-toolkit/scripts/import_tranche.py --check
+      - name: Check publisher registry and source checks are current
+        run: python research-toolkit/scripts/registry.py --check
       - name: Run validator unit tests
         run: python -m unittest discover -s tests -p "test_*.py" -v
       - name: Build site

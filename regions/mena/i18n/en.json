@@ -438,5 +438,21 @@
   "source.provenance.evidence_ref": "Evidence reference",
   "source.provenance.evidence_note": "Not independently checkable",
   "source.link": "Official source link",
-  "sources.count": "{count} unreviewed candidate leads across {jurisdictions} jurisdictions."
+  "sources.count": "{count} unreviewed candidate leads across {jurisdictions} jurisdictions.",
+  "source.publisher": "Publisher host",
+  "source.registry": "Publisher registry",
+  "source.registry.unverified": "Unverified",
+  "source.registry.reviewed": "Reviewed",
+  "source.registry.disputed": "Disputed",
+  "source.health": "Source health",
+  "source.health.not_checked": "Not yet checked",
+  "source.health.reachable": "Reachable at last check",
+  "source.health.unchanged": "No change detected at last check",
+  "source.health.changed": "Changed at last check",
+  "source.health.blocked": "Retrieval blocked",
+  "source.health.failed": "Check failed",
+  "source.health.unknown": "Unknown",
+  "source.health.stale": "Check overdue",
+  "source.health.last_checked": "Last source check",
+  "sources.currency_notice": "No source check is recorded for these leads. Their currency is unknown: a linked source is not evidence that the instrument is current or in force."
 }

@@ -438,5 +438,21 @@
   "source.provenance.evidence_ref": "مرجع الدليل",
   "source.provenance.evidence_note": "غير قابل للتحقق بشكل مستقل",
   "source.link": "رابط المصدر الرسمي",
-  "sources.count": "{count} مصدرًا مرشحًا غير مراجع في {jurisdictions} ولاية قضائية."
+  "sources.count": "{count} مصدرًا مرشحًا غير مراجع في {jurisdictions} ولاية قضائية.",
+  "source.publisher": "مضيف الناشر",
+  "source.registry": "سجل الناشرين",
+  "source.registry.unverified": "غير مُتحقق منه",
+  "source.registry.reviewed": "مُراجَع",
+  "source.registry.disputed": "متنازع عليه",
+  "source.health": "حالة المصدر",
+  "source.health.not_checked": "لم يُفحص بعد",
+  "source.health.reachable": "متاح عند آخر فحص",
+  "source.health.unchanged": "لم يُرصد تغيير عند آخر فحص",
+  "source.health.changed": "تغيّر عند آخر فحص",
+  "source.health.blocked": "الاسترجاع محظور",
+  "source.health.failed": "فشل الفحص",
+  "source.health.unknown": "غير معروف",
+  "source.health.stale": "الفحص متأخر",
+  "source.health.last_checked": "آخر فحص للمصدر",
+  "sources.currency_notice": "لا يوجد فحص مصدر مسجل لهذه المصادر. حداثتها غير معروفة: وجود رابط لا يُثبت أن الوثيقة سارية أو نافذة."
 }

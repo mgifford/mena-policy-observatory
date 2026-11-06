@@ -17,7 +17,7 @@ Prepared for: https://github.com/mgifford/mena-policy-observatory (repository in
 
 - `agents/`: staged, bounded prompts with hard-stop and handoff contracts.
 - `backlog/`: 24 proposed geographic entries, domain inventory, 54 tasks (24 jurisdiction discovery tasks, 16 cross-domain tasks and 14 tranche-02 verification tasks), and the tranche-02 task queue.
-- `sources/`: previous official-site **candidate leads** and authoritative research portals, not verified law.
+- `sources/`: previous official-site **candidate leads** and authoritative research portals, not verified law; `publishers.json` records the cited hosts and `source-checks.json` records retrieval health (currently `not_checked`).
 - `templates/`: source, interpretation, relationship, Axiom, review, PR and research packet scaffolds.
 - `schemas/`: standalone packet JSON Schema, deliberately not replacing the existing `regions/mena/schemas/` model.
 - `scripts/`: offline packet validator, deterministic output manifest with `--check`, multi-file queue summaries with logical duplicate detection, and the idempotent tranche importer. Network/model calls are intentionally excluded.
@@ -40,10 +40,11 @@ Prepared for: https://github.com/mgifford/mena-policy-observatory (repository in
 ```sh
 python3 scripts/validate_packets.py examples/valid-packet.json
 python3 -m unittest discover -s tests -p 'test_*.py' -v
-python3 scripts/report_queue.py backlog/tasks.jsonl backlog/cross-domain-tasks.jsonl
+python3 scripts/report_queue.py backlog/tasks.jsonl backlog/cross-domain-tasks.jsonl backlog/tasks-tranche-02.jsonl
 python3 scripts/manifest.py . --output MANIFEST.json
 python3 scripts/manifest.py . --output MANIFEST.json --check
 python3 scripts/import_tranche.py --check
+python3 scripts/registry.py --check
 python3 incoming/tranche-02/validate.py
 ```
 

@@ -111,6 +111,22 @@ class CoveragePageTests(unittest.TestCase):
         self.assertIn('Import package', body)
         self.assertIn('Not independently checkable', body)
 
+    def test_sources_page_shows_publisher_and_source_health(self):
+        body = sources_body(self.catalogues, 'en', self.view)
+        self.assertIn('Publisher host', body)
+        self.assertIn('Publisher registry', body)
+        self.assertIn('Source health', body)
+        self.assertIn('Not yet checked', body)
+        self.assertIn('No source check is recorded for these leads', body)
+        self.assertIn('droit.mjustice.gov.dz', body)
+        self.assertIn('Unverified', body)
+
+    def test_arabic_sources_page_translates_source_health(self):
+        body = sources_body(self.catalogues, 'ar', self.view)
+        self.assertIn('حالة المصدر', body)
+        self.assertIn('لم يُفحص بعد', body)
+        self.assertIn('سجل الناشرين', body)
+
     def test_arabic_sources_page_translates_candidate_metadata(self):
         body = sources_body(self.catalogues, 'ar', self.view)
         self.assertIn('حالة المراجعة القانونية', body)
