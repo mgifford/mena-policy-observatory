@@ -34,7 +34,53 @@ AS_OF = '2026-11-06'
 STALE_AFTER_DAYS = 180
 PUBLISHER_NOTE = ('Derived from a cited source URL. Publisher name, authority type '
                   'and status remain unknown until a human reviewer records them.')
-CHECK_NOTE = 'No source check has been recorded.'
+CHECK_NOTE = 'No retrieval has been attempted.'
+RETRIEVAL_MIGRATION = {
+    'not_checked': 'not_attempted',
+    'reachable': 'success',
+    'unchanged': 'success',
+    'changed': 'success',
+    'failed': 'failed',
+    'blocked': 'blocked',
+    'unknown': 'unknown',
+}
+
+
+def _check_from_previous(previous, candidate_id, publisher_id):
+    if 'retrieval_status' in previous:
+        return {
+            'candidate_id': candidate_id,
+            'publisher_id': publisher_id,
+            'retrieval_status': previous.get('retrieval_status', 'not_attempted'),
+            'attempted_at': previous.get('attempted_at'),
+            'http_status': previous.get('http_status'),
+            'final_url': previous.get('final_url'),
+            'content_type': previous.get('content_type'),
+            'error_category': previous.get('error_category'),
+            'last_successful_retrieval': previous.get('last_successful_retrieval'),
+            'legal_verification': previous.get('legal_verification') or {
+                'status': 'unreviewed', 'evidence': None, 'reviewed_at': None,
+            },
+            'notes': (CHECK_NOTE if previous.get('notes') == 'No source check has been recorded.'
+                      else previous.get('notes', CHECK_NOTE)),
+        }
+    legacy = previous.get('status')
+    retrieval = RETRIEVAL_MIGRATION.get(legacy, 'not_attempted')
+    attempted = previous.get('checked_at') if legacy not in (None, 'not_checked') else None
+    return {
+        'candidate_id': candidate_id,
+        'publisher_id': publisher_id,
+        'retrieval_status': retrieval,
+        'attempted_at': attempted,
+        'http_status': previous.get('http_status'),
+        'final_url': previous.get('final_url'),
+        'content_type': previous.get('content_type'),
+        'error_category': None,
+        'last_successful_retrieval': attempted if retrieval == 'success' else None,
+        'legal_verification': {'status': 'unreviewed', 'evidence': None, 'reviewed_at': None},
+        'notes': (CHECK_NOTE if previous.get('notes') == 'No source check has been recorded.'
+                  else previous.get('notes', CHECK_NOTE)),
+    }
 
 
 def read_json(path: Path):
@@ -118,17 +164,8 @@ def derive(sources_doc, policies_doc, publishers_doc=None, checks_doc=None):
     for candidate in sorted(candidates, key=lambda item: str(item.get('id'))):
         host = host_of(candidate.get('source_url'))
         previous = previous_checks.get(candidate.get('id'), {})
-        check = {
-            'candidate_id': candidate.get('id'),
-            'publisher_id': publisher_ids.get(host, ''),
-            'status': previous.get('status', 'not_checked'),
-            'checked_at': previous.get('checked_at'),
-            'http_status': previous.get('http_status'),
-            'final_url': previous.get('final_url'),
-            'content_type': previous.get('content_type'),
-            'notes': previous.get('notes', CHECK_NOTE),
-        }
-        checks.append(check)
+        checks.append(_check_from_previous(
+            previous, candidate.get('id'), publisher_ids.get(host, '')))
 
     as_of = (checks_doc or {}).get('as_of') or AS_OF
     publishers_document = {
@@ -139,12 +176,13 @@ def derive(sources_doc, policies_doc, publishers_doc=None, checks_doc=None):
         'publishers': publishers,
     }
     checks_document = {
-        'version': '1',
+        'version': '2',
         'as_of': as_of,
         'stale_after_days': (checks_doc or {}).get('stale_after_days', STALE_AFTER_DAYS),
-        'policy': ('A check records retrieval health only. It does not establish that a '
-                   'source is current, that an instrument is in force, or that its content '
-                   'was reviewed. A missing check is not evidence of absence.'),
+        'policy': ('Retrieval outcome, source freshness and legal verification are separate. '
+                   'A successful request never verifies legal effect or currency, a failed '
+                   'request does not erase an earlier successful retrieval, and no check is '
+                   'evidence of absence.'),
         'checks': checks,
     }
     return publishers_document, checks_document

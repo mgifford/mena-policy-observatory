@@ -46,11 +46,13 @@ class RegistryTests(unittest.TestCase):
         candidate_ids = {candidate['id'] for candidate in load(SOURCES)['records']}
         self.assertEqual({check['candidate_id'] for check in checks}, candidate_ids)
         for check in checks:
-            self.assertEqual(check['status'], 'not_checked')
-            self.assertIsNone(check['checked_at'])
+            self.assertEqual(check['retrieval_status'], 'not_attempted')
+            self.assertIsNone(check['attempted_at'])
             self.assertIsNone(check['http_status'])
             self.assertIsNone(check['final_url'])
             self.assertIsNone(check['content_type'])
+            self.assertIsNone(check['last_successful_retrieval'])
+            self.assertEqual(check['legal_verification']['status'], 'unreviewed')
 
     def test_derivation_is_idempotent(self):
         sources = load(SOURCES)
@@ -114,13 +116,17 @@ class RegistryValidationTests(unittest.TestCase):
         self.data.source_checks.append(check)
         self.assertTrue(any('unknown candidate' in error for error in self.errors()))
 
-    def test_not_checked_with_a_date_is_rejected(self):
-        self.data.source_checks[0]['checked_at'] = '2026-11-06'
-        self.assertTrue(any('not_checked record may not carry' in error for error in self.errors()))
+    def test_not_attempted_with_details_is_rejected(self):
+        self.data.source_checks[0]['attempted_at'] = '2026-11-06'
+        self.assertTrue(any('not_attempted record may not carry' in error
+                            for error in self.errors()))
 
-    def test_checked_status_needs_a_date(self):
-        self.data.source_checks[0]['status'] = 'reachable'
-        self.assertTrue(any('needs an ISO checked_at' in error for error in self.errors()))
+    def test_attempted_retrieval_needs_a_timestamp(self):
+        self.data.source_checks[0]['retrieval_status'] = 'success'
+        self.data.source_checks[0]['http_status'] = 200
+        self.data.source_checks[0]['final_url'] = (
+            self.data.candidate_inventory['records'][0]['source_url'])
+        self.assertTrue(any('needs an ISO attempted_at' in error for error in self.errors()))
 
     def test_missing_check_is_rejected(self):
         self.data.source_checks = self.data.source_checks[1:]
@@ -130,33 +136,145 @@ class RegistryValidationTests(unittest.TestCase):
         self.data.registry_as_of = 'unknown'
         self.assertTrue(any('as_of must be an ISO date' in error for error in self.errors()))
 
-    def test_recorded_check_marks_a_stale_source(self):
-        check = self.data.source_checks[0]
-        check.update({
-            'status': 'reachable',
-            'checked_at': '2024-01-01',
-            'http_status': 200,
-            'final_url': self.data.candidate_inventory['records'][0]['source_url'],
-            'content_type': 'text/html',
-        })
+    def candidate_view(self, check):
         view = build_view(self.data)
-        candidate = next(item for item in view['candidates']
-                         if item['id'] == check['candidate_id'])
-        self.assertEqual(candidate['check_state'], 'stale')
+        return next(item for item in view['candidates']
+                    if item['id'] == check['candidate_id'])
 
-    def test_recent_check_is_not_stale(self):
+    def source_url(self, check):
+        return next(candidate['source_url']
+                    for candidate in self.data.candidate_inventory['records']
+                    if candidate['id'] == check['candidate_id'])
+
+    def record_success(self, check, day):
+        check.update({
+            'retrieval_status': 'success',
+            'attempted_at': day,
+            'http_status': 200,
+            'final_url': self.source_url(check),
+            'content_type': 'text/html',
+            'error_category': None,
+            'last_successful_retrieval': day,
+        })
+
+    def test_never_checked_is_not_established(self):
+        candidate = self.candidate_view(self.data.source_checks[0])
+        self.assertEqual(candidate['retrieval_status'], 'not_attempted')
+        self.assertEqual(candidate['freshness'], 'not_established')
+        self.assertEqual(candidate['legal_verification']['status'], 'unreviewed')
+
+    def test_successful_retrieval_is_fresh_but_not_legally_verified(self):
+        check = self.data.source_checks[0]
+        self.record_success(check, '2026-11-01')
+        candidate = self.candidate_view(check)
+        self.assertEqual(candidate['retrieval_status'], 'success')
+        self.assertEqual(candidate['freshness'], 'within_interval')
+        self.assertEqual(candidate['legal_verification']['status'], 'unreviewed')
+
+    def test_failed_retrieval_is_not_a_success(self):
         check = self.data.source_checks[0]
         check.update({
-            'status': 'unchanged',
-            'checked_at': '2026-11-01',
-            'http_status': 200,
-            'final_url': self.data.candidate_inventory['records'][0]['source_url'],
-            'content_type': 'text/html',
+            'retrieval_status': 'failed',
+            'attempted_at': '2026-11-06',
+            'error_category': 'timeout',
         })
-        view = build_view(self.data)
-        candidate = next(item for item in view['candidates']
-                         if item['id'] == check['candidate_id'])
-        self.assertEqual(candidate['check_state'], 'checked')
+        candidate = self.candidate_view(check)
+        self.assertEqual(candidate['retrieval_status'], 'failed')
+        self.assertEqual(candidate['freshness'], 'not_established')
+
+    def test_blocked_retrieval_is_reported(self):
+        check = self.data.source_checks[0]
+        check.update({
+            'retrieval_status': 'blocked',
+            'attempted_at': '2026-11-06',
+            'error_category': 'blocked',
+        })
+        candidate = self.candidate_view(check)
+        self.assertEqual(candidate['retrieval_status'], 'blocked')
+
+    def test_unknown_retrieval_is_reported(self):
+        check = self.data.source_checks[0]
+        check.update({'retrieval_status': 'unknown', 'attempted_at': '2026-11-06'})
+        candidate = self.candidate_view(check)
+        self.assertEqual(candidate['retrieval_status'], 'unknown')
+
+    def test_expired_freshness_interval(self):
+        check = self.data.source_checks[0]
+        self.record_success(check, '2024-01-01')
+        candidate = self.candidate_view(check)
+        self.assertEqual(candidate['freshness'], 'interval_exceeded')
+
+    def test_failed_retrieval_keeps_earlier_success(self):
+        check = self.data.source_checks[0]
+        self.record_success(check, '2026-10-01')
+        check.update({
+            'retrieval_status': 'failed',
+            'attempted_at': '2026-11-06',
+            'error_category': 'http_error',
+            'http_status': 503,
+            'final_url': None,
+            'content_type': None,
+        })
+        candidate = self.candidate_view(check)
+        self.assertEqual(candidate['retrieval_status'], 'failed')
+        self.assertEqual(check['last_successful_retrieval'], '2026-10-01')
+        self.assertEqual(candidate['freshness'], 'within_interval')
+
+    def test_successful_retrieval_needs_last_successful_date(self):
+        check = self.data.source_checks[0]
+        check.update({
+            'retrieval_status': 'success',
+            'attempted_at': '2026-11-01',
+            'http_status': 200,
+            'final_url': self.source_url(check),
+        })
+        self.assertTrue(any('needs last_successful_retrieval' in error for error in self.errors()))
+
+    def test_last_successful_retrieval_cannot_follow_attempt(self):
+        check = self.data.source_checks[0]
+        self.record_success(check, '2026-11-01')
+        check['last_successful_retrieval'] = '2026-11-02'
+        self.assertTrue(any('is after attempted_at' in error for error in self.errors()))
+
+    def test_freshness_uses_the_fixed_as_of_date(self):
+        check = self.data.source_checks[0]
+        self.record_success(check, '2020-12-01')
+        self.data.registry_as_of = '2020-12-31'
+        self.assertEqual(self.candidate_view(check)['freshness'], 'within_interval')
+
+    def test_future_dated_retrieval_is_rejected(self):
+        check = self.data.source_checks[0]
+        check.update({
+            'retrieval_status': 'failed',
+            'attempted_at': '2027-01-01',
+            'error_category': 'other',
+        })
+        self.assertTrue(any('attempted_at is after the registry as_of' in error
+                            for error in self.errors()))
+
+    def test_future_dated_success_is_unknown_not_fresh(self):
+        check = self.data.source_checks[0]
+        self.record_success(check, '2027-01-01')
+        candidate = self.candidate_view(check)
+        self.assertEqual(candidate['freshness'], 'unknown')
+
+    def test_legal_verification_cannot_be_promoted_without_evidence(self):
+        check = self.data.source_checks[0]
+        self.record_success(check, '2026-11-01')
+        check['legal_verification'] = {
+            'status': 'verified', 'evidence': None, 'reviewed_at': None,
+        }
+        self.assertTrue(any('needs recorded evidence' in error for error in self.errors()))
+        self.assertTrue(any('needs an ISO reviewed_at' in error for error in self.errors()))
+
+    def test_valid_legal_verification_requires_evidence_and_date(self):
+        check = self.data.source_checks[0]
+        self.record_success(check, '2026-11-01')
+        check['legal_verification'] = {
+            'status': 'verified', 'evidence': 'Recorded reviewer evidence',
+            'reviewed_at': '2026-11-05',
+        }
+        self.assertEqual(self.errors(), [])
 
 
 if __name__ == '__main__':

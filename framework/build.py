@@ -280,11 +280,22 @@ PUBLISHER_STATUS_KEYS = {
     'reviewed': 'source.registry.reviewed',
     'disputed': 'source.registry.disputed',
 }
-CHECK_STATUS_KEYS = {
-    status: f'source.health.{status}'
-    for status in (
-        'not_checked', 'reachable', 'unchanged', 'changed', 'blocked', 'failed', 'unknown',
-    )
+RETRIEVAL_KEYS = {
+    status: f'source.retrieval.{status}'
+    for status in ('not_attempted', 'success', 'failed', 'blocked', 'unknown')
+}
+FRESHNESS_KEYS = {
+    state: f'source.freshness.{state}'
+    for state in ('not_established', 'within_interval', 'interval_exceeded', 'unknown')
+}
+LEGAL_VERIFICATION_KEYS = {
+    status: f'source.legal_verification.{status}'
+    for status in ('unreviewed', 'in_review', 'verified', 'disputed', 'superseded')
+}
+RETRIEVAL_ERROR_KEYS = {
+    category: f'source.retrieval.error.{category}'
+    for category in ('timeout', 'dns', 'tls', 'http_error', 'blocked',
+                     'unsupported_content', 'other')
 }
 
 
@@ -298,9 +309,24 @@ def publisher_status_text(strings, value):
     return strings[key] if key else strings['source.registry.unverified']
 
 
-def check_status_text(strings, value):
-    key = CHECK_STATUS_KEYS.get(value)
-    return strings[key] if key else strings['source.health.unknown']
+def retrieval_text(strings, value):
+    key = RETRIEVAL_KEYS.get(value)
+    return strings[key] if key else strings['source.retrieval.unknown']
+
+
+def freshness_text(strings, value):
+    key = FRESHNESS_KEYS.get(value)
+    return strings[key] if key else strings['source.freshness.unknown']
+
+
+def legal_verification_text(strings, value):
+    key = LEGAL_VERIFICATION_KEYS.get(value)
+    return strings[key] if key else strings['source.legal_verification.unreviewed']
+
+
+def retrieval_error_text(strings, value):
+    key = RETRIEVAL_ERROR_KEYS.get(value)
+    return strings[key] if key else strings['source.retrieval.error.other']
 
 
 def legal_review_text(strings, value):
@@ -1267,17 +1293,24 @@ def sources_body(catalogues, lang, view):
         else:
             details.append((strings['source.publisher'], esc(strings['source.not_recorded'])))
             details.append((strings['source.registry'], esc(strings['source.not_recorded'])))
-        check = candidate.get('source_check')
-        if check:
-            checked_at = (code(check['checked_at']) if check.get('checked_at')
-                          else esc(strings['source.not_recorded']))
-            health = (f'{esc(check_status_text(strings, check.get("status")))} — '
-                      f'{esc(strings["source.health.last_checked"])}: {checked_at}')
-            if candidate.get('check_state') == 'stale':
-                health += f' — {esc(strings["source.health.stale"])}'
-        else:
-            health = esc(strings['source.not_recorded'])
-        details.append((strings['source.health'], health))
+        check = candidate.get('source_check') or {}
+        attempted = (code(check['attempted_at']) if check.get('attempted_at')
+                     else esc(strings['source.not_recorded']))
+        retrieval = (f'{esc(retrieval_text(strings, candidate.get("retrieval_status")))} — '
+                     f'{esc(strings["source.retrieval.last_attempted"])}: {attempted}')
+        if check.get('error_category'):
+            retrieval += (f' — {esc(strings["source.retrieval.error"])}: '
+                          f'{esc(retrieval_error_text(strings, check["error_category"]))}')
+        details.append((strings['source.retrieval'], retrieval))
+        successful = (code(check['last_successful_retrieval'])
+                      if check.get('last_successful_retrieval')
+                      else esc(strings['source.not_recorded']))
+        freshness = (f'{esc(freshness_text(strings, candidate.get("freshness")))} — '
+                     f'{esc(strings["source.freshness.last_successful"])}: {successful}')
+        details.append((strings['source.freshness'], freshness))
+        verification = candidate.get('legal_verification') or {}
+        details.append((strings['source.legal_verification'],
+                        esc(legal_verification_text(strings, verification.get('status')))))
         if instrument:
             dates = instrument.get('dates') if isinstance(instrument.get('dates'), dict) else {}
 

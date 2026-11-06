@@ -1,5 +1,11 @@
 # Toolkit change record
 
+## v6 (2026-11-06)
+- Split the source-check model into retrieval outcome, freshness inputs and legal verification (`source-checks.json` version 2); legacy records migrate automatically.
+- `registry.py` preserves an earlier successful retrieval when a later attempt fails and never promotes legal verification.
+- Retrospective effective dates are warnings rather than validation errors; impossible calendar dates remain errors.
+- Documentation and translation copy updated for the separated model. No legal status changed.
+
 ## v5 (2026-11-06)
 - Added `sources/instruments.json`: one reported instrument identity per candidate, with parsed type/number/year, explicit null authority and version dates, expression label and uncertainty notes.
 - Added `scripts/instruments.py`: deterministic derivation with `--check`; preserves human-entered authority, dates, expression language and review state.

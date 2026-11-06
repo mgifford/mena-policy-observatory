@@ -14,6 +14,8 @@ Evidence-currency work package (additive): `research-toolkit/sources/publishers.
 
 Instrument-identity work package (additive): `research-toolkit/sources/instruments.json` adds one reported instrument identity per candidate, with parsed type/number/year, explicit null dates and uncertainty notes. No existing candidate, task, policy record or legal-status field changes. Reproducible with `python3 research-toolkit/scripts/instruments.py --check`.
 
+Source-health defect correction (non-breaking data migration): `research-toolkit/sources/source-checks.json` moves to version 2 fields. Legacy `status`/`checked_at` records migrate to `retrieval_status`, `attempted_at` and `last_successful_retrieval`, and gain a separate `legal_verification` object. All 23 current records are `not_attempted` and `unreviewed`; no retrieval, freshness or verification claim is created. `registry.py --check` reproduces the file. Retrospective effective dates now produce a validation warning instead of an error; no source date is changed.
+
 Research layers remain separate: geographic scope, task status, candidate discovery, source verification, provision extraction, interpretation, translation, Rules as Code and publication are never collapsed into one label. Candidate source leads are displayed as unreviewed discovery leads only; no candidate has been captured, verified, translated or legally reviewed.
 
 Omitted: old duplicated `docs/policies` tree and historical generated HTML, because they were derived outputs. No additional law or verified translation has been invented. Old scripts have not been carried forward where their behavior duplicates the new framework.

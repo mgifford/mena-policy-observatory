@@ -54,12 +54,15 @@ def validate_region(root: Path, region: str) -> list[str]:
 def main() -> int:
     root = Path(__file__).resolve().parents[1]
     errors: list[str] = []
+    warnings: list[str] = []
     for region in REGIONS:
         errors.extend(validate_region(root, region))
-        errors.extend(validate_region_research(root / 'regions' / region, region))
+        errors.extend(validate_region_research(root / 'regions' / region, region, warnings))
     errors.extend(validate_coverage(load_coverage(
         root / 'regions' / COVERAGE_REGION, root / 'research-toolkit')))
 
+    for warning in warnings:
+        print(f'WARNING: {warning}')
     if errors:
         print('\n'.join(errors), file=sys.stderr)
         return 1
