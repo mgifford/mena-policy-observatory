@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "CHANGELOG.md",
-      "size": 1859,
-      "sha256": "83fac1ec40b78191206f141f0561b9e5eec0f8c1e295578e2745bf28bb67f009"
+      "size": 2667,
+      "sha256": "d843f74ed963dd79b2fa83bf218a3f64b65f7a5d6d224cc3ae4a174b5c7ad0ad"
     },
     {
       "path": "LICENSE-NOTE.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "size": 3597,
-      "sha256": "f32cbedfefb929bce32b16976d69e2f8482d0fd5d07baf8d4a6f6c11ba380406"
+      "size": 4052,
+      "sha256": "e397842a03590faccd4d87ec32ba64487c35e6461d81ee9dec5fa1084db8c3c8"
     },
     {
       "path": "agents/00-controller.md",
@@ -88,6 +88,11 @@
       "sha256": "76cab3bbe6019ed2009739ea4520a134b4a49d90e915820c3306e640a0644159"
     },
     {
+      "path": "backlog/tasks-tranche-02.jsonl",
+      "size": 5101,
+      "sha256": "e9ff12dee7903e9ad3c5709d66d825067f2bf50bf65e555197ca1125660ae39f"
+    },
+    {
       "path": "backlog/tasks.jsonl",
       "size": 11223,
       "sha256": "bb2fe7864684f5d966c033a86721c598e2cd9ad5446f8d7fadda8e0bf865db74"
@@ -129,8 +134,8 @@
     },
     {
       "path": "docs/REPO-INTEGRATION.md",
-      "size": 4354,
-      "sha256": "120d6fce6ac5f723b445ce26fb5b5d67e9ac24b19ae4de2311792c5392a9f682"
+      "size": 6758,
+      "sha256": "98686e2c096a9b3ed0e4decd2a9c03107e41c0469b69b02dac37dc86134176d2"
     },
     {
       "path": "docs/RESEARCH-METHOD.md",
@@ -198,9 +203,19 @@
       "sha256": "bb7bb305694d9f038fba0cd2dda50c597965e1b3d7bda96f78a479a38444b08e"
     },
     {
+      "path": "reconciliation/tranche-02-report.json",
+      "size": 10886,
+      "sha256": "449a98a6db070f2a78700c693972c54685066538d989a33a7ed6e2e9a03ed6c3"
+    },
+    {
       "path": "schemas/candidate-packet.schema.json",
       "size": 4249,
       "sha256": "1f35e86918c0dec61c8c922a12913b2a416361ebcfbc72ebaa13c2ca90b4de04"
+    },
+    {
+      "path": "scripts/import_tranche.py",
+      "size": 27529,
+      "sha256": "ad747074b2cfefe10323cb93567d6b0c21a8177af91a099f2ebe3dddfe211cea"
     },
     {
       "path": "scripts/manifest.py",
@@ -224,8 +239,8 @@
     },
     {
       "path": "sources/candidate-sources.json",
-      "size": 9384,
-      "sha256": "047487b8ffce01db21b7deceb4eb6258b6e9ebfdd25677d49556ca9bea3050e1"
+      "size": 36188,
+      "sha256": "fecef7a729bf018488f44caa56cef417a88d7b0c1fd6309a5bac1ba84301d3de"
     },
     {
       "path": "templates/AGENT-REPORT.md",

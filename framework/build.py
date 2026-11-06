@@ -248,6 +248,33 @@ def source_type_text(strings, source_type):
     return strings[key] if key else strings['source.type.unknown']
 
 
+LEGAL_REVIEW_KEYS = {
+    'not_assessed': 'source.legal_review.not_assessed',
+}
+RELATION_KEYS = {
+    'amends': 'source.relationship.amends',
+    'related': 'source.relationship.related',
+    'implements': 'source.relationship.implements',
+    'consolidates': 'source.relationship.consolidates',
+}
+VERIFICATION_KEYS = {
+    requirement: f'source.verification.{requirement}'
+    for requirement in (
+        'official_source', 'legal_scope', 'language', 'publication_permissions',
+    )
+}
+
+
+def legal_review_text(strings, value):
+    key = LEGAL_REVIEW_KEYS.get(value)
+    return strings[key] if key else strings['source.legal_review.not_assessed']
+
+
+def relation_text(strings, value):
+    key = RELATION_KEYS.get(value)
+    return strings[key] if key else strings['source.relationship.related']
+
+
 def country_text(country, lang):
     if lang == 'ar' and country.get('name_ar'):
         return country['name_ar']
@@ -866,7 +893,9 @@ def country_body(catalogues, lang, view, country):
             f'{foreign(candidate.get("instrument_title", candidate["id"]), lang)}</a> '
             f'{code(candidate["id"])} — '
             f'{esc(strings["source.discovery_label"])} '
-            f'({esc(capture_text(strings, candidate.get("capture_status")))})</li>'
+            f'({esc(capture_text(strings, candidate.get("capture_status")))}) — '
+            f'{esc(strings["source.legal_review"])}: '
+            f'{esc(legal_review_text(strings, candidate.get("legal_effect")))}</li>'
             for candidate in country['candidates']
         )
         parts.append(
@@ -1038,7 +1067,9 @@ def domain_body(catalogues, lang, view, domain):
         items = ''.join(
             f'<li><a href="{esc(candidate["source_url"])}" rel="noreferrer">'
             f'{foreign(candidate.get("instrument_title", candidate["id"]), lang)}</a> '
-            f'{code(candidate["id"])} — {esc(strings["source.discovery_label"])}</li>'
+            f'{code(candidate["id"])} — {esc(strings["source.discovery_label"])} — '
+            f'{esc(strings["source.legal_review"])}: '
+            f'{esc(legal_review_text(strings, candidate.get("legal_effect")))}</li>'
             for candidate in domain['candidates']
         )
         parts.append(
@@ -1142,7 +1173,8 @@ def sources_body(catalogues, lang, view):
     strings = catalogues[lang]
     country_map = {country['code']: country for country in view['countries']}
     domain_map = {domain['id']: domain for domain in view['domains']}
-    rows = []
+    countries = {candidate.get('jurisdiction') for candidate in view['candidates']}
+    sections = []
     for candidate in view['candidates']:
         country = country_map.get(candidate.get('jurisdiction'),
                                   {'name': candidate.get('jurisdiction', '')})
@@ -1153,31 +1185,86 @@ def sources_body(catalogues, lang, view):
         recorded = candidate.get('published_date_reported')
         recorded_html = (code(recorded) if recorded and recorded != 'unknown'
                          else esc(strings['source.not_recorded']))
-        rows.append(
-            f'<tr><th scope="row"><a href="{esc(candidate["source_url"])}" rel="noreferrer">'
-            f'{foreign(candidate.get("instrument_title", candidate["id"]), lang)}</a> '
-            f'{code(candidate["id"])}</th>'
-            f'<td>{country_name(country, lang)}</td>'
-            f'<td>{domains}</td>'
-            f'<td>{esc(source_type_text(strings, candidate.get("source_type")))}</td>'
-            f'<td>{esc(strings["source.discovery_label"])} — '
-            f'{esc(capture_text(strings, candidate.get("capture_status")))}</td>'
-            f'<td>{recorded_html}</td></tr>'
-        )
+        details = [
+            (strings['source.jurisdiction'], country_name(country, lang)),
+            (strings['source.domains'], esc(domains) if domains
+             else esc(strings['source.not_recorded'])),
+            (strings['source.authority'],
+             esc(candidate['issuing_authority']) if candidate.get('issuing_authority')
+             else esc(strings['source.not_recorded'])),
+            (strings['source.source_type'],
+             esc(source_type_text(strings, candidate.get('source_type')))),
+            (strings['source.published'], recorded_html),
+            (strings['source.research_status'],
+             esc(status_text(strings, 'candidate_sources_identified'))),
+            (strings['source.legal_review'],
+             esc(legal_review_text(strings, candidate.get('legal_effect')))),
+        ]
+        languages = candidate.get('source_languages') or []
+        details.append((strings['source.languages'],
+                        ', '.join(code(language) for language in languages)
+                        if languages else esc(strings['source.not_recorded'])))
+        task_ids = candidate.get('task_ids') or []
+        details.append((strings['source.related_task'],
+                        ' '.join(code(task_id) for task_id in task_ids)
+                        if task_ids else esc(strings['source.related_task.none'])))
+        verification = candidate.get('verification_required') or []
+        if verification:
+            items = ''.join(
+                f'<li>{esc(strings[VERIFICATION_KEYS[requirement]])}</li>'
+                for requirement in verification
+            )
+            details.append((strings['source.verification'], f'<ul>{items}</ul>'))
+        else:
+            details.append((strings['source.verification'],
+                            esc(strings['source.verification.none'])))
+        relations = candidate.get('relations') or []
+        if relations:
+            items = ''.join(
+                f'<li>{esc(relation_text(strings, relation.get("relation")))} — '
+                f'{code(relation.get("target_candidate_id", ""))} — '
+                f'{foreign(relation.get("recorded_label", ""), lang)} '
+                f'({esc(strings["source.relationship.unreviewed"])})</li>'
+                for relation in relations
+            )
+            details.append((strings['source.relationship'], f'<ul>{items}</ul>'))
+        provenance = candidate.get('provenance')
+        if provenance:
+            prov = [
+                f'<li>{esc(strings["source.provenance.package"])}: '
+                f'{code(provenance.get("package", ""))}</li>',
+                f'<li>{esc(strings["source.provenance.incoming"])}: '
+                f'{code(provenance.get("incoming_id", ""))}</li>',
+                f'<li>{esc(strings["source.provenance.recorded"])}: '
+                f'{code(provenance.get("recorded_on", ""))}</li>',
+            ]
+            if provenance.get('evidence_ref'):
+                prov.append(
+                    f'<li>{esc(strings["source.provenance.evidence_ref"])}: '
+                    f'{code(provenance["evidence_ref"])} — '
+                    f'{esc(strings["source.provenance.evidence_note"])}</li>')
+            details.append((strings['source.provenance'], f'<ul>{"".join(prov)}</ul>'))
+        details.append((strings['source.link'],
+                        f'<a href="{esc(candidate["source_url"])}" rel="noreferrer">'
+                        f'{code(candidate["source_url"])}</a>'))
+        definition = ''.join(f'<dt>{esc(label)}</dt><dd>{value}</dd>'
+                             for label, value in details)
+        sections.append(
+            f'<section><h2>{foreign(candidate.get("instrument_title", candidate["id"]), lang)} '
+            f'{code(candidate["id"])}</h2>'
+            f'<p class="meta">{esc(strings["source.discovery_label"])} — '
+            f'{esc(capture_text(strings, candidate.get("capture_status")))}</p>'
+            f'<dl>{definition}</dl></section>')
+    count_line = t(strings, 'sources.count', count=len(view['candidates']),
+                   jurisdictions=len(countries))
     return '\n'.join([
         f'<h1>{esc(strings["sources.h1"])}</h1>',
         f'<p class="lede">{esc(strings["sources.lede"])}</p>',
         f'<p class="notice">{esc(strings["source.discovery_notice"])}</p>',
+        f'<p class="notice">{esc(strings["source.candidate_notice"])}</p>',
         f'<p class="notice">{esc(strings["sources.pending_review"])}</p>',
-        f'<div class="table-scroll" role="region" aria-label="{esc(strings["sources.h1"])}" tabindex="0">'
-        f'<table><caption>{esc(strings["sources.caption"])}</caption><thead><tr>'
-        f'<th scope="col">{esc(strings["sources.table.source"])}</th>'
-        f'<th scope="col">{esc(strings["sources.table.jurisdiction"])}</th>'
-        f'<th scope="col">{esc(strings["sources.table.domains"])}</th>'
-        f'<th scope="col">{esc(strings["sources.table.type"])}</th>'
-        f'<th scope="col">{esc(strings["sources.table.state"])}</th>'
-        f'<th scope="col">{esc(strings["sources.table.recorded"])}</th>'
-        f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>',
+        f'<p>{esc(count_line)}</p>',
+        '\n'.join(sections),
         f'<p><a href="../index.html">{esc(strings["sources.back"])}</a></p>',
     ])
 

@@ -1,0 +1,389 @@
+{
+  "version": "1",
+  "package": "research-toolkit/incoming/tranche-02",
+  "package_research_date": "2026-11-05",
+  "integration_date": "2026-11-06",
+  "incoming": {
+    "candidates": 14,
+    "tasks": 14,
+    "jurisdictions": 9
+  },
+  "imported_candidates": [
+    {
+      "incoming_id": "MENA-T02-001",
+      "candidate_id": "mena-t02-001",
+      "jurisdiction": "DZ",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-002",
+      "candidate_id": "mena-t02-002",
+      "jurisdiction": "DZ",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-003",
+      "candidate_id": "mena-t02-003",
+      "jurisdiction": "IQ",
+      "domains": [
+        "disability_inclusion"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-004",
+      "candidate_id": "mena-t02-004",
+      "jurisdiction": "IQ",
+      "domains": [
+        "disability_inclusion"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-005",
+      "candidate_id": "mena-t02-005",
+      "jurisdiction": "KW",
+      "domains": [
+        "disability_inclusion"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-006",
+      "candidate_id": "mena-t02-006",
+      "jurisdiction": "LB",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-007",
+      "candidate_id": "mena-t02-007",
+      "jurisdiction": "MR",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-008",
+      "candidate_id": "mena-t02-008",
+      "jurisdiction": "SO",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-009",
+      "candidate_id": "mena-t02-009",
+      "jurisdiction": "SO",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-010",
+      "candidate_id": "mena-t02-010",
+      "jurisdiction": "PS",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-011",
+      "candidate_id": "mena-t02-011",
+      "jurisdiction": "DJ",
+      "domains": [
+        "disability_inclusion"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-012",
+      "candidate_id": "mena-t02-012",
+      "jurisdiction": "DJ",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-013",
+      "candidate_id": "mena-t02-013",
+      "jurisdiction": "DJ",
+      "domains": [
+        "digital_rights"
+      ]
+    },
+    {
+      "incoming_id": "MENA-T02-014",
+      "candidate_id": "mena-t02-014",
+      "jurisdiction": "LY",
+      "domains": [
+        "digital_rights"
+      ]
+    }
+  ],
+  "matched_candidates": [],
+  "possible_duplicates": [],
+  "conflicts": [],
+  "imported_tasks": [
+    {
+      "incoming_task_id": "MENA-T02-001-VERIFY",
+      "task_id": "MENA-T02-001-VERIFY",
+      "candidate_id": "mena-t02-001"
+    },
+    {
+      "incoming_task_id": "MENA-T02-002-VERIFY",
+      "task_id": "MENA-T02-002-VERIFY",
+      "candidate_id": "mena-t02-002"
+    },
+    {
+      "incoming_task_id": "MENA-T02-003-VERIFY",
+      "task_id": "MENA-T02-003-VERIFY",
+      "candidate_id": "mena-t02-003"
+    },
+    {
+      "incoming_task_id": "MENA-T02-004-VERIFY",
+      "task_id": "MENA-T02-004-VERIFY",
+      "candidate_id": "mena-t02-004"
+    },
+    {
+      "incoming_task_id": "MENA-T02-005-VERIFY",
+      "task_id": "MENA-T02-005-VERIFY",
+      "candidate_id": "mena-t02-005"
+    },
+    {
+      "incoming_task_id": "MENA-T02-006-VERIFY",
+      "task_id": "MENA-T02-006-VERIFY",
+      "candidate_id": "mena-t02-006"
+    },
+    {
+      "incoming_task_id": "MENA-T02-007-VERIFY",
+      "task_id": "MENA-T02-007-VERIFY",
+      "candidate_id": "mena-t02-007"
+    },
+    {
+      "incoming_task_id": "MENA-T02-008-VERIFY",
+      "task_id": "MENA-T02-008-VERIFY",
+      "candidate_id": "mena-t02-008"
+    },
+    {
+      "incoming_task_id": "MENA-T02-009-VERIFY",
+      "task_id": "MENA-T02-009-VERIFY",
+      "candidate_id": "mena-t02-009"
+    },
+    {
+      "incoming_task_id": "MENA-T02-010-VERIFY",
+      "task_id": "MENA-T02-010-VERIFY",
+      "candidate_id": "mena-t02-010"
+    },
+    {
+      "incoming_task_id": "MENA-T02-011-VERIFY",
+      "task_id": "MENA-T02-011-VERIFY",
+      "candidate_id": "mena-t02-011"
+    },
+    {
+      "incoming_task_id": "MENA-T02-012-VERIFY",
+      "task_id": "MENA-T02-012-VERIFY",
+      "candidate_id": "mena-t02-012"
+    },
+    {
+      "incoming_task_id": "MENA-T02-013-VERIFY",
+      "task_id": "MENA-T02-013-VERIFY",
+      "candidate_id": "mena-t02-013"
+    },
+    {
+      "incoming_task_id": "MENA-T02-014-VERIFY",
+      "task_id": "MENA-T02-014-VERIFY",
+      "candidate_id": "mena-t02-014"
+    }
+  ],
+  "outstanding_questions": [
+    {
+      "candidate_id": "mena-t02-001",
+      "question": "Resolve consolidated wording and commencement provisions.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-002",
+      "question": "Extract exact amendment operations and verify dates and transitional rules.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-003",
+      "question": "Obtain 2024 amendment from official gazette, reconcile terminology and superseded provisions.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-004",
+      "question": "Locate official amendment PDF and establish exact changes.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-005",
+      "question": "Retrieve official-gazette text and amendments; distinguish rights from service descriptions.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-006",
+      "question": "Extract applicable provisions and implementing measures; assess legal authority and effective dates.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-007",
+      "question": "Retrieve official gazette and reconcile authority decrees of 2022 and 2023.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-008",
+      "question": "Confirm exact primary text, translations, federal applicability and effective dates.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-009",
+      "question": "Retrieve promulgated regulations and distinguish cabinet approval from commencement.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-010",
+      "question": "Extract amendment-sensitive provisions and geographic/legal applicability; avoid evaluative rights claims without review.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-011",
+      "question": "Retrieve national 2022 law and treaty-status evidence; do not infer domestic enforceability from ratification alone.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-012",
+      "question": "Analyze authority powers, safeguards, interactions with privacy code and reporting duties.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-013",
+      "question": "Verify international treaty status and subsequent implementing measures.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    },
+    {
+      "candidate_id": "mena-t02-014",
+      "question": "Investigate legal and institutional context, subsequent amendments, and interpretation by local professionals.",
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ]
+    }
+  ],
+  "relationships": 3,
+  "duplicate_detection": {
+    "signals": [
+      "canonical source URL (scheme, host and path, fragment ignored)",
+      "jurisdiction plus primary instrument number and year",
+      "jurisdiction plus normalized title"
+    ],
+    "limitations": "The package records one URL per lead and no alternative or archived URLs, so URL comparison cannot detect a mirror of the same instrument. Amendment and consolidation relationships are stored as unreviewed candidate relations; they are not used to merge records."
+  },
+  "mappings": {
+    "domains": {
+      "digital_rights": "digital_rights",
+      "disability_rights": "disability_inclusion"
+    },
+    "source_types": {
+      "official_gazette": "official_legislative_publication",
+      "justice_ministry_legal_portal": "official_legislation_index",
+      "justice_ministry": "official_legislation_index",
+      "official_legislative_database": "official_legislation_index",
+      "house_of_representatives_portal": "official_legislation_index",
+      "government_authority": "official_index",
+      "central_bank_official_law_collection": "official_regulator_legal_index",
+      "government_regulator": "official_regulator_legal_index",
+      "government_regulator_announcement": "official_government_explainer_not_statute",
+      "intergovernmental_index": "secondary"
+    },
+    "task_statuses": {
+      "ready_for_source_verification": "unstarted"
+    },
+    "task_stage": "capture"
+  },
+  "existing_policy_records": {
+    "count": 7,
+    "ids": [
+      "ae-moe-accessibility",
+      "ae-mof-accessibility",
+      "ae-national-digital-accessibility",
+      "qa-eaccessibility-2011",
+      "qa-eaccessibility-2025-upcoming",
+      "sa-dga-web-accessibility-guide",
+      "sa-mep-accessibility"
+    ]
+  },
+  "canonical_candidate_records": 23,
+  "canonical_task_records": 54,
+  "errors": [],
+  "result": "ok"
+}
