@@ -1,0 +1,7 @@
+# NON-EXECUTABLE RESEARCH SCAFFOLD. No legal rule encoded.
+# Requires authoritative clause locator, reviewed interpretation, pinned engine, tests.
+# Unresolved interpretation issue: EX-001.
+format: rulespec/v1
+module:
+  title: "Unreviewed policy candidate - do not execute"
+rules: []

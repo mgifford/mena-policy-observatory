@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "task_id": "OM-DA-APPLICABILITY-001",
+  "jurisdiction": "OM",
+  "domain": "digital_accessibility",
+  "question": "Which public-sector entities fall within the reported national digital accessibility policy?",
+  "stage": "candidate",
+  "source": {
+    "official_url": "https://www.mtcit.gov.om/library-3/legislations-policies-8/policies-73/the-national-digital-accessibility-policy-649",
+    "document_id": null,
+    "provision_locator": null,
+    "source_language": null,
+    "captured_at": null,
+    "sha256": null,
+    "capture_path": null,
+    "source_type": "official_index"
+  },
+  "evidence": {
+    "exact_excerpt": null,
+    "verified_against_source": false,
+    "license_checked": false
+  },
+  "interpretation": {
+    "proposed": null,
+    "alternatives": [],
+    "open_questions": [
+      "Locate original instrument and determine authoritative version and entity scope."
+    ],
+    "legal_effect": "not_assessed"
+  },
+  "rules_as_code": {
+    "engine": "axiom",
+    "status": "blocked"
+  },
+  "review": {
+    "source_verified": false,
+    "legal_reviewed": false,
+    "translation_reviewed": false
+  }
+}

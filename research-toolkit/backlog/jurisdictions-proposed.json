@@ -1,0 +1,198 @@
+{
+  "scope_version": "proposed-v1",
+  "scope_note": "24 proposed entries; existing repo has 21. Additional entries require editorial review. Geographic classification and jurisdiction are not synonymous.",
+  "entries": [
+    {
+      "code": "DZ",
+      "name": "Algeria",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "EG",
+      "name": "Egypt",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "LY",
+      "name": "Libya",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "MA",
+      "name": "Morocco",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "SD",
+      "name": "Sudan",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "TN",
+      "name": "Tunisia",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "BH",
+      "name": "Bahrain",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "IQ",
+      "name": "Iraq",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "IL",
+      "name": "Israel",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "JO",
+      "name": "Jordan",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "KW",
+      "name": "Kuwait",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "LB",
+      "name": "Lebanon",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "OM",
+      "name": "Oman",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "PS",
+      "name": "Palestine",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "QA",
+      "name": "Qatar",
+      "registry_status": "exists_in_repository",
+      "research_status": "initial_research_records_exist",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "SA",
+      "name": "Saudi Arabia",
+      "registry_status": "exists_in_repository",
+      "research_status": "initial_research_records_exist",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "SY",
+      "name": "Syria",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "AE",
+      "name": "United Arab Emirates",
+      "registry_status": "exists_in_repository",
+      "research_status": "initial_research_records_exist",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "YE",
+      "name": "Yemen",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "DJ",
+      "name": "Djibouti",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "MR",
+      "name": "Mauritania",
+      "registry_status": "exists_in_repository",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "IR",
+      "name": "Iran",
+      "registry_status": "proposed_scope_entry",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "SO",
+      "name": "Somalia",
+      "registry_status": "proposed_scope_entry",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Editorial region scope; not a claim about applicable law"
+    },
+    {
+      "code": "EH",
+      "name": "Western Sahara",
+      "registry_status": "proposed_scope_entry",
+      "research_status": "not_assessed",
+      "legal_coverage_claim": "none",
+      "scope_note": "Territory/disputed legal authority requires case-specific analysis"
+    }
+  ]
+}
