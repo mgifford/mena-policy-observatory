@@ -63,6 +63,13 @@ class CoveragePageTests(unittest.TestCase):
         self.assertIn('<span lang="en" dir="ltr">', body)
         self.assertIn('غير مسجل', body)
 
+    def test_arabic_country_page_translates_group_and_notes(self):
+        body = country_body(self.catalogues, 'ar', self.view, self.country('EH'))
+        self.assertIn('إضافات إقليمية', body)
+        self.assertIn('إقليم لم تُحسم سيادته', body)
+        self.assertNotIn('<span lang="en" dir="ltr">Regional additions</span>', body)
+        self.assertNotIn('Territory with unresolved sovereignty', body)
+
     def test_domains_index_and_page(self):
         index = domains_index_body(self.catalogues, 'en', self.view)
         for domain_id in ('digital_accessibility', 'ai_governance', 'srhr'):

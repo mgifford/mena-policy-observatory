@@ -108,6 +108,53 @@ class CoverageRegistryTests(unittest.TestCase):
         self.assertTrue(any('unknown source lead' in error
                             for error in validate_coverage(data)))
 
+    def test_countries_carry_provisional_arabic_labels(self):
+        for country in self.data.countries:
+            self.assertTrue(country['group_ar'], country['code'])
+            self.assertEqual(country['group_ar_status'], 'provisional', country['code'])
+            self.assertTrue(country['scope_note_ar'], country['code'])
+            self.assertEqual(country['scope_note_ar_status'], 'provisional', country['code'])
+            if country.get('jurisdiction_note'):
+                self.assertTrue(country.get('jurisdiction_note_ar'), country['code'])
+                self.assertEqual(country.get('jurisdiction_note_ar_status'), 'provisional')
+
+    def test_missing_arabic_group_label_is_rejected(self):
+        data = copy.deepcopy(self.data)
+        for country in data.countries:
+            if country['code'] == 'EH':
+                country.pop('group_ar')
+        self.assertTrue(any('group_ar' in error for error in validate_coverage(data)))
+
+    def test_jurisdiction_note_without_arabic_is_rejected(self):
+        data = copy.deepcopy(self.data)
+        for country in data.countries:
+            if country['code'] == 'DZ':
+                country['jurisdiction_note'] = 'An editorial note that needs a translation.'
+        self.assertTrue(any('DZ' in error and 'jurisdiction_note_ar' in error
+                            for error in validate_coverage(data)))
+
+    def test_confirmed_effect_needs_recorded_review(self):
+        data = copy.deepcopy(self.data)
+        for policy in data.policies:
+            if policy['country'] == 'AE':
+                policy['legal_effect'] = 'binding_confirmed'
+        self.assertTrue(any('complete recorded review' in error
+                            for error in validate_coverage(data)))
+
+    def test_incomplete_review_record_is_rejected(self):
+        data = copy.deepcopy(self.data)
+        data.research[data.policies[0]['id']]['review'] = {
+            'status': 'reviewed',
+            'reviewer': 'Fixture reviewer',
+        }
+        self.assertTrue(any('reviewed record needs' in error
+                            for error in validate_coverage(data)))
+
+    def test_pending_review_record_is_allowed(self):
+        data = copy.deepcopy(self.data)
+        data.research[data.policies[0]['id']]['review'] = {'status': 'pending'}
+        self.assertFalse(any('review' in error for error in validate_coverage(data)))
+
     def test_logical_task_duplicate_is_rejected(self):
         data = copy.deepcopy(self.data)
         duplicate = dict(data.tasks[0], task_id=data.tasks[0]['task_id'].replace('-', '_'))
@@ -158,13 +205,48 @@ class CoverageStatusTests(unittest.TestCase):
         self.assertEqual(cell_status(data, 'DZ', 'digital_accessibility'), 'blocked')
         self.assertEqual(country_status(data, 'DZ', ['digital_accessibility']), 'blocked')
 
-    def test_reviewed_findings_require_confirmed_effect_and_no_questions(self):
+    def test_reviewed_findings_require_confirmed_effect_and_recorded_review(self):
         data = copy.deepcopy(self.data)
         for policy in data.policies:
             if policy['country'] == 'AE':
                 policy['legal_effect'] = 'binding_confirmed'
                 data.research[policy['id']]['interpretations'] = []
+                data.research[policy['id']]['review'] = {
+                    'status': 'reviewed',
+                    'reviewer': 'Fixture reviewer',
+                    'reviewed_at': '2026-11-06',
+                    'scope': 'Fixture review of the legal-effect finding',
+                }
         self.assertEqual(cell_status(data, 'AE', 'digital_accessibility'), 'reviewed_findings')
+
+    def test_confirmed_effect_without_review_is_not_reviewed(self):
+        data = copy.deepcopy(self.data)
+        for policy in data.policies:
+            if policy['country'] == 'AE':
+                policy['legal_effect'] = 'binding_confirmed'
+                data.research[policy['id']]['interpretations'] = []
+        self.assertEqual(cell_status(data, 'AE', 'digital_accessibility'), 'provision_extraction')
+
+    def test_incomplete_review_is_not_reviewed(self):
+        data = copy.deepcopy(self.data)
+        for policy in data.policies:
+            if policy['country'] == 'AE':
+                policy['legal_effect'] = 'binding_confirmed'
+                data.research[policy['id']]['interpretations'] = []
+                data.research[policy['id']]['review'] = {
+                    'status': 'reviewed',
+                    'reviewer': 'Fixture reviewer',
+                }
+        self.assertEqual(cell_status(data, 'AE', 'digital_accessibility'), 'provision_extraction')
+
+    def test_pending_review_is_not_reviewed(self):
+        data = copy.deepcopy(self.data)
+        for policy in data.policies:
+            if policy['country'] == 'AE':
+                policy['legal_effect'] = 'binding_confirmed'
+                data.research[policy['id']]['interpretations'] = []
+                data.research[policy['id']]['review'] = {'status': 'pending'}
+        self.assertEqual(cell_status(data, 'AE', 'digital_accessibility'), 'provision_extraction')
 
     def test_provision_extraction_and_capture_states(self):
         data = copy.deepcopy(self.data)
@@ -179,11 +261,28 @@ class CoverageStatusTests(unittest.TestCase):
 
     def test_record_review_requires_no_open_question(self):
         policy = {'id': 'x', 'legal_effect': 'binding_confirmed'}
-        self.assertTrue(record_is_reviewed(policy, {'interpretations': []}))
+        review = {
+            'status': 'reviewed',
+            'reviewer': 'Fixture reviewer',
+            'reviewed_at': '2026-11-06',
+            'scope': 'Fixture review of the legal-effect finding',
+        }
+        self.assertTrue(record_is_reviewed(policy, {'interpretations': [], 'review': review}))
         self.assertFalse(record_is_reviewed(
-            policy, {'interpretations': [{'status': 'unresolved'}]}))
+            policy, {'interpretations': [{'status': 'unresolved'}], 'review': review}))
         self.assertFalse(record_is_reviewed(
-            {'id': 'x', 'legal_effect': 'not_legally_assessed'}, {'interpretations': []}))
+            {'id': 'x', 'legal_effect': 'not_legally_assessed'},
+            {'interpretations': [], 'review': review}))
+
+    def test_record_review_requires_recorded_review_evidence(self):
+        policy = {'id': 'x', 'legal_effect': 'binding_confirmed'}
+        self.assertFalse(record_is_reviewed(policy, {'interpretations': []}))
+        self.assertFalse(record_is_reviewed(policy, {
+            'interpretations': [], 'review': {'status': 'pending'}}))
+        self.assertFalse(record_is_reviewed(policy, {
+            'interpretations': [],
+            'review': {'status': 'reviewed', 'reviewer': 'Fixture reviewer',
+                       'reviewed_at': '2026-11-06'}}))
 
     def test_public_view_hides_non_displayable_candidates(self):
         data = copy.deepcopy(self.data)

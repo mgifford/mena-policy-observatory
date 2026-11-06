@@ -199,7 +199,7 @@
   "coverage.legend.evidence_captured": "A policy record exists, but no provision has been extracted yet.",
   "coverage.legend.provision_extraction": "Provisions are recorded, but interpretation questions are not yet recorded.",
   "coverage.legend.legal_review_pending": "Provisions and open interpretation questions are recorded; qualified legal review is still pending.",
-  "coverage.legend.reviewed_findings": "Every policy record in the cell has a confirmed legal-effect finding and no open interpretation question.",
+  "coverage.legend.reviewed_findings": "Every policy record in the cell has a confirmed legal-effect finding, a recorded review entry and no open interpretation question.",
   "coverage.legend.blocked": "A recorded task is blocked. A blocked task is not a legal finding.",
 
   "tasks.h1": "Research and discovery queue",
