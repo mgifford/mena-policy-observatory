@@ -189,9 +189,34 @@ def _candidate_view(candidate):
     }
 
 
+def recorded_review(research: dict | None) -> dict | None:
+    """Return the record-level review entry only when it is complete.
+
+    The presence of a review object is not enough: a review is recorded only
+    with a reviewer, a date and a stated scope. An absent or partial review
+    leaves the record unreviewed rather than inferred from silence.
+    """
+    review = (research or {}).get('review')
+    if not isinstance(review, dict) or review.get('status') != 'reviewed':
+        return None
+    for key in ('reviewer', 'scope'):
+        if not isinstance(review.get(key), str) or not review[key].strip():
+            return None
+    if not _iso_date(review.get('reviewed_at')):
+        return None
+    return review
+
+
 def record_is_reviewed(policy: dict, research: dict | None) -> bool:
-    """A record is reviewed only with a confirmed effect and no open questions."""
+    """A record is reviewed with a confirmed effect, a recorded review and no open questions.
+
+    The status vocabulary calls ``reviewed_findings`` a review outcome, so the
+    gate requires recorded review evidence. Absence of interpretation questions
+    is not by itself review evidence.
+    """
     if policy.get('legal_effect') not in CONFIRMED_LEGAL_EFFECT:
+        return False
+    if recorded_review(research) is None:
         return False
     questions = (research or {}).get('interpretations') or []
     return not any(question.get('status') != 'resolved' for question in questions)
@@ -398,6 +423,21 @@ def validate_coverage(data: CoverageData) -> list[str]:
                 _error(errors, f'country {label}: {key} must be a nonempty string')
         if country.get('name_ar_status') not in ('provisional', 'reviewed'):
             _error(errors, f'country {label}: name_ar_status must be provisional or reviewed')
+        for key in ('group_ar', 'scope_note_ar'):
+            if not isinstance(country.get(key), str) or not country.get(key).strip():
+                _error(errors, f'country {label}: {key} must be a nonempty string')
+            if country.get(f'{key}_status') not in ('provisional', 'reviewed'):
+                _error(errors, f'country {label}: {key}_status must be provisional or reviewed')
+        if country.get('jurisdiction_note'):
+            if not isinstance(country.get('jurisdiction_note_ar'), str) or \
+                    not country['jurisdiction_note_ar'].strip():
+                _error(errors, f'country {label}: jurisdiction_note_ar is required '
+                               f'when jurisdiction_note is set')
+            if country.get('jurisdiction_note_ar_status') not in ('provisional', 'reviewed'):
+                _error(errors, f'country {label}: jurisdiction_note_ar_status must be '
+                               f'provisional or reviewed')
+        elif country.get('jurisdiction_note_ar'):
+            _error(errors, f'country {label}: jurisdiction_note_ar is set without jurisdiction_note')
         if country.get('in_scope') is not True:
             _error(errors, f'country {label}: in_scope must be true for a listed entry')
         if country.get('status') not in LEGACY_RECORD_STATUSES:
@@ -489,6 +529,19 @@ def validate_coverage(data: CoverageData) -> list[str]:
             _error(errors, f'policy {policy_id}: unknown domain {policy.get("topic")!r}')
         if not str(policy.get('source_url', '')).startswith('https://'):
             _error(errors, f'policy {policy_id}: source_url must be https')
+        research = data.research.get(str(policy_id))
+        review = (research or {}).get('review')
+        if review is not None:
+            if not isinstance(review, dict):
+                _error(errors, f'policy {policy_id}: review must be an object')
+            elif review.get('status') not in ('pending', 'reviewed'):
+                _error(errors, f'policy {policy_id}: review.status must be pending or reviewed')
+            elif review.get('status') == 'reviewed' and recorded_review(research) is None:
+                _error(errors, f'policy {policy_id}: a reviewed record needs a reviewer, '
+                               f'an ISO reviewed_at and a stated scope')
+        if policy.get('legal_effect') in CONFIRMED_LEGAL_EFFECT and recorded_review(research) is None:
+            _error(errors, f'policy {policy_id}: a confirmed legal effect needs a complete '
+                           f'recorded review; coverage will not infer one from silence')
     for policy_id in sorted({item for item in policy_ids if policy_ids.count(item) > 1}):
         _error(errors, f'policy {policy_id}: duplicate id')
 

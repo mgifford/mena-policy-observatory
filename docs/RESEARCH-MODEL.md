@@ -83,6 +83,29 @@ The layers stay separate. A listed jurisdiction is not a legal finding. A queued
 
 The validator rejects a candidate that asserts a confirmed legal effect, a captured source without capture metadata, an unknown domain or task stage, a duplicate logical task ID after separator normalization, or a public display record missing a required check.
 
+Country entries also carry provisional Arabic group labels, scope notes and jurisdiction notes (`group_ar`, `scope_note_ar`, `jurisdiction_note_ar`, each with an `_ar_status` of `provisional` or `reviewed`). The validator requires the Arabic counterpart wherever the English editorial text exists, so an Arabic page cannot silently fall back to untranslated interface prose. `provisional` is a statement about review, not about accuracy.
+
+### Record-level review evidence
+
+`reviewed_findings` is a review outcome, so the coverage layer will not infer it from silence. A record is counted as reviewed only when all of the following hold:
+
+- its `legal_effect` is `binding_confirmed` or `nonbinding_confirmed`;
+- `research.json` carries a complete `review` entry with `status: "reviewed"`, a `reviewer`, an ISO `reviewed_at` date and a stated `scope`;
+- no interpretation question in the record is still open.
+
+A `review` entry with `status: "pending"` records intent only and never counts as review evidence. A confirmed legal effect without a complete review entry is a validation error, because the site would otherwise have to label the record unreviewed while the data claims a confirmed effect.
+
+```json
+"review": {
+  "status": "reviewed",
+  "reviewer": "Reviewer name or role, recorded with consent",
+  "reviewed_at": "2026-11-06",
+  "scope": "Legal effect and applicability of the reviewed instrument"
+}
+```
+
+The review entry records that a review happened and what it covered. It is not a legal approval, and the schema does not verify the reviewer's independence.
+
 ## Running the checks
 
 ```sh

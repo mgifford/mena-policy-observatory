@@ -273,6 +273,23 @@ def domain_name(domain, lang):
     return foreign(domain.get('label_en', ''), lang)
 
 
+def country_group(country, lang):
+    """Prefer the registry's provisional Arabic group label on Arabic pages."""
+    if lang == 'ar' and country.get('group_ar'):
+        return esc(country['group_ar'])
+    return foreign(country.get('group', ''), lang)
+
+
+def country_note(country, key, lang):
+    """Render an editorial note, preferring its provisional Arabic rendering."""
+    english = country.get(key, '')
+    if not english:
+        return ''
+    if lang == 'ar' and country.get(f'{key}_ar'):
+        return esc(country[f'{key}_ar'])
+    return foreign(english, lang)
+
+
 def code(value):
     return f'<code lang="en" dir="ltr">{esc(value)}</code>'
 
@@ -775,10 +792,10 @@ def country_body(catalogues, lang, view, country):
     domain_map = {domain['id']: domain for domain in view['domains']}
     parts = [
         f'<h1>{country_name(country, lang)}</h1>',
-        f'<p class="lede">{foreign(country.get("scope_note", ""), lang)}</p>',
+        f'<p class="lede">{country_note(country, "scope_note", lang)}</p>',
     ]
     if country.get('jurisdiction_note'):
-        parts.append(f'<p class="notice">{foreign(country["jurisdiction_note"], lang)}</p>')
+        parts.append(f'<p class="notice">{country_note(country, "jurisdiction_note", lang)}</p>')
     if lang == 'ar':
         parts.append(f'<p class="notice">{esc(strings["countries.translation_note"])}</p>')
 
@@ -786,7 +803,7 @@ def country_body(catalogues, lang, view, country):
     latest_discovery = country.get('latest_discovery') or strings['country.not_recorded']
     summary = [
         (strings['country.code'], code(country.get('code', ''))),
-        (strings['country.group'], foreign(country.get('group', ''), lang)),
+        (strings['country.group'], country_group(country, lang)),
         (strings['country.status'], esc(status_text(strings, country['status']))),
         (strings['country.records'], str(len(country['records']))),
         (strings['country.sources'], str(len(country['candidates']))),

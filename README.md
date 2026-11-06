@@ -36,7 +36,7 @@ Interface and homepage strings live in `regions/mena/i18n/en.json` and `regions/
 
 The site publishes bilingual (EN/AR) coverage views generated from recorded evidence only:
 
-- **Jurisdictions** (`countries.json`): the 24-entry geographic scope registry, with provisional Arabic names and reconciled aliases.
+- **Jurisdictions** (`countries.json`): the 24-entry geographic scope registry, with provisional Arabic names, group labels and scope notes, and reconciled aliases.
 - **Policy areas** (`domains.json`): eight research domains grouped into five themes, with subtopics. English identifiers are canonical; Arabic labels are provisional drafts.
 - **Coverage matrix**: one cell per jurisdiction and policy area, showing derived research status.
 - **Research queue**: discovery and review tasks from `research-toolkit/backlog/`.
@@ -46,6 +46,8 @@ The site publishes bilingual (EN/AR) coverage views generated from recorded evid
 `framework/coverage.py` loads and validates the registries, derives every status from recorded evidence, and separates candidate discovery from source verification. Status vocabulary is about research activity, not compliance: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`. An empty or not-started cell means this repository has not researched the combination; it is not evidence that no law or policy exists.
 
 A candidate source lead is never promoted to a verified source or a legal finding by a successful build. Public pages mark every lead as an unreviewed discovery lead, link only, with no source text reproduced. Human review of all nine current leads is still pending.
+
+`reviewed_findings` requires recorded review evidence, not just an empty question list: a confirmed `legal_effect`, a complete `review` entry in `research.json` (reviewer, ISO date, scope) and no open interpretation question. A confirmed effect without that entry fails validation.
 
 ## Structured research data
 
