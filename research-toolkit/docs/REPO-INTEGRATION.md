@@ -99,6 +99,19 @@ python3 research-toolkit/scripts/registry.py
 python3 research-toolkit/scripts/registry.py --check
 ```
 
+## Instrument identity (work package 2)
+
+- `research-toolkit/sources/instruments.json` derives one identity per candidate: work id, reported title, parsed type/number/year, null authority and version dates, expression label, no captured item, uncertainty notes and `review_state: reported`.
+- `research-toolkit/scripts/instruments.py` regenerates the file deterministically, preserves human-entered authority/dates/expression language, and supports `--check`; CI runs it.
+- Types and numbers are parsed from reported titles and are not verified. A null date means unknown, and the parsed year is not an effective date.
+- The sources page shows the reported instrument, publication/commencement/repeal dates and captured-version state.
+- Out of scope: capturing versions, verifying identity, change detection, French interface.
+
+```sh
+python3 research-toolkit/scripts/instruments.py
+python3 research-toolkit/scripts/instruments.py --check
+```
+
 ## CI recommendation
 Add an isolated job for toolkit validator and unit tests, then fold selected checks into the repository's existing build after review. Do not make incomplete candidate sources appear as published legal records.
 

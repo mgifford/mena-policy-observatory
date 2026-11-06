@@ -14,6 +14,7 @@ python3 -m unittest discover -s research-toolkit/tests -p 'test_*.py' -v
 python3 research-toolkit/scripts/report_queue.py research-toolkit/backlog/tasks.jsonl research-toolkit/backlog/cross-domain-tasks.jsonl research-toolkit/backlog/tasks-tranche-02.jsonl
 python3 research-toolkit/scripts/import_tranche.py --check
 python3 research-toolkit/scripts/registry.py --check
+python3 research-toolkit/scripts/instruments.py --check
 python3 research-toolkit/scripts/manifest.py research-toolkit --output research-toolkit/MANIFEST.json --check
 python3 -m http.server 8000 --directory dist
 ```
@@ -42,7 +43,7 @@ The site publishes bilingual (EN/AR) coverage views generated from recorded evid
 - **Policy areas** (`domains.json`): eight research domains grouped into five themes, with subtopics. English identifiers are canonical; Arabic labels are provisional drafts.
 - **Coverage matrix**: one cell per jurisdiction and policy area, showing derived research status.
 - **Research queue**: discovery and review tasks from `research-toolkit/backlog/`, including the 14 verification tasks supplied with tranche 02.
-- **Candidate sources**: unreviewed discovery leads from `research-toolkit/sources/candidate-sources.json`, shown as link-and-metadata only, with the cited publisher host, publisher-registry status and source-health state. No source check is recorded yet, so currency is reported as unknown rather than assumed.
+- **Candidate sources**: unreviewed discovery leads from `research-toolkit/sources/candidate-sources.json`, shown as link-and-metadata only, with the reported instrument identity, publisher host, publisher-registry status, version dates, captured-version state and source-health state. Types and numbers are parsed from reported titles and are not verified; no source check is recorded yet, so currency is reported as unknown rather than assumed.
 - **Comparison**: recorded provisions flattened for side-by-side reading.
 
 `framework/coverage.py` loads and validates the registries, derives every status from recorded evidence, and separates candidate discovery from source verification. Status vocabulary is about research activity, not compliance: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`. An empty or not-started cell means this repository has not researched the combination; it is not evidence that no law or policy exists.

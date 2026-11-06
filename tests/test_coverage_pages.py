@@ -111,6 +111,23 @@ class CoveragePageTests(unittest.TestCase):
         self.assertIn('Import package', body)
         self.assertIn('Not independently checkable', body)
 
+    def test_sources_page_shows_instrument_identity_and_versions(self):
+        body = sources_body(self.catalogues, 'en', self.view)
+        self.assertIn('Reported instrument', body)
+        self.assertIn('Version dates', body)
+        self.assertIn('Captured version', body)
+        self.assertIn('Instrument types and numbers are parsed from reported titles', body)
+        self.assertIn('Decree-law', body)
+        self.assertIn('<code lang="en" dir="ltr">18-07</code>', body)
+        self.assertIn('Not captured', body)
+
+    def test_arabic_sources_page_translates_instrument_labels(self):
+        body = sources_body(self.catalogues, 'ar', self.view)
+        self.assertIn('الوثيقة المُبلغ عنها', body)
+        self.assertIn('تواريخ النسخة', body)
+        self.assertIn('النسخة المحفوظة', body)
+        self.assertIn('غير محفوظة', body)
+
     def test_sources_page_shows_publisher_and_source_health(self):
         body = sources_body(self.catalogues, 'en', self.view)
         self.assertIn('Publisher host', body)

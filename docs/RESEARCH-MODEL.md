@@ -129,6 +129,20 @@ A check records retrieval health only. It does not establish that a source is cu
 
 Freshness is derived from the fixed `as_of` date and `stale_after_days`, not from the build date, so the static output is deterministic. A recorded check older than the threshold is reported as `stale`; without a recorded check the state is `not_checked`, not `stale`.
 
+### Instrument identity and versions
+
+`research-toolkit/sources/instruments.json` records one reported instrument identity per candidate:
+
+- work id and candidate id (the same stable identifier until a separate work registry exists);
+- reported title, parsed instrument type and instrument number, and the year parsed from the title;
+- issuing authority and version dates, which stay `null` until a human records them;
+- the expression label (`Reported title only`) and no captured item;
+- explicit uncertainty notes and `review_state: reported`.
+
+Types and numbers are **parsed from reported titles** and are not verified. A null publication, adoption, commencement, expiry, repeal or consolidation date means the date is unknown, not that no date exists. The reported year is not an effective date. `research-toolkit/scripts/instruments.py` derives the file deterministically, preserves human-entered authority, dates, expression language and review state, and supports `--check`.
+
+The validator rejects a mismatch with the candidate title, jurisdiction or reported publication date; an unknown type carrying a number; a year without a number; an invented captured item; a promoted review state; a non-ISO date; and a candidate without an instrument record.
+
 `research-toolkit/scripts/registry.py` derives both files from the existing URLs, preserves recorded checks and human-entered publisher fields, and supports `--check`. The validator rejects a cited host without a publisher, an uncited publisher, a publisher whose id does not match its host, unknown vocabularies, duplicate or unknown checks, `not_checked` records carrying dates, recorded statuses without a date, and a candidate without a check.
 
 ## Running the checks

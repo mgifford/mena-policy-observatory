@@ -44,9 +44,9 @@ Do not:
 
 ## Work packages
 
-1. **Publisher registry and source-health records** — registry derived from existing candidate and record URLs; one check record per candidate; explicit `not_checked` state; validator, bilingual display and tests. *(Current package.)*
-2. **Instrument identity and version metadata** — work/expression/captured-item identifiers and documented dates.
-3. **French interface foundation** — third locale, navigation, language switching, three-locale tests.
+1. **Publisher registry and source-health records** — delivered (PR #14): registry of 25 cited hosts, one `not_checked` record per candidate, validator and bilingual display.
+2. **Instrument identity and version metadata** — delivered in this work package: reported type/number/year, explicit null authority and version dates, captured-version state, validator and bilingual display.
+3. **French interface foundation** — next: third locale, navigation, language switching, three-locale tests.
 4. **Translation provenance and terminology** — states, provenance, reviewed glossary.
 5. **Source-change review workflow** — change events, review tasks, stale-source warnings.
 

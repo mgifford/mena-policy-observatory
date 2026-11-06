@@ -1,5 +1,11 @@
 # Toolkit change record
 
+## v5 (2026-11-06)
+- Added `sources/instruments.json`: one reported instrument identity per candidate, with parsed type/number/year, explicit null authority and version dates, expression label and uncertainty notes.
+- Added `scripts/instruments.py`: deterministic derivation with `--check`; preserves human-entered authority, dates, expression language and review state.
+- Coverage validates instrument identity against the candidate title, jurisdiction and reported publication date; invented capture, promoted review state and non-ISO dates are rejected.
+- The sources page shows reported instrument type/number/year, version dates and captured-version state. No identity or date is verified.
+
 ## v4 (2026-11-06)
 - Added `sources/publishers.json`: 25 cited hosts with jurisdiction, citation links and explicit unknown publisher identity.
 - Added `sources/source-checks.json`: one `not_checked` health record per candidate; no check is inferred.

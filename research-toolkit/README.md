@@ -17,7 +17,7 @@ Prepared for: https://github.com/mgifford/mena-policy-observatory (repository in
 
 - `agents/`: staged, bounded prompts with hard-stop and handoff contracts.
 - `backlog/`: 24 proposed geographic entries, domain inventory, 54 tasks (24 jurisdiction discovery tasks, 16 cross-domain tasks and 14 tranche-02 verification tasks), and the tranche-02 task queue.
-- `sources/`: previous official-site **candidate leads** and authoritative research portals, not verified law; `publishers.json` records the cited hosts and `source-checks.json` records retrieval health (currently `not_checked`).
+- `sources/`: previous official-site **candidate leads** and authoritative research portals, not verified law; `publishers.json` records the cited hosts, `source-checks.json` records retrieval health (currently `not_checked`), and `instruments.json` records reported instrument identity and version metadata with explicit unknowns.
 - `templates/`: source, interpretation, relationship, Axiom, review, PR and research packet scaffolds.
 - `schemas/`: standalone packet JSON Schema, deliberately not replacing the existing `regions/mena/schemas/` model.
 - `scripts/`: offline packet validator, deterministic output manifest with `--check`, multi-file queue summaries with logical duplicate detection, and the idempotent tranche importer. Network/model calls are intentionally excluded.
@@ -45,6 +45,7 @@ python3 scripts/manifest.py . --output MANIFEST.json
 python3 scripts/manifest.py . --output MANIFEST.json --check
 python3 scripts/import_tranche.py --check
 python3 scripts/registry.py --check
+python3 scripts/instruments.py --check
 python3 incoming/tranche-02/validate.py
 ```
 
