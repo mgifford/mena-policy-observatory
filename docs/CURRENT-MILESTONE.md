@@ -3,7 +3,7 @@
 **Status:** Implementation complete — manual and professional review outstanding\
 **Working branch:** delivered on `main` (commit `4b3c13a`); see the completion record below\
 **Priority:** P0\
-**Next milestone:** trilingual research foundation (proposed in `docs/ROADMAP.md`; not authorized)
+**Next milestone:** legal evidence currency and multilingual support (proposed in `docs/ROADMAP.md`; not authorized)
 
 ## Objective
 
@@ -134,7 +134,9 @@ These are release conditions, not implementation gaps. Ticking the checklist abo
 
 ## Next milestone
 
-Proposed in `docs/ROADMAP.md`: **Milestone 1 — trilingual research foundation** (English, French and Arabic). It is not authorized by this milestone and must not begin without an explicit instruction.
+Proposed in `docs/ROADMAP.md`: **legal evidence currency and multilingual support**. It combines a bounded official-publisher registry, legal-instrument versions and source-change review with English, French and Arabic interface support and translation provenance.
+
+It is not authorized by this milestone and must not begin without an explicit instruction. It does not start Axiom, RuleSpec, executable rules or policy simulation; those remain deferred to the final roadmap milestone.
 
 ## Required verification commands
 
