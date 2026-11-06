@@ -1,9 +1,9 @@
 # Current Milestone: MENA Research Coverage Integration
 
-**Status:** In progress  
-**Working branch:** `feat/coverage-integration` (verify before use)  
-**Priority:** P0  
-**Next milestone:** Rules as Code proof of concept, not yet authorized
+**Status:** Implementation complete — manual and professional review outstanding\
+**Working branch:** delivered on `main` (commit `4b3c13a`); see the completion record below\
+**Priority:** P0\
+**Next milestone:** trilingual research foundation (proposed in `docs/ROADMAP.md`; not authorized)
 
 ## Objective
 
@@ -94,21 +94,47 @@ Automated tests do not establish full WCAG conformance.
 
 ## Completion checklist
 
-- [ ] Current implementation functionality completed.
-- [ ] Country registry reconciled.
-- [ ] Domain registry validated.
-- [ ] Tranche 02 integrated or explicitly deferred with documented justification.
-- [ ] Duplicate source and task handling tested.
-- [ ] Candidate sources remain unreviewed.
-- [ ] Existing published research records preserved.
-- [ ] Country and domain coverage pages generated.
-- [ ] Research statuses displayed accurately.
-- [ ] English and Arabic navigation works.
-- [ ] Automated accessibility tests pass.
-- [ ] Python validation and unit tests pass.
-- [ ] Static site builds reproducibly.
-- [ ] Documentation matches implemented behavior.
-- [ ] Pull request prepared for human review.
+- [x] Current implementation functionality completed.
+- [x] Country registry reconciled.
+- [x] Domain registry validated.
+- [x] Tranche 02 integrated.
+- [x] Duplicate source and task handling tested.
+- [x] Candidate sources remain unreviewed.
+- [x] Existing published research records preserved.
+- [x] Country and domain coverage pages generated.
+- [x] Research statuses displayed accurately.
+- [x] English and Arabic navigation works.
+- [x] Automated accessibility tests pass.
+- [x] Python validation and unit tests pass.
+- [x] Static site builds reproducibly.
+- [x] Documentation matches implemented behavior.
+- [x] Pull request prepared for human review and merged.
+
+## Implementation completion record
+
+- **Completed:** 2026-11-06.
+- **`main` commit:** `4b3c13a` (merge of PR #12).
+- **Delivered by:** PR #8 (coverage layer), PR #9 (review gate and Arabic labels), PR #10 (tranche 02), promoted to `main` by PR #12; PR #11 committed these instructions.
+- **Research data:** 23 candidate leads (14 imported from tranche 02, all unreviewed), 54 queued tasks, 3 unreviewed reported relationships.
+- **Generated site:** 93 HTML pages; `research-toolkit/MANIFEST.json` covers 59 files.
+- **Verification on `main`:** tranche-02 validator PASS; `framework/validate.py` exit 0; 124 repository tests and 15 toolkit tests pass; `import_tranche.py --check` current; `build.py` and `check_html.py` pass for all 93 pages; Playwright/axe 281 pass; rebuilding leaves `dist/` unchanged.
+- **Deployment:** GitHub Pages run `42259556896` succeeded; sampled English and Arabic pages are byte-identical to committed `dist/`. Two earlier `main` runs (for #11 and #8) failed in `actions/deploy-pages@v5` after successful builds; the final deployment succeeded.
+- **Not claimed:** legal effect, source verification, translation quality or WCAG conformance.
+
+## Outstanding manual and professional review
+
+These are release conditions, not implementation gaps. Ticking the checklist above does not satisfy them.
+
+- [ ] Manual keyboard-only walkthrough.
+- [ ] Screen reader: NVDA/Firefox and VoiceOver/Safari, including table and description-list navigation.
+- [ ] Browser zoom 200% and 400%; text spacing and reflow.
+- [ ] Forced colours, reduced motion and touch targets.
+- [ ] Native-Arabic review of interface strings, including the new candidate metadata labels.
+- [ ] Human verification of all 23 candidate leads: official source, issuing authority, legal scope, authoritative language and publication permissions.
+
+## Next milestone
+
+Proposed in `docs/ROADMAP.md`: **Milestone 1 — trilingual research foundation** (English, French and Arabic). It is not authorized by this milestone and must not begin without an explicit instruction.
 
 ## Required verification commands
 
