@@ -85,11 +85,25 @@ def _duplicates(values):
 
 
 def _iso(value):
-    return value if isinstance(value, str) and ISO_DATE.match(value) else None
+    """Return an ISO date string only when it is also a real calendar date."""
+    if not isinstance(value, str) or not ISO_DATE.match(value):
+        return None
+    try:
+        date.fromisoformat(value)
+    except ValueError:
+        return None
+    return value
 
 
-def validate_record(policy_dir, record_id, validator, known_record_ids=None):
-    """Return semantic errors for one research.json. Shape errors come first."""
+def validate_record(policy_dir, record_id, validator, known_record_ids=None,
+                    warnings=None):
+    """Return semantic errors for one research.json. Shape errors come first.
+
+    Warnings record unusual but acceptable chronology, such as a retrospective
+    effective date. They never change an error into a pass; callers decide how
+    to display them.
+    """
+    warnings = [] if warnings is None else warnings
     prefix = f'{record_id}: '
     path = policy_dir / RESEARCH_FILENAME
     if not path.is_file():
@@ -132,7 +146,7 @@ def validate_record(policy_dir, record_id, validator, known_record_ids=None):
     for source in sources:
         if not isinstance(source, dict):
             continue
-        _check_dates(source, prefix, errors)
+        _check_dates(source, prefix, errors, warnings)
         _check_excerpt(source, prefix, policy_dir, artifact_text, errors)
         _check_translation(source, prefix, errors)
 
@@ -200,15 +214,20 @@ def validate_record(policy_dir, record_id, validator, known_record_ids=None):
     return errors
 
 
-def _check_dates(source, prefix, errors):
+def _check_dates(source, prefix, errors, warnings=None):
+    warnings = [] if warnings is None else warnings
     publication = _iso(source.get('publication_date'))
     effective = _iso(source.get('effective_date'))
     if publication and effective and effective < publication:
-        errors.append(prefix + f'source {source.get("id")}: effective date precedes publication date')
+        warnings.append(
+            prefix + f'source {source.get("id")}: effective date precedes publication date; '
+                      'verify whether the instrument has retrospective effect')
     for field in ('publication_date', 'effective_date'):
         value = source.get(field)
-        if isinstance(value, str) and value != 'unknown' and not ISO_DATE.match(value):
-            errors.append(prefix + f'source {source.get("id")}: {field} must be an ISO date or "unknown"')
+        if isinstance(value, str) and value != 'unknown':
+            if not ISO_DATE.match(value) or _iso(value) is None:
+                errors.append(prefix + f'source {source.get("id")}: {field} must be a '
+                                       'valid ISO calendar date or "unknown"')
     capture = source.get('capture') if isinstance(source.get('capture'), dict) else {}
     if capture.get('bytes_stored'):
         if not capture.get('sha256'):
@@ -292,8 +311,9 @@ def _artifact_ids_from_text(text, pattern):
     return {match.group(1): match.group(2) for match in pattern.finditer(text)}
 
 
-def validate_region(base, region):
+def validate_region(base, region, warnings=None):
     """Validate every structured research file in one region."""
+    warnings = [] if warnings is None else warnings
     base = Path(base)
     validator = Validator(base / 'schemas')
     records = json.loads((base / 'data' / 'policies.json').read_text(encoding='utf-8'))
@@ -308,7 +328,7 @@ def validate_region(base, region):
             errors.append(f'{region}: {record_id} has a record entry but no policy directory')
             continue
         policy_dir = base / 'policies' / record_id
-        errors.extend(validate_record(policy_dir, record_id, validator, known))
+        errors.extend(validate_record(policy_dir, record_id, validator, known, warnings))
         if (policy_dir / RESEARCH_FILENAME).is_file():
             try:
                 relations_by_record[record_id] = load_research(policy_dir).get('relations')

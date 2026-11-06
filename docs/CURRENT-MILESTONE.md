@@ -2,7 +2,7 @@
 
 **Status:** In progress\
 **Priority:** P0\
-**Working branch:** `feat/french-interface` (verify before use)\
+**Working branch:** `fix/evidence-defects` (verify before use)\
 **Previous milestone:** MENA research coverage integration — implementation complete on `main` at `4b3c13a` (see git history and `docs/ROADMAP.md`)\
 **Later milestones:** public digital policy research, then reviewed Rules as Code. Neither is authorized.
 
@@ -17,9 +17,10 @@ The milestone is delivered in bounded work packages. Each package needs its own 
 ### Legal evidence currency
 
 - A registry of official publishers cited by existing candidate leads and published records, recording host, jurisdiction, authority type, languages, verification status, monitoring state and retrieval notes. Unknown values stay unknown.
-- Source-check records per candidate: retrieval status, last checked date, HTTP status, final URL and content type where a check exists. A check records retrieval health only.
+- Source-check records per candidate, separating retrieval outcome, source freshness and legal verification. A successful request never verifies legal effect; a failed request never erases an earlier successful retrieval.
 - Explicit freshness and stale-source reporting derived from recorded checks, with a fixed `as_of` date so the static build stays deterministic.
 - Instrument identity and version metadata (work, expression, captured item; publication, commencement, repeal and consolidation dates) only where documented, with unknown values preserved.
+- Defect corrections in existing evidence handling: retrieval outcome, source freshness and legal verification are separate; unusual chronology such as retrospective effect is a review warning, not a hard rejection; repository instructions match the trilingual implementation.
 - Immutable change events and human review tasks for detected or suspected changes. No automated legal-effect change.
 
 ### Multilingual support
@@ -44,25 +45,27 @@ Do not:
 
 ## Work packages
 
-1. **Publisher registry and source-health records** — delivered (PR #14): registry of 25 cited hosts, one `not_checked` record per candidate, validator and trilingual display.
+1. **Publisher registry and source-health records** — delivered (PR #14): registry of 25 cited hosts, one not-attempted retrieval record per candidate, validator and trilingual display. Defect correction in this PR separates retrieval outcome, freshness and legal verification.
 2. **Instrument identity and version metadata** — delivered in this work package: reported type/number/year, explicit null authority and version dates, captured-version state, validator and trilingual display.
-3. **French interface foundation** — delivered in this work package: French catalogue, localized country/domain labels, three-language navigation and language switching, 139-page build and three-locale tests; WP4 (translation provenance and terminology) is next.
-4. **Translation provenance and terminology** — states, provenance, reviewed glossary.
+3. **French interface foundation** — delivered (PR #16): French catalogue, localized country/domain labels, three-language navigation and language switching, 139-page build and three-locale tests.
+4. **Translation provenance and terminology** — next: states, provenance, reviewed glossary.
 5. **Source-change review workflow** — change events, review tasks, stale-source warnings.
+
+**Maintenance (this PR): defect corrections** — source-health classification, retrospective-date handling, trilingual instruction reconciliation and regression tests.
 
 ## Completion criteria
 
-- [ ] Publisher registry covers every host cited by candidates and records, with explicit unknowns.
-- [ ] Every candidate has a source-check record; no check is fabricated.
-- [ ] Freshness and stale states are derived from recorded checks and a fixed `as_of` date.
-- [ ] Instrument identity and version metadata are recorded where evidence exists.
-- [ ] Change events and review tasks exist for detected changes.
+- [x] Publisher registry covers every host cited by candidates and records, with explicit unknowns.
+- [x] Every candidate has a source-check record; no check is fabricated.
+- [x] Retrieval outcome, freshness and legal verification are separate and freshness is derived from a fixed `as_of` date.
+- [x] Instrument identity and version metadata are recorded where evidence exists.
+- [ ] Change events and review tasks exist for detected changes (WP5).
 - [x] English, French and Arabic navigation works; French and Arabic copy is marked provisional.
-- [ ] Translation states and provenance are recorded per text.
+- [ ] Translation states and provenance are recorded per text (WP4).
 - [x] Automated accessibility tests pass for all three locales.
-- [ ] Python validation, unit tests and the reproducible build pass.
-- [ ] Documentation matches the implementation.
-- [ ] Work-package pull requests are prepared for human review.
+- [x] Python validation, unit tests and the reproducible build pass.
+- [x] Documentation matches the implementation.
+- [x] Work-package pull requests are prepared for human review.
 
 ## Required verification commands
 

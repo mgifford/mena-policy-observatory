@@ -123,11 +123,12 @@ The review entry records that a review happened and what it covered. It is not a
 Two files record what is known about source currency, separately from legal effect:
 
 - `research-toolkit/sources/publishers.json`: one entry per host cited by a candidate or published record. It records the host, jurisdictions, citation links and explicit unknowns. `publisher_name`, `authority_type`, `languages` and `verification_status` are human-supplied; the generator preserves them but never invents them. An entry is `unverified` until a reviewer records otherwise.
-- `research-toolkit/sources/source-checks.json`: one check per candidate. Statuses are `not_checked`, `reachable`, `unchanged`, `changed`, `blocked`, `failed` and `unknown`. A `not_checked` record may not carry a date, HTTP status, final URL or content type. Any other status requires an ISO `checked_at`.
+- `research-toolkit/sources/source-checks.json`: one retrieval and verification record per candidate. It separates three concepts:
+  - **Retrieval outcome:** `not_attempted`, `success`, `failed`, `blocked` or `unknown`, with `attempted_at`, `http_status`, `final_url`, `content_type` and an optional `error_category` (`timeout`, `dns`, `tls`, `http_error`, `blocked`, `unsupported_content`, `other`). A `not_attempted` record carries no retrieval details; any attempted retrieval needs an ISO `attempted_at`; a successful retrieval needs an HTTP status and final URL; a failure needs an error category.
+  - **Source freshness:** derived at build time from `last_successful_retrieval` and the fixed `as_of`/`stale_after_days`: `not_established`, `within_interval`, `interval_exceeded` or `unknown`. A failed retrieval does not erase an earlier successful retrieval. A successful retrieval dated after `as_of` is `unknown`, not fresh.
+  - **Legal verification:** `unreviewed`, `in_review`, `verified`, `disputed` or `superseded`, with `evidence` and `reviewed_at`. Verified, disputed and superseded records require both. A successful HTTP request never promotes legal verification.
 
-A check records retrieval health only. It does not establish that a source is current, that an instrument is in force, or that its content was reviewed. A missing check is not evidence of absence.
-
-Freshness is derived from the fixed `as_of` date and `stale_after_days`, not from the build date, so the static output is deterministic. A recorded check older than the threshold is reported as `stale`; without a recorded check the state is `not_checked`, not `stale`.
+A retrieval record says what happened when the source was requested. It does not establish that the source is current, that an instrument is in force, or that its content was legally reviewed. A missing record is not evidence of absence.
 
 ### Instrument identity and versions
 
@@ -143,7 +144,11 @@ Types and numbers are **parsed from reported titles** and are not verified. A nu
 
 The validator rejects a mismatch with the candidate title, jurisdiction or reported publication date; an unknown type carrying a number; a year without a number; an invented captured item; a promoted review state; a non-ISO date; and a candidate without an instrument record.
 
-`research-toolkit/scripts/registry.py` derives both files from the existing URLs, preserves recorded checks and human-entered publisher fields, and supports `--check`. The validator rejects a cited host without a publisher, an uncited publisher, a publisher whose id does not match its host, unknown vocabularies, duplicate or unknown checks, `not_checked` records carrying dates, recorded statuses without a date, and a candidate without a check.
+`research-toolkit/scripts/registry.py` derives both files from the existing URLs, migrates legacy check records and preserves recorded retrieval, verification and publisher fields; `--check` fails when they are stale. The validator rejects a cited host without a publisher, an uncited publisher, a publisher whose id does not match its host, unknown vocabularies, duplicate or unknown records, `not_attempted` records carrying retrieval details, attempted retrievals without a timestamp, failed retrievals without an error category, successful retrievals without an HTTP status or final URL, future-dated retrieval or review dates, promoted legal verification without evidence, and a candidate without a record.
+
+### Publication and effective dates
+
+Malformed and impossible calendar dates are errors. A missing date stays `unknown`; it is never inferred. An effective date earlier than the publication date produces a **warning**, not an error, because retrospective effect is legally possible and requires review. `python3 framework/validate.py` prints warnings and still exits successfully. Publication, adoption, commencement, amendment, consolidation, expiry and repeal remain distinct concepts; the validator does not infer one from another, and accepting a retrospective date is not a finding that it is legally correct.
 
 ## Running the checks
 

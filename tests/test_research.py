@@ -27,14 +27,14 @@ class ResearchValidationTests(unittest.TestCase):
     def setUp(self):
         self.validator = Validator(SCHEMAS)
 
-    def check(self, data):
+    def check(self, data, warnings=None):
         with tempfile.TemporaryDirectory() as temporary:
             target = Path(temporary)
             for name in ARTIFACTS:
                 shutil.copy(VALID / name, target / name)
             (target / 'research.json').write_text(
                 json.dumps(data, ensure_ascii=False), encoding='utf-8')
-            return validate_record(target, RECORD_ID, self.validator, {RECORD_ID})
+            return validate_record(target, RECORD_ID, self.validator, {RECORD_ID}, warnings)
 
     def assert_error(self, data, fragment):
         errors = self.check(data)
@@ -95,6 +95,38 @@ class ResearchValidationTests(unittest.TestCase):
         data['review'] = {'status': 'pending', 'legal_effect': 'binding_confirmed'}
         self.assert_error(data, 'must match exactly one allowed shape')
 
+    def test_ordinary_dates_produce_no_warning(self):
+        data = load_valid()
+        data['sources'][0]['publication_date'] = '2020-01-01'
+        data['sources'][0]['effective_date'] = '2020-06-01'
+        warnings = []
+        self.assertEqual(self.check(data, warnings), [])
+        self.assertEqual(warnings, [])
+
+    def test_retrospective_effective_date_is_a_warning_not_an_error(self):
+        data = load_valid()
+        data['sources'][0]['publication_date'] = '2020-01-01'
+        data['sources'][0]['effective_date'] = '2019-01-01'
+        warnings = []
+        self.assertEqual(self.check(data, warnings), [])
+        self.assertTrue(any('retrospective effect' in warning for warning in warnings))
+
+    def test_unknown_dates_produce_no_warning(self):
+        data = load_valid()
+        warnings = []
+        self.assertEqual(self.check(data, warnings), [])
+        self.assertEqual(warnings, [])
+
+    def test_impossible_calendar_date_is_rejected(self):
+        data = load_valid()
+        data['sources'][0]['publication_date'] = '2020-02-31'
+        self.assert_error(data, 'valid ISO calendar date')
+
+    def test_impossible_effective_month_is_rejected(self):
+        data = load_valid()
+        data['sources'][0]['effective_date'] = '2020-13-01'
+        self.assert_error(data, 'valid ISO calendar date')
+
     def test_duplicate_source_ids_are_rejected(self):
         data = load_valid()
         data['sources'].append(copy.deepcopy(data['sources'][0]))
@@ -110,13 +142,6 @@ class ResearchValidationTests(unittest.TestCase):
         data['provisions'][0]['interpreting_questions'] = ['FX-99']
         self.assert_error(data, 'references unknown question')
 
-    def test_effective_date_before_publication_is_rejected(self):
-        data = load_valid()
-        source = data['sources'][0]
-        source['publication_date'] = '2025-01-02'
-        source['effective_date'] = '2025-01-01'
-        self.assert_error(data, 'effective date precedes publication date')
-
     def test_unknown_date_marker_is_allowed(self):
         data = load_valid()
         data['sources'][0]['publication_date'] = 'unknown'
@@ -126,7 +151,7 @@ class ResearchValidationTests(unittest.TestCase):
     def test_free_text_date_is_rejected(self):
         data = load_valid()
         data['sources'][0]['publication_date'] = 'sometime in 2011'
-        self.assert_error(data, 'must be an ISO date or "unknown"')
+        self.assert_error(data, 'valid ISO calendar date')
 
     def test_excerpt_must_appear_verbatim_in_the_artifact(self):
         data = load_valid()

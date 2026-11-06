@@ -1,12 +1,12 @@
 # Roadmap
 
-**Status:** proposal for authorization. The active milestone (`docs/CURRENT-MILESTONE.md`) is implementation-complete; the milestones below are **not authorized**. Each requires an explicit instruction, its own milestone document and a human-reviewed pull request.
+**Status:** the active milestone (`docs/CURRENT-MILESTONE.md`) is in progress; the milestones after it are **not authorized**. Each requires an explicit instruction, its own milestone document and a human-reviewed pull request.
 
 **Direction:** the observatory documents and explains law and policy that already exist. Proposed or hypothetical rules are a separate, labelled capability and never appear as current obligations.
 
-## Next milestone — Legal evidence currency and multilingual support
+## Active milestone — Legal evidence currency and multilingual support
 
-**Priority:** next. This milestone makes the existing evidence current, traceable and readable across languages. It does **not** start Rules as Code, Axiom or any executable rule work.
+**Status:** authorized and in progress. This milestone makes the existing evidence current, traceable and readable across languages. It does **not** start Rules as Code, Axiom or any executable rule work.
 
 ### Legal evidence currency
 

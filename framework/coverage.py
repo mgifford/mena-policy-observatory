@@ -75,9 +75,12 @@ PUBLISHER_AUTHORITY_TYPES = (
 )
 PUBLISHER_VERIFICATION_STATUSES = ('unverified', 'reviewed', 'disputed')
 PUBLISHER_MONITORING_STATES = ('not_configured', 'manual', 'scheduled')
-SOURCE_CHECK_STATUSES = (
-    'not_checked', 'reachable', 'unchanged', 'changed', 'blocked', 'failed', 'unknown',
+RETRIEVAL_STATUSES = ('not_attempted', 'success', 'failed', 'blocked', 'unknown')
+RETRIEVAL_ERROR_CATEGORIES = (
+    'timeout', 'dns', 'tls', 'http_error', 'blocked', 'unsupported_content', 'other',
 )
+FRESHNESS_STATES = ('not_established', 'within_interval', 'interval_exceeded', 'unknown')
+LEGAL_VERIFICATION_STATUSES = ('unreviewed', 'in_review', 'verified', 'disputed', 'superseded')
 DEFAULT_STALE_AFTER_DAYS = 180
 INSTRUMENT_TYPES = (
     'unknown', 'law', 'act', 'decree_law', 'decision', 'regulation', 'ordinance',
@@ -212,6 +215,20 @@ def _host_of(url) -> str:
 
 def publisher_slug(host: str) -> str:
     return re.sub(r'[^a-z0-9]+', '-', str(host).lower()).strip('-')
+
+
+def freshness_state(check, as_of, stale_after_days) -> str:
+    """Derive freshness from the last successful retrieval, never from a failure."""
+    if not check:
+        return 'not_established'
+    success = _iso_date(check.get('last_successful_retrieval'))
+    if success is None:
+        return 'not_established'
+    if as_of is None or success > as_of:
+        return 'unknown'
+    if (as_of - success).days > stale_after_days:
+        return 'interval_exceeded'
+    return 'within_interval'
 
 
 def _iso_date(value):
@@ -386,14 +403,11 @@ def build_view(data: CoverageData) -> dict:
         candidate['instrument'] = instruments_by_candidate.get(candidate.get('id'))
         candidate['publisher'] = publishers_by_host.get(host)
         candidate['source_check'] = check
-        state = 'not_checked'
-        if check and check.get('status') not in (None, 'not_checked'):
-            checked = _iso_date(check.get('checked_at'))
-            if checked and as_of and (as_of - checked).days > data.stale_after_days:
-                state = 'stale'
-            else:
-                state = 'checked'
-        candidate['check_state'] = state
+        candidate['retrieval_status'] = (check or {}).get('retrieval_status', 'not_attempted')
+        candidate['freshness'] = freshness_state(check, as_of, data.stale_after_days)
+        candidate['legal_verification'] = ((check or {}).get('legal_verification')
+                                           or {'status': 'unreviewed', 'evidence': None,
+                                               'reviewed_at': None})
 
     records_view = []
     for policy in data.policies:
@@ -922,30 +936,83 @@ def validate_evidence_currency(data: CoverageData) -> list[str]:
         publisher = publisher_map.get(host) or {}
         if check.get('publisher_id') != publisher.get('id'):
             _error(errors, f'{label}: publisher_id does not match the candidate host')
-        status = check.get('status')
-        if status not in SOURCE_CHECK_STATUSES:
-            _error(errors, f'{label}: unknown status {status!r}')
+
+        retrieval = check.get('retrieval_status')
+        if retrieval not in RETRIEVAL_STATUSES:
+            _error(errors, f'{label}: unknown retrieval_status {retrieval!r}')
             continue
-        details = ('checked_at', 'http_status', 'final_url', 'content_type')
-        if status == 'not_checked':
-            present = [key for key in details if check.get(key) is not None]
+        retrieval_fields = ('attempted_at', 'http_status', 'final_url', 'content_type',
+                            'error_category')
+        if retrieval == 'not_attempted':
+            present = [key for key in retrieval_fields if check.get(key) is not None]
             if present:
-                _error(errors, f'{label}: a not_checked record may not carry {present}')
+                _error(errors, f'{label}: a not_attempted record may not carry {present}')
+        else:
+            attempted = _iso_date(check.get('attempted_at'))
+            if attempted is None:
+                _error(errors, f'{label}: a {retrieval} retrieval needs an ISO attempted_at')
+            elif as_of is not None and attempted > as_of:
+                _error(errors, f'{label}: attempted_at is after the registry as_of date')
+            error_category = check.get('error_category')
+            if error_category is not None and error_category not in RETRIEVAL_ERROR_CATEGORIES:
+                _error(errors, f'{label}: unknown error_category {error_category!r}')
+            if retrieval == 'failed' and error_category is None:
+                _error(errors, f'{label}: a failed retrieval needs an error_category')
+            if retrieval == 'success':
+                http_status = check.get('http_status')
+                if not isinstance(http_status, int) or isinstance(http_status, bool) \
+                        or not 100 <= http_status <= 599:
+                    _error(errors, f'{label}: a successful retrieval needs an HTTP status')
+                if not safe_url(check.get('final_url')):
+                    _error(errors, f'{label}: a successful retrieval needs a safe https final_url')
+            elif check.get('http_status') is not None:
+                http_status = check.get('http_status')
+                if not isinstance(http_status, int) or isinstance(http_status, bool) \
+                        or not 100 <= http_status <= 599:
+                    _error(errors, f'{label}: http_status must be an integer HTTP status or null')
+            if check.get('final_url') is not None and not safe_url(check.get('final_url')):
+                _error(errors, f'{label}: final_url must be a safe https URL or null')
+            content_type = check.get('content_type')
+            if content_type is not None and (not isinstance(content_type, str)
+                                             or not content_type.strip()):
+                _error(errors, f'{label}: content_type must be a nonempty string or null')
+
+        success = check.get('last_successful_retrieval')
+        if retrieval == 'success' and success is None:
+            _error(errors, f'{label}: a successful retrieval needs last_successful_retrieval')
+        attempted_date = _iso_date(check.get('attempted_at'))
+        success_date = _iso_date(success)
+        if attempted_date and success_date and success_date > attempted_date:
+            _error(errors, f'{label}: last_successful_retrieval is after attempted_at')
+        if success is not None:
+            parsed_success = _iso_date(success)
+            if parsed_success is None:
+                _error(errors, f'{label}: last_successful_retrieval must be an ISO date or null')
+            elif as_of is not None and parsed_success > as_of:
+                _error(errors, f'{label}: last_successful_retrieval is after the registry as_of date')
+
+        verification = check.get('legal_verification')
+        if not isinstance(verification, dict):
+            _error(errors, f'{label}: legal_verification must be an object')
             continue
-        if _iso_date(check.get('checked_at')) is None:
-            _error(errors, f'{label}: a {status} check needs an ISO checked_at')
-        http_status = check.get('http_status')
-        if http_status is not None and (not isinstance(http_status, int)
-                                        or isinstance(http_status, bool)
-                                        or not 100 <= http_status <= 599):
-            _error(errors, f'{label}: http_status must be an integer HTTP status or null')
-        final_url = check.get('final_url')
-        if final_url is not None and not safe_url(final_url):
-            _error(errors, f'{label}: final_url must be a safe https URL or null')
-        content_type = check.get('content_type')
-        if content_type is not None and (not isinstance(content_type, str)
-                                         or not content_type.strip()):
-            _error(errors, f'{label}: content_type must be a nonempty string or null')
+        status = verification.get('status')
+        if status not in LEGAL_VERIFICATION_STATUSES:
+            _error(errors, f'{label}: unknown legal verification status {status!r}')
+            continue
+        evidence = verification.get('evidence')
+        reviewed_at = verification.get('reviewed_at')
+        if status in ('verified', 'disputed', 'superseded'):
+            if not isinstance(evidence, str) or not evidence.strip():
+                _error(errors, f'{label}: {status} legal verification needs recorded evidence')
+            if _iso_date(reviewed_at) is None:
+                _error(errors, f'{label}: {status} legal verification needs an ISO reviewed_at')
+        elif reviewed_at is not None and _iso_date(reviewed_at) is None:
+            _error(errors, f'{label}: reviewed_at must be an ISO date or null')
+        if reviewed_at is not None and as_of is not None and _iso_date(reviewed_at) \
+                and _iso_date(reviewed_at) > as_of:
+            _error(errors, f'{label}: legal verification review date is after the registry as_of date')
+        if status == 'unreviewed' and (evidence is not None or reviewed_at is not None):
+            _error(errors, f'{label}: an unreviewed record may not carry verification evidence')
     for candidate_id in candidate_map:
         if candidate_id not in check_map:
             _error(errors, f'check: candidate {candidate_id!r} has no source-check record')

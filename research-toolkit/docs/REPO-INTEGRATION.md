@@ -86,9 +86,9 @@ CI runs the package validator and the `--check` command, so a stale import or a 
 The next milestone's first work package adds an explicit currency layer without fetching anything.
 
 - `research-toolkit/sources/publishers.json` derives one entry per host cited by a candidate or policy record. Publisher name, authority type and verification status stay `null`/`unknown`/`unverified` until a human records them; the generator preserves human values.
-- `research-toolkit/sources/source-checks.json` derives one check per candidate, initially `not_checked` with no date, HTTP status, final URL or content type. A check records retrieval health only.
+- `research-toolkit/sources/source-checks.json` derives one record per candidate, initially `retrieval_status: not_attempted` with no retrieval details and `legal_verification.status: unreviewed`. Retrieval outcome, freshness and legal verification are separate; a successful request never verifies legal effect.
 - `research-toolkit/scripts/registry.py` regenerates both files deterministically and supports `--check`; CI runs it.
-- Freshness is computed from the fixed `as_of` and `stale_after_days`, never from the build date, so generated output stays reproducible. A source without a recorded check is `not_checked`, not stale and not current.
+- Freshness is computed from `last_successful_retrieval`, the fixed `as_of` and `stale_after_days`, never from the build date. A source without a successful retrieval is `not_established`; a failed retrieval keeps an earlier success and never becomes a success or a legal finding.
 - The sources page publishes publisher host, registry status, health state and last check date, with a notice that currency is unknown. Arabic labels are provisional.
 - Out of scope for this package: live retrieval, change detection, instrument versions, French interface. Those remain separate work packages.
 

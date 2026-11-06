@@ -1,3 +1,4 @@
+import copy
 import json
 import sys
 import unittest
@@ -140,21 +141,58 @@ class CoveragePageTests(unittest.TestCase):
         self.assertIn('النسخة المحفوظة', body)
         self.assertIn('غير محفوظة', body)
 
-    def test_sources_page_shows_publisher_and_source_health(self):
+    def test_sources_page_separates_retrieval_freshness_and_verification(self):
         body = sources_body(self.catalogues, 'en', self.view)
-        self.assertIn('Publisher host', body)
-        self.assertIn('Publisher registry', body)
-        self.assertIn('Source health', body)
-        self.assertIn('Not yet checked', body)
-        self.assertIn('No source check is recorded for these leads', body)
+        self.assertIn('Retrieval outcome', body)
+        self.assertIn('Not attempted', body)
+        self.assertIn('Source freshness', body)
+        self.assertIn('Not established', body)
+        self.assertIn('Legal verification', body)
+        self.assertIn('Unreviewed', body)
+        self.assertIn('Retrieval outcome, source freshness and legal verification are separate', body)
         self.assertIn('droit.mjustice.gov.dz', body)
         self.assertIn('Unverified', body)
 
+    def test_failed_retrieval_is_displayed_as_failed(self):
+        data = load_coverage(BASE, REPO_ROOT / 'research-toolkit')
+        check = data.source_checks[0]
+        check.update({
+            'retrieval_status': 'failed',
+            'attempted_at': '2026-11-06',
+            'error_category': 'timeout',
+        })
+        body = sources_body(self.catalogues, 'en', build_view(data))
+        self.assertIn('Failed', body)
+        self.assertIn('Timeout', body)
+        self.assertIn('Not established', body)
+        self.assertIn('Unreviewed', body)
+        self.assertNotIn('Successful', body)
+
+    def test_successful_retrieval_is_displayed_without_legal_verification(self):
+        data = load_coverage(BASE, REPO_ROOT / 'research-toolkit')
+        check = data.source_checks[0]
+        candidate = next(item for item in data.candidate_inventory['records']
+                         if item['id'] == check['candidate_id'])
+        check.update({
+            'retrieval_status': 'success',
+            'attempted_at': '2026-11-01',
+            'http_status': 200,
+            'final_url': candidate['source_url'],
+            'content_type': 'text/html',
+            'last_successful_retrieval': '2026-11-01',
+        })
+        body = sources_body(self.catalogues, 'en', build_view(data))
+        self.assertIn('Successful', body)
+        self.assertIn('Within the monitoring interval', body)
+        self.assertIn('2026-11-01', body)
+        self.assertIn('Unreviewed', body)
+
     def test_arabic_sources_page_translates_source_health(self):
         body = sources_body(self.catalogues, 'ar', self.view)
-        self.assertIn('حالة المصدر', body)
-        self.assertIn('لم يُفحص بعد', body)
-        self.assertIn('سجل الناشرين', body)
+        self.assertIn('نتيجة الاسترجاع', body)
+        self.assertIn('لم تُحاول', body)
+        self.assertIn('حداثة المصدر', body)
+        self.assertIn('غير مثبتة', body)
 
     def test_arabic_sources_page_translates_candidate_metadata(self):
         body = sources_body(self.catalogues, 'ar', self.view)
