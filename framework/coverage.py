@@ -79,6 +79,10 @@ SOURCE_CHECK_STATUSES = (
     'not_checked', 'reachable', 'unchanged', 'changed', 'blocked', 'failed', 'unknown',
 )
 DEFAULT_STALE_AFTER_DAYS = 180
+INSTRUMENT_TYPES = (
+    'unknown', 'law', 'act', 'decree_law', 'decision', 'regulation', 'ordinance',
+)
+INSTRUMENT_DATE_KEYS = ('adoption', 'commencement', 'expiry', 'repeal', 'consolidation')
 CONFIRMED_LEGAL_EFFECT = ('binding_confirmed', 'nonbinding_confirmed')
 LEGACY_RECORD_STATUSES = ('not_assessed', 'source_verified', 'source_identified', 'identified')
 REQUIRED_DISPLAY_CHECKS = (
@@ -115,6 +119,7 @@ class CoverageData:
     tasks: list[dict]
     candidate_inventory: dict
     proposed_scope: dict
+    instruments: list[dict] = field(default_factory=list)
     publishers: list[dict] = field(default_factory=list)
     source_checks: list[dict] = field(default_factory=list)
     registry_as_of: str = ''
@@ -150,6 +155,8 @@ def load_coverage(base=DEFAULT_BASE, toolkit=DEFAULT_TOOLKIT) -> CoverageData:
         for task in _read_jsonl(toolkit / 'backlog' / name):
             tasks.append(task)
     candidate_inventory = _read_json(toolkit / 'sources' / 'candidate-sources.json')
+    instruments_doc = _read_json(toolkit / 'sources' / 'instruments.json') \
+        if (toolkit / 'sources' / 'instruments.json').is_file() else {'instruments': []}
     publishers_doc = _read_json(toolkit / 'sources' / 'publishers.json') \
         if (toolkit / 'sources' / 'publishers.json').is_file() else {'publishers': []}
     checks_doc = _read_json(toolkit / 'sources' / 'source-checks.json') \
@@ -168,6 +175,7 @@ def load_coverage(base=DEFAULT_BASE, toolkit=DEFAULT_TOOLKIT) -> CoverageData:
         tasks=tasks,
         candidate_inventory=candidate_inventory,
         proposed_scope=proposed_scope,
+        instruments=instruments_doc.get('instruments', []),
         publishers=publishers_doc.get('publishers', []),
         source_checks=checks_doc.get('checks', []),
         registry_as_of=str(checks_doc.get('as_of') or ''),
@@ -367,12 +375,15 @@ def build_view(data: CoverageData) -> dict:
             tasks_by_candidate.setdefault(lead, []).append(str(task.get('task_id')))
     for candidate in candidates:
         candidate['task_ids'] = sorted(tasks_by_candidate.get(candidate.get('id'), []))
+    instruments_by_candidate = {instrument.get('candidate_id'): instrument
+                                for instrument in data.instruments}
     publishers_by_host = {publisher.get('host'): publisher for publisher in data.publishers}
     checks_by_candidate = {check.get('candidate_id'): check for check in data.source_checks}
     as_of = _iso_date(data.registry_as_of)
     for candidate in candidates:
         host = (urlparse(str(candidate.get('source_url') or '')).hostname or '').lower()
         check = checks_by_candidate.get(candidate.get('id'))
+        candidate['instrument'] = instruments_by_candidate.get(candidate.get('id'))
         candidate['publisher'] = publishers_by_host.get(host)
         candidate['source_check'] = check
         state = 'not_checked'
@@ -463,6 +474,7 @@ def build_view(data: CoverageData) -> dict:
             'records': len(records_view),
             'candidates': len(candidates),
             'tasks': len(tasks),
+            'instruments': len(data.instruments),
             'publishers': len(data.publishers),
             'source_checks': len(data.source_checks),
             'unresolved_questions': sum(len(item['open_questions']) for item in country_views),
@@ -783,6 +795,7 @@ def validate_coverage(data: CoverageData) -> list[str]:
             _error(errors, f'country {code}: unknown derived research status {status!r}')
 
     errors.extend(validate_evidence_currency(data))
+    errors.extend(validate_instruments(data))
     return errors
 
 
@@ -931,6 +944,90 @@ def validate_evidence_currency(data: CoverageData) -> list[str]:
     for candidate_id in candidate_map:
         if candidate_id not in check_map:
             _error(errors, f'check: candidate {candidate_id!r} has no source-check record')
+    return errors
+
+
+def validate_instruments(data: CoverageData) -> list[str]:
+    """Validate reported instrument identity and documented version dates."""
+    errors: list[str] = []
+    candidate_map = {candidate.get('id'): candidate
+                     for candidate in data.candidate_inventory.get('records', [])}
+    instrument_map = {}
+    for instrument in data.instruments:
+        candidate_id = instrument.get('candidate_id')
+        label = f'instrument {candidate_id!r}'
+        if not candidate_id:
+            _error(errors, 'instrument: missing candidate_id')
+            continue
+        if candidate_id in instrument_map:
+            _error(errors, f'{label}: duplicate instrument')
+        instrument_map[candidate_id] = instrument
+        candidate = candidate_map.get(candidate_id)
+        if candidate is None:
+            _error(errors, f'{label}: unknown candidate')
+            continue
+        if instrument.get('work_id') != candidate_id:
+            _error(errors, f'{label}: work_id must match the candidate id')
+        if instrument.get('jurisdiction') != candidate.get('jurisdiction'):
+            _error(errors, f'{label}: jurisdiction does not match the candidate')
+        if instrument.get('title_reported') != candidate.get('instrument_title'):
+            _error(errors, f'{label}: title_reported does not match the candidate title')
+        instrument_type = instrument.get('instrument_type_reported')
+        if instrument_type not in INSTRUMENT_TYPES:
+            _error(errors, f'{label}: unknown instrument type {instrument_type!r}')
+        number = instrument.get('instrument_number_reported')
+        if number is not None and (not isinstance(number, str) or not number.strip()):
+            _error(errors, f'{label}: instrument number must be a nonempty string or null')
+        if instrument_type == 'unknown' and number:
+            _error(errors, f'{label}: an unknown type may not carry an instrument number')
+        year = instrument.get('instrument_year_reported')
+        if year is not None and (not isinstance(year, str)
+                                 or not re.fullmatch(r'[0-9]{4}', year)):
+            _error(errors, f'{label}: instrument year must be four digits or null')
+        if year and not number:
+            _error(errors, f'{label}: an instrument year needs an instrument number')
+        authority = instrument.get('issuing_authority')
+        if authority is not None and (not isinstance(authority, str) or not authority.strip()):
+            _error(errors, f'{label}: issuing_authority must be a nonempty string or null')
+        reported = candidate.get('published_date_reported')
+        expected_publication = reported if _iso_date(reported) else None
+        if instrument.get('publication_date_reported') != expected_publication:
+            _error(errors, f'{label}: publication_date_reported must match the candidate '
+                           f'publication date or stay null')
+        dates = instrument.get('dates')
+        if not isinstance(dates, dict):
+            _error(errors, f'{label}: dates must be an object')
+        else:
+            for key in INSTRUMENT_DATE_KEYS:
+                value = dates.get(key)
+                if value is not None and _iso_date(value) is None:
+                    _error(errors, f'{label}: dates.{key} must be an ISO date or null')
+            for key in sorted(set(dates) - set(INSTRUMENT_DATE_KEYS)):
+                _error(errors, f'{label}: unexpected date key {key!r}')
+        expression = instrument.get('expression')
+        if not isinstance(expression, dict):
+            _error(errors, f'{label}: expression must be an object')
+        else:
+            language = expression.get('language')
+            if language is not None and (not isinstance(language, str)
+                                         or len(language.strip()) != 2):
+                _error(errors, f'{label}: expression language must be a two-letter tag or null')
+            if not isinstance(expression.get('label'), str) or not expression['label'].strip():
+                _error(errors, f'{label}: expression label must be a nonempty string')
+        if instrument.get('captured_item') is not None:
+            _error(errors, f'{label}: a captured item may not be recorded without capture evidence')
+        if instrument.get('review_state') != 'reported':
+            _error(errors, f'{label}: review_state must remain reported')
+        uncertainties = instrument.get('uncertainties')
+        if not isinstance(uncertainties, list) or not uncertainties:
+            _error(errors, f'{label}: uncertainties must be a nonempty array')
+        else:
+            for note in uncertainties:
+                if not isinstance(note, str) or not note.strip():
+                    _error(errors, f'{label}: uncertainty notes must be nonempty strings')
+    for candidate_id in candidate_map:
+        if candidate_id not in instrument_map:
+            _error(errors, f'instrument: candidate {candidate_id!r} has no instrument record')
     return errors
 
 

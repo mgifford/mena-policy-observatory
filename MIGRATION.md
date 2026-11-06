@@ -12,6 +12,8 @@ Tranche 02 integration (additive): `research-toolkit/sources/candidate-sources.j
 
 Evidence-currency work package (additive): `research-toolkit/sources/publishers.json` records the 25 hosts cited by the 23 candidates and seven policy records, with publisher identity fields left unknown; `research-toolkit/sources/source-checks.json` records 23 `not_checked` source-health records. No existing candidate, task, policy record or legal-status field changes. Both files are reproducible with `python3 research-toolkit/scripts/registry.py --check`.
 
+Instrument-identity work package (additive): `research-toolkit/sources/instruments.json` adds one reported instrument identity per candidate, with parsed type/number/year, explicit null dates and uncertainty notes. No existing candidate, task, policy record or legal-status field changes. Reproducible with `python3 research-toolkit/scripts/instruments.py --check`.
+
 Research layers remain separate: geographic scope, task status, candidate discovery, source verification, provision extraction, interpretation, translation, Rules as Code and publication are never collapsed into one label. Candidate source leads are displayed as unreviewed discovery leads only; no candidate has been captured, verified, translated or legally reviewed.
 
 Omitted: old duplicated `docs/policies` tree and historical generated HTML, because they were derived outputs. No additional law or verified translation has been invented. Old scripts have not been carried forward where their behavior duplicates the new framework.

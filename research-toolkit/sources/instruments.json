@@ -1,0 +1,664 @@
+{
+  "version": "1",
+  "note": "Instrument identity is parsed from reported titles. It is not verified against the instrument, and a null date means the date is unknown, not that no date exists.",
+  "instruments": [
+    {
+      "work_id": "bh-government-web-accessibility-example",
+      "candidate_id": "bh-government-web-accessibility-example",
+      "jurisdiction": "BH",
+      "title_reported": "Ministry of Education Accessibility Statement",
+      "instrument_type_reported": "unknown",
+      "instrument_number_reported": null,
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "No instrument number could be parsed from the reported title; the instrument identity remains unknown.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "bh-personal-data-30-2018",
+      "candidate_id": "bh-personal-data-30-2018",
+      "jurisdiction": "BH",
+      "title_reported": "Law No. 30 of 2018 with Respect to Personal Data Protection",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "30",
+      "instrument_year_reported": "2018",
+      "issuing_authority": null,
+      "publication_date_reported": "2018-07-19",
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "eg-disability-law-10-2018",
+      "candidate_id": "eg-disability-law-10-2018",
+      "jurisdiction": "EG",
+      "title_reported": "Law No. 10 of 2018 on Rights of Persons with Disabilities",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "10",
+      "instrument_year_reported": "2018",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "jo-digital-inclusion-2025",
+      "candidate_id": "jo-digital-inclusion-2025",
+      "jurisdiction": "JO",
+      "title_reported": "Jordanian Digital Inclusion Policy 2025",
+      "instrument_type_reported": "unknown",
+      "instrument_number_reported": null,
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "No instrument number could be parsed from the reported title; the instrument identity remains unknown.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "jo-personal-data-2023",
+      "candidate_id": "jo-personal-data-2023",
+      "jurisdiction": "JO",
+      "title_reported": "Personal Data Protection Law No. 24 of 2023",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "24",
+      "instrument_year_reported": "2023",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "ma-disability-97-13",
+      "candidate_id": "ma-disability-97-13",
+      "jurisdiction": "MA",
+      "title_reported": "Framework Law 97-13 on Rights of Persons with Disabilities",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "97-13",
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "ma-personal-data-09-08",
+      "candidate_id": "ma-personal-data-09-08",
+      "jurisdiction": "MA",
+      "title_reported": "Law 09-08 on Personal Data Protection",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "09-08",
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-001",
+      "candidate_id": "mena-t02-001",
+      "jurisdiction": "DZ",
+      "title_reported": "Law 18-07 of 2018",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "18-07",
+      "instrument_year_reported": "2018",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-002",
+      "candidate_id": "mena-t02-002",
+      "jurisdiction": "DZ",
+      "title_reported": "Law 25-11 of 2025 amending Law 18-07",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "25-11",
+      "instrument_year_reported": "2025",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-003",
+      "candidate_id": "mena-t02-003",
+      "jurisdiction": "IQ",
+      "title_reported": "Law 38 of 2013 on care of persons with disabilities and special needs",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "38",
+      "instrument_year_reported": "2013",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-004",
+      "candidate_id": "mena-t02-004",
+      "jurisdiction": "IQ",
+      "title_reported": "Law 11 of 2024, first amendment to Law 38 of 2013",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "11",
+      "instrument_year_reported": "2024",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-005",
+      "candidate_id": "mena-t02-005",
+      "jurisdiction": "KW",
+      "title_reported": "Law 8 of 2010 on rights of persons with disabilities",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "8",
+      "instrument_year_reported": "2010",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-006",
+      "candidate_id": "mena-t02-006",
+      "jurisdiction": "LB",
+      "title_reported": "Law 81 of 2018 on electronic transactions and personal data",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "81",
+      "instrument_year_reported": "2018",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-007",
+      "candidate_id": "mena-t02-007",
+      "jurisdiction": "MR",
+      "title_reported": "Law 2017-020 on protection of personal data",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "2017-020",
+      "instrument_year_reported": "2017",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-008",
+      "candidate_id": "mena-t02-008",
+      "jurisdiction": "SO",
+      "title_reported": "Data Protection Act 005 of 2023",
+      "instrument_type_reported": "act",
+      "instrument_number_reported": "005",
+      "instrument_year_reported": "2023",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-009",
+      "candidate_id": "mena-t02-009",
+      "jurisdiction": "SO",
+      "title_reported": "2026 Data Protection Act regulations approval",
+      "instrument_type_reported": "unknown",
+      "instrument_number_reported": null,
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "No instrument number could be parsed from the reported title; the instrument identity remains unknown.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-010",
+      "candidate_id": "mena-t02-010",
+      "jurisdiction": "PS",
+      "title_reported": "Decree-Law 10 of 2018 concerning cybercrime, consolidated",
+      "instrument_type_reported": "decree_law",
+      "instrument_number_reported": "10",
+      "instrument_year_reported": "2018",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-011",
+      "candidate_id": "mena-t02-011",
+      "jurisdiction": "DJ",
+      "title_reported": "Law 177/AN/25 ratifying African Disability Protocol",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "177/AN/25",
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-012",
+      "candidate_id": "mena-t02-012",
+      "jurisdiction": "DJ",
+      "title_reported": "Law 195/AN/25 creating national cybersecurity authority",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "195/AN/25",
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-013",
+      "candidate_id": "mena-t02-013",
+      "jurisdiction": "DJ",
+      "title_reported": "Law 18/AN/23 ratifying AU Malabo Convention",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "18/AN/23",
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "mena-t02-014",
+      "candidate_id": "mena-t02-014",
+      "jurisdiction": "LY",
+      "title_reported": "Law 5 of 2022 on combating cybercrime",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "5",
+      "instrument_year_reported": "2022",
+      "issuing_authority": null,
+      "publication_date_reported": null,
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "om-national-digital-accessibility",
+      "candidate_id": "om-national-digital-accessibility",
+      "jurisdiction": "OM",
+      "title_reported": "National Digital Accessibility Policy",
+      "instrument_type_reported": "unknown",
+      "instrument_number_reported": null,
+      "instrument_year_reported": null,
+      "issuing_authority": null,
+      "publication_date_reported": "2022-08-01",
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "No instrument number could be parsed from the reported title; the instrument identity remains unknown.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    },
+    {
+      "work_id": "tn-personal-data-2004-63",
+      "candidate_id": "tn-personal-data-2004-63",
+      "jurisdiction": "TN",
+      "title_reported": "Organic Law No. 2004-63 on Personal Data Protection",
+      "instrument_type_reported": "law",
+      "instrument_number_reported": "2004-63",
+      "instrument_year_reported": "2004",
+      "issuing_authority": null,
+      "publication_date_reported": "2004-07-27",
+      "dates": {
+        "adoption": null,
+        "commencement": null,
+        "expiry": null,
+        "repeal": null,
+        "consolidation": null
+      },
+      "expression": {
+        "language": null,
+        "label": "Reported title only"
+      },
+      "captured_item": null,
+      "review_state": "reported",
+      "uncertainties": [
+        "Instrument type and number are parsed from the reported title; they are not verified against the instrument.",
+        "The reported year is parsed from the title and is not an effective, commencement or repeal date.",
+        "No captured version is recorded. Version dates are recorded only where documented."
+      ]
+    }
+  ]
+}

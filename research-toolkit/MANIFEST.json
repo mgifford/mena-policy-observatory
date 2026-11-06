@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "CHANGELOG.md",
-      "size": 3326,
-      "sha256": "594e571e176cb6a7d07f470c13046ed66ebc6c8e04c30e107507c51f9bc9d40a"
+      "size": 4022,
+      "sha256": "7c98e446c95a6e5e7e96ba42c6b2ffc9e1b8eee39ce71b2d2e40a2e71762b22b"
     },
     {
       "path": "LICENSE-NOTE.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "size": 4238,
-      "sha256": "4d4e4a48fd406282c8ed62a76d463aa63a51128fc799e2b5cb35cf89430af392"
+      "size": 4379,
+      "sha256": "95888f514a5cb945319d2b3c841d6da03479b79db3d3cd59b06cf73b10995cb6"
     },
     {
       "path": "agents/00-controller.md",
@@ -134,8 +134,8 @@
     },
     {
       "path": "docs/REPO-INTEGRATION.md",
-      "size": 8123,
-      "sha256": "68ee0c687e8fb4978cb542af1d21e845454b88ec678730b0e0d3e06bd001245f"
+      "size": 9066,
+      "sha256": "2cfe006ef62a8d83ff54bd7014e47b86d8e9eb08d23005ae6c4b7c3101925a7b"
     },
     {
       "path": "docs/RESEARCH-METHOD.md",
@@ -218,6 +218,11 @@
       "sha256": "ad747074b2cfefe10323cb93567d6b0c21a8177af91a099f2ebe3dddfe211cea"
     },
     {
+      "path": "scripts/instruments.py",
+      "size": 6398,
+      "sha256": "f7a5935679cf4df5e3af3c2052fe85d2c09aaee11fb29c69c1f46056fe4301d8"
+    },
+    {
       "path": "scripts/manifest.py",
       "size": 1515,
       "sha256": "e9506f3187c31ca4c6be178be65f80c0b90281971b56312e5c8bf528e1778ffe"
@@ -246,6 +251,11 @@
       "path": "sources/candidate-sources.json",
       "size": 36188,
       "sha256": "fecef7a729bf018488f44caa56cef417a88d7b0c1fd6309a5bac1ba84301d3de"
+    },
+    {
+      "path": "sources/instruments.json",
+      "size": 23889,
+      "sha256": "b5c4927f9835ebe2987ba31978a2e5996234d533a6c12095e4829af137954e23"
     },
     {
       "path": "sources/publishers.json",

@@ -265,6 +265,12 @@ VERIFICATION_KEYS = {
 }
 
 
+INSTRUMENT_TYPE_KEYS = {
+    instrument_type: f'source.instrument_type.{instrument_type}'
+    for instrument_type in (
+        'law', 'act', 'decree_law', 'decision', 'regulation', 'ordinance', 'unknown',
+    )
+}
 PUBLISHER_STATUS_KEYS = {
     'unverified': 'source.registry.unverified',
     'reviewed': 'source.registry.reviewed',
@@ -276,6 +282,11 @@ CHECK_STATUS_KEYS = {
         'not_checked', 'reachable', 'unchanged', 'changed', 'blocked', 'failed', 'unknown',
     )
 }
+
+
+def instrument_type_text(strings, value):
+    key = INSTRUMENT_TYPE_KEYS.get(value)
+    return strings[key] if key else strings['source.instrument_type.unknown']
 
 
 def publisher_status_text(strings, value):
@@ -1212,6 +1223,20 @@ def sources_body(catalogues, lang, view):
             (strings['source.jurisdiction'], country_name(country, lang)),
             (strings['source.domains'], esc(domains) if domains
              else esc(strings['source.not_recorded'])),
+        ]
+        instrument = candidate.get('instrument')
+        if instrument:
+            instrument_value = [esc(instrument_type_text(
+                strings, instrument.get('instrument_type_reported')))]
+            if instrument.get('instrument_number_reported'):
+                instrument_value.append(code(instrument['instrument_number_reported']))
+            if instrument.get('instrument_year_reported'):
+                instrument_value.append(code(instrument['instrument_year_reported']))
+            instrument_html = ' · '.join(instrument_value)
+        else:
+            instrument_html = esc(strings['source.not_recorded'])
+        details.append((strings['source.instrument'], instrument_html))
+        details += [
             (strings['source.authority'],
              esc(candidate['issuing_authority']) if candidate.get('issuing_authority')
              else esc(strings['source.not_recorded'])),
@@ -1237,8 +1262,25 @@ def sources_body(catalogues, lang, view):
         else:
             health = esc(strings['source.not_recorded'])
         details.append((strings['source.health'], health))
+        if instrument:
+            dates = instrument.get('dates') if isinstance(instrument.get('dates'), dict) else {}
+
+            def date_value(value):
+                return code(value) if value else esc(strings['source.not_recorded'])
+
+            version = (f'{esc(strings["source.version.publication"])}: '
+                       f'{date_value(instrument.get("publication_date_reported"))} · '
+                       f'{esc(strings["source.version.commencement"])}: '
+                       f'{date_value(dates.get("commencement"))} · '
+                       f'{esc(strings["source.version.repeal"])}: '
+                       f'{date_value(dates.get("repeal"))}')
+            captured = esc(strings['source.captured_version.none'])
+        else:
+            version = esc(strings['source.not_recorded'])
+            captured = esc(strings['source.not_recorded'])
         details += [
-            (strings['source.published'], recorded_html),
+            (strings['source.version_dates'], version),
+            (strings['source.captured_version'], captured),
             (strings['source.research_status'],
              esc(status_text(strings, 'candidate_sources_identified'))),
             (strings['source.legal_review'],
@@ -1308,6 +1350,7 @@ def sources_body(catalogues, lang, view):
         f'<p class="notice">{esc(strings["source.candidate_notice"])}</p>',
         f'<p class="notice">{esc(strings["sources.pending_review"])}</p>',
         f'<p class="notice">{esc(strings["sources.currency_notice"])}</p>',
+        f'<p class="notice">{esc(strings["sources.instrument_notice"])}</p>',
         f'<p>{esc(count_line)}</p>',
         '\n'.join(sections),
         f'<p><a href="../index.html">{esc(strings["sources.back"])}</a></p>',
