@@ -56,6 +56,45 @@ class ResearchValidationTests(unittest.TestCase):
         data['legal_conclusion'] = 'compliant'
         self.assert_error(data, "unexpected property 'legal_conclusion'")
 
+    def test_reviewed_review_records_reviewer_date_and_scope(self):
+        data = load_valid()
+        data['review'] = {
+            'status': 'reviewed',
+            'reviewer': 'Fixture reviewer',
+            'reviewed_at': '2026-11-06',
+            'scope': 'Fixture review of legal effect and scope',
+        }
+        self.assertEqual(self.check(data), [])
+
+    def test_pending_review_is_allowed(self):
+        data = load_valid()
+        data['review'] = {'status': 'pending'}
+        self.assertEqual(self.check(data), [])
+
+    def test_reviewed_review_without_scope_is_rejected(self):
+        data = load_valid()
+        data['review'] = {
+            'status': 'reviewed',
+            'reviewer': 'Fixture reviewer',
+            'reviewed_at': '2026-11-06',
+        }
+        self.assert_error(data, 'must match exactly one allowed shape')
+
+    def test_reviewed_review_with_invalid_date_is_rejected(self):
+        data = load_valid()
+        data['review'] = {
+            'status': 'reviewed',
+            'reviewer': 'Fixture reviewer',
+            'reviewed_at': '6 November 2026',
+            'scope': 'Fixture review of legal effect and scope',
+        }
+        self.assert_error(data, 'must match exactly one allowed shape')
+
+    def test_review_may_not_carry_extra_fields(self):
+        data = load_valid()
+        data['review'] = {'status': 'pending', 'legal_effect': 'binding_confirmed'}
+        self.assert_error(data, 'must match exactly one allowed shape')
+
     def test_duplicate_source_ids_are_rejected(self):
         data = load_valid()
         data['sources'].append(copy.deepcopy(data['sources'][0]))

@@ -251,7 +251,677 @@
         "human_reviewed": false,
         "checked_at": "2026-11-06"
       }
+    },
+    {
+      "id": "mena-t02-001",
+      "jurisdiction": "DZ",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Law 18-07 of 2018",
+      "source_url": "https://droit.mjustice.gov.dz/fr/content/protection-des-personnes-physiques-dans-le-traitement-des-donn%C3%A9es-%C3%A0-caract%C3%A8re-personnel",
+      "source_type": "official_legislation_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Resolve consolidated wording and commencement provisions.",
+      "source_languages": [
+        "fr",
+        "ar"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-001",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "justice_ministry_legal_portal",
+        "discovery_note": "Base data protection legislation; 2025 amendment identified on same portal.",
+        "evidence_ref": "turn402392search3",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-002",
+      "jurisdiction": "DZ",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Law 25-11 of 2025 amending Law 18-07",
+      "source_url": "https://www.joradp.dz/FTP/JO-FRANCAIS/2025/F2025048.pdf",
+      "source_type": "official_legislative_publication",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Extract exact amendment operations and verify dates and transitional rules.",
+      "source_languages": [
+        "fr"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-002",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "official_gazette",
+        "discovery_note": "Official Gazette issue 48, 24 July 2025; amendment to the 2018 framework.",
+        "evidence_ref": "turn402392search1",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      },
+      "relations": [
+        {
+          "id": "mena-t02-002-amends-mena-t02-001",
+          "relation": "amends",
+          "target_candidate_id": "mena-t02-001",
+          "recorded_label": "Law 25-11 of 2025 amending Law 18-07",
+          "review_state": "unreviewed"
+        }
+      ]
+    },
+    {
+      "id": "mena-t02-003",
+      "jurisdiction": "IQ",
+      "domains": [
+        "disability_inclusion"
+      ],
+      "instrument_title": "Law 38 of 2013 on care of persons with disabilities and special needs",
+      "source_url": "https://moj.gov.iq/view.6856/",
+      "source_type": "official_legislation_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Obtain 2024 amendment from official gazette, reconcile terminology and superseded provisions.",
+      "source_languages": [
+        "ar",
+        "en"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-003",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "justice_ministry",
+        "discovery_note": "Ministry of Justice hosts law; ILO NATLEX indexes 2024 Law 11 amendment.",
+        "evidence_ref": "turn402392search9",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-004",
+      "jurisdiction": "IQ",
+      "domains": [
+        "disability_inclusion"
+      ],
+      "instrument_title": "Law 11 of 2024, first amendment to Law 38 of 2013",
+      "source_url": "https://natlex.ilo.org/dyn/natlex2/r/natlex/fe/details?p3_isn=96874",
+      "source_type": "secondary",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Locate official amendment PDF and establish exact changes.",
+      "source_languages": [
+        "ar"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-004",
+        "recorded_on": "2026-11-05",
+        "source_status": "secondary_index_identified",
+        "source_kind": "intergovernmental_index",
+        "discovery_note": "ILO NATLEX indexes amendment in 2024, not its authoritative full amended text.",
+        "evidence_ref": "turn402392search0",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      },
+      "relations": [
+        {
+          "id": "mena-t02-004-amends-mena-t02-003",
+          "relation": "amends",
+          "target_candidate_id": "mena-t02-003",
+          "recorded_label": "Law 11 of 2024, first amendment to Law 38 of 2013",
+          "review_state": "unreviewed"
+        }
+      ]
+    },
+    {
+      "id": "mena-t02-005",
+      "jurisdiction": "KW",
+      "domains": [
+        "disability_inclusion"
+      ],
+      "instrument_title": "Law 8 of 2010 on rights of persons with disabilities",
+      "source_url": "https://www.pada.gov.kw/en/about-authority/",
+      "source_type": "official_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Retrieve official-gazette text and amendments; distinguish rights from service descriptions.",
+      "source_languages": [
+        "ar",
+        "en"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-005",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "government_authority",
+        "discovery_note": "Public Authority for Disability Affairs identifies enabling law and its mandate.",
+        "evidence_ref": "turn402392search2",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-006",
+      "jurisdiction": "LB",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Law 81 of 2018 on electronic transactions and personal data",
+      "source_url": "https://www.bdl.gov.lb/laws.php",
+      "source_type": "official_regulator_legal_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Extract applicable provisions and implementing measures; assess legal authority and effective dates.",
+      "source_languages": [
+        "ar"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-006",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "central_bank_official_law_collection",
+        "discovery_note": "Central bank official laws collection lists Law 81, with Arabic primary document.",
+        "evidence_ref": "turn492406search13",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-007",
+      "jurisdiction": "MR",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Law 2017-020 on protection of personal data",
+      "source_url": "https://natlex.ilo.org/dyn/natlex2/r/natlex/fe/details?p3_isn=112890",
+      "source_type": "secondary",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Retrieve official gazette and reconcile authority decrees of 2022 and 2023.",
+      "source_languages": [
+        "fr"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-007",
+        "recorded_on": "2026-11-05",
+        "source_status": "secondary_index_identified",
+        "source_kind": "intergovernmental_index",
+        "discovery_note": "ILO NATLEX provides official-gazette reference and implementing instruments.",
+        "evidence_ref": "turn492406search4",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-008",
+      "jurisdiction": "SO",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Data Protection Act 005 of 2023",
+      "source_url": "https://dpa.gov.so/guidance-2/",
+      "source_type": "official_regulator_legal_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Confirm exact primary text, translations, federal applicability and effective dates.",
+      "source_languages": [
+        "en",
+        "so"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-008",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "government_regulator",
+        "discovery_note": "Official data protection authority publishes act and supporting materials.",
+        "evidence_ref": "turn492406search10",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-009",
+      "jurisdiction": "SO",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "2026 Data Protection Act regulations approval",
+      "source_url": "https://dpa.gov.so/news/council-of-ministries-approves-data-protection-act-regulations/",
+      "source_type": "official_government_explainer_not_statute",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Retrieve promulgated regulations and distinguish cabinet approval from commencement.",
+      "source_languages": [
+        "en"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-009",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "government_regulator_announcement",
+        "discovery_note": "Government regulator announced cabinet approval of regulations on 5 January 2026.",
+        "evidence_ref": "turn492406search0",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      },
+      "relations": [
+        {
+          "id": "mena-t02-009-related-mena-t02-008",
+          "relation": "related",
+          "target_candidate_id": "mena-t02-008",
+          "recorded_label": "Reported approval of regulations for the 2023 Data Protection Act",
+          "review_state": "unreviewed"
+        }
+      ]
+    },
+    {
+      "id": "mena-t02-010",
+      "jurisdiction": "PS",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Decree-Law 10 of 2018 concerning cybercrime, consolidated",
+      "source_url": "https://mjr.ogb.gov.ps/MergedLegislations/ViewText/41/%D9%82%D8%B1%D8%A7%D8%B1-%D8%A8%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%B1%D9%82%D9%85-10-%D9%84%D8%B3%D9%86%D8%A9-2018%D9%85-%D8%A8%D8%B4%D8%A3%D9%86-%D8%A7%D9%84%D8%AC%D8%B1%D8%A7%D8%A6%D9%85-%D8%A7%D9%84%D8%A5%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A%D8%A9-%D9%88%D8%AC%D8%B1%D8%A7%D8%A6%D9%85-%D8%A7%D9%84%D8%A7%D8%AA%D8%B5%D8%A7%D9%84%D8%A7%D8%AA-%D9%88%D8%AA%D9%83%D9%86%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A7-%D8%A7%D9%84%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA-%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86",
+      "source_type": "official_legislation_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Extract amendment-sensitive provisions and geographic/legal applicability; avoid evaluative rights claims without review.",
+      "source_languages": [
+        "ar"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-010",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "official_legislative_database",
+        "discovery_note": "Official consolidated text identifies amendments 28/2020 and 38/2021.",
+        "evidence_ref": "turn492406search2",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-011",
+      "jurisdiction": "DJ",
+      "domains": [
+        "disability_inclusion"
+      ],
+      "instrument_title": "Law 177/AN/25 ratifying African Disability Protocol",
+      "source_url": "https://www.journalofficiel.dj/texte-juridique/loi-n177-an-25-9eme-l-portant-ratification-du-protocole-a-la-charte-africaine-de-droits-de-lhomme-et-des-peuples-relatif-aux-droits-des-personnes-handicapees-en-afrique/",
+      "source_type": "official_legislative_publication",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Retrieve national 2022 law and treaty-status evidence; do not infer domestic enforceability from ratification alone.",
+      "source_languages": [
+        "fr"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-011",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "official_gazette",
+        "discovery_note": "2025 ratification statute refers to national disability law 151/AN/22 replacing law 207/AN/17.",
+        "evidence_ref": "turn402392search8",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-012",
+      "jurisdiction": "DJ",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Law 195/AN/25 creating national cybersecurity authority",
+      "source_url": "https://www.journalofficiel.dj/texte-juridique/loi-n195-an-25-9eme-l-portant-creation-de-lautorite-nationale-de-cybersecurite/",
+      "source_type": "official_legislative_publication",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Analyze authority powers, safeguards, interactions with privacy code and reporting duties.",
+      "source_languages": [
+        "fr"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-012",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "official_gazette",
+        "discovery_note": "Published January 2026; establishes cybersecurity authority and refers to the digital code.",
+        "evidence_ref": "turn178355search0",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-013",
+      "jurisdiction": "DJ",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Law 18/AN/23 ratifying AU Malabo Convention",
+      "source_url": "https://www.journalofficiel.dj/texte-juridique/loi-n-18-an-23-9eme-ll-portant-ratification-de-la-convention-de-lunion-africaine-sur-la-cybersecurite-et-la-protection-de-donnees-a-caractere-personnel/",
+      "source_type": "official_legislative_publication",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Verify international treaty status and subsequent implementing measures.",
+      "source_languages": [
+        "fr"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-013",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "official_gazette",
+        "discovery_note": "2024 publication of treaty ratification act; no national compliance conclusion derived.",
+        "evidence_ref": "turn178355search1",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
+    },
+    {
+      "id": "mena-t02-014",
+      "jurisdiction": "LY",
+      "domains": [
+        "digital_rights"
+      ],
+      "instrument_title": "Law 5 of 2022 on combating cybercrime",
+      "source_url": "https://mcpp.gov.ly/blog/post-35/",
+      "source_type": "official_legislation_index",
+      "published_date_reported": "unknown",
+      "legal_effect": "not_assessed",
+      "capture_status": "not_captured",
+      "research_question": "Investigate legal and institutional context, subsequent amendments, and interpretation by local professionals.",
+      "source_languages": [
+        "ar"
+      ],
+      "verification_required": [
+        "official_source",
+        "legal_scope",
+        "language",
+        "publication_permissions"
+      ],
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      },
+      "provenance": {
+        "package": "research-toolkit/incoming/tranche-02",
+        "incoming_id": "MENA-T02-014",
+        "recorded_on": "2026-11-05",
+        "source_status": "official_portal_identified",
+        "source_kind": "house_of_representatives_portal",
+        "discovery_note": "House of Representatives portal publishes law text.",
+        "evidence_ref": "turn178355search6",
+        "evidence_ref_note": "AI session turn reference kept as recorded provenance. It is not a retrievable source and is not verification.",
+        "note": "Imported from an unreviewed discovery tranche. No source was captured, transcribed, translated or legally reviewed."
+      }
     }
   ],
-  "toolkit_status": "Unverified candidate leads from prior research, not re-fetched or authenticated in this package."
+  "toolkit_status": "Unverified candidate leads from prior research, not re-fetched or authenticated in this package.",
+  "imported_packages": [
+    {
+      "package": "research-toolkit/incoming/tranche-02",
+      "research_date": "2026-11-05",
+      "candidates_imported": 14,
+      "tasks_imported": 14,
+      "report": "research-toolkit/reconciliation/tranche-02-report.json"
+    }
+  ]
 }

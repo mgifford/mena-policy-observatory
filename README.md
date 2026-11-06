@@ -34,18 +34,20 @@ Interface and homepage strings live in `regions/mena/i18n/en.json` and `regions/
 
 ## Research coverage views
 
-The site publishes bilingual (EN/AR) coverage views generated from recorded evidence only:
+The site publishes bilingual (EN/AR) coverage views generated from recorded evidence only. Tranche 02 is imported through `research-toolkit/scripts/import_tranche.py`, which is deterministic and idempotent and writes a reconciliation report:
 
-- **Jurisdictions** (`countries.json`): the 24-entry geographic scope registry, with provisional Arabic names and reconciled aliases.
+- **Jurisdictions** (`countries.json`): the 24-entry geographic scope registry, with provisional Arabic names, group labels and scope notes, and reconciled aliases.
 - **Policy areas** (`domains.json`): eight research domains grouped into five themes, with subtopics. English identifiers are canonical; Arabic labels are provisional drafts.
 - **Coverage matrix**: one cell per jurisdiction and policy area, showing derived research status.
-- **Research queue**: discovery and review tasks from `research-toolkit/backlog/`.
+- **Research queue**: discovery and review tasks from `research-toolkit/backlog/`, including the 14 verification tasks supplied with tranche 02.
 - **Candidate sources**: unreviewed discovery leads from `research-toolkit/sources/candidate-sources.json`, shown as link-and-metadata only.
 - **Comparison**: recorded provisions flattened for side-by-side reading.
 
 `framework/coverage.py` loads and validates the registries, derives every status from recorded evidence, and separates candidate discovery from source verification. Status vocabulary is about research activity, not compliance: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`. An empty or not-started cell means this repository has not researched the combination; it is not evidence that no law or policy exists.
 
-A candidate source lead is never promoted to a verified source or a legal finding by a successful build. Public pages mark every lead as an unreviewed discovery lead, link only, with no source text reproduced. Human review of all nine current leads is still pending.
+A candidate source lead is never promoted to a verified source or a legal finding by a successful build. Public pages mark every lead as an unreviewed discovery lead, link only, with no source text reproduced. Human review of all 23 current leads is still pending: nine from the earlier inventory and 14 imported from research tranche 02.
+
+`reviewed_findings` requires recorded review evidence, not just an empty question list: a confirmed `legal_effect`, a complete `review` entry in `research.json` (reviewer, ISO date, scope) and no open interpretation question. A confirmed effect without that entry fails validation.
 
 ## Structured research data
 

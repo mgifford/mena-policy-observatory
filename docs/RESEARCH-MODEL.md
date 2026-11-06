@@ -74,14 +74,49 @@ Existing manifest labels such as `normative_annex`, `technical_standard` or `pro
 
 - `regions/mena/data/countries.json` — the geographic scope, reconciled with the toolkit's proposed 24-entry list.
 - `regions/mena/data/domains.json` — eight policy areas in five research themes, with subtopics.
-- `research-toolkit/backlog/tasks.jsonl` and `cross-domain-tasks.jsonl` — 40 queued discovery tasks.
-- `research-toolkit/sources/candidate-sources.json` — nine candidate source leads.
+- `research-toolkit/backlog/tasks.jsonl`, `cross-domain-tasks.jsonl` and `tasks-tranche-02.jsonl` — 54 queued discovery and verification tasks.
+- `research-toolkit/sources/candidate-sources.json` — 23 candidate source leads (nine from the earlier inventory, 14 imported from research tranche 02).
 
 Every research status is derived from recorded evidence; it is never stored as an independent legal conclusion. The vocabulary describes research activity only: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`.
 
-The layers stay separate. A listed jurisdiction is not a legal finding. A queued task is not evidence about the law. A candidate source lead is not a captured or verified source, and it is not a finding about legal effect. Candidate leads appear publicly only when the source URL passes a conservative HTTPS check and a recorded display review covers the required checks; even then the page labels every lead as unreviewed and reproduces no source text. Human review is still pending for all nine current leads.
+The layers stay separate. A listed jurisdiction is not a legal finding. A queued task is not evidence about the law. A candidate source lead is not a captured or verified source, and it is not a finding about legal effect. Candidate leads appear publicly only when the source URL passes a conservative HTTPS check and a recorded display review covers the required checks; even then the page labels every lead as unreviewed and reproduces no source text. Human review is still pending for all 23 current leads.
 
 The validator rejects a candidate that asserts a confirmed legal effect, a captured source without capture metadata, an unknown domain or task stage, a duplicate logical task ID after separator normalization, or a public display record missing a required check.
+
+### Candidate-source import
+
+`research-toolkit/scripts/import_tranche.py` maps an unreviewed discovery package into the canonical candidate inventory. It is deterministic and idempotent: a second run produces the same files, and `--check` fails when the committed inventory is stale. It never assigns a legal effect, never stores source bytes and never edits a policy record.
+
+- Incoming identifiers are preserved in lowercase (`MENA-T02-001` becomes `mena-t02-001`); task identifiers are preserved verbatim.
+- Domains and source types are mapped through explicit tables; an unmapped value blocks the import instead of being guessed.
+- Duplicates are detected by canonical URL first, then by jurisdiction plus the primary instrument number, then by jurisdiction plus title. A possible duplicate is held out of the import and listed in the reconciliation report for human review; it is not merged or silently dropped.
+- A record that already exists with the same identifier but different metadata is reported as a conflict and left untouched.
+- `research-toolkit/reconciliation/tranche-02-report.json` records imported records, matched records, possible duplicates, conflicts, imported tasks, outstanding verification and the mapping tables.
+- Imported candidates keep their package provenance (package, incoming identifier, recorded date, source status, evidence reference) and carry `verification_required` requirements taken from the paired task. A `web_evidence_ref` that points at an AI session turn is preserved as recorded provenance and labelled as not independently checkable.
+- Reported instrument relationships (for example the reported 2025 amendment to Algeria's 2018 data protection law) are stored as unreviewed candidate relations and validated. They are not legal findings.
+
+Country entries also carry provisional Arabic group labels, scope notes and jurisdiction notes (`group_ar`, `scope_note_ar`, `jurisdiction_note_ar`, each with an `_ar_status` of `provisional` or `reviewed`). The validator requires the Arabic counterpart wherever the English editorial text exists, so an Arabic page cannot silently fall back to untranslated interface prose. `provisional` is a statement about review, not about accuracy.
+
+### Record-level review evidence
+
+`reviewed_findings` is a review outcome, so the coverage layer will not infer it from silence. A record is counted as reviewed only when all of the following hold:
+
+- its `legal_effect` is `binding_confirmed` or `nonbinding_confirmed`;
+- `research.json` carries a complete `review` entry with `status: "reviewed"`, a `reviewer`, an ISO `reviewed_at` date and a stated `scope`;
+- no interpretation question in the record is still open.
+
+A `review` entry with `status: "pending"` records intent only and never counts as review evidence. A confirmed legal effect without a complete review entry is a validation error, because the site would otherwise have to label the record unreviewed while the data claims a confirmed effect.
+
+```json
+"review": {
+  "status": "reviewed",
+  "reviewer": "Reviewer name or role, recorded with consent",
+  "reviewed_at": "2026-11-06",
+  "scope": "Legal effect and applicability of the reviewed instrument"
+}
+```
+
+The review entry records that a review happened and what it covered. It is not a legal approval, and the schema does not verify the reviewer's independence.
 
 ## Running the checks
 

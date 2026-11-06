@@ -1,5 +1,13 @@
 # Toolkit change record
 
+## v3 (2026-11-06)
+- Added `scripts/import_tranche.py`: deterministic, idempotent import for unreviewed discovery packages with URL, instrument-number and title duplicate detection.
+- Integrated tranche 02: 14 candidate leads and 14 verification tasks. The canonical inventory now holds 23 candidates and the combined queue 54 tasks.
+- Added `reconciliation/tranche-02-report.json` and `backlog/tasks-tranche-02.jsonl`.
+- Candidate records now accept `source_languages`, `verification_required`, `provenance` and unreviewed `relations`; coverage validates all four.
+- CI validates the package, checks the integration with `import_tranche.py --check`, and includes the tranche task queue in the queue audit.
+- No legal effect, capture, translation or review status was added; all 23 leads remain unreviewed.
+
 ## v2 (2026-11-06)
 - Integrated the toolkit registries with the observatory's coverage views: 24 jurisdictions, eight policy areas, 40 queued tasks and nine unreviewed candidate source leads.
 - Reconciled the proposed jurisdiction list with `regions/mena/data/countries.json`; preserved provisional Arabic names and recorded aliases.

@@ -8,7 +8,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "شمال أفريقيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "EG",
@@ -19,7 +23,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "شمال أفريقيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "LY",
@@ -30,7 +38,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "شمال أفريقيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "MA",
@@ -41,7 +53,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "شمال أفريقيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "SD",
@@ -52,7 +68,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "شمال أفريقيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "TN",
@@ -63,7 +83,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "شمال أفريقيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "BH",
@@ -74,7 +98,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "IQ",
@@ -85,7 +113,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "IL",
@@ -96,7 +128,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "JO",
@@ -107,7 +143,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "KW",
@@ -118,7 +158,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "LB",
@@ -129,7 +173,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "OM",
@@ -140,7 +188,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "PS",
@@ -153,7 +205,13 @@
     "status": "not_assessed",
     "reviewed_policy_records": 0,
     "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
-    "jurisdiction_note": "The English name follows the repository's existing designation. Listing this jurisdiction does not resolve legal authority or the application of any instrument."
+    "jurisdiction_note": "The English name follows the repository's existing designation. Listing this jurisdiction does not resolve legal authority or the application of any instrument.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional",
+    "jurisdiction_note_ar": "يتبع الاسم الإنجليزي التسمية القائمة في المستودع. وإدراج هذه الولاية القضائية لا يحسم السلطة القانونية ولا تطبيق أي وثيقة.",
+    "jurisdiction_note_ar_status": "provisional"
   },
   {
     "code": "QA",
@@ -164,7 +222,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 2,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "SA",
@@ -175,7 +237,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 2,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "SY",
@@ -187,7 +253,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "AE",
@@ -198,7 +268,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 3,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "YE",
@@ -209,7 +283,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "غرب آسيا",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "DJ",
@@ -220,7 +298,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "إضافات إقليمية",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "MR",
@@ -231,7 +313,11 @@
     "in_scope": true,
     "status": "not_assessed",
     "reviewed_policy_records": 0,
-    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "group_ar": "إضافات إقليمية",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "نطاق تحريري لمنطقة الشرق الأوسط وشمال أفريقيا فقط؛ وليس ادعاءً بشأن القانون المنطبق.",
+    "scope_note_ar_status": "provisional"
   },
   {
     "code": "IR",
@@ -243,7 +329,13 @@
     "status": "not_assessed",
     "reviewed_policy_records": 0,
     "scope_note": "Proposed 2026 editorial addition to geographic scope; no research outcome is recorded.",
-    "jurisdiction_note": "Geographic inclusion only. No legal instrument, authority or applicability is asserted."
+    "jurisdiction_note": "Geographic inclusion only. No legal instrument, authority or applicability is asserted.",
+    "group_ar": "إضافات إقليمية",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "إضافة تحريرية مقترحة لعام 2026 إلى النطاق الجغرافي؛ ولم تُسجَّل أي نتيجة بحثية.",
+    "scope_note_ar_status": "provisional",
+    "jurisdiction_note_ar": "إدراج جغرافي فقط. ولا يُدَّعى وجود أي وثيقة قانونية أو سلطة أو سريان.",
+    "jurisdiction_note_ar_status": "provisional"
   },
   {
     "code": "SO",
@@ -255,7 +347,13 @@
     "status": "not_assessed",
     "reviewed_policy_records": 0,
     "scope_note": "Proposed 2026 editorial addition to geographic scope; no research outcome is recorded.",
-    "jurisdiction_note": "Geographic inclusion only. No legal instrument, authority or applicability is asserted."
+    "jurisdiction_note": "Geographic inclusion only. No legal instrument, authority or applicability is asserted.",
+    "group_ar": "إضافات إقليمية",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "إضافة تحريرية مقترحة لعام 2026 إلى النطاق الجغرافي؛ ولم تُسجَّل أي نتيجة بحثية.",
+    "scope_note_ar_status": "provisional",
+    "jurisdiction_note_ar": "إدراج جغرافي فقط. ولا يُدَّعى وجود أي وثيقة قانونية أو سلطة أو سريان.",
+    "jurisdiction_note_ar_status": "provisional"
   },
   {
     "code": "EH",
@@ -268,6 +366,12 @@
     "reviewed_policy_records": 0,
     "scope_note": "Proposed 2026 editorial addition to geographic scope; no research outcome is recorded.",
     "jurisdiction_note": "Territory with unresolved sovereignty. Listing is geographic only and does not assert a particular legal authority or the applicability of any instrument.",
-    "territorial_status": "disputed_unresolved"
+    "territorial_status": "disputed_unresolved",
+    "group_ar": "إضافات إقليمية",
+    "group_ar_status": "provisional",
+    "scope_note_ar": "إضافة تحريرية مقترحة لعام 2026 إلى النطاق الجغرافي؛ ولم تُسجَّل أي نتيجة بحثية.",
+    "scope_note_ar_status": "provisional",
+    "jurisdiction_note_ar": "إقليم لم تُحسم سيادته. والإدراج جغرافي فقط، ولا يُدَّعى سلطة قانونية معينة ولا سريان أي وثيقة.",
+    "jurisdiction_note_ar_status": "provisional"
   }
 ]
