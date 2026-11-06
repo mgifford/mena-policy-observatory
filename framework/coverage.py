@@ -498,26 +498,25 @@ def validate_coverage(data: CoverageData) -> list[str]:
             _error(errors, f'country {label}: code must be two uppercase letters')
         codes.append(code)
         country_map[code] = country
-        for key in ('name', 'name_ar', 'group'):
+        for key in ('name', 'group'):
             if not isinstance(country.get(key), str) or not country.get(key).strip():
                 _error(errors, f'country {label}: {key} must be a nonempty string')
-        if country.get('name_ar_status') not in ('provisional', 'reviewed'):
-            _error(errors, f'country {label}: name_ar_status must be provisional or reviewed')
-        for key in ('group_ar', 'scope_note_ar'):
-            if not isinstance(country.get(key), str) or not country.get(key).strip():
-                _error(errors, f'country {label}: {key} must be a nonempty string')
-            if country.get(f'{key}_status') not in ('provisional', 'reviewed'):
-                _error(errors, f'country {label}: {key}_status must be provisional or reviewed')
-        if country.get('jurisdiction_note'):
-            if not isinstance(country.get('jurisdiction_note_ar'), str) or \
-                    not country['jurisdiction_note_ar'].strip():
-                _error(errors, f'country {label}: jurisdiction_note_ar is required '
-                               f'when jurisdiction_note is set')
-            if country.get('jurisdiction_note_ar_status') not in ('provisional', 'reviewed'):
-                _error(errors, f'country {label}: jurisdiction_note_ar_status must be '
-                               f'provisional or reviewed')
-        elif country.get('jurisdiction_note_ar'):
-            _error(errors, f'country {label}: jurisdiction_note_ar is set without jurisdiction_note')
+        for language in ('ar', 'fr'):
+            for key in (f'name_{language}', f'group_{language}', f'scope_note_{language}'):
+                if not isinstance(country.get(key), str) or not country.get(key).strip():
+                    _error(errors, f'country {label}: {key} must be a nonempty string')
+                if country.get(f'{key}_status') not in ('provisional', 'reviewed'):
+                    _error(errors, f'country {label}: {key}_status must be provisional or reviewed')
+            note_key = f'jurisdiction_note_{language}'
+            if country.get('jurisdiction_note'):
+                if not isinstance(country.get(note_key), str) or not country[note_key].strip():
+                    _error(errors, f'country {label}: {note_key} is required '
+                                   f'when jurisdiction_note is set')
+                if country.get(f'{note_key}_status') not in ('provisional', 'reviewed'):
+                    _error(errors, f'country {label}: {note_key}_status must be '
+                                   f'provisional or reviewed')
+            elif country.get(note_key):
+                _error(errors, f'country {label}: {note_key} is set without jurisdiction_note')
         if country.get('in_scope') is not True:
             _error(errors, f'country {label}: in_scope must be true for a listed entry')
         if country.get('status') not in LEGACY_RECORD_STATUSES:
@@ -551,11 +550,12 @@ def validate_coverage(data: CoverageData) -> list[str]:
     for group in data.groups:
         group_id = group.get('id')
         group_ids.append(group_id)
-        for key in ('label_en', 'label_ar'):
+        for language in ('en', 'ar', 'fr'):
+            key = f'label_{language}'
             if not isinstance(group.get(key), str) or not group.get(key).strip():
                 _error(errors, f'domain group {group_id}: {key} must be a nonempty string')
-        if group.get('label_ar_status') not in ('provisional', 'reviewed'):
-            _error(errors, f'domain group {group_id}: label_ar_status must be provisional or reviewed')
+            if language != 'en' and group.get(f'{key}_status') not in ('provisional', 'reviewed'):
+                _error(errors, f'domain group {group_id}: {key}_status must be provisional or reviewed')
     for group_id in sorted({item for item in group_ids if group_ids.count(item) > 1}):
         _error(errors, f'domain group {group_id}: duplicate id')
 
@@ -567,21 +567,24 @@ def validate_coverage(data: CoverageData) -> list[str]:
             _error(errors, 'domain: missing id')
         if domain.get('group') not in group_ids:
             _error(errors, f'domain {domain_id}: unknown group {domain.get("group")!r}')
-        for key in ('label_en', 'label_ar'):
+        for language in ('en', 'ar', 'fr'):
+            key = f'label_{language}'
             if not isinstance(domain.get(key), str) or not domain.get(key).strip():
                 _error(errors, f'domain {domain_id}: {key} must be a nonempty string')
-        if domain.get('label_ar_status') not in ('provisional', 'reviewed'):
-            _error(errors, f'domain {domain_id}: label_ar_status must be provisional or reviewed')
+            if language != 'en' and domain.get(f'{key}_status') not in ('provisional', 'reviewed'):
+                _error(errors, f'domain {domain_id}: {key}_status must be provisional or reviewed')
         subtopic_ids = []
         for subtopic in domain.get('subtopics') or []:
             subtopic_ids.append(subtopic.get('id'))
-            for key in ('label_en', 'label_ar'):
+            for language in ('en', 'ar', 'fr'):
+                key = f'label_{language}'
                 if not isinstance(subtopic.get(key), str) or not subtopic.get(key).strip():
                     _error(errors, f'domain {domain_id} subtopic {subtopic.get("id")}: '
                                    f'{key} must be a nonempty string')
-            if subtopic.get('label_ar_status') not in ('provisional', 'reviewed'):
-                _error(errors, f'domain {domain_id} subtopic {subtopic.get("id")}: '
-                               f'label_ar_status must be provisional or reviewed')
+                if language != 'en' and \
+                        subtopic.get(f'{key}_status') not in ('provisional', 'reviewed'):
+                    _error(errors, f'domain {domain_id} subtopic {subtopic.get("id")}: '
+                                   f'{key}_status must be provisional or reviewed')
         for subtopic_id in sorted({item for item in subtopic_ids if subtopic_ids.count(item) > 1}):
             _error(errors, f'domain {domain_id}: duplicate subtopic {subtopic_id}')
     for domain_id in sorted({item for item in domain_ids if domain_ids.count(item) > 1}):
@@ -596,8 +599,10 @@ def validate_coverage(data: CoverageData) -> list[str]:
             continue
         if labels.get('en') != domain.get('label_en'):
             _error(errors, f'region domain_labels: {domain_id} English label differs from domains.json')
-        if labels.get('ar') != domain.get('label_ar'):
-            _error(errors, f'region domain_labels: {domain_id} Arabic label differs from domains.json')
+        for language in ('ar', 'fr'):
+            if labels.get(language) != domain.get(f'label_{language}'):
+                _error(errors, f'region domain_labels: {domain_id} {language} label '
+                               f'differs from domains.json')
 
     policy_ids = []
     for policy in data.policies:

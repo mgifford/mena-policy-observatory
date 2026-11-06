@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "ae-national-digital-accessibility",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-ae-national-policy",
+      "title": "National Digital Accessibility Policy",
+      "url": "https://dgov.tdra.gov.ae/en/publications/national-digital-accessibility-policy",
+      "jurisdiction": "AE",
+      "issuer": "UAE Telecommunications and Digital Government Regulatory Authority",
+      "instrument_type": "national_policy",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": null,
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "recorded",
+      "excerpt": {
+        "text": "All public service sites must comply with Level AA of the WCAG 2.1.",
+        "language": "en",
+        "locator": "Technical annex, section 1",
+        "artifact": "SOURCE.md"
+      },
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Scope and covered entities",
+      "locator": {
+        "kind": "section",
+        "value": "National policy: scope and general provisions"
+      },
+      "source_ids": ["src-ae-national-policy"],
+      "summary": "The official national policy includes federal entities and public-service providers; precise contractual reach and enforcement must be interpreted with the original clauses.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["AE-01"]
+    },
+    {
+      "id": "P-02",
+      "heading": "Staff training",
+      "locator": {
+        "kind": "article",
+        "value": "Article 8"
+      },
+      "source_ids": ["src-ae-national-policy"],
+      "summary": "Article 8 discusses periodic employee training and accessible training materials.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": []
+    },
+    {
+      "id": "P-03",
+      "heading": "Technical references",
+      "locator": {
+        "kind": "annex",
+        "value": "Article 9 and Annex 1"
+      },
+      "source_ids": ["src-ae-national-policy"],
+      "summary": "Article 9 and Annex 1 contain requirements or references to technical standards; verify specific version and exemptions before encoding.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["AE-02", "AE-03"]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "AE-01",
+      "provision_id": "P-01",
+      "statement": "Scope of public service sites and whether annex language establishes a binding legal obligation need legal review.",
+      "observation": "The annex says public service sites must comply with WCAG 2.1 AA.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "scope_and_normativity",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-02",
+      "provision_id": "P-03",
+      "statement": "Whether separate built-in text-to-speech is mandatory or technology-neutral alternatives satisfy the requirement is not resolved.",
+      "observation": "A text-reader feature is explicitly described.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "technology_specific_obligation",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_accessibility_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-03",
+      "provision_id": "P-03",
+      "statement": "It is unclear which user journeys, media types and service channels require each feature.",
+      "observation": "The annex discusses sign-language and speech recognition features.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "applicability",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_accessibility_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-ae-national-annex",
+      "target": {
+        "kind": "external_document",
+        "title": "UAE technical annex (same official policy PDF)",
+        "url": "https://dgov.tdra.gov.ae/-/media/dgov/pdfs/publications/national-digital-accessibility-policy-en.pdf",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "normative_annex",
+      "review_state": "unreviewed",
+      "note": null
+    },
+    {
+      "id": "rel-ae-national-wcag21",
+      "target": {
+        "kind": "external_document",
+        "title": "WCAG 2.1",
+        "url": "https://www.w3.org/TR/WCAG21/",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "technical_standard",
+      "review_state": "unreviewed",
+      "note": null
+    }
+  ]
+}

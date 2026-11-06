@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "sa-dga-web-accessibility-guide",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-sa-dga-guideline",
+      "title": "Guideline for Web Accessibility of Government Websites, v1.0",
+      "url": "https://dga.gov.sa/sites/default/files/2022-12/The%20Guideline%20for%20Web%20Accessibility%20of%20Government%20Websites%20%E2%80%93%20V1.0_1.pdf",
+      "jurisdiction": "SA",
+      "issuer": "Saudi Digital Government Authority",
+      "instrument_type": "government_guideline",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": "v1.0",
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "not_recorded",
+      "excerpt": null,
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Normative status",
+      "locator": {
+        "kind": "section",
+        "value": "DGA guideline introduction and authority"
+      },
+      "source_ids": ["src-sa-dga-guideline"],
+      "summary": "Guideline publication does not by itself prove that every recommendation is legally mandatory.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["SA-01"]
+    },
+    {
+      "id": "P-02",
+      "heading": "Technical standard",
+      "locator": {
+        "kind": "section",
+        "value": "DGA technical guidance"
+      },
+      "source_ids": ["src-sa-dga-guideline"],
+      "summary": "Check any specific referenced WCAG version against text and other governing instruments.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": ["SA-02"]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "SA-01",
+      "provision_id": "P-01",
+      "statement": "Legal force and relation to binding digital government rules remain unverified.",
+      "observation": "The document is a governmental guideline relating to web accessibility.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "normativity",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "SA-02",
+      "provision_id": "P-02",
+      "statement": "Verify the exact clause and version in the primary guideline before encoding an obligation.",
+      "observation": "WCAG 2.1 AA is attributed to related government statements.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "source_mapping",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "source_capture",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-sa-dga-wcag21",
+      "target": {
+        "kind": "external_document",
+        "title": "WCAG 2.1",
+        "url": "https://www.w3.org/TR/WCAG21/",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "technical_standard",
+      "review_state": "unreviewed",
+      "note": null
+    }
+  ]
+}

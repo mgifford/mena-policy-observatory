@@ -10,26 +10,26 @@ from framework.build import load_i18n, t
 
 PLACEHOLDER = re.compile(r'\{([a-z_]+)\}')
 LATIN = re.compile(r'[A-Za-z]')
-LANGUAGE_NAME_KEY = 'nav.language_other'
 
 
 class I18nCatalogueTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalogues = load_i18n(REPO_ROOT / 'regions' / 'mena', ('en', 'ar'))
+        cls.catalogues = load_i18n(REPO_ROOT / 'regions' / 'mena', ('en', 'fr', 'ar'))
         cls.en = cls.catalogues['en']
+        cls.fr = cls.catalogues['fr']
         cls.ar = cls.catalogues['ar']
 
     def test_locales_declare_the_same_keys(self):
+        self.assertEqual(set(self.en), set(self.fr))
         self.assertEqual(set(self.en), set(self.ar))
 
     def test_placeholders_match_between_locales(self):
         for key in self.en:
             with self.subTest(key=key):
-                self.assertEqual(
-                    set(PLACEHOLDER.findall(self.en[key])),
-                    set(PLACEHOLDER.findall(self.ar[key])),
-                )
+                expected = set(PLACEHOLDER.findall(self.en[key]))
+                self.assertEqual(expected, set(PLACEHOLDER.findall(self.fr[key])))
+                self.assertEqual(expected, set(PLACEHOLDER.findall(self.ar[key])))
 
     def test_no_empty_values(self):
         for lang, catalogue in self.catalogues.items():
@@ -45,8 +45,6 @@ class I18nCatalogueTests(unittest.TestCase):
 
     def test_arabic_values_have_no_unmarked_latin_text(self):
         for key, value in self.ar.items():
-            if key == LANGUAGE_NAME_KEY:
-                continue
             without_placeholders = PLACEHOLDER.sub('', value)
             with self.subTest(key=key):
                 self.assertIsNone(

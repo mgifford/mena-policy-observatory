@@ -1,0 +1,7 @@
+# Research-only scaffold: sa-mep-accessibility
+# No enforceable rule is encoded because legal interpretation and source scope are not approved.
+# Ambiguities: SA-MEP-ACCESSIBILITY-01, SA-MEP-ACCESSIBILITY-02, SA-MEP-ACCESSIBILITY-03
+format: rulespec/v1
+module:
+  title: "Saudi Ministry of Economy and Planning Accessibility Policy (unapproved)"
+rules: []

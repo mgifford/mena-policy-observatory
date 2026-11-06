@@ -29,7 +29,7 @@ BASE = REPO_ROOT / 'regions' / 'mena'
 class CoveragePageTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalogues = load_i18n(BASE, ('en', 'ar'))
+        cls.catalogues = load_i18n(BASE, ('en', 'fr', 'ar'))
         cls.cfg = json.loads((BASE / 'region.json').read_text(encoding='utf-8'))
         cls.view = build_view(load_coverage(BASE, REPO_ROOT / 'research-toolkit'))
         cls.policies = json.loads((BASE / 'data' / 'policies.json').read_text(encoding='utf-8'))
@@ -69,6 +69,18 @@ class CoveragePageTests(unittest.TestCase):
         self.assertIn('إقليم لم تُحسم سيادته', body)
         self.assertNotIn('<span lang="en" dir="ltr">Regional additions</span>', body)
         self.assertNotIn('Territory with unresolved sovereignty', body)
+
+    def test_french_country_page_uses_french_labels(self):
+        body = country_body(self.catalogues, 'fr', self.view, self.country('EH'))
+        self.assertIn('Sahara occidental', body)
+        self.assertIn('Ajouts régionaux', body)
+        self.assertIn('Territoire dont la souveraineté', body)
+        self.assertNotIn('Western Sahara', body)
+
+    def test_french_domains_index_uses_french_labels(self):
+        body = domains_index_body(self.catalogues, 'fr', self.view)
+        self.assertIn('Accessibilité numérique', body)
+        self.assertIn('Droits et inclusion des personnes handicapées', body)
 
     def test_domains_index_and_page(self):
         index = domains_index_body(self.catalogues, 'en', self.view)
@@ -171,7 +183,7 @@ class CoveragePageTests(unittest.TestCase):
                 (coverage_body, ()),
                 (tasks_body, ()),
                 (comparison_body, ())):
-            for lang in ('en', 'ar'):
+            for lang in ('en', 'fr', 'ar'):
                 first = builder(self.catalogues, lang, self.view, *args)
                 second = builder(self.catalogues, lang, self.view, *args)
                 self.assertEqual(first, second, f'{builder.__name__} is not deterministic')
