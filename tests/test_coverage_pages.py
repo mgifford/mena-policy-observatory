@@ -63,6 +63,13 @@ class CoveragePageTests(unittest.TestCase):
         self.assertIn('<span lang="en" dir="ltr">', body)
         self.assertIn('غير مسجل', body)
 
+    def test_arabic_country_page_translates_group_and_notes(self):
+        body = country_body(self.catalogues, 'ar', self.view, self.country('EH'))
+        self.assertIn('إضافات إقليمية', body)
+        self.assertIn('إقليم لم تُحسم سيادته', body)
+        self.assertNotIn('<span lang="en" dir="ltr">Regional additions</span>', body)
+        self.assertNotIn('Territory with unresolved sovereignty', body)
+
     def test_domains_index_and_page(self):
         index = domains_index_body(self.catalogues, 'en', self.view)
         for domain_id in ('digital_accessibility', 'ai_governance', 'srhr'):
@@ -81,16 +88,35 @@ class CoveragePageTests(unittest.TestCase):
 
     def test_tasks_page_renders_every_task(self):
         body = tasks_body(self.catalogues, 'en', self.view)
-        self.assertEqual(body.count('<tr><th scope="row">'), 40)
+        self.assertEqual(body.count('<tr><th scope="row">'), 54)
         self.assertIn('DZ-DIGITAL-ACCESSIBILITY-DISCOVERY-001', body)
+        self.assertIn('MENA-T02-001-VERIFY', body)
         self.assertIn('Source discovery', body)
 
     def test_sources_page_marks_leads_as_unreviewed(self):
         body = sources_body(self.catalogues, 'en', self.view)
-        self.assertEqual(body.count('<tr><th scope="row">'), 9)
+        self.assertEqual(body.count('<dl>'), 23)
         self.assertIn('Unreviewed discovery lead', body)
         self.assertIn('Human review of these candidate leads is still pending', body)
         self.assertIn('https://www.mtcit.gov.om/', body)
+
+    def test_sources_page_shows_candidate_verification_metadata(self):
+        body = sources_body(self.catalogues, 'en', self.view)
+        self.assertIn('Candidate official source. Its current legal effect, applicability, and provision-level interpretation have not yet been independently verified.', body)
+        self.assertIn('mena-t02-001', body)
+        self.assertIn('MENA-T02-001-VERIFY', body)
+        self.assertIn('Outstanding verification', body)
+        self.assertIn('Confirm the official source and its issuing authority', body)
+        self.assertIn('Reported amendment', body)
+        self.assertIn('Import package', body)
+        self.assertIn('Not independently checkable', body)
+
+    def test_arabic_sources_page_translates_candidate_metadata(self):
+        body = sources_body(self.catalogues, 'ar', self.view)
+        self.assertIn('حالة المراجعة القانونية', body)
+        self.assertIn('التحقق المطلوب', body)
+        self.assertIn('حزمة الاستيراد', body)
+        self.assertIn('<span lang="en" dir="ltr">Law 18-07 of 2018</span>', body)
 
     def test_comparison_page_renders_all_provisions(self):
         body = comparison_body(self.catalogues, 'en', self.view)
@@ -103,6 +129,19 @@ class CoveragePageTests(unittest.TestCase):
                      'tasks/index.html', 'sources/index.html', 'comparison/index.html'):
             self.assertIn(f'href="{path}"', body)
         self.assertIn('href="countries/AE.html"', body)
+
+    def test_page_bodies_are_deterministic(self):
+        for builder, args in (
+                (sources_body, ()),
+                (countries_index_body, ()),
+                (domains_index_body, ()),
+                (coverage_body, ()),
+                (tasks_body, ()),
+                (comparison_body, ())):
+            for lang in ('en', 'ar'):
+                first = builder(self.catalogues, lang, self.view, *args)
+                second = builder(self.catalogues, lang, self.view, *args)
+                self.assertEqual(first, second, f'{builder.__name__} is not deterministic')
 
     def test_breadcrumb_lists_contain_only_list_items(self):
         class ListChildCheck(HTMLParser):

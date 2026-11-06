@@ -58,7 +58,30 @@ The toolkit is now integrated additively; no existing policy record or legal con
 
 Status vocabulary used by the coverage views is research activity only: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`. It never asserts legal effect or compliance.
 
+## Tranche 02 integration
+
+Tranche 02 is imported through `research-toolkit/scripts/import_tranche.py`. The import is deterministic and idempotent and writes `research-toolkit/reconciliation/tranche-02-report.json`.
+
+- **Inputs:** `incoming/tranche-02/candidate-sources.json`, `incoming/tranche-02/tasks.jsonl`, the canonical candidate inventory, policy records, jurisdiction and domain registries.
+- **Outputs:** additions to `sources/candidate-sources.json`, `backlog/tasks-tranche-02.jsonl`, and the reconciliation report.
+- **Result:** 14 candidates and 14 tasks imported; no matches, possible duplicates or conflicts against the existing inventory. The canonical inventory now holds 23 candidates; the combined queue holds 54 tasks.
+- **Duplicate detection:** canonical URL first, then jurisdiction plus the primary instrument number, then jurisdiction plus title. A possible duplicate is held out of the import for human review and listed in the report. Title similarity alone never merges or drops a lead.
+- **Legal status:** every imported candidate keeps `legal_effect: not_assessed`, `capture_status: not_captured` and `display_review.human_reviewed: false`. No capture, transcription, translation or review is claimed.
+- **Relationships:** the reported 2025 amendment to Algeria's 2018 data protection law, the reported 2024 amendment to Iraq's 2013 disability law, and Somalia's reported 2026 regulations approval are stored as unreviewed candidate relations. They are not legal findings.
+- **Provenance:** each imported record keeps the package path, incoming identifier, recorded date, source status, discovery note and the tranche's evidence reference. Turn-style evidence references are labelled as not independently checkable rather than presented as verification.
+- **Language mapping:** `disability_rights` maps to the canonical `disability_inclusion` domain; all other domains and every source kind are mapped explicitly. Unmapped values block the import.
+
+Run and verify:
+
+```sh
+python3 research-toolkit/incoming/tranche-02/validate.py
+python3 research-toolkit/scripts/import_tranche.py
+python3 research-toolkit/scripts/import_tranche.py --check
+```
+
+CI runs the package validator and the `--check` command, so a stale import or a package whose checksums no longer match fails the build.
+
 ## CI recommendation
 Add an isolated job for toolkit validator and unit tests, then fold selected checks into the repository's existing build after review. Do not make incomplete candidate sources appear as published legal records.
 
-Status: applied in the repository workflow. The positive fixture is validated in CI; the intentionally invalid fixture is exercised by unit tests only.
+Status: applied in the repository workflow. The positive fixture is validated in CI; the intentionally invalid fixture is exercised by unit tests only. Tranche 02 is integrated and gated by the package validator plus `import_tranche.py --check`.

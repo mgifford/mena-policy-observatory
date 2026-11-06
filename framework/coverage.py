@@ -61,6 +61,14 @@ CANDIDATE_SOURCE_TYPES = (
     'unknown',
 )
 CAPTURE_STATUSES = ('not_captured', 'captured', 'verified')
+VERIFICATION_REQUIREMENTS = (
+    'official_source',
+    'legal_scope',
+    'language',
+    'publication_permissions',
+)
+CANDIDATE_RELATIONS = ('amends', 'related', 'implements', 'consolidates')
+TASK_FILES = ('tasks.jsonl', 'cross-domain-tasks.jsonl', 'tasks-tranche-02.jsonl')
 CONFIRMED_LEGAL_EFFECT = ('binding_confirmed', 'nonbinding_confirmed')
 LEGACY_RECORD_STATUSES = ('not_assessed', 'source_verified', 'source_identified', 'identified')
 REQUIRED_DISPLAY_CHECKS = (
@@ -124,7 +132,7 @@ def load_coverage(base=DEFAULT_BASE, toolkit=DEFAULT_TOOLKIT) -> CoverageData:
         if path.is_file():
             research[str(policy.get('id'))] = _read_json(path)
     tasks = []
-    for name in ('tasks.jsonl', 'cross-domain-tasks.jsonl'):
+    for name in TASK_FILES:
         for task in _read_jsonl(toolkit / 'backlog' / name):
             tasks.append(task)
     candidate_inventory = _read_json(toolkit / 'sources' / 'candidate-sources.json')
@@ -189,9 +197,34 @@ def _candidate_view(candidate):
     }
 
 
+def recorded_review(research: dict | None) -> dict | None:
+    """Return the record-level review entry only when it is complete.
+
+    The presence of a review object is not enough: a review is recorded only
+    with a reviewer, a date and a stated scope. An absent or partial review
+    leaves the record unreviewed rather than inferred from silence.
+    """
+    review = (research or {}).get('review')
+    if not isinstance(review, dict) or review.get('status') != 'reviewed':
+        return None
+    for key in ('reviewer', 'scope'):
+        if not isinstance(review.get(key), str) or not review[key].strip():
+            return None
+    if not _iso_date(review.get('reviewed_at')):
+        return None
+    return review
+
+
 def record_is_reviewed(policy: dict, research: dict | None) -> bool:
-    """A record is reviewed only with a confirmed effect and no open questions."""
+    """A record is reviewed with a confirmed effect, a recorded review and no open questions.
+
+    The status vocabulary calls ``reviewed_findings`` a review outcome, so the
+    gate requires recorded review evidence. Absence of interpretation questions
+    is not by itself review evidence.
+    """
     if policy.get('legal_effect') not in CONFIRMED_LEGAL_EFFECT:
+        return False
+    if recorded_review(research) is None:
         return False
     questions = (research or {}).get('interpretations') or []
     return not any(question.get('status') != 'resolved' for question in questions)
@@ -293,7 +326,15 @@ def build_view(data: CoverageData) -> dict:
     candidates = [candidate for candidate in (
         _candidate_view(item) for item in data.candidate_inventory.get('records', []))
         if candidate['displayable']]
+    candidates.sort(key=lambda candidate: (str(candidate.get('jurisdiction')),
+                                           str(candidate.get('id'))))
     tasks = list(data.tasks)
+    tasks_by_candidate = {}
+    for task in tasks:
+        for lead in task.get('source_lead_ids') or []:
+            tasks_by_candidate.setdefault(lead, []).append(str(task.get('task_id')))
+    for candidate in candidates:
+        candidate['task_ids'] = sorted(tasks_by_candidate.get(candidate.get('id'), []))
 
     records_view = []
     for policy in data.policies:
@@ -398,6 +439,21 @@ def validate_coverage(data: CoverageData) -> list[str]:
                 _error(errors, f'country {label}: {key} must be a nonempty string')
         if country.get('name_ar_status') not in ('provisional', 'reviewed'):
             _error(errors, f'country {label}: name_ar_status must be provisional or reviewed')
+        for key in ('group_ar', 'scope_note_ar'):
+            if not isinstance(country.get(key), str) or not country.get(key).strip():
+                _error(errors, f'country {label}: {key} must be a nonempty string')
+            if country.get(f'{key}_status') not in ('provisional', 'reviewed'):
+                _error(errors, f'country {label}: {key}_status must be provisional or reviewed')
+        if country.get('jurisdiction_note'):
+            if not isinstance(country.get('jurisdiction_note_ar'), str) or \
+                    not country['jurisdiction_note_ar'].strip():
+                _error(errors, f'country {label}: jurisdiction_note_ar is required '
+                               f'when jurisdiction_note is set')
+            if country.get('jurisdiction_note_ar_status') not in ('provisional', 'reviewed'):
+                _error(errors, f'country {label}: jurisdiction_note_ar_status must be '
+                               f'provisional or reviewed')
+        elif country.get('jurisdiction_note_ar'):
+            _error(errors, f'country {label}: jurisdiction_note_ar is set without jurisdiction_note')
         if country.get('in_scope') is not True:
             _error(errors, f'country {label}: in_scope must be true for a listed entry')
         if country.get('status') not in LEGACY_RECORD_STATUSES:
@@ -489,6 +545,19 @@ def validate_coverage(data: CoverageData) -> list[str]:
             _error(errors, f'policy {policy_id}: unknown domain {policy.get("topic")!r}')
         if not str(policy.get('source_url', '')).startswith('https://'):
             _error(errors, f'policy {policy_id}: source_url must be https')
+        research = data.research.get(str(policy_id))
+        review = (research or {}).get('review')
+        if review is not None:
+            if not isinstance(review, dict):
+                _error(errors, f'policy {policy_id}: review must be an object')
+            elif review.get('status') not in ('pending', 'reviewed'):
+                _error(errors, f'policy {policy_id}: review.status must be pending or reviewed')
+            elif review.get('status') == 'reviewed' and recorded_review(research) is None:
+                _error(errors, f'policy {policy_id}: a reviewed record needs a reviewer, '
+                               f'an ISO reviewed_at and a stated scope')
+        if policy.get('legal_effect') in CONFIRMED_LEGAL_EFFECT and recorded_review(research) is None:
+            _error(errors, f'policy {policy_id}: a confirmed legal effect needs a complete '
+                           f'recorded review; coverage will not infer one from silence')
     for policy_id in sorted({item for item in policy_ids if policy_ids.count(item) > 1}):
         _error(errors, f'policy {policy_id}: duplicate id')
 
@@ -550,8 +619,74 @@ def validate_coverage(data: CoverageData) -> list[str]:
                 _error(errors, f'candidate {candidate_id}: display_review.human_reviewed must be boolean')
             if not _iso_date(display.get('checked_at')):
                 _error(errors, f'candidate {candidate_id}: display_review.checked_at must be an ISO date')
+        languages = candidate.get('source_languages')
+        if languages is not None:
+            if not isinstance(languages, list) or not languages:
+                _error(errors, f'candidate {candidate_id}: source_languages must be a nonempty array')
+            else:
+                for language in languages:
+                    if not isinstance(language, str) or len(language.strip()) != 2:
+                        _error(errors, f'candidate {candidate_id}: invalid language tag {language!r}')
+        authority = candidate.get('issuing_authority')
+        if authority is not None and (not isinstance(authority, str) or not authority.strip()):
+            _error(errors, f'candidate {candidate_id}: issuing_authority must be a nonempty string or null')
+        verification = candidate.get('verification_required')
+        if verification is not None:
+            if not isinstance(verification, list):
+                _error(errors, f'candidate {candidate_id}: verification_required must be an array')
+            else:
+                for token in verification:
+                    if token not in VERIFICATION_REQUIREMENTS:
+                        _error(errors, f'candidate {candidate_id}: unknown verification requirement {token!r}')
+        provenance = candidate.get('provenance')
+        if provenance is not None:
+            if not isinstance(provenance, dict):
+                _error(errors, f'candidate {candidate_id}: provenance must be an object')
+            else:
+                for key in ('package', 'incoming_id', 'note'):
+                    if not isinstance(provenance.get(key), str) or not provenance[key].strip():
+                        _error(errors, f'candidate {candidate_id}: provenance.{key} must be a nonempty string')
+                if not _iso_date(provenance.get('recorded_on')):
+                    _error(errors, f'candidate {candidate_id}: provenance.recorded_on must be an ISO date')
+                evidence_ref = provenance.get('evidence_ref')
+                if evidence_ref is not None and not isinstance(evidence_ref, str):
+                    _error(errors, f'candidate {candidate_id}: provenance.evidence_ref must be a string or null')
+        relations = candidate.get('relations')
+        if relations is not None:
+            if not isinstance(relations, list):
+                _error(errors, f'candidate {candidate_id}: relations must be an array')
+            else:
+                relation_ids = []
+                for relation in relations:
+                    if not isinstance(relation, dict):
+                        _error(errors, f'candidate {candidate_id}: each relation must be an object')
+                        continue
+                    relation_ids.append(relation.get('id'))
+                    if not relation.get('id'):
+                        _error(errors, f'candidate {candidate_id}: relation needs an id')
+                    if relation.get('relation') not in CANDIDATE_RELATIONS:
+                        _error(errors, f'candidate {candidate_id}: unknown relation {relation.get("relation")!r}')
+                    if relation.get('review_state') != 'unreviewed':
+                        _error(errors, f'candidate {candidate_id}: candidate relations must stay unreviewed')
+                    if not isinstance(relation.get('recorded_label'), str) or \
+                            not relation['recorded_label'].strip():
+                        _error(errors, f'candidate {candidate_id}: relation needs a recorded label')
+                    target = relation.get('target_candidate_id')
+                    if not isinstance(target, str) or not target:
+                        _error(errors, f'candidate {candidate_id}: relation needs a target candidate')
+                    elif target == candidate_id:
+                        _error(errors, f'candidate {candidate_id}: relation points at its own record')
+                for relation_id in sorted({item for item in relation_ids if relation_ids.count(item) > 1}):
+                    _error(errors, f'candidate {candidate_id}: duplicate relation {relation_id!r}')
     for candidate_id in sorted({item for item in candidate_ids if candidate_ids.count(item) > 1}):
         _error(errors, f'candidate {candidate_id}: duplicate id')
+    for candidate in data.candidate_inventory.get('records', []):
+        for relation in candidate.get('relations') or []:
+            if not isinstance(relation, dict):
+                continue
+            target = relation.get('target_candidate_id')
+            if isinstance(target, str) and target and target not in candidate_map:
+                _error(errors, f'candidate {candidate.get("id")}: relation target {target!r} is unknown')
 
     task_ids = []
     for task in data.tasks:

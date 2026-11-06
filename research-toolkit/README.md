@@ -16,11 +16,13 @@ Prepared for: https://github.com/mgifford/mena-policy-observatory (repository in
 ## What's inside
 
 - `agents/`: staged, bounded prompts with hard-stop and handoff contracts.
-- `backlog/`: 24 proposed geographic entries, domain inventory, and 40 tasks (24 jurisdiction discovery tasks plus 16 cross-domain tasks).
+- `backlog/`: 24 proposed geographic entries, domain inventory, 54 tasks (24 jurisdiction discovery tasks, 16 cross-domain tasks and 14 tranche-02 verification tasks), and the tranche-02 task queue.
 - `sources/`: previous official-site **candidate leads** and authoritative research portals, not verified law.
 - `templates/`: source, interpretation, relationship, Axiom, review, PR and research packet scaffolds.
 - `schemas/`: standalone packet JSON Schema, deliberately not replacing the existing `regions/mena/schemas/` model.
-- `scripts/`: offline packet validator, deterministic output manifest with `--check`, and multi-file queue summaries with logical duplicate detection. Network/model calls are intentionally excluded.
+- `scripts/`: offline packet validator, deterministic output manifest with `--check`, multi-file queue summaries with logical duplicate detection, and the idempotent tranche importer. Network/model calls are intentionally excluded.
+- `reconciliation/`: machine-readable import reports; each report lists imported records, matches, possible duplicates, conflicts and outstanding verification.
+- `incoming/`: unreviewed discovery packages. Nothing under `incoming/` is published until it is imported and reviewed.
 - `tests/`: positive and negative test fixtures.
 - `docs/`: methodology, provenance, quality gates, accessible site patterns, privacy, threat modeling, internationalization, comparison and modeling.
 
@@ -41,6 +43,8 @@ python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 scripts/report_queue.py backlog/tasks.jsonl backlog/cross-domain-tasks.jsonl
 python3 scripts/manifest.py . --output MANIFEST.json
 python3 scripts/manifest.py . --output MANIFEST.json --check
+python3 scripts/import_tranche.py --check
+python3 incoming/tranche-02/validate.py
 ```
 
 `report_queue.py` accepts one or more JSONL files, reports per-file and combined totals, and fails on duplicate logical task IDs after normalizing `_` and `-` separators. Missing `priority` or `deliverable` metadata is reported but does not fail: cross-domain discovery tasks intentionally omit those fields until triage.
