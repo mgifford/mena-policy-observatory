@@ -163,6 +163,41 @@
       "sha256": "35ea93f4bb67b65fa737abf85d648921a918b33ddf0a9c2b5ca356cf4a264dff"
     },
     {
+      "path": "incoming/tranche-02/README.md",
+      "size": 645,
+      "sha256": "c233a0e8d2a1c1d4045654a094520dc8df8376901eaad565990b0517aee72150"
+    },
+    {
+      "path": "incoming/tranche-02/RESEARCH.md",
+      "size": 9949,
+      "sha256": "fd7100789e8e37b338409062df31fd709130a5354e062f4f9827ca68b660e894"
+    },
+    {
+      "path": "incoming/tranche-02/SHA256SUMS",
+      "size": 487,
+      "sha256": "288e487f32a0e3aa8423bd9efe4bc00a19958042a27b34cdabfe3655000dc6c3"
+    },
+    {
+      "path": "incoming/tranche-02/candidate-sources.csv",
+      "size": 5214,
+      "sha256": "0b05dc3462f97140e5c5b1eb77abe0cf44291346c564291cdbddd1a4bb4b48a8"
+    },
+    {
+      "path": "incoming/tranche-02/candidate-sources.json",
+      "size": 17177,
+      "sha256": "5837a2129378ac74426ffd077e40b59327941eb0fca3afa498bb8446c6dba908"
+    },
+    {
+      "path": "incoming/tranche-02/tasks.jsonl",
+      "size": 5929,
+      "sha256": "2d4628c59791f24feaa13d332e6fdde542a2b4463d2d82e1c690e13ae268241c"
+    },
+    {
+      "path": "incoming/tranche-02/validate.py",
+      "size": 1150,
+      "sha256": "bb7bb305694d9f038fba0cd2dda50c597965e1b3d7bda96f78a479a38444b08e"
+    },
+    {
       "path": "schemas/candidate-packet.schema.json",
       "size": 4249,
       "sha256": "1f35e86918c0dec61c8c922a12913b2a416361ebcfbc72ebaa13c2ca90b4de04"
