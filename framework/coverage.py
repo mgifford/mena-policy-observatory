@@ -61,6 +61,14 @@ CANDIDATE_SOURCE_TYPES = (
     'unknown',
 )
 CAPTURE_STATUSES = ('not_captured', 'captured', 'verified')
+VERIFICATION_REQUIREMENTS = (
+    'official_source',
+    'legal_scope',
+    'language',
+    'publication_permissions',
+)
+CANDIDATE_RELATIONS = ('amends', 'related', 'implements', 'consolidates')
+TASK_FILES = ('tasks.jsonl', 'cross-domain-tasks.jsonl', 'tasks-tranche-02.jsonl')
 CONFIRMED_LEGAL_EFFECT = ('binding_confirmed', 'nonbinding_confirmed')
 LEGACY_RECORD_STATUSES = ('not_assessed', 'source_verified', 'source_identified', 'identified')
 REQUIRED_DISPLAY_CHECKS = (
@@ -124,7 +132,7 @@ def load_coverage(base=DEFAULT_BASE, toolkit=DEFAULT_TOOLKIT) -> CoverageData:
         if path.is_file():
             research[str(policy.get('id'))] = _read_json(path)
     tasks = []
-    for name in ('tasks.jsonl', 'cross-domain-tasks.jsonl'):
+    for name in TASK_FILES:
         for task in _read_jsonl(toolkit / 'backlog' / name):
             tasks.append(task)
     candidate_inventory = _read_json(toolkit / 'sources' / 'candidate-sources.json')
@@ -318,7 +326,15 @@ def build_view(data: CoverageData) -> dict:
     candidates = [candidate for candidate in (
         _candidate_view(item) for item in data.candidate_inventory.get('records', []))
         if candidate['displayable']]
+    candidates.sort(key=lambda candidate: (str(candidate.get('jurisdiction')),
+                                           str(candidate.get('id'))))
     tasks = list(data.tasks)
+    tasks_by_candidate = {}
+    for task in tasks:
+        for lead in task.get('source_lead_ids') or []:
+            tasks_by_candidate.setdefault(lead, []).append(str(task.get('task_id')))
+    for candidate in candidates:
+        candidate['task_ids'] = sorted(tasks_by_candidate.get(candidate.get('id'), []))
 
     records_view = []
     for policy in data.policies:
@@ -603,8 +619,74 @@ def validate_coverage(data: CoverageData) -> list[str]:
                 _error(errors, f'candidate {candidate_id}: display_review.human_reviewed must be boolean')
             if not _iso_date(display.get('checked_at')):
                 _error(errors, f'candidate {candidate_id}: display_review.checked_at must be an ISO date')
+        languages = candidate.get('source_languages')
+        if languages is not None:
+            if not isinstance(languages, list) or not languages:
+                _error(errors, f'candidate {candidate_id}: source_languages must be a nonempty array')
+            else:
+                for language in languages:
+                    if not isinstance(language, str) or len(language.strip()) != 2:
+                        _error(errors, f'candidate {candidate_id}: invalid language tag {language!r}')
+        authority = candidate.get('issuing_authority')
+        if authority is not None and (not isinstance(authority, str) or not authority.strip()):
+            _error(errors, f'candidate {candidate_id}: issuing_authority must be a nonempty string or null')
+        verification = candidate.get('verification_required')
+        if verification is not None:
+            if not isinstance(verification, list):
+                _error(errors, f'candidate {candidate_id}: verification_required must be an array')
+            else:
+                for token in verification:
+                    if token not in VERIFICATION_REQUIREMENTS:
+                        _error(errors, f'candidate {candidate_id}: unknown verification requirement {token!r}')
+        provenance = candidate.get('provenance')
+        if provenance is not None:
+            if not isinstance(provenance, dict):
+                _error(errors, f'candidate {candidate_id}: provenance must be an object')
+            else:
+                for key in ('package', 'incoming_id', 'note'):
+                    if not isinstance(provenance.get(key), str) or not provenance[key].strip():
+                        _error(errors, f'candidate {candidate_id}: provenance.{key} must be a nonempty string')
+                if not _iso_date(provenance.get('recorded_on')):
+                    _error(errors, f'candidate {candidate_id}: provenance.recorded_on must be an ISO date')
+                evidence_ref = provenance.get('evidence_ref')
+                if evidence_ref is not None and not isinstance(evidence_ref, str):
+                    _error(errors, f'candidate {candidate_id}: provenance.evidence_ref must be a string or null')
+        relations = candidate.get('relations')
+        if relations is not None:
+            if not isinstance(relations, list):
+                _error(errors, f'candidate {candidate_id}: relations must be an array')
+            else:
+                relation_ids = []
+                for relation in relations:
+                    if not isinstance(relation, dict):
+                        _error(errors, f'candidate {candidate_id}: each relation must be an object')
+                        continue
+                    relation_ids.append(relation.get('id'))
+                    if not relation.get('id'):
+                        _error(errors, f'candidate {candidate_id}: relation needs an id')
+                    if relation.get('relation') not in CANDIDATE_RELATIONS:
+                        _error(errors, f'candidate {candidate_id}: unknown relation {relation.get("relation")!r}')
+                    if relation.get('review_state') != 'unreviewed':
+                        _error(errors, f'candidate {candidate_id}: candidate relations must stay unreviewed')
+                    if not isinstance(relation.get('recorded_label'), str) or \
+                            not relation['recorded_label'].strip():
+                        _error(errors, f'candidate {candidate_id}: relation needs a recorded label')
+                    target = relation.get('target_candidate_id')
+                    if not isinstance(target, str) or not target:
+                        _error(errors, f'candidate {candidate_id}: relation needs a target candidate')
+                    elif target == candidate_id:
+                        _error(errors, f'candidate {candidate_id}: relation points at its own record')
+                for relation_id in sorted({item for item in relation_ids if relation_ids.count(item) > 1}):
+                    _error(errors, f'candidate {candidate_id}: duplicate relation {relation_id!r}')
     for candidate_id in sorted({item for item in candidate_ids if candidate_ids.count(item) > 1}):
         _error(errors, f'candidate {candidate_id}: duplicate id')
+    for candidate in data.candidate_inventory.get('records', []):
+        for relation in candidate.get('relations') or []:
+            if not isinstance(relation, dict):
+                continue
+            target = relation.get('target_candidate_id')
+            if isinstance(target, str) and target and target not in candidate_map:
+                _error(errors, f'candidate {candidate.get("id")}: relation target {target!r} is unknown')
 
     task_ids = []
     for task in data.tasks:

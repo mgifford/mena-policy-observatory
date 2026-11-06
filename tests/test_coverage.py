@@ -189,13 +189,16 @@ class CoverageStatusTests(unittest.TestCase):
         self.assertEqual(cells[('AE', 'digital_accessibility')], 'legal_review_pending')
         self.assertEqual(cells[('JO', 'digital_accessibility')], 'candidate_sources_identified')
         self.assertEqual(cells[('DZ', 'digital_accessibility')], 'not_started')
+        self.assertEqual(cells[('DZ', 'digital_rights')], 'candidate_sources_identified')
+        self.assertEqual(cells[('IL', 'digital_accessibility')], 'not_started')
 
     def test_country_status_aggregates_evidence(self):
         statuses = {country['code']: country['status']
                     for country in build_view(self.data)['countries']}
         self.assertEqual(statuses['AE'], 'legal_review_pending')
         self.assertEqual(statuses['JO'], 'candidate_sources_identified')
-        self.assertEqual(statuses['DZ'], 'not_started')
+        self.assertEqual(statuses['DZ'], 'candidate_sources_identified')
+        self.assertEqual(statuses['IL'], 'not_started')
 
     def test_blocked_task_outranks_other_statuses(self):
         data = copy.deepcopy(self.data)
@@ -288,7 +291,7 @@ class CoverageStatusTests(unittest.TestCase):
         data = copy.deepcopy(self.data)
         data.candidate_inventory['records'][0]['source_url'] = 'http://unsafe.test/x'
         view = build_view(data)
-        self.assertEqual(view['totals']['candidates'], 8)
+        self.assertEqual(view['totals']['candidates'], 22)
         self.assertNotIn(data.candidate_inventory['records'][0]['id'],
                          {candidate['id'] for candidate in view['candidates']})
 
@@ -297,8 +300,8 @@ class CoverageStatusTests(unittest.TestCase):
         self.assertEqual(view['totals']['countries'], 24)
         self.assertEqual(view['totals']['domains'], 8)
         self.assertEqual(view['totals']['records'], 7)
-        self.assertEqual(view['totals']['candidates'], 9)
-        self.assertEqual(view['totals']['tasks'], 40)
+        self.assertEqual(view['totals']['candidates'], 23)
+        self.assertEqual(view['totals']['tasks'], 54)
 
 
 class CoverageAuditTests(unittest.TestCase):
@@ -308,8 +311,8 @@ class CoverageAuditTests(unittest.TestCase):
     def test_live_queue_has_no_logical_duplicates(self):
         audit = audit_coverage(self.data, reference_date=date(2026, 11, 6))
         self.assertEqual(audit['duplicates'], [])
-        self.assertEqual(audit['task_count'], 40)
-        self.assertEqual(audit['candidate_count'], 9)
+        self.assertEqual(audit['task_count'], 54)
+        self.assertEqual(audit['candidate_count'], 23)
 
     def test_audit_reports_logical_duplicates(self):
         data = copy.deepcopy(self.data)
@@ -321,7 +324,7 @@ class CoverageAuditTests(unittest.TestCase):
         audit = audit_coverage(self.data, reference_date=date(2026, 11, 6))
         pending = [item for item in audit['unresolved_review']
                    if item['kind'] == 'candidate_display']
-        self.assertEqual(len(pending), 9)
+        self.assertEqual(len(pending), 23)
         self.assertTrue(all(item['status'] == 'human_review_pending' for item in pending))
 
 
