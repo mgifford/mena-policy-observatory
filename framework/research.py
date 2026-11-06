@@ -29,7 +29,7 @@ EXPRESSION_KINDS = (
     'translation_unavailable', 'authority_unresolved',
 )
 EXPRESSION_REVIEW_STATES = ('unreviewed', 'in_review', 'reviewed', 'native_reviewed', 'disputed')
-REVIEWED_EXPRESSION_STATES = ('reviewed', 'native_reviewed')
+REVIEWED_EXPRESSION_STATES = ('reviewed', 'native_reviewed', 'disputed')
 CONFIRMED_EFFECT = ('in_force_confirmed', 'not_in_force_confirmed')
 ACYCLIC_RELATIONS = {'amends', 'supersedes'}
 
