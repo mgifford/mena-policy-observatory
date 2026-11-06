@@ -46,5 +46,19 @@ If tests need network/browser installation, report inability honestly; don't cla
 - **Omitted:** auto-scraping, API calls, public-facing LLM, bulk source reproduction and legal determinations without human review.
 - **Reason:** legality, privacy, provenance and reproducibility cannot be inferred from a successful build.
 
+## Current integration status (PR 1)
+
+The toolkit is now integrated additively; no existing policy record or legal conclusion was changed.
+
+- `framework/coverage.py` loads `regions/mena/data/countries.json`, `regions/mena/data/domains.json`, `research-toolkit/sources/candidate-sources.json` and both backlog files. It validates registry consistency, derives research status from recorded evidence, and builds the public view model.
+- `framework/validate.py` runs coverage validation after the existing record checks.
+- `framework/build.py` emits bilingual jurisdiction, policy-area, coverage-matrix, task, candidate-source and comparison pages. Candidate displays are filtered to safe HTTPS, credential-free, non-IP, link-only leads with recorded display review metadata.
+- `.github/workflows/pages.yml` runs the toolkit validator, toolkit tests, queue summary and `manifest.py --check` before building the site.
+- `research-toolkit/tests/test_toolkit.py` covers the new validator, queue and manifest behavior.
+
+Status vocabulary used by the coverage views is research activity only: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`. It never asserts legal effect or compliance.
+
 ## CI recommendation
 Add an isolated job for toolkit validator and unit tests, then fold selected checks into the repository's existing build after review. Do not make incomplete candidate sources appear as published legal records.
+
+Status: applied in the repository workflow. The positive fixture is validated in CI; the intentionally invalid fixture is exercised by unit tests only.

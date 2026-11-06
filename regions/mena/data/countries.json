@@ -2,148 +2,272 @@
   {
     "code": "DZ",
     "name": "Algeria",
+    "name_ar": "الجزائر",
+    "name_ar_status": "provisional",
     "group": "Northern Africa",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "EG",
     "name": "Egypt",
+    "name_ar": "مصر",
+    "name_ar_status": "provisional",
     "group": "Northern Africa",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "LY",
     "name": "Libya",
+    "name_ar": "ليبيا",
+    "name_ar_status": "provisional",
     "group": "Northern Africa",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "MA",
     "name": "Morocco",
+    "name_ar": "المغرب",
+    "name_ar_status": "provisional",
     "group": "Northern Africa",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "SD",
     "name": "Sudan",
+    "name_ar": "السودان",
+    "name_ar_status": "provisional",
     "group": "Northern Africa",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "TN",
     "name": "Tunisia",
+    "name_ar": "تونس",
+    "name_ar_status": "provisional",
     "group": "Northern Africa",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "BH",
     "name": "Bahrain",
+    "name_ar": "البحرين",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "IQ",
     "name": "Iraq",
+    "name_ar": "العراق",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "IL",
     "name": "Israel",
+    "name_ar": "إسرائيل",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "JO",
     "name": "Jordan",
+    "name_ar": "الأردن",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "KW",
     "name": "Kuwait",
+    "name_ar": "الكويت",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "LB",
     "name": "Lebanon",
+    "name_ar": "لبنان",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "OM",
     "name": "Oman",
+    "name_ar": "عُمان",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "PS",
     "name": "State of Palestine",
+    "reconciled_from_name": "Palestine",
+    "name_ar": "دولة فلسطين",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law.",
+    "jurisdiction_note": "The English name follows the repository's existing designation. Listing this jurisdiction does not resolve legal authority or the application of any instrument."
   },
   {
     "code": "QA",
     "name": "Qatar",
+    "name_ar": "قطر",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 2
+    "reviewed_policy_records": 2,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "SA",
     "name": "Saudi Arabia",
+    "name_ar": "المملكة العربية السعودية",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 1
+    "reviewed_policy_records": 2,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "SY",
     "name": "Syrian Arab Republic",
+    "reconciled_from_name": "Syria",
+    "name_ar": "الجمهورية العربية السورية",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "AE",
     "name": "United Arab Emirates",
+    "name_ar": "الإمارات العربية المتحدة",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 1
+    "reviewed_policy_records": 3,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "YE",
     "name": "Yemen",
+    "name_ar": "اليمن",
+    "name_ar_status": "provisional",
     "group": "Western Asia",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "DJ",
     "name": "Djibouti",
+    "name_ar": "جيبوتي",
+    "name_ar_status": "provisional",
     "group": "Regional additions",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
   },
   {
     "code": "MR",
     "name": "Mauritania",
+    "name_ar": "موريتانيا",
+    "name_ar_status": "provisional",
     "group": "Regional additions",
+    "in_scope": true,
     "status": "not_assessed",
-    "reviewed_policy_records": 0
+    "reviewed_policy_records": 0,
+    "scope_note": "Editorial MENA scope only; not a claim about applicable law."
+  },
+  {
+    "code": "IR",
+    "name": "Iran",
+    "name_ar": "إيران",
+    "name_ar_status": "provisional",
+    "group": "Regional additions",
+    "in_scope": true,
+    "status": "not_assessed",
+    "reviewed_policy_records": 0,
+    "scope_note": "Proposed 2026 editorial addition to geographic scope; no research outcome is recorded.",
+    "jurisdiction_note": "Geographic inclusion only. No legal instrument, authority or applicability is asserted."
+  },
+  {
+    "code": "SO",
+    "name": "Somalia",
+    "name_ar": "الصومال",
+    "name_ar_status": "provisional",
+    "group": "Regional additions",
+    "in_scope": true,
+    "status": "not_assessed",
+    "reviewed_policy_records": 0,
+    "scope_note": "Proposed 2026 editorial addition to geographic scope; no research outcome is recorded.",
+    "jurisdiction_note": "Geographic inclusion only. No legal instrument, authority or applicability is asserted."
+  },
+  {
+    "code": "EH",
+    "name": "Western Sahara",
+    "name_ar": "الصحراء الغربية",
+    "name_ar_status": "provisional",
+    "group": "Regional additions",
+    "in_scope": true,
+    "status": "not_assessed",
+    "reviewed_policy_records": 0,
+    "scope_note": "Proposed 2026 editorial addition to geographic scope; no research outcome is recorded.",
+    "jurisdiction_note": "Territory with unresolved sovereignty. Listing is geographic only and does not assert a particular legal authority or the applicability of any instrument.",
+    "territorial_status": "disputed_unresolved"
   }
 ]

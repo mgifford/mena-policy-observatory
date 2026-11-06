@@ -2,6 +2,7 @@
   "research_date": "2026-11-05",
   "publication_status": "candidate_source_inventory_not_legal_review",
   "schema_note": "Discovery interchange only. Map into existing research.json after source capture and reviewer validation.",
+  "display_policy": "Public pages may show the title, jurisdiction, domain, source URL, source type, recorded date and capture state. No source text is reproduced. This is not verification of the document or its legal effect.",
   "records": [
     {
       "id": "om-national-digital-accessibility",
@@ -17,7 +18,18 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "high",
-      "research_question": "Confirm applicability to government agencies, technical standards, exemptions and whether later policies supersede the 2022 instrument."
+      "research_question": "Confirm applicability to government agencies, technical standards, exemptions and whether later policies supersede the 2022 instrument.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     },
     {
       "id": "jo-digital-inclusion-2025",
@@ -34,16 +46,27 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "high",
-      "research_question": "Capture policy and determine accessibility-specific provisions and scope."
+      "research_question": "Capture policy and determine accessibility-specific provisions and scope.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     },
     {
       "id": "jo-personal-data-2023",
       "jurisdiction": "JO",
       "domains": [
         "digital_rights",
-        "artificial_intelligence",
+        "ai_governance",
         "immigration",
-        "reproductive_health_rights"
+        "srhr"
       ],
       "instrument_title": "Personal Data Protection Law No. 24 of 2023",
       "source_url": "https://www.modee.gov.jo/EN/Pages/FAQs",
@@ -52,7 +75,18 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "high",
-      "research_question": "Capture Arabic authoritative legislation and distinguish effective date, transition period and exceptions."
+      "research_question": "Capture Arabic authoritative legislation and distinguish effective date, transition period and exceptions.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     },
     {
       "id": "ma-disability-97-13",
@@ -69,14 +103,25 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "high",
-      "research_question": "Identify accessibility and implementation provisions and later implementing instruments."
+      "research_question": "Identify accessibility and implementation provisions and later implementing instruments.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     },
     {
       "id": "ma-personal-data-09-08",
       "jurisdiction": "MA",
       "domains": [
         "digital_rights",
-        "artificial_intelligence"
+        "ai_governance"
       ],
       "instrument_title": "Law 09-08 on Personal Data Protection",
       "source_url": "https://www.cndp.ma/textes-et-lois/",
@@ -85,15 +130,26 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "high",
-      "research_question": "Capture original law, implementing decree, exclusions, transfer rules and amendments."
+      "research_question": "Capture original law, implementing decree, exclusions, transfer rules and amendments.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     },
     {
       "id": "bh-personal-data-30-2018",
       "jurisdiction": "BH",
       "domains": [
         "digital_rights",
-        "artificial_intelligence",
-        "digital_infrastructure"
+        "ai_governance",
+        "data_centres"
       ],
       "instrument_title": "Law No. 30 of 2018 with Respect to Personal Data Protection",
       "source_url": "https://www.lloc.gov.bh/En/Legislation/id/K3018",
@@ -102,7 +158,18 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "high",
-      "research_question": "Compare Arabic and English versions and verify implementing decisions and amendments."
+      "research_question": "Compare Arabic and English versions and verify implementing decisions and amendments.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     },
     {
       "id": "eg-disability-law-10-2018",
@@ -119,14 +186,25 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "medium",
-      "research_question": "Locate gazetted Arabic law and implementing regulations; do not derive website mandates from secondary summary."
+      "research_question": "Locate gazetted Arabic law and implementing regulations; do not derive website mandates from secondary summary.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     },
     {
       "id": "tn-personal-data-2004-63",
       "jurisdiction": "TN",
       "domains": [
         "digital_rights",
-        "artificial_intelligence"
+        "ai_governance"
       ],
       "instrument_title": "Organic Law No. 2004-63 on Personal Data Protection",
       "source_url": "https://www.justice.gov.tn/index.php?L=3&id=265",
@@ -135,7 +213,18 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "medium",
-      "research_question": "Retrieve full gazetted law, current amendments, powers of regulator and relevant decisions."
+      "research_question": "Retrieve full gazetted law, current amendments, powers of regulator and relevant decisions.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     },
     {
       "id": "bh-government-web-accessibility-example",
@@ -150,7 +239,18 @@
       "legal_effect": "not_assessed",
       "capture_status": "not_captured",
       "priority": "medium",
-      "research_question": "Distinguish ministry claim of WCAG 2.1 AA from independent testing and national requirements."
+      "research_question": "Distinguish ministry claim of WCAG 2.1 AA from independent testing and national requirements.",
+      "display_review": {
+        "checks": [
+          "https_scheme",
+          "no_credentials",
+          "hostname_not_ip",
+          "no_personal_data_fields",
+          "link_only_no_text_reproduced"
+        ],
+        "human_reviewed": false,
+        "checked_at": "2026-11-06"
+      }
     }
   ],
   "toolkit_status": "Unverified candidate leads from prior research, not re-fetched or authenticated in this package."

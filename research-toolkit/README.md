@@ -16,11 +16,11 @@ Prepared for: https://github.com/mgifford/mena-policy-observatory (repository in
 ## What's inside
 
 - `agents/`: staged, bounded prompts with hard-stop and handoff contracts.
-- `backlog/`: 24 proposed geographic entries, domain inventory, prioritised tasks, and small starter queue for all recorded jurisdictions.
+- `backlog/`: 24 proposed geographic entries, domain inventory, and 40 tasks (24 jurisdiction discovery tasks plus 16 cross-domain tasks).
 - `sources/`: previous official-site **candidate leads** and authoritative research portals, not verified law.
 - `templates/`: source, interpretation, relationship, Axiom, review, PR and research packet scaffolds.
 - `schemas/`: standalone packet JSON Schema, deliberately not replacing the existing `regions/mena/schemas/` model.
-- `scripts/`: offline packet validator, output manifest, and queue summaries. Network/model calls are intentionally excluded.
+- `scripts/`: offline packet validator, deterministic output manifest with `--check`, and multi-file queue summaries with logical duplicate detection. Network/model calls are intentionally excluded.
 - `tests/`: positive and negative test fixtures.
 - `docs/`: methodology, provenance, quality gates, accessible site patterns, privacy, threat modeling, internationalization, comparison and modeling.
 
@@ -37,9 +37,12 @@ Prepared for: https://github.com/mgifford/mena-policy-observatory (repository in
 
 ```sh
 python3 scripts/validate_packets.py examples/valid-packet.json
-python3 -m unittest discover -s tests -v
-python3 scripts/report_queue.py backlog/tasks.jsonl
-python3 scripts/manifest.py . --output /tmp/mena-toolkit-manifest.json
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+python3 scripts/report_queue.py backlog/tasks.jsonl backlog/cross-domain-tasks.jsonl
+python3 scripts/manifest.py . --output MANIFEST.json
+python3 scripts/manifest.py . --output MANIFEST.json --check
 ```
+
+`report_queue.py` accepts one or more JSONL files, reports per-file and combined totals, and fails on duplicate logical task IDs after normalizing `_` and `-` separators. Missing `priority` or `deliverable` metadata is reported but does not fail: cross-domain discovery tasks intentionally omit those fields until triage.
 
 See `docs/REPO-INTEGRATION.md` before merging any of this into an existing repository.

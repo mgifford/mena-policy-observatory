@@ -1,0 +1,140 @@
+{
+  "registry_version": "1.0",
+  "scope_note": "Policy areas are research categories. A domain appearing here is not evidence that any jurisdiction has researched it or that a legal obligation exists.",
+  "translation_status": {
+    "ar": "provisional",
+    "note": "Arabic domain and subtopic labels are provisional drafts pending native review. English labels remain the reference for identifiers."
+  },
+  "groups": [
+    {
+      "id": "disability_rights",
+      "label_en": "Disability rights and inclusion",
+      "label_ar": "حقوق الأشخاص ذوي الإعاقة وإدماجهم",
+      "label_ar_status": "provisional"
+    },
+    {
+      "id": "digital_rights",
+      "label_en": "Digital rights",
+      "label_ar": "الحقوق الرقمية",
+      "label_ar_status": "provisional"
+    },
+    {
+      "id": "ai",
+      "label_en": "Artificial intelligence",
+      "label_ar": "الذكاء الاصطناعي",
+      "label_ar_status": "provisional"
+    },
+    {
+      "id": "data_infrastructure",
+      "label_en": "Data centres and digital infrastructure",
+      "label_ar": "مراكز البيانات والبنية التحتية الرقمية",
+      "label_ar_status": "provisional"
+    },
+    {
+      "id": "other",
+      "label_en": "Other policy areas",
+      "label_ar": "مجالات سياسات أخرى",
+      "label_ar_status": "provisional"
+    }
+  ],
+  "domains": [
+    {
+      "id": "digital_accessibility",
+      "group": "disability_rights",
+      "label_en": "Digital accessibility",
+      "label_ar": "إمكانية الوصول الرقمي",
+      "label_ar_status": "provisional",
+      "subtopics": []
+    },
+    {
+      "id": "physical_accessibility",
+      "group": "disability_rights",
+      "label_en": "Physical accessibility",
+      "label_ar": "إمكانية الوصول المادي",
+      "label_ar_status": "provisional",
+      "subtopics": []
+    },
+    {
+      "id": "disability_inclusion",
+      "group": "disability_rights",
+      "label_en": "Disability inclusion",
+      "label_ar": "إدماج الأشخاص ذوي الإعاقة",
+      "label_ar_status": "provisional",
+      "subtopics": [
+        {"id": "built_environment", "label_en": "Built environment", "label_ar": "البيئة المبنية", "label_ar_status": "provisional"},
+        {"id": "public_transport", "label_en": "Public transport", "label_ar": "النقل العام", "label_ar_status": "provisional"},
+        {"id": "reasonable_accommodation", "label_en": "Reasonable accommodation", "label_ar": "الترتيبات التيسيرية المعقولة", "label_ar_status": "provisional"},
+        {"id": "employment", "label_en": "Employment", "label_ar": "العمل", "label_ar_status": "provisional"},
+        {"id": "education", "label_en": "Education", "label_ar": "التعليم", "label_ar_status": "provisional"},
+        {"id": "public_services", "label_en": "Public services", "label_ar": "الخدمات العامة", "label_ar_status": "provisional"}
+      ]
+    },
+    {
+      "id": "digital_rights",
+      "group": "digital_rights",
+      "label_en": "Digital rights",
+      "label_ar": "الحقوق الرقمية",
+      "label_ar_status": "provisional",
+      "subtopics": [
+        {"id": "freedom_of_expression", "label_en": "Freedom of expression", "label_ar": "حرية التعبير", "label_ar_status": "provisional"},
+        {"id": "privacy", "label_en": "Privacy", "label_ar": "الخصوصية", "label_ar_status": "provisional"},
+        {"id": "surveillance", "label_en": "Surveillance", "label_ar": "المراقبة", "label_ar_status": "provisional"},
+        {"id": "data_protection", "label_en": "Data protection", "label_ar": "حماية البيانات", "label_ar_status": "provisional"},
+        {"id": "internet_access", "label_en": "Internet access and shutdowns", "label_ar": "الوصول إلى الإنترنت والانقطاعات", "label_ar_status": "provisional"},
+        {"id": "content_restrictions", "label_en": "Content restrictions", "label_ar": "قيود المحتوى", "label_ar_status": "provisional"},
+        {"id": "access_to_information", "label_en": "Access to information", "label_ar": "الوصول إلى المعلومات", "label_ar_status": "provisional"},
+        {"id": "digital_participation", "label_en": "Digital participation", "label_ar": "المشاركة الرقمية", "label_ar_status": "provisional"}
+      ]
+    },
+    {
+      "id": "ai_governance",
+      "group": "ai",
+      "label_en": "Artificial intelligence governance",
+      "label_ar": "حوكمة الذكاء الاصطناعي",
+      "label_ar_status": "provisional",
+      "subtopics": [
+        {"id": "public_sector_ai", "label_en": "Public-sector AI", "label_ar": "الذكاء الاصطناعي في القطاع العام", "label_ar_status": "provisional"},
+        {"id": "automated_decision_making", "label_en": "Automated decision-making", "label_ar": "اتخاذ القرار الآلي", "label_ar_status": "provisional"},
+        {"id": "transparency", "label_en": "Transparency", "label_ar": "الشفافية", "label_ar_status": "provisional"},
+        {"id": "human_oversight", "label_en": "Human oversight", "label_ar": "الإشراف البشري", "label_ar_status": "provisional"},
+        {"id": "impact_assessments", "label_en": "Impact assessments", "label_ar": "تقييمات الأثر", "label_ar_status": "provisional"},
+        {"id": "accountability", "label_en": "Accountability", "label_ar": "المساءلة", "label_ar_status": "provisional"},
+        {"id": "ai_procurement", "label_en": "AI procurement", "label_ar": "مشتريات الذكاء الاصطناعي", "label_ar_status": "provisional"}
+      ]
+    },
+    {
+      "id": "data_centres",
+      "group": "data_infrastructure",
+      "label_en": "Data centres and digital infrastructure",
+      "label_ar": "مراكز البيانات والبنية التحتية الرقمية",
+      "label_ar_status": "provisional",
+      "subtopics": [
+        {"id": "electricity_consumption", "label_en": "Electricity consumption", "label_ar": "استهلاك الكهرباء", "label_ar_status": "provisional"},
+        {"id": "water_consumption", "label_en": "Water consumption", "label_ar": "استهلاك المياه", "label_ar_status": "provisional"},
+        {"id": "environmental_permitting", "label_en": "Environmental permitting", "label_ar": "التصاريح البيئية", "label_ar_status": "provisional"},
+        {"id": "energy_efficiency", "label_en": "Energy efficiency", "label_ar": "كفاءة الطاقة", "label_ar_status": "provisional"},
+        {"id": "emissions", "label_en": "Emissions", "label_ar": "الانبعاثات", "label_ar_status": "provisional"},
+        {"id": "cooling", "label_en": "Cooling", "label_ar": "التبريد", "label_ar_status": "provisional"},
+        {"id": "data_residency", "label_en": "Data residency", "label_ar": "إقامة البيانات", "label_ar_status": "provisional"},
+        {"id": "digital_sovereignty", "label_en": "Digital sovereignty", "label_ar": "السيادة الرقمية", "label_ar_status": "provisional"},
+        {"id": "infrastructure_reporting", "label_en": "Infrastructure reporting", "label_ar": "الإبلاغ عن البنية التحتية", "label_ar_status": "provisional"}
+      ]
+    },
+    {
+      "id": "immigration",
+      "group": "other",
+      "label_en": "Immigration",
+      "label_ar": "الهجرة",
+      "label_ar_status": "provisional",
+      "subtopics": []
+    },
+    {
+      "id": "srhr",
+      "group": "other",
+      "label_en": "Sexual and reproductive health and rights",
+      "label_ar": "الصحة والحقوق الجنسية والإنجابية",
+      "label_ar_status": "provisional",
+      "subtopics": []
+    }
+  ]
+}

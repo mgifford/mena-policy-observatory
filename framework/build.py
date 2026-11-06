@@ -11,8 +11,10 @@ import json
 import shutil
 
 try:  # imported as framework.build
+    from .coverage import build_view, load_coverage
     from .research import RESEARCH_FILENAME, load_research
 except ImportError:  # run as a script
+    from coverage import build_view, load_coverage
     from research import RESEARCH_FILENAME, load_research
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -114,6 +116,56 @@ TRANSLATION_REVIEW_KEYS = {
     'not_reviewed': 'record.translation.not_reviewed',
     'native_reviewed': 'record.translation.native_reviewed',
 }
+RESEARCH_STATUS_KEYS = {
+    status: f'coverage.status.{status}'
+    for status in (
+        'not_started', 'source_discovery', 'candidate_sources_identified',
+        'evidence_captured', 'provision_extraction', 'legal_review_pending',
+        'reviewed_findings', 'blocked',
+    )
+}
+TASK_STATUS_KEYS = {
+    'unstarted': 'task.status.unstarted',
+    'in_progress': 'task.status.in_progress',
+    'blocked': 'task.status.blocked',
+    'complete': 'task.status.complete',
+    'cancelled': 'task.status.cancelled',
+}
+TASK_STAGE_KEYS = {
+    'source_discovery': 'task.stage.source_discovery',
+    'capture': 'task.stage.capture',
+    'transcription': 'task.stage.transcription',
+    'provision_extraction': 'task.stage.provision_extraction',
+    'interpretation': 'task.stage.interpretation',
+    'challenge': 'task.stage.challenge',
+    'review': 'task.stage.review',
+    'publication': 'task.stage.publication',
+    'formalization': 'task.stage.formalization',
+}
+PRIORITY_KEYS = {
+    'baseline': 'task.priority.baseline',
+    'pilot': 'task.priority.pilot',
+    'high': 'task.priority.high',
+    'medium': 'task.priority.medium',
+    'low': 'task.priority.low',
+}
+CAPTURE_KEYS = {
+    'not_captured': 'source.capture.not_captured',
+    'captured': 'source.capture.captured',
+    'verified': 'source.capture.verified',
+}
+SOURCE_TYPE_KEYS = {
+    source_type: f'source.type.{source_type}'
+    for source_type in (
+        'official_instrument', 'official_index', 'official_summary',
+        'official_ministry_policy_listing', 'official_ministry_policy_index',
+        'official_ministry_explainer', 'official_legislative_publication',
+        'official_regulator_legal_index', 'official_legislation_index',
+        'official_government_explainer_not_statute',
+        'official_ministry_explainer_not_statute',
+        'official_agency_accessibility_statement', 'secondary', 'unknown',
+    )
+}
 
 
 def esc(value):
@@ -170,11 +222,80 @@ def direction(lang):
     return 'rtl' if lang == 'ar' else 'ltr'
 
 
+def status_text(strings, status):
+    return strings[RESEARCH_STATUS_KEYS.get(status, RESEARCH_STATUS_KEYS['not_started'])]
+
+
+def task_status_text(strings, status):
+    return strings[TASK_STATUS_KEYS.get(status, 'task.status.unstarted')]
+
+
+def task_stage_text(strings, stage):
+    return strings[TASK_STAGE_KEYS.get(stage, 'task.stage.source_discovery')]
+
+
+def priority_text(strings, priority):
+    key = PRIORITY_KEYS.get(priority)
+    return strings[key] if key else strings['task.priority.unknown']
+
+
+def capture_text(strings, status):
+    return strings[CAPTURE_KEYS.get(status, 'source.capture.not_captured')]
+
+
+def source_type_text(strings, source_type):
+    key = SOURCE_TYPE_KEYS.get(source_type)
+    return strings[key] if key else strings['source.type.unknown']
+
+
+def country_text(country, lang):
+    if lang == 'ar' and country.get('name_ar'):
+        return country['name_ar']
+    return country.get('name', '')
+
+
+def domain_text(domain, lang):
+    if lang == 'ar' and domain.get('label_ar'):
+        return domain['label_ar']
+    return domain.get('label_en', '')
+
+
+def country_name(country, lang):
+    """Prefer the registry's Arabic name on Arabic pages; mark English elsewhere."""
+    if lang == 'ar' and country.get('name_ar'):
+        return esc(country['name_ar'])
+    return foreign(country.get('name', ''), lang)
+
+
+def domain_name(domain, lang):
+    if lang == 'ar' and domain.get('label_ar'):
+        return esc(domain['label_ar'])
+    return foreign(domain.get('label_en', ''), lang)
+
+
+def code(value):
+    return f'<code lang="en" dir="ltr">{esc(value)}</code>'
+
+
+def breadcrumb_trail(items):
+    parts = []
+    for index, (href, label_html, current) in enumerate(items):
+        if current:
+            content = f'<span aria-current="page">{label_html}</span>'
+        else:
+            content = f'<a href="{esc(href)}">{label_html}</a>'
+        separator = ('<span class="breadcrumb-separator" aria-hidden="true">/</span>'
+                     if index else '')
+        parts.append(f'<li>{separator}{content}</li>')
+    return '<ol>' + ''.join(parts) + '</ol>'
+
+
 def page(catalogues, lang, title, body, depth, alt_href, description,
          breadcrumb_html=''):
     strings = catalogues[lang]
     prefix = '../' * depth
-    home_href = ('../' * (depth - 1)) + 'index.html'
+    local = '../' * (depth - 1)
+    home_href = local + 'index.html'
     root_href = prefix + '../index.html'
     lang_other = other_language(lang)
     breadcrumb = ''
@@ -201,6 +322,11 @@ def page(catalogues, lang, title, body, depth, alt_href, description,
 <li><a href="{home_href}">{esc(strings['nav.home'])}</a></li>
 <li><a href="{home_href}#method">{esc(strings['nav.method'])}</a></li>
 <li><a href="{home_href}#records">{esc(strings['nav.records'])}</a></li>
+<li><a href="{local}coverage/index.html">{esc(strings['nav.coverage'])}</a></li>
+<li><a href="{local}countries/index.html">{esc(strings['nav.countries'])}</a></li>
+<li><a href="{local}domains/index.html">{esc(strings['nav.domains'])}</a></li>
+<li><a href="{local}tasks/index.html">{esc(strings['nav.tasks'])}</a></li>
+<li><a href="{local}sources/index.html">{esc(strings['nav.sources'])}</a></li>
 <li><a href="{REPOSITORY_URL}">{esc(strings['nav.repository'])}</a></li>
 </ul>
 </nav>
@@ -229,8 +355,9 @@ def breadcrumb_html(strings, home_href, current_label, current_is_foreign):
             f'<li><span aria-current="page">{label_html}</span></li></ol>')
 
 
-def home_body(catalogues, lang, cfg, policies, countries):
+def home_body(catalogues, lang, cfg, policies, view):
     strings = catalogues[lang]
+    countries = view['countries']
     records = len(policies)
     covered = len({record.get('country') for record in policies})
     total = len(countries)
@@ -324,14 +451,16 @@ def home_body(catalogues, lang, cfg, policies, countries):
 
     coverage_rows = []
     for country in countries:
-        count = sum(1 for record in policies if record.get('country') == country['code'])
-        status = strings['home.coverage.status'] if count else strings['home.coverage.none']
+        country_cell = (f'<a href="countries/{esc(country["code"])}.html">'
+                        f'{country_name(country, lang)}</a>')
         coverage_rows.append(
-            f'<tr><th scope="row">{foreign(country["name"], lang)}</th>'
-            f'<td>{count}</td><td>{esc(status)}</td></tr>'
+            f'<tr><th scope="row">{country_cell}</th>'
+            f'<td>{len(country["records"])}</td>'
+            f'<td>{esc(status_text(strings, country["status"]))}</td></tr>'
         )
     parts.append(
         f'<section><h2>{esc(strings["home.coverage.heading"])}</h2>'
+        f'<p>{esc(strings["home.coverage.note"])}</p>'
         f'<div class="table-scroll" role="region" aria-label="{esc(strings["home.coverage.heading"])}" tabindex="0">'
         f'<table><caption>{esc(strings["home.coverage.caption"])}</caption><thead><tr>'
         f'<th scope="col">{esc(strings["home.table.jurisdiction"])}</th>'
@@ -340,10 +469,30 @@ def home_body(catalogues, lang, cfg, policies, countries):
         f'</tr></thead><tbody>{"".join(coverage_rows)}</tbody></table></div></section>'
     )
 
-    domains = ''.join(f'<li>{esc(value[lang])}</li>' for value in cfg['domain_labels'].values())
+    domain_items = ''.join(
+        f'<li><a href="domains/{esc(domain["id"])}.html">{domain_name(domain, lang)}</a> — '
+        f'{esc(status_text(strings, domain["status"]))}</li>'
+        for domain in view['domains']
+    )
     parts.append(
         f'<section><h2>{esc(strings["home.domains.heading"])}</h2>'
-        f'<p>{esc(strings["home.domains.note"])}</p><ul>{domains}</ul></section>'
+        f'<p>{esc(strings["home.domains.note"])}</p><ul>{domain_items}</ul></section>'
+    )
+
+    page_links = ''.join(
+        f'<li><a href="{href}">{esc(strings[key])}</a></li>'
+        for href, key in (
+            ('coverage/index.html', 'home.pages.matrix'),
+            ('countries/index.html', 'home.pages.countries'),
+            ('domains/index.html', 'home.pages.domains'),
+            ('tasks/index.html', 'home.pages.tasks'),
+            ('sources/index.html', 'home.pages.sources'),
+            ('comparison/index.html', 'home.pages.comparison'),
+        )
+    )
+    parts.append(
+        f'<section><h2>{esc(strings["home.pages.heading"])}</h2>'
+        f'<p>{esc(strings["home.pages.body"])}</p><ul>{page_links}</ul></section>'
     )
 
     parts.append(
@@ -590,6 +739,467 @@ def record_body(catalogues, lang, record, base, research=None):
     return '\n'.join(parts)
 
 
+def countries_index_body(catalogues, lang, view):
+    strings = catalogues[lang]
+    rows = []
+    for country in view['countries']:
+        rows.append(
+            f'<tr><th scope="row"><a href="{esc(country["code"])}.html">'
+            f'{country_name(country, lang)}</a></th>'
+            f'<td>{esc(status_text(strings, country["status"]))}</td>'
+            f'<td>{len(country["records"])}</td>'
+            f'<td>{len(country["candidates"])}</td>'
+            f'<td>{len(country["tasks"])}</td></tr>'
+        )
+    parts = [
+        f'<h1>{esc(strings["countries.h1"])}</h1>',
+        f'<p class="lede">{esc(strings["countries.lede"])}</p>',
+        f'<p class="notice">{esc(strings["countries.note"])}</p>',
+        f'<div class="table-scroll" role="region" aria-label="{esc(strings["countries.h1"])}" tabindex="0">'
+        f'<table><caption>{esc(strings["countries.caption"])}</caption><thead><tr>'
+        f'<th scope="col">{esc(strings["countries.table.jurisdiction"])}</th>'
+        f'<th scope="col">{esc(strings["countries.table.status"])}</th>'
+        f'<th scope="col">{esc(strings["countries.table.records"])}</th>'
+        f'<th scope="col">{esc(strings["countries.table.sources"])}</th>'
+        f'<th scope="col">{esc(strings["countries.table.tasks"])}</th>'
+        f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>',
+    ]
+    if lang == 'ar':
+        parts.append(f'<p class="notice">{esc(strings["countries.translation_note"])}</p>')
+    parts.append(f'<p><a href="../index.html">{esc(strings["countries.back"])}</a></p>')
+    return '\n'.join(parts)
+
+
+def country_body(catalogues, lang, view, country):
+    strings = catalogues[lang]
+    domain_map = {domain['id']: domain for domain in view['domains']}
+    parts = [
+        f'<h1>{country_name(country, lang)}</h1>',
+        f'<p class="lede">{foreign(country.get("scope_note", ""), lang)}</p>',
+    ]
+    if country.get('jurisdiction_note'):
+        parts.append(f'<p class="notice">{foreign(country["jurisdiction_note"], lang)}</p>')
+    if lang == 'ar':
+        parts.append(f'<p class="notice">{esc(strings["countries.translation_note"])}</p>')
+
+    latest_review = country.get('latest_review') or strings['country.not_recorded']
+    latest_discovery = country.get('latest_discovery') or strings['country.not_recorded']
+    summary = [
+        (strings['country.code'], code(country.get('code', ''))),
+        (strings['country.group'], foreign(country.get('group', ''), lang)),
+        (strings['country.status'], esc(status_text(strings, country['status']))),
+        (strings['country.records'], str(len(country['records']))),
+        (strings['country.sources'], str(len(country['candidates']))),
+        (strings['country.tasks'], str(len(country['tasks']))),
+        (strings['country.latest_review'],
+         code(latest_review) if country.get('latest_review') else esc(latest_review)),
+        (strings['country.latest_discovery'],
+         code(latest_discovery) if country.get('latest_discovery') else esc(latest_discovery)),
+    ]
+    parts.append('<dl>' + ''.join(f'<dt>{esc(key)}</dt><dd>{value}</dd>'
+                                  for key, value in summary) + '</dl>')
+
+    if country['domains']:
+        rows = []
+        for item in country['domains']:
+            domain = domain_map.get(item['id'], {'label_en': item['id']})
+            records = sum(1 for record in country['records'] if record.get('topic') == item['id'])
+            sources = sum(1 for candidate in country['candidates']
+                          if item['id'] in (candidate.get('domains') or []))
+            tasks = sum(1 for task in country['tasks'] if task.get('domain') == item['id'])
+            rows.append(
+                f'<tr><th scope="row"><a href="../domains/{esc(item["id"])}.html">'
+                f'{domain_name(domain, lang)}</a></th>'
+                f'<td>{esc(status_text(strings, item["status"]))}</td>'
+                f'<td>{records}</td><td>{sources}</td><td>{tasks}</td></tr>'
+            )
+        parts.append(
+            f'<section><h2>{esc(strings["country.domains_heading"])}</h2>'
+            f'<div class="table-scroll" role="region" aria-label="{esc(strings["country.domains_heading"])}" tabindex="0">'
+            f'<table><caption>{esc(strings["country.domains_caption"])}</caption><thead><tr>'
+            f'<th scope="col">{esc(strings["country.table.domain"])}</th>'
+            f'<th scope="col">{esc(strings["country.table.status"])}</th>'
+            f'<th scope="col">{esc(strings["country.table.records"])}</th>'
+            f'<th scope="col">{esc(strings["country.table.sources"])}</th>'
+            f'<th scope="col">{esc(strings["country.table.tasks"])}</th>'
+            f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div></section>'
+        )
+    else:
+        parts.append(
+            f'<section><h2>{esc(strings["country.domains_heading"])}</h2>'
+            f'<p>{esc(strings["country.no_domains"])}</p></section>'
+        )
+
+    if country['records']:
+        items = ''.join(
+            f'<li><a href="../records/{esc(record["id"])}.html">'
+            f'{foreign(record.get("title", record["id"]), lang, record.get("language", "en"))}</a>'
+            f' {code(record["id"])}</li>'
+            for record in country['records']
+        )
+        parts.append(f'<section><h2>{esc(strings["country.records_heading"])}</h2>'
+                     f'<ul>{items}</ul></section>')
+    else:
+        parts.append(f'<section><h2>{esc(strings["country.records_heading"])}</h2>'
+                     f'<p>{esc(strings["country.no_records"])}</p></section>')
+
+    if country['candidates']:
+        items = ''.join(
+            f'<li><a href="{esc(candidate["source_url"])}" rel="noreferrer">'
+            f'{foreign(candidate.get("instrument_title", candidate["id"]), lang)}</a> '
+            f'{code(candidate["id"])} — '
+            f'{esc(strings["source.discovery_label"])} '
+            f'({esc(capture_text(strings, candidate.get("capture_status")))})</li>'
+            for candidate in country['candidates']
+        )
+        parts.append(
+            f'<section><h2>{esc(strings["country.sources_heading"])}</h2>'
+            f'<p class="notice">{esc(strings["source.discovery_notice"])}</p>'
+            f'<ul>{items}</ul></section>'
+        )
+    else:
+        parts.append(f'<section><h2>{esc(strings["country.sources_heading"])}</h2>'
+                     f'<p>{esc(strings["country.no_sources"])}</p></section>')
+
+    if country['tasks']:
+        items = ''.join(
+            f'<li>{code(task["task_id"])} — '
+            f'{esc(task_stage_text(strings, task.get("stage")))} — '
+            f'{esc(task_status_text(strings, task.get("status")))}'
+            f'<p>{foreign(task.get("question", ""), lang)}</p></li>'
+            for task in country['tasks']
+        )
+        parts.append(f'<section><h2>{esc(strings["country.tasks_heading"])}</h2>'
+                     f'<ul>{items}</ul></section>')
+    else:
+        parts.append(f'<section><h2>{esc(strings["country.tasks_heading"])}</h2>'
+                     f'<p>{esc(strings["country.no_tasks"])}</p></section>')
+
+    if country['open_questions']:
+        items = ''.join(
+            f'<li>{foreign(question.get("text", ""), lang)}'
+            f' <span class="meta">({code(question.get("id", ""))})</span></li>'
+            for question in country['open_questions']
+        )
+        parts.append(
+            f'<section><h2>{esc(strings["country.questions_heading"])}</h2>'
+            f'<p class="notice">{esc(strings["country.questions_notice"])}</p>'
+            f'<ul>{items}</ul></section>'
+        )
+    else:
+        parts.append(f'<section><h2>{esc(strings["country.questions_heading"])}</h2>'
+                     f'<p>{esc(strings["country.no_questions"])}</p></section>')
+
+    parts.append(f'<p><a href="index.html">{esc(strings["countries.back"])}</a></p>')
+    return '\n'.join(parts)
+
+
+def domains_index_body(catalogues, lang, view):
+    strings = catalogues[lang]
+    domain_map = {domain['id']: domain for domain in view['domains']}
+    parts = [
+        f'<h1>{esc(strings["domains.h1"])}</h1>',
+        f'<p class="lede">{esc(strings["domains.lede"])}</p>',
+        f'<p class="notice">{esc(strings["domains.note"])}</p>',
+    ]
+    for group in view['groups']:
+        domains = [domain_map[domain['id']] for domain in view['domains']
+                   if domain['group'] == group['id']]
+        if not domains:
+            continue
+        rows = ''.join(
+            f'<tr><th scope="row"><a href="{esc(domain["id"])}.html">'
+            f'{domain_name(domain, lang)}</a></th>'
+            f'<td>{esc(status_text(strings, domain["status"]))}</td>'
+            f'<td>{len(domain["records"])}</td>'
+            f'<td>{len(domain["candidates"])}</td>'
+            f'<td>{len(domain["tasks"])}</td></tr>'
+            for domain in domains
+        )
+        group_label = (esc(group['label_ar']) if lang == 'ar' and group.get('label_ar')
+                       else foreign(group.get('label_en', ''), lang))
+        parts.append(
+            f'<section><h2>{group_label}</h2>'
+            f'<div class="table-scroll" role="region" aria-label="{group_label}" tabindex="0">'
+            f'<table><caption>{esc(strings["domains.caption"])}</caption><thead><tr>'
+            f'<th scope="col">{esc(strings["domains.table.domain"])}</th>'
+            f'<th scope="col">{esc(strings["domains.table.status"])}</th>'
+            f'<th scope="col">{esc(strings["domains.table.records"])}</th>'
+            f'<th scope="col">{esc(strings["domains.table.sources"])}</th>'
+            f'<th scope="col">{esc(strings["domains.table.tasks"])}</th>'
+            f'</tr></thead><tbody>{rows}</tbody></table></div></section>'
+        )
+    if lang == 'ar':
+        parts.append(f'<p class="notice">{esc(strings["domains.translation_note"])}</p>')
+    parts.append(f'<p><a href="../index.html">{esc(strings["domains.back"])}</a></p>')
+    return '\n'.join(parts)
+
+
+def domain_body(catalogues, lang, view, domain):
+    strings = catalogues[lang]
+    country_map = {country['code']: country for country in view['countries']}
+    parts = [
+        f'<h1>{domain_name(domain, lang)}</h1>',
+        f'<p class="lede">{esc(strings["domain.lede"])}</p>',
+    ]
+    group = next((item for item in view['groups'] if item['id'] == domain.get('group')), None)
+    if group:
+        group_label = (esc(group['label_ar']) if lang == 'ar' and group.get('label_ar')
+                       else foreign(group.get('label_en', ''), lang))
+        parts.append(f'<p>{esc(strings["domain.group"])}: {group_label}</p>')
+    if lang == 'ar':
+        parts.append(f'<p class="notice">{esc(strings["domains.translation_note"])}</p>')
+
+    parts.append(
+        f'<dl><dt>{esc(strings["domain.status"])}</dt>'
+        f'<dd>{esc(status_text(strings, domain["status"]))}</dd>'
+        f'<dt>{esc(strings["domain.records"])}</dt><dd>{len(domain["records"])}</dd>'
+        f'<dt>{esc(strings["domain.sources"])}</dt><dd>{len(domain["candidates"])}</dd>'
+        f'<dt>{esc(strings["domain.tasks"])}</dt><dd>{len(domain["tasks"])}</dd></dl>'
+    )
+
+    if domain.get('subtopics'):
+        items = ''.join(
+            f'<li>{(esc(subtopic["label_ar"]) if lang == "ar" and subtopic.get("label_ar") else foreign(subtopic.get("label_en", ""), lang))}</li>'
+            for subtopic in domain['subtopics']
+        )
+        parts.append(f'<section><h2>{esc(strings["domain.subtopics_heading"])}</h2>'
+                     f'<p>{esc(strings["domain.subtopics_note"])}</p>'
+                     f'<ul>{items}</ul></section>')
+
+    referenced = {}
+    for record in domain['records']:
+        referenced.setdefault(record.get('country'), {'records': 0, 'sources': 0, 'tasks': 0})
+        referenced[record.get('country')]['records'] += 1
+    for candidate in domain['candidates']:
+        referenced.setdefault(candidate.get('jurisdiction'), {'records': 0, 'sources': 0, 'tasks': 0})
+        referenced[candidate.get('jurisdiction')]['sources'] += 1
+    for task in domain['tasks']:
+        referenced.setdefault(task.get('jurisdiction'), {'records': 0, 'sources': 0, 'tasks': 0})
+        referenced[task.get('jurisdiction')]['tasks'] += 1
+
+    if referenced:
+        rows = []
+        for country_code in sorted(referenced):
+            country = country_map.get(country_code, {'code': country_code, 'name': country_code})
+            counts = referenced[country_code]
+            status = next((item['status'] for item in country['domains']
+                           if item['id'] == domain['id']), 'not_started')
+            rows.append(
+                f'<tr><th scope="row"><a href="../countries/{esc(country_code)}.html">'
+                f'{country_name(country, lang)}</a></th>'
+                f'<td>{esc(status_text(strings, status))}</td>'
+                f'<td>{counts["records"]}</td>'
+                f'<td>{counts["sources"]}</td>'
+                f'<td>{counts["tasks"]}</td></tr>'
+            )
+        parts.append(
+            f'<section><h2>{esc(strings["domain.countries_heading"])}</h2>'
+            f'<div class="table-scroll" role="region" aria-label="{esc(strings["domain.countries_heading"])}" tabindex="0">'
+            f'<table><caption>{esc(strings["domain.countries_caption"])}</caption><thead><tr>'
+            f'<th scope="col">{esc(strings["domain.table.country"])}</th>'
+            f'<th scope="col">{esc(strings["domain.table.status"])}</th>'
+            f'<th scope="col">{esc(strings["domain.table.records"])}</th>'
+            f'<th scope="col">{esc(strings["domain.table.sources"])}</th>'
+            f'<th scope="col">{esc(strings["domain.table.tasks"])}</th>'
+            f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div></section>'
+        )
+    else:
+        parts.append(f'<section><h2>{esc(strings["domain.countries_heading"])}</h2>'
+                     f'<p>{esc(strings["domain.no_countries"])}</p></section>')
+
+    if domain['records']:
+        items = ''.join(
+            f'<li><a href="../records/{esc(record["id"])}.html">'
+            f'{foreign(record.get("title", record["id"]), lang, record.get("language", "en"))}</a> '
+            f'{code(record["id"])}</li>'
+            for record in domain['records']
+        )
+        parts.append(f'<section><h2>{esc(strings["country.records_heading"])}</h2>'
+                     f'<ul>{items}</ul></section>')
+    if domain['candidates']:
+        items = ''.join(
+            f'<li><a href="{esc(candidate["source_url"])}" rel="noreferrer">'
+            f'{foreign(candidate.get("instrument_title", candidate["id"]), lang)}</a> '
+            f'{code(candidate["id"])} — {esc(strings["source.discovery_label"])}</li>'
+            for candidate in domain['candidates']
+        )
+        parts.append(
+            f'<section><h2>{esc(strings["country.sources_heading"])}</h2>'
+            f'<p class="notice">{esc(strings["source.discovery_notice"])}</p>'
+            f'<ul>{items}</ul></section>'
+        )
+    if domain['open_questions']:
+        items = ''.join(
+            f'<li>{foreign(question.get("text", ""), lang)} '
+            f'<span class="meta">({code(question.get("id", ""))})</span></li>'
+            for question in domain['open_questions']
+        )
+        parts.append(
+            f'<section><h2>{esc(strings["country.questions_heading"])}</h2>'
+            f'<p class="notice">{esc(strings["country.questions_notice"])}</p>'
+            f'<ul>{items}</ul></section>'
+        )
+    parts.append(f'<p><a href="index.html">{esc(strings["domains.back"])}</a></p>')
+    return '\n'.join(parts)
+
+
+def coverage_body(catalogues, lang, view):
+    strings = catalogues[lang]
+    matrix_by_code = {row['country']['code']: row['cells'] for row in view['matrix']}
+    headers = ''.join(
+        f'<th scope="col">{domain_name(domain, lang)}</th>'
+        for domain in view['domains']
+    )
+    rows = []
+    for country in view['countries']:
+        cells = ''.join(
+            f'<td>{esc(status_text(strings, cell["status"]))}</td>'
+            for cell in matrix_by_code.get(country['code'], [])
+        )
+        rows.append(
+            f'<tr><th scope="row"><a href="../countries/{esc(country["code"])}.html">'
+            f'{country_name(country, lang)}</a></th>{cells}</tr>'
+        )
+    legend = ''.join(
+        f'<li><strong>{esc(status_text(strings, status))}</strong>: '
+        f'{esc(strings[f"coverage.legend.{status}"])}</li>'
+        for status in (
+            'not_started', 'source_discovery', 'candidate_sources_identified',
+            'evidence_captured', 'provision_extraction', 'legal_review_pending',
+            'reviewed_findings', 'blocked',
+        )
+    )
+    parts = [
+        f'<h1>{esc(strings["coverage.h1"])}</h1>',
+        f'<p class="lede">{esc(strings["coverage.lede"])}</p>',
+        f'<p class="notice">{esc(strings["coverage.note"])}</p>',
+        f'<div class="table-scroll" role="region" aria-label="{esc(strings["coverage.h1"])}" tabindex="0">'
+        f'<table><caption>{esc(strings["coverage.caption"])}</caption><thead><tr>'
+        f'<th scope="col">{esc(strings["coverage.table.jurisdiction"])}</th>{headers}'
+        f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>',
+        f'<section><h2>{esc(strings["coverage.legend_heading"])}</h2>'
+        f'<ul>{legend}</ul></section>',
+    ]
+    parts.append(f'<p><a href="../index.html">{esc(strings["coverage.back"])}</a></p>')
+    return '\n'.join(parts)
+
+
+def tasks_body(catalogues, lang, view):
+    strings = catalogues[lang]
+    country_map = {country['code']: country for country in view['countries']}
+    domain_map = {domain['id']: domain for domain in view['domains']}
+    tasks = sorted(view['tasks'], key=lambda task: (
+        task.get('jurisdiction', ''), task.get('domain', ''), task.get('task_id', '')))
+    rows = []
+    for task in tasks:
+        country = country_map.get(task.get('jurisdiction'), {'name': task.get('jurisdiction', '')})
+        domain = domain_map.get(task.get('domain'), {'label_en': task.get('domain', '')})
+        rows.append(
+            f'<tr><th scope="row">{code(task["task_id"])} — '
+            f'{foreign(task.get("question", ""), lang)}</th>'
+            f'<td>{country_name(country, lang)}</td>'
+            f'<td>{domain_name(domain, lang)}</td>'
+            f'<td>{esc(task_stage_text(strings, task.get("stage")))}</td>'
+            f'<td>{esc(priority_text(strings, task.get("priority")))}</td>'
+            f'<td>{esc(task_status_text(strings, task.get("status")))}</td></tr>'
+        )
+    return '\n'.join([
+        f'<h1>{esc(strings["tasks.h1"])}</h1>',
+        f'<p class="lede">{esc(strings["tasks.lede"])}</p>',
+        f'<p class="notice">{esc(strings["tasks.note"])}</p>',
+        f'<div class="table-scroll" role="region" aria-label="{esc(strings["tasks.h1"])}" tabindex="0">'
+        f'<table><caption>{esc(strings["tasks.caption"])}</caption><thead><tr>'
+        f'<th scope="col">{esc(strings["tasks.table.task"])}</th>'
+        f'<th scope="col">{esc(strings["tasks.table.jurisdiction"])}</th>'
+        f'<th scope="col">{esc(strings["tasks.table.domain"])}</th>'
+        f'<th scope="col">{esc(strings["tasks.table.stage"])}</th>'
+        f'<th scope="col">{esc(strings["tasks.table.priority"])}</th>'
+        f'<th scope="col">{esc(strings["tasks.table.status"])}</th>'
+        f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>',
+        f'<p><a href="../index.html">{esc(strings["tasks.back"])}</a></p>',
+    ])
+
+
+def sources_body(catalogues, lang, view):
+    strings = catalogues[lang]
+    country_map = {country['code']: country for country in view['countries']}
+    domain_map = {domain['id']: domain for domain in view['domains']}
+    rows = []
+    for candidate in view['candidates']:
+        country = country_map.get(candidate.get('jurisdiction'),
+                                  {'name': candidate.get('jurisdiction', '')})
+        domains = '; '.join(
+            domain_name(domain_map.get(domain_id, {'label_en': domain_id}), lang)
+            for domain_id in candidate.get('domains', [])
+        )
+        recorded = candidate.get('published_date_reported')
+        recorded_html = (code(recorded) if recorded and recorded != 'unknown'
+                         else esc(strings['source.not_recorded']))
+        rows.append(
+            f'<tr><th scope="row"><a href="{esc(candidate["source_url"])}" rel="noreferrer">'
+            f'{foreign(candidate.get("instrument_title", candidate["id"]), lang)}</a> '
+            f'{code(candidate["id"])}</th>'
+            f'<td>{country_name(country, lang)}</td>'
+            f'<td>{domains}</td>'
+            f'<td>{esc(source_type_text(strings, candidate.get("source_type")))}</td>'
+            f'<td>{esc(strings["source.discovery_label"])} — '
+            f'{esc(capture_text(strings, candidate.get("capture_status")))}</td>'
+            f'<td>{recorded_html}</td></tr>'
+        )
+    return '\n'.join([
+        f'<h1>{esc(strings["sources.h1"])}</h1>',
+        f'<p class="lede">{esc(strings["sources.lede"])}</p>',
+        f'<p class="notice">{esc(strings["source.discovery_notice"])}</p>',
+        f'<p class="notice">{esc(strings["sources.pending_review"])}</p>',
+        f'<div class="table-scroll" role="region" aria-label="{esc(strings["sources.h1"])}" tabindex="0">'
+        f'<table><caption>{esc(strings["sources.caption"])}</caption><thead><tr>'
+        f'<th scope="col">{esc(strings["sources.table.source"])}</th>'
+        f'<th scope="col">{esc(strings["sources.table.jurisdiction"])}</th>'
+        f'<th scope="col">{esc(strings["sources.table.domains"])}</th>'
+        f'<th scope="col">{esc(strings["sources.table.type"])}</th>'
+        f'<th scope="col">{esc(strings["sources.table.state"])}</th>'
+        f'<th scope="col">{esc(strings["sources.table.recorded"])}</th>'
+        f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>',
+        f'<p><a href="../index.html">{esc(strings["sources.back"])}</a></p>',
+    ])
+
+
+def comparison_body(catalogues, lang, view):
+    strings = catalogues[lang]
+    country_map = {country['code']: country for country in view['countries']}
+    rows = []
+    for record in view['records']:
+        policy = record['policy']
+        country = country_map.get(policy.get('country'), {'name': policy.get('country', '')})
+        for provision in record['provisions']:
+            locator = (provision.get('locator') or {}).get('value', '')
+            rows.append(
+                f'<tr><th scope="row"><a href="../records/{esc(policy["id"])}.html">'
+                f'{foreign(policy.get("title", policy["id"]), lang, policy.get("language", "en"))}</a> '
+                f'{code(provision.get("id", ""))} '
+                f'{foreign(provision.get("heading", ""), lang)}</th>'
+                f'<td>{country_name(country, lang)}</td>'
+                f'<td>{foreign(locator, lang)}</td>'
+                f'<td>{esc(label(strings, EFFECT_KEYS, provision.get("effect_assessment")))}</td>'
+                f'<td>{esc(label(strings, ENCODING_KEYS, provision.get("encoding_status")))}</td></tr>'
+            )
+    return '\n'.join([
+        f'<h1>{esc(strings["comparison.h1"])}</h1>',
+        f'<p class="lede">{esc(strings["comparison.lede"])}</p>',
+        f'<p class="notice">{esc(strings["comparison.note"])}</p>',
+        f'<div class="table-scroll" role="region" aria-label="{esc(strings["comparison.h1"])}" tabindex="0">'
+        f'<table><caption>{esc(strings["comparison.caption"])}</caption><thead><tr>'
+        f'<th scope="col">{esc(strings["comparison.table.provision"])}</th>'
+        f'<th scope="col">{esc(strings["comparison.table.jurisdiction"])}</th>'
+        f'<th scope="col">{esc(strings["comparison.table.locator"])}</th>'
+        f'<th scope="col">{esc(strings["comparison.table.effect"])}</th>'
+        f'<th scope="col">{esc(strings["comparison.table.encoding"])}</th>'
+        f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>',
+        f'<p><a href="../index.html">{esc(strings["comparison.back"])}</a></p>',
+    ])
+
+
 def build(region):
     base = ROOT / 'regions' / region
     out = ROOT / 'dist' / region
@@ -600,7 +1210,7 @@ def build(region):
 
     cfg = load(base / 'region.json')
     policies = load(base / 'data' / 'policies.json')
-    countries = load(base / 'data' / 'countries.json')
+    view = build_view(load_coverage(base, ROOT / 'research-toolkit'))
     catalogues = load_i18n(base, tuple(cfg['languages']))
 
     for lang in cfg['languages']:
@@ -608,13 +1218,89 @@ def build(region):
         lang_dir.mkdir()
         title = cfg['title'][lang]
         strings = catalogues[lang]
-        alt_href = f'../{other_language(lang)}/'
-        body = home_body(catalogues, lang, cfg, policies, countries)
+        other = other_language(lang)
+        alt_href = f'../{other}/'
+        body = home_body(catalogues, lang, cfg, policies, view)
         (lang_dir / 'index.html').write_text(
             page(catalogues, lang, strings['home.title'], body, 1, alt_href,
                  strings['home.description']),
             encoding='utf-8',
         )
+
+        home_crumb = ('../index.html', esc(strings['nav.home']), False)
+        body_label = {
+            'countries': strings['countries.h1'],
+            'domains': strings['domains.h1'],
+            'coverage': strings['coverage.h1'],
+            'tasks': strings['tasks.h1'],
+            'sources': strings['sources.h1'],
+            'comparison': strings['comparison.h1'],
+        }
+
+        def write_section(name, suffix, body_html, description):
+            section_dir = lang_dir / name
+            section_dir.mkdir(exist_ok=True)
+            section_alt = f'../../{other}/{name}/{suffix}'
+            crumb = breadcrumb_trail([
+                home_crumb,
+                (None, esc(body_label[name]), True),
+            ])
+            (section_dir / suffix).write_text(
+                page(catalogues, lang, f'{body_label[name]} — {title}', body_html,
+                     2, section_alt, description, crumb),
+                encoding='utf-8',
+            )
+
+        write_section('countries', 'index.html',
+                      countries_index_body(catalogues, lang, view),
+                      strings['countries.description'])
+        write_section('domains', 'index.html',
+                      domains_index_body(catalogues, lang, view),
+                      strings['domains.description'])
+        write_section('coverage', 'index.html',
+                      coverage_body(catalogues, lang, view),
+                      strings['coverage.description'])
+        write_section('tasks', 'index.html',
+                      tasks_body(catalogues, lang, view),
+                      strings['tasks.description'])
+        write_section('sources', 'index.html',
+                      sources_body(catalogues, lang, view),
+                      strings['sources.description'])
+        write_section('comparison', 'index.html',
+                      comparison_body(catalogues, lang, view),
+                      strings['comparison.description'])
+
+        for country in view['countries']:
+            country_code = country['code']
+            crumb = breadcrumb_trail([
+                home_crumb,
+                ('index.html', esc(strings['countries.h1']), False),
+                (None, country_name(country, lang), True),
+            ])
+            (lang_dir / 'countries' / f'{country_code}.html').write_text(
+                page(catalogues, lang,
+                     f'{country_text(country, lang)} — {title}',
+                     country_body(catalogues, lang, view, country), 2,
+                     f'../../{other}/countries/{country_code}.html',
+                     strings['country.description'], crumb),
+                encoding='utf-8',
+            )
+
+        for domain in view['domains']:
+            domain_id = domain['id']
+            crumb = breadcrumb_trail([
+                home_crumb,
+                ('index.html', esc(strings['domains.h1']), False),
+                (None, domain_name(domain, lang), True),
+            ])
+            (lang_dir / 'domains' / f'{domain_id}.html').write_text(
+                page(catalogues, lang,
+                     f'{domain_text(domain, lang)} — {title}',
+                     domain_body(catalogues, lang, view, domain), 2,
+                     f'../../{other}/domains/{domain_id}.html',
+                     strings['domain.description'], crumb),
+                encoding='utf-8',
+            )
 
         (lang_dir / 'records').mkdir()
         for record in policies:

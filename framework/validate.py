@@ -9,11 +9,14 @@ import json
 import sys
 
 try:  # imported as framework.validate
+    from .coverage import load_coverage, validate_coverage
     from .research import validate_region as validate_region_research
 except ImportError:  # run as a script
+    from coverage import load_coverage, validate_coverage
     from research import validate_region as validate_region_research
 
 REGIONS = ('mena',)
+COVERAGE_REGION = 'mena'
 REQUIRED_FILES = ('SOURCE.md', 'INTERPRETATION.md', 'RELATED.md', 'rule.rulespec.yaml')
 ALLOWED_EXECUTION_STATUS = ('not_implemented', 'scaffold', 'not_encoded', None)
 
@@ -54,6 +57,8 @@ def main() -> int:
     for region in REGIONS:
         errors.extend(validate_region(root, region))
         errors.extend(validate_region_research(root / 'regions' / region, region))
+    errors.extend(validate_coverage(load_coverage(
+        root / 'regions' / COVERAGE_REGION, root / 'research-toolkit')))
 
     if errors:
         print('\n'.join(errors), file=sys.stderr)
