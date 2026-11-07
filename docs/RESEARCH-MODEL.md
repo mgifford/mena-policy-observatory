@@ -171,10 +171,28 @@ The validator rejects a mismatch with the candidate title, jurisdiction or repor
 
 Malformed and impossible calendar dates are errors. A missing date stays `unknown`; it is never inferred. An effective date earlier than the publication date produces a **warning**, not an error, because retrospective effect is legally possible and requires review. `python3 framework/validate.py` prints warnings and still exits successfully. Publication, adoption, commencement, amendment, consolidation, expiry and repeal remain distinct concepts; the validator does not infer one from another, and accepting a retrospective date is not a finding that it is legally correct.
 
+### Source-change events and human review
+
+WP5 adds an append-only observation layer under `research-toolkit/monitoring/`:
+
+- `change-events.jsonl` records what was observed: a stable event ID, candidate, optional instrument and publisher IDs, jurisdiction, detection timestamp and method, retrieval outcome, technical change type, potential legal change, classification status, previous/new evidence references, evidence references, notes and uncertainties.
+- `review-decisions.jsonl` records human review separately: decision ID, event ID, review date, reviewer role, decision, legal-change classification (only with a confirming decision), evidence references, explanation and remaining uncertainty.
+
+Technical change types (`new_content`, `bytes_changed`, `text_changed`, `metadata_changed`, `url_changed`, `format_changed`, `no_observed_change`, `indeterminate`) are distinct from potential legal changes (`possible_amendment`, `possible_repeal`, `possible_correction`, `possible_consolidation`, `possible_translation_update`, `possible_effective_date_change`, `possible_new_instrument`, `relationship_unresolved`, `none`) and from reviewed conclusions (`confirmed_amendment`, `confirmed_repeal`, `confirmed_correction`, `confirmed_consolidation`, `confirmed_translation_update`, `no_substantive_change`, `indeterminate`).
+
+Observations remain traceable: the event line is never rewritten; decisions are appended. Event identity for deduplication is the combination of candidate, previous reference, new reference and technical change type, not the timestamp. A repeated observation with a new event ID is rejected.
+
+`framework/change_events.py` validates events and decisions, derives one review task per event that carries a potential legal change, and supports `--check`. Tasks reuse the existing queue schema (`stage: review`, `human_review_required: true`) and live in `backlog/tasks-change-review.jsonl`; repeated derivation is idempotent. Task status follows the latest recorded decision (`complete` for a reviewed outcome, `in_progress` for further evidence, interpretation or translation review).
+
+Validation rejects: malformed event/decision IDs, duplicate event IDs or observations, unknown candidates/publishers/instruments, jurisdiction or publisher mismatches, unknown vocabularies, non-successful retrieval asserting a document change, contradictory classification, missing evidence references or references that omit the compared versions, invalid or future timestamps relative to the fixed `as_of`, task-ID mismatches, confirmed legal changes without a confirming decision, unsupported review outcomes, decisions without evidence or explanation, and stale or extra derived tasks. A successful retrieval or a decision never changes a policy record's `legal_effect`.
+
+An empty event file means no observations have been recorded by this project; it does not mean legislation is unchanged. The public sources page shows the latest observation, technical and potential legal labels, review status and review task where events exist, and an explicit empty state otherwise.
+
 ## Running the checks
 
 ```sh
 python3 research-toolkit/scripts/registry.py --check
+python3 framework/change_events.py --check
 python3 framework/validate.py
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```

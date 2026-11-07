@@ -18,6 +18,8 @@ Source-health defect correction (non-breaking data migration): `research-toolkit
 
 Translation-provenance work package (additive): source records may carry an optional `expressions` array for language expressions and translations. No existing research record is changed or required to add one; records without expressions remain valid and show an explicit "no expression record" state. Added `regions/mena/data/terminology.json` (15 draft concepts) and terminology validation. No source text, translation, reviewer or legal claim is fabricated.
 
+Source-change work package (additive): added empty `research-toolkit/monitoring/change-events.jsonl` and `review-decisions.jsonl`, plus derived `research-toolkit/backlog/tasks-change-review.jsonl`. No event, decision, task or legal claim is created; the files are empty by design and the public sources page shows an explicit no-observations state. Existing tasks, candidates, records and source checks are unchanged. The derived task queue is reproducible with `python3 framework/change_events.py --check`.
+
 Research layers remain separate: geographic scope, task status, candidate discovery, source verification, provision extraction, interpretation, translation, Rules as Code and publication are never collapsed into one label. Candidate source leads are displayed as unreviewed discovery leads only; no candidate has been captured, verified, translated or legally reviewed.
 
 Omitted: old duplicated `docs/policies` tree and historical generated HTML, because they were derived outputs. No additional law or verified translation has been invented. Old scripts have not been carried forward where their behavior duplicates the new framework.

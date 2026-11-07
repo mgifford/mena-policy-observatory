@@ -27,6 +27,27 @@ from urllib.parse import urlparse
 import json
 import re
 
+try:
+    from .change_events import (
+        derive_tasks as derive_change_tasks,
+        latest_decisions,
+        load_change_events,
+        load_change_tasks,
+        load_review_decisions,
+        review_status as change_review_status,
+        validate_change_records,
+    )
+except ImportError:  # run as a script
+    from change_events import (
+        derive_tasks as derive_change_tasks,
+        latest_decisions,
+        load_change_events,
+        load_change_tasks,
+        load_review_decisions,
+        review_status as change_review_status,
+        validate_change_records,
+    )
+
 RESEARCH_STATUSES = (
     'not_started',
     'source_discovery',
@@ -68,7 +89,8 @@ VERIFICATION_REQUIREMENTS = (
     'publication_permissions',
 )
 CANDIDATE_RELATIONS = ('amends', 'related', 'implements', 'consolidates')
-TASK_FILES = ('tasks.jsonl', 'cross-domain-tasks.jsonl', 'tasks-tranche-02.jsonl')
+TASK_FILES = ('tasks.jsonl', 'cross-domain-tasks.jsonl', 'tasks-tranche-02.jsonl',
+              'tasks-change-review.jsonl')
 PUBLISHER_AUTHORITY_TYPES = (
     'unknown', 'gazette', 'legislation_portal', 'parliament', 'ministry',
     'regulator', 'intergovernmental_index', 'standards_body', 'other',
@@ -127,6 +149,9 @@ class CoverageData:
     source_checks: list[dict] = field(default_factory=list)
     registry_as_of: str = ''
     stale_after_days: int = DEFAULT_STALE_AFTER_DAYS
+    change_events: list[dict] = field(default_factory=list)
+    review_decisions: list[dict] = field(default_factory=list)
+    change_tasks: list[dict] = field(default_factory=list)
     extra: dict = field(default_factory=dict)
 
 
@@ -183,6 +208,9 @@ def load_coverage(base=DEFAULT_BASE, toolkit=DEFAULT_TOOLKIT) -> CoverageData:
         source_checks=checks_doc.get('checks', []),
         registry_as_of=str(checks_doc.get('as_of') or ''),
         stale_after_days=checks_doc.get('stale_after_days', DEFAULT_STALE_AFTER_DAYS),
+        change_events=load_change_events(toolkit),
+        review_decisions=load_review_decisions(toolkit),
+        change_tasks=load_change_tasks(toolkit),
         extra={'domain_registry': domain_registry},
     )
 
@@ -396,6 +424,12 @@ def build_view(data: CoverageData) -> dict:
                                 for instrument in data.instruments}
     publishers_by_host = {publisher.get('host'): publisher for publisher in data.publishers}
     checks_by_candidate = {check.get('candidate_id'): check for check in data.source_checks}
+    events_by_candidate = {}
+    for event in data.change_events:
+        events_by_candidate.setdefault(event.get('candidate_id'), []).append(event)
+    previous_decisions = latest_decisions(data.review_decisions)
+    task_by_event = {task.get('change_event_id'): task.get('task_id')
+                     for task in data.change_tasks}
     as_of = _iso_date(data.registry_as_of)
     for candidate in candidates:
         host = (urlparse(str(candidate.get('source_url') or '')).hostname or '').lower()
@@ -408,6 +442,19 @@ def build_view(data: CoverageData) -> dict:
         candidate['legal_verification'] = ((check or {}).get('legal_verification')
                                            or {'status': 'unreviewed', 'evidence': None,
                                                'reviewed_at': None})
+        events = sorted(events_by_candidate.get(candidate.get('id'), []),
+                        key=lambda event: (str(event.get('detected_at') or ''),
+                                           str(event.get('event_id') or '')))
+        latest = events[-1] if events else None
+        candidate['change_events'] = events
+        candidate['latest_change'] = latest
+        candidate['latest_change_decision'] = (
+            previous_decisions.get(latest.get('event_id')) if latest else None)
+        candidate['change_review_status'] = (
+            change_review_status(latest, previous_decisions) if latest else None)
+        candidate['change_task_ids'] = sorted(
+            task_by_event[event.get('event_id')] for event in events
+            if event.get('event_id') in task_by_event)
 
     records_view = []
     for policy in data.policies:
@@ -491,6 +538,9 @@ def build_view(data: CoverageData) -> dict:
             'instruments': len(data.instruments),
             'publishers': len(data.publishers),
             'source_checks': len(data.source_checks),
+            'change_events': len(data.change_events),
+            'review_decisions': len(data.review_decisions),
+            'review_tasks': len(data.change_tasks),
             'unresolved_questions': sum(len(item['open_questions']) for item in country_views),
         },
     }
@@ -815,6 +865,10 @@ def validate_coverage(data: CoverageData) -> list[str]:
 
     errors.extend(validate_evidence_currency(data))
     errors.extend(validate_instruments(data))
+    errors.extend(validate_change_records(
+        data.change_events, data.review_decisions, data.change_tasks,
+        data.candidate_inventory.get('records', []), data.publishers,
+        data.instruments, _iso_date(data.registry_as_of)))
     return errors
 
 

@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "CHANGELOG.md",
-      "size": 4995,
-      "sha256": "f73829b63ffedc7c27876e2b3fe66f3d9d432376e6a68f56aeb018b177c7525e"
+      "size": 5507,
+      "sha256": "7654381ac4deb4d38f1ce6de057d2a32da59032b5f597a8cfe6fb05a1df3dcd6"
     },
     {
       "path": "LICENSE-NOTE.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "size": 4443,
-      "sha256": "6a003e91251c88d49795925c0f7007b33399940e6c7d56465b1689b4b2088435"
+      "size": 4721,
+      "sha256": "6355fdc6bba7a44c69b22f6f2d95c25af950bd909b37c38878b89e6346a10de4"
     },
     {
       "path": "agents/00-controller.md",
@@ -88,6 +88,11 @@
       "sha256": "76cab3bbe6019ed2009739ea4520a134b4a49d90e915820c3306e640a0644159"
     },
     {
+      "path": "backlog/tasks-change-review.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
       "path": "backlog/tasks-tranche-02.jsonl",
       "size": 5101,
       "sha256": "e9ff12dee7903e9ad3c5709d66d825067f2bf50bf65e555197ca1125660ae39f"
@@ -134,8 +139,8 @@
     },
     {
       "path": "docs/REPO-INTEGRATION.md",
-      "size": 9245,
-      "sha256": "d033b6e8da4b22f12736c40bfbcac614d83b2f0e393c6c009df10193b65871c8"
+      "size": 10216,
+      "sha256": "e5054bcb7684e6fb4facc9be65ea293a4bcea27e6d5eaa8f884255193a73edf8"
     },
     {
       "path": "docs/RESEARCH-METHOD.md",
@@ -201,6 +206,16 @@
       "path": "incoming/tranche-02/validate.py",
       "size": 1150,
       "sha256": "bb7bb305694d9f038fba0cd2dda50c597965e1b3d7bda96f78a479a38444b08e"
+    },
+    {
+      "path": "monitoring/change-events.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "monitoring/review-decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "reconciliation/tranche-02-report.json",

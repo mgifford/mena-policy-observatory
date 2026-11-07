@@ -30,6 +30,8 @@ jobs:
         run: python research-toolkit/scripts/registry.py --check
       - name: Check instrument identity is current
         run: python research-toolkit/scripts/instruments.py --check
+      - name: Check source-change events and review tasks
+        run: python framework/change_events.py --check
       - name: Run validator unit tests
         run: python -m unittest discover -s tests -p "test_*.py" -v
       - name: Build site
