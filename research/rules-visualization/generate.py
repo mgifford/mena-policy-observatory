@@ -235,7 +235,7 @@ def test_table(lang: str) -> str:
             f'<tr><th scope="row">{esc(test["label"][lang])}</th><td>{esc(test["facts"][lang])}</td>'
             f'<td>{foreign(test["axiom"])}</td><td>{foreign(test["l4"])}</td><td>{esc(test["agreement"][lang])}</td></tr>')
     return f"""
-    <div class="table-scroll" tabindex="0" role="region" aria-label="{esc(ui['tests_h'])}">
+    <div class="table-scroll" tabindex="0" role="region" aria-label="{esc(ui['tests_table_region'])}">
     <table>
       <caption>{esc(ui['tests_h'])}</caption>
       <thead><tr><th scope="col">{esc(ui['case'])}</th><th scope="col">{esc(ui['facts'])}</th>

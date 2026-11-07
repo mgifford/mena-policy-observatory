@@ -735,7 +735,8 @@
       "footer": "Synthetic research prototype. No legal effect. No real instrument is encoded. Translations are provisional and not official legal translations.",
       "back": "Back to prototype index",
       "source_code": "Prototype source",
-      "graph_table_caption": "Dependency graph: nodes and dependencies"
+      "graph_table_caption": "Dependency graph: nodes and dependencies",
+      "tests_table_region": "Recorded engine results table"
     },
     "fr": {
       "lang_name": "Français",
@@ -791,7 +792,8 @@
       "footer": "Prototype de recherche synthétique. Sans effet juridique. Aucun instrument réel n'est encodé. Traductions provisoires, non officielles.",
       "back": "Retour à l'index du prototype",
       "source_code": "Source du prototype",
-      "graph_table_caption": "Graphe de dépendances : nœuds et dépendances"
+      "graph_table_caption": "Graphe de dépendances : nœuds et dépendances",
+      "tests_table_region": "Tableau des résultats réels des moteurs"
     },
     "ar": {
       "lang_name": "العربية",
@@ -847,7 +849,8 @@
       "footer": "نموذج بحثي اصطناعي. لا أثر قانوني. لا تُشفّر أي أداة حقيقية. الترجمات مؤقتة وليست ترجمات قانونية رسمية.",
       "back": "العودة إلى فهرس النموذج",
       "source_code": "مصدر النموذج",
-      "graph_table_caption": "رسم التبعيات: العقد والتبعيات"
+      "graph_table_caption": "رسم التبعيات: العقد والتبعيات",
+      "tests_table_region": "جدول نتائج المحركين المسجلة"
     }
   },
   "effective_period": {
