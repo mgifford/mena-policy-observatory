@@ -57,6 +57,10 @@ A candidate source lead is never promoted to a verified source or a legal findin
 
 Three existing candidates have recorded retrieval evidence in `research-toolkit/monitoring/source-captures.jsonl`: Algeria Law 25-11 (Official Gazette PDF), Bahrain Law 30/2018 (Legislation and Legal Opinion Commission landing page) and Oman's National Digital Accessibility Policy (MTCIT policy page). Bytes were hashed and not stored; no legal effect, authenticity or currency is established. See `docs/PILOT-REPORT.md` for selection reasons, checksums, limitations and outstanding review.
 
+## Rule presentation (synthetic only)
+
+`framework/rule_presentation.py` validates and statically renders a reviewed `rule-presentation/v1` artifact. It is intentionally not attached to the public site; the only artifact is a synthetic fixture. See [docs/RULE-PRESENTATION.md](docs/RULE-PRESENTATION.md).
+
 ## Structured research data
 
 Each policy directory contains a `research.json` alongside its Markdown artifacts. The file records sources, candidate provisions, interpretation questions and instrument relations in a machine-readable form. It never replaces the Markdown research notes, and it never records a legal conclusion: unknown values stay `"unknown"` or `null`, and unresolved questions stay unresolved.
