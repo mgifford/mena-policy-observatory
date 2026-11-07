@@ -8,3 +8,5 @@ These are discovery links, not determinations of amendment or supersession.
   Recorded label: `national_digital_accessibility_policy`. Discovery link; not reconciled.
 - [Official English translation](https://uaelegislation.gov.ae/en/legislations/1172)
   Recorded label: `official_translation`. Arabic prevails; translation review outstanding.
+- [UAE Legislation amendment list](https://uaelegislation.gov.ae/ar/legislations/1172/modifications)
+  Recorded label: `amendment_list`. One 2009 amendment listed; consolidated text not captured.

@@ -16,8 +16,8 @@ This note is deliberately separate from the policy records and visualizations. I
 
 | Record | What it is | What it shows | Current limits |
 |---|---|---|---|
-| `ae-national-digital-accessibility` | National Digital Accessibility Policy (March 2024) | 5 provisions, 5 questions, 3 links, 1 excerpt | English PDF plus Arabic policy page expression; legal status, Arabic/English authority and enforcement unresolved |
-| `ae-federal-law-29-2006` | Federal Law No. 29 of 2006 | 5 provisions, 4 questions, 2 links, 1 Arabic excerpt | Arabic official page plus official English translation; digital scope, implementing instrument and authority unresolved |
+| `ae-national-digital-accessibility` | National Digital Accessibility Policy (March 2024) | 5 provisions, 5 questions, 4 links, 2 excerpts | English PDF and full Arabic PDF; clause comparison, legal status, authority and enforcement unresolved |
+| `ae-federal-law-29-2006` | Federal Law No. 29 of 2006 | 5 provisions, 4 questions, 3 links, 1 Arabic excerpt | Arabic official page plus official English translation; digital scope, implementing instrument and authority unresolved |
 | `ae-moe-accessibility` | Ministry of Education digital accessibility policy | 2 provisions, 3 questions | Agency policy, not national law; no excerpt/capture; WCAG 2.1/2.2 AA claim self-described |
 | `ae-mof-accessibility` | Ministry of Finance digital accessibility policy | 1 provision, 2 questions | Agency policy; no WCAG version; no excerpt/capture |
 
@@ -30,7 +30,7 @@ The public visualizations show these as **source structure and candidate questio
 | [Federal Law No. 29 of 2006 Concerning the Rights of People with Special Needs](https://u.ae/en/about-the-uae/human-rights-in-the-uae/protecting-the-rights-of-people-of-determination) | Federal law | Broad rights, dignity, equality and protection for people of determination; the official page links the [UN-hosted English text](https://www.un.org/development/desa/disabilities/wp-content/uploads/sites/15/2019/11/United-Arab-Emirates_The-Rights-of-People-with-Special-Needs.pdf) | Binding-law candidate; **digital-specific obligations not established** from the captured material; Arabic text and official English translation now recorded, native legal review outstanding |
 | [Cabinet Resolution No. 43 of 2018 Regarding Supporting Special Needs (People of Determination) Work](https://uaelegislation.gov.ae/en/legislations/1174) | Cabinet resolution | Employment/support measures; issued 29 July 2018, effective 1 August 2018, Gazette 633 | Binding instrument; not a digital-accessibility standard |
 | [National Policy for Empowering People of Determination](https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/policies/social-affairs/the-national-policy-for-empowering-people-with-special-needs) | National policy | Six pillars: health/rehabilitation, education/vocational rehabilitation/employment, outreach, social protection/family empowerment, and public life/culture/sports | Policy, not a statute; implementation detail not established |
-| [National Digital Accessibility Policy](https://uaelegislation.gov.ae/en/policy/details/the-national-digital-accessibility-policy) — [PDF](https://assets.u.ae/api/public/content/84ec9317f73249c8a2594d76705d3c46?v=8a2f9df6) | National policy, issued March 2024 | Digital scope, obligations, governance, Digital Accessibility Officer, technical annex and compliance reporting | Policy instrument; legal enforceability and penalty mechanism unresolved; Arabic original to confirm |
+| [National Digital Accessibility Policy](https://uaelegislation.gov.ae/en/policy/details/the-national-digital-accessibility-policy) — [English PDF](https://assets.u.ae/api/public/content/84ec9317f73249c8a2594d76705d3c46?v=8a2f9df6) — [Arabic PDF](https://assets.u.ae/api/public/content/4108f4f6ade849fb92d5ffcb67c2a416?v=35bf36ee) | National policy, issued March 2024 | Digital scope, obligations, governance, Digital Accessibility Officer, technical annex and compliance reporting | Policy instrument; legal enforceability and penalty mechanism unresolved; clause-level Arabic/English comparison outstanding |
 | [UAE Digital Government Strategy 2025](https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/strategies-plans-and-visions/government-services-and-digital-transformation/uae-national-digital-government-strategy) | Strategy | "Inclusive by default" and digital government direction | Strategy, not a legal obligation |
 | [UAE Design System 3.0 — Accessibility](https://designsystem.gov.ae/guidelines/accessibility) | Technical guidance | WCAG 2.1 AA baseline, WAI references, ARIA, testing at 175% zoom; federal entities instructed to comply | Guidance/standard, not a statute; useful for procurement and design review |
 | [UAE Digital Accessibility Statement](https://u.ae/en/Footer/Accessibility) | Public self-statement | Claims WCAG 2.1 and 2.2 AA as minimum; describes audits, feedback and AI-powered accessibility tools | Self-description, not independent certification; third-party content is a stated limitation |
@@ -119,8 +119,10 @@ This avoids ranking the UAE and invites the counterpart to clarify legal status,
 ## Gaps in the current observatory
 
 - **Federal Law 29/2006** now has a structured record with an Arabic authoritative expression, an official English translation expression and five provisions (captured 2026-11-07). The digital scope is still a legal question, not a finding.
-- The **2024 National Digital Accessibility Policy** record now has five provisions, the March 2024 English PDF and an Arabic policy-page expression. The Arabic page is a summary; the full Arabic policy PDF and clause comparison are still missing.
-- **Cabinet Resolution 43/2018** is recorded as a related instrument, not a standalone accessibility record; it addresses employment/support.
+- The **2024 National Digital Accessibility Policy** record now has five provisions, the March 2024 English PDF and the full Arabic PDF. The two language expressions have not been compared clause by clause.
+- **Cabinet Resolution 43/2018** is recorded as a related instrument, not a standalone accessibility record; it addresses employment/support and its full text was not captured.
+- **Federal Law 29/2006 amendment list** shows one 2009 amendment; the consolidated text and substantive effect are not captured.
+- No official instrument for the Article 23 building-standard Cabinet decision was located in the sources consulted; this remains an explicit gap.
 - No local-emirate records (Dubai/Abu Dhabi) or free-zone authorities.
 - No procurement, audit, complaint or enforcement evidence.
 - No manual accessibility or native Arabic review.
@@ -128,14 +130,14 @@ This avoids ranking the UAE and invites the counterpart to clarify legal status,
 ## Evidence captured on 2026-11-07
 
 - **Federal Law 29/2006:** Arabic official page and official English translation page retrieved; 5 provisions recorded; Arabic expression marked authoritative, English translation expression unreviewed. Official metadata: issued 13 August 2006; published/effective 26 August 2006; Official Gazette No. 453; one amendment listed.
-- **2024 National Digital Accessibility Policy:** official English PDF retrieved; Arabic policy summary page recorded as an expression. Policy page records issue date 18 March 2024 and TDRA as lead authority. Five policy provisions now recorded.
+- **2024 National Digital Accessibility Policy:** official English PDF and full Arabic PDF retrieved; both language expressions recorded. Policy page records issue date 18 March 2024 and TDRA as lead authority. Five policy provisions now recorded. Clause-level comparison remains outstanding.
 - No capture bytes or checksums were stored; the records point to the official pages and explicitly say so.
 
 ## Recommended next evidence, if the UAE conversation continues
 
-1. Obtain the full Arabic 2024 policy PDF and compare its articles with the English PDF; the Arabic page already captured is a summary, not the full instrument.
+1. Compare the full Arabic 2024 policy PDF with the English PDF clause by clause, especially scope, technical standards, governance and enforcement.
 2. Capture the 2024 policy's technical annex with locators and permitted checksums.
-3. Obtain and record the Cabinet decision contemplated by Article 23, and the current consolidated text of Federal Law 29/2006 after its listed amendment.
+3. Obtain and record the Cabinet decision contemplated by Article 23, and the consolidated Federal Law 29/2006 after its one listed 2009 amendment.
 4. Record Federal Law 29/2006, the 2024 policy and Cabinet Resolution 43/2018 as separate source records; the first two now exist, the resolution is only a related link.
 4. Ask for the entity-level Digital Accessibility Officer contact/role description, a sample accessibility statement, and a redacted audit/acceptance test template.
 5. Ask for the procurement/contract clause used for digital services and the remediation process.
@@ -147,7 +149,8 @@ This avoids ranking the UAE and invites the counterpart to clarify legal status,
 - UAE Government, [Protecting the rights of people of determination](https://u.ae/en/about-the-uae/human-rights-in-the-uae/protecting-the-rights-of-people-of-determination), with link to Federal Law No. 29 of 2006.
 - UAE Government, [National Policy for Empowering People of Determination](https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/policies/social-affairs/the-national-policy-for-empowering-people-with-special-needs).
 - UAE Legislation, [Cabinet Resolution No. 43 of 2018](https://uaelegislation.gov.ae/en/legislations/1174).
-- UAE Legislation, [The National Digital Accessibility Policy](https://uaelegislation.gov.ae/en/policy/details/the-national-digital-accessibility-policy); [official PDF](https://assets.u.ae/api/public/content/84ec9317f73249c8a2594d76705d3c46?v=8a2f9df6).
+- UAE Legislation, [Federal Law No. 29 of 2006 amendment list](https://uaelegislation.gov.ae/ar/legislations/1172/modifications).
+- UAE Legislation, [The National Digital Accessibility Policy](https://uaelegislation.gov.ae/en/policy/details/the-national-digital-accessibility-policy); [English PDF](https://assets.u.ae/api/public/content/84ec9317f73249c8a2594d76705d3c46?v=8a2f9df6); [Arabic PDF](https://assets.u.ae/api/public/content/4108f4f6ade849fb92d5ffcb67c2a416?v=35bf36ee).
 - UAE Government, [National Digital Accessibility Policy page](https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/policies/government-services-and-digital-transformation/national-digital-accessibility-policy).
 - UAE Government, [Digital Accessibility Statement](https://u.ae/en/Footer/Accessibility).
 - UAE Design System 3.0, [Accessibility guideline](https://designsystem.gov.ae/guidelines/accessibility).

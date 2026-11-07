@@ -70,6 +70,16 @@
       "title": "Arabic policy page",
       "url": "https://uaelegislation.gov.ae/ar/policy/details/the-national-digital-accessibility-policy",
       "relation": "official_language_expression"
+    },
+    {
+      "title": "Full Arabic policy PDF",
+      "url": "https://assets.u.ae/api/public/content/4108f4f6ade849fb92d5ffcb67c2a416?v=35bf36ee",
+      "relation": "official_language_expression"
+    },
+    {
+      "title": "UAE Legislation amendment list for Federal Law No. 29 of 2006",
+      "url": "https://uaelegislation.gov.ae/ar/legislations/1172/modifications",
+      "relation": "amendment_list"
     }
   ]
 }
