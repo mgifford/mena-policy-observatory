@@ -16,6 +16,7 @@ import html
 import json
 import re
 import sys
+import textwrap
 from datetime import date
 from pathlib import Path
 
@@ -569,8 +570,8 @@ def _svg(data: dict, lang: str, strings: dict) -> str:
     layers: dict[int, list[dict]] = {}
     for node in data['nodes']:
         layers.setdefault(depth[node['id']], []).append(node)
-    width, height = 150, 56
-    gap_x, gap_y, margin = 28, 50, 24
+    width, height = 170, 76
+    gap_x, gap_y, margin = 30, 52, 24
     counts = {level: len(items) for level, items in layers.items()}
     view_width = max(counts.values()) * width + (max(counts.values()) - 1) * gap_x + margin * 2
     view_height = (max(layers) + 1) * height + max(layers) * gap_y + margin * 2
@@ -594,9 +595,17 @@ def _svg(data: dict, lang: str, strings: dict) -> str:
     for node in data['nodes']:
         x, y = positions[node['id']]
         cls = {'input': 'node-input', 'constant': 'node-constant', 'computed': 'node-computed'}[node['kind']]
+        label, used = _resolve(node.get('label'), lang)
+        lines = textwrap.wrap(label, width=24)[:2]
+        if len(textwrap.wrap(label, width=24)) > 2:
+            lines[-1] = lines[-1][:23] + '…'
+        label_spans = ''.join(
+            f'<tspan x="{x + width / 2:.1f}" dy="{0 if index == 0 else 15}">{_esc(line)}</tspan>'
+            for index, line in enumerate(lines or ['']))
         shapes.append(
             f'<g class="{cls}"><rect x="{x:.1f}" y="{y:.1f}" width="{width}" height="{height}" rx="9" />'
-            f'<text x="{x + width / 2:.1f}" y="{y + 35:.1f}" text-anchor="middle">{_esc(node["id"])}</text></g>')
+            f'<text x="{x + width / 2:.1f}" y="{y + 20:.1f}" text-anchor="middle">{_esc(node["id"])}</text>'
+            f'<text x="{x + width / 2:.1f}" y="{y + 38:.1f}" text-anchor="middle" lang="{used}" dir="{DIRECTIONS.get(used, "ltr")}">{label_spans}</text></g>')
     title = f"{_text_raw(data['title'], lang)} — {strings['rule.presentation.graph']}"
     return f"""
 <svg viewBox="0 0 {view_width:.0f} {view_height:.0f}" role="img" aria-labelledby="rule-graph-title" aria-describedby="rule-graph-desc" focusable="false">

@@ -55,7 +55,7 @@ When a locale lacks a language expression, the renderer falls back to the first 
 
 The page contains:
 
-1. a dependency graph: inline SVG with a unique title/description, numbered nodes and edges; no canvas, drag or pointer-only content;
+1. a dependency graph: inline SVG with a unique title/description, numbered nodes with wrapped short labels and edges; no canvas, drag or pointer-only content; full labels remain in the node list;
 2. a node list with every label, kind, dependency and source citation — the accessible equivalent of the graph;
 3. an ordered ladder with every condition and both branches;
 4. the complete linear explanation, unknown-state text and limits;
