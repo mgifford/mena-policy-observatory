@@ -1,5 +1,11 @@
 # Toolkit change record
 
+## v9 (2026-11-07)
+- Added `monitoring/source-captures.jsonl` and capture validation: metadata, checksum, language and storage state, linked to the latest successful source check.
+- Recorded actual retrieval evidence for three existing candidates (Algeria, Bahrain, Oman); bytes hashed and not stored.
+- Source checks for those candidates are now `success` with a real last-successful date; legal verification remains unreviewed.
+- No change event is created for an initial capture without a previous version.
+
 ## v8 (2026-11-06)
 - Added append-only source-change observations and human review decisions under `monitoring/`, plus derived `backlog/tasks-change-review.jsonl`.
 - `framework/change_events.py` validates events/decisions, derives idempotent review tasks and supports `--check`.

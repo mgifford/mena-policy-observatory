@@ -1,6 +1,6 @@
 {
   "version": "2",
-  "as_of": "2026-11-06",
+  "as_of": "2026-11-07",
   "stale_after_days": 180,
   "policy": "Retrieval outcome, source freshness and legal verification are separate. A successful request never verifies legal effect or currency, a failed request does not erase an earlier successful retrieval, and no check is evidence of absence.",
   "checks": [
@@ -24,19 +24,19 @@
     {
       "candidate_id": "bh-personal-data-30-2018",
       "publisher_id": "www-lloc-gov-bh",
-      "retrieval_status": "not_attempted",
-      "attempted_at": null,
-      "http_status": null,
-      "final_url": null,
-      "content_type": null,
+      "retrieval_status": "success",
+      "attempted_at": "2026-11-07",
+      "http_status": 200,
+      "final_url": "https://www.lloc.gov.bh/En/Legislation/id/K3018",
+      "content_type": "text/html; charset=utf-8",
       "error_category": null,
-      "last_successful_retrieval": null,
+      "last_successful_retrieval": "2026-11-07",
       "legal_verification": {
         "status": "unreviewed",
         "evidence": null,
         "reviewed_at": null
       },
-      "notes": "No retrieval has been attempted."
+      "notes": "Retrieved; see cap-bh-personal-data-30-2018-c72eb36f1d31."
     },
     {
       "candidate_id": "eg-disability-law-10-2018",
@@ -143,19 +143,19 @@
     {
       "candidate_id": "mena-t02-002",
       "publisher_id": "www-joradp-dz",
-      "retrieval_status": "not_attempted",
-      "attempted_at": null,
-      "http_status": null,
-      "final_url": null,
-      "content_type": null,
+      "retrieval_status": "success",
+      "attempted_at": "2026-11-07",
+      "http_status": 200,
+      "final_url": "https://www.joradp.dz/FTP/JO-FRANCAIS/2025/F2025048.pdf",
+      "content_type": "application/pdf",
       "error_category": null,
-      "last_successful_retrieval": null,
+      "last_successful_retrieval": "2026-11-07",
       "legal_verification": {
         "status": "unreviewed",
         "evidence": null,
         "reviewed_at": null
       },
-      "notes": "No retrieval has been attempted."
+      "notes": "Retrieved; see cap-mena-t02-002-855ff487d526."
     },
     {
       "candidate_id": "mena-t02-003",
@@ -364,19 +364,19 @@
     {
       "candidate_id": "om-national-digital-accessibility",
       "publisher_id": "www-mtcit-gov-om",
-      "retrieval_status": "not_attempted",
-      "attempted_at": null,
-      "http_status": null,
-      "final_url": null,
-      "content_type": null,
+      "retrieval_status": "success",
+      "attempted_at": "2026-11-07",
+      "http_status": 200,
+      "final_url": "https://www.mtcit.gov.om/library-3/legislations-policies-8/policies-73/the-national-digital-accessibility-policy-649",
+      "content_type": "text/html; charset=utf-8",
       "error_category": null,
-      "last_successful_retrieval": null,
+      "last_successful_retrieval": "2026-11-07",
       "legal_verification": {
         "status": "unreviewed",
         "evidence": null,
         "reviewed_at": null
       },
-      "notes": "No retrieval has been attempted."
+      "notes": "Retrieved; see cap-om-national-digital-accessibility-2393b1412795."
     },
     {
       "candidate_id": "tn-personal-data-2004-63",

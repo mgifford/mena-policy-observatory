@@ -45,13 +45,24 @@ class RegistryTests(unittest.TestCase):
         checks = load(CHECKS)['checks']
         candidate_ids = {candidate['id'] for candidate in load(SOURCES)['records']}
         self.assertEqual({check['candidate_id'] for check in checks}, candidate_ids)
-        for check in checks:
-            self.assertEqual(check['retrieval_status'], 'not_attempted')
+        not_attempted = [check for check in checks
+                         if check['retrieval_status'] == 'not_attempted']
+        attempted = [check for check in checks
+                     if check['retrieval_status'] != 'not_attempted']
+        self.assertEqual(len(attempted), 3)
+        for check in not_attempted:
             self.assertIsNone(check['attempted_at'])
             self.assertIsNone(check['http_status'])
             self.assertIsNone(check['final_url'])
             self.assertIsNone(check['content_type'])
             self.assertIsNone(check['last_successful_retrieval'])
+        for check in attempted:
+            self.assertEqual(check['retrieval_status'], 'success')
+            self.assertIsNotNone(check['attempted_at'])
+            self.assertIsNotNone(check['http_status'])
+            self.assertIsNotNone(check['final_url'])
+            self.assertIsNotNone(check['last_successful_retrieval'])
+        for check in checks:
             self.assertEqual(check['legal_verification']['status'], 'unreviewed')
 
     def test_derivation_is_idempotent(self):

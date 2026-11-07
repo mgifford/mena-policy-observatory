@@ -34,8 +34,10 @@ try:
         load_change_events,
         load_change_tasks,
         load_review_decisions,
+        load_source_captures,
         review_status as change_review_status,
         validate_change_records,
+        validate_source_captures,
     )
 except ImportError:  # run as a script
     from change_events import (
@@ -44,8 +46,10 @@ except ImportError:  # run as a script
         load_change_events,
         load_change_tasks,
         load_review_decisions,
+        load_source_captures,
         review_status as change_review_status,
         validate_change_records,
+        validate_source_captures,
     )
 
 RESEARCH_STATUSES = (
@@ -152,6 +156,7 @@ class CoverageData:
     change_events: list[dict] = field(default_factory=list)
     review_decisions: list[dict] = field(default_factory=list)
     change_tasks: list[dict] = field(default_factory=list)
+    source_captures: list[dict] = field(default_factory=list)
     extra: dict = field(default_factory=dict)
 
 
@@ -211,6 +216,7 @@ def load_coverage(base=DEFAULT_BASE, toolkit=DEFAULT_TOOLKIT) -> CoverageData:
         change_events=load_change_events(toolkit),
         review_decisions=load_review_decisions(toolkit),
         change_tasks=load_change_tasks(toolkit),
+        source_captures=load_source_captures(toolkit),
         extra={'domain_registry': domain_registry},
     )
 
@@ -430,6 +436,9 @@ def build_view(data: CoverageData) -> dict:
     previous_decisions = latest_decisions(data.review_decisions)
     task_by_event = {task.get('change_event_id'): task.get('task_id')
                      for task in data.change_tasks}
+    captures_by_candidate = {}
+    for capture in data.source_captures:
+        captures_by_candidate.setdefault(capture.get('candidate_id'), []).append(capture)
     as_of = _iso_date(data.registry_as_of)
     for candidate in candidates:
         host = (urlparse(str(candidate.get('source_url') or '')).hostname or '').lower()
@@ -455,6 +464,11 @@ def build_view(data: CoverageData) -> dict:
         candidate['change_task_ids'] = sorted(
             task_by_event[event.get('event_id')] for event in events
             if event.get('event_id') in task_by_event)
+        captures = sorted(captures_by_candidate.get(candidate.get('id'), []),
+                          key=lambda capture: (str(capture.get('captured_at') or ''),
+                                               str(capture.get('capture_id') or '')))
+        candidate['source_captures'] = captures
+        candidate['latest_capture'] = captures[-1] if captures else None
 
     records_view = []
     for policy in data.policies:
@@ -541,6 +555,7 @@ def build_view(data: CoverageData) -> dict:
             'change_events': len(data.change_events),
             'review_decisions': len(data.review_decisions),
             'review_tasks': len(data.change_tasks),
+            'source_captures': len(data.source_captures),
             'unresolved_questions': sum(len(item['open_questions']) for item in country_views),
         },
     }
@@ -869,6 +884,9 @@ def validate_coverage(data: CoverageData) -> list[str]:
         data.change_events, data.review_decisions, data.change_tasks,
         data.candidate_inventory.get('records', []), data.publishers,
         data.instruments, _iso_date(data.registry_as_of)))
+    errors.extend(validate_source_captures(
+        data.source_captures, data.candidate_inventory.get('records', []),
+        data.publishers, data.source_checks, _iso_date(data.registry_as_of)))
     return errors
 
 

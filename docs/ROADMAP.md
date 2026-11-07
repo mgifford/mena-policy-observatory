@@ -1,12 +1,12 @@
 # Roadmap
 
-**Status:** the active milestone (`docs/CURRENT-MILESTONE.md`) is implementation-complete but not operationally validated; the milestones after it are **not authorized**. Each requires an explicit instruction, its own milestone document and a human-reviewed pull request.
+**Status:** the three-source verification and monitoring pilot (`docs/CURRENT-MILESTONE.md`) is in progress; the milestones after it are **not authorized**. Each requires an explicit instruction, its own milestone document and a human-reviewed pull request.
 
 **Direction:** the observatory documents and explains law and policy that already exist. Proposed or hypothetical rules are a separate, labelled capability and never appear as current obligations.
 
-## Active milestone — Legal evidence currency and multilingual support
+## Completed milestone — Legal evidence currency and multilingual support
 
-**Status:** authorized and in progress. This milestone makes the existing evidence current, traceable and readable across languages. It does **not** start Rules as Code, Axiom or any executable rule work.
+**Status:** implementation complete (WP1–WP5, through PR #19); operational monitoring is not established. Kept here as the record of the completed milestone.
 
 ### Legal evidence currency
 
@@ -45,9 +45,9 @@
 7. No candidate promoted to a verified source or legal finding.
 8. Documentation and a reviewable pull request.
 
-## Milestone 2 (proposed) — Three-source verification and monitoring pilot
+## Current milestone (Milestone 2) — Three-source verification and monitoring pilot
 
-**Not authorized.** Verify and monitor three existing authoritative legal sources already represented by candidate leads.
+**Authorized for three sources only.** Verify and monitor three existing authoritative legal sources already represented by candidate leads.
 
 - Record publisher identity, authority, languages and retrieval constraints for the three sources.
 - Capture permitted evidence with timestamps and checksums where allowed; record explicit access limitations.

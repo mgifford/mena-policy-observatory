@@ -21,7 +21,7 @@ Prepared for: https://github.com/mgifford/mena-policy-observatory (repository in
 - `templates/`: source, interpretation, relationship, Axiom, review, PR and research packet scaffolds.
 - `schemas/`: standalone packet JSON Schema, deliberately not replacing the existing `regions/mena/schemas/` model.
 - `scripts/`: offline packet validator, deterministic output manifest with `--check`, multi-file queue summaries with logical duplicate detection, and the idempotent tranche importer. Network/model calls are intentionally excluded.
-- `monitoring/`: append-only `change-events.jsonl` and `review-decisions.jsonl`; empty until real observations exist. Technical changes and potential legal changes are separate, and only human decisions record reviewed conclusions.
+- `monitoring/`: append-only `source-captures.jsonl` (metadata and checksums for three pilot sources), plus `change-events.jsonl` and `review-decisions.jsonl`, which are empty until real observations exist. Technical changes and potential legal changes are separate, and only human decisions record reviewed conclusions.
 - `reconciliation/`: machine-readable import reports; each report lists imported records, matches, possible duplicates, conflicts and outstanding verification.
 - `incoming/`: unreviewed discovery packages. Nothing under `incoming/` is published until it is imported and reviewed.
 - `tests/`: positive and negative test fixtures.

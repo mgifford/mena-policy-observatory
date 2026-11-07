@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "CHANGELOG.md",
-      "size": 5507,
-      "sha256": "7654381ac4deb4d38f1ce6de057d2a32da59032b5f597a8cfe6fb05a1df3dcd6"
+      "size": 6018,
+      "sha256": "80bb284fdf0641f2f3e11504af0fe3eb4059b8866e017cf89e768ce463b9bfe4"
     },
     {
       "path": "LICENSE-NOTE.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "size": 4721,
-      "sha256": "6355fdc6bba7a44c69b22f6f2d95c25af950bd909b37c38878b89e6346a10de4"
+      "size": 4810,
+      "sha256": "51f110a71d33916dd65c04fc86e1ab7c86b288027b756844fbe3e15295c43a4e"
     },
     {
       "path": "agents/00-controller.md",
@@ -139,8 +139,8 @@
     },
     {
       "path": "docs/REPO-INTEGRATION.md",
-      "size": 10216,
-      "sha256": "e5054bcb7684e6fb4facc9be65ea293a4bcea27e6d5eaa8f884255193a73edf8"
+      "size": 10868,
+      "sha256": "ba92ed149e524e76bcf5bc0aa46b613cd0adcaab848ab91310d2de58ea430818"
     },
     {
       "path": "docs/RESEARCH-METHOD.md",
@@ -218,6 +218,11 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "monitoring/source-captures.jsonl",
+      "size": 2637,
+      "sha256": "92b5945e20a3a2352806bf5714f349c7112b4ee7784a060e61fe73177ab76bc8"
+    },
+    {
       "path": "reconciliation/tranche-02-report.json",
       "size": 10886,
       "sha256": "449a98a6db070f2a78700c693972c54685066538d989a33a7ed6e2e9a03ed6c3"
@@ -245,7 +250,7 @@
     {
       "path": "scripts/registry.py",
       "size": 9868,
-      "sha256": "000c2eb309d8e0faacf10021e996cfca94e4eec3870ef18730aed42b9a11ebc9"
+      "sha256": "6333f88e68f34a70726671b2b92faf598764f9c4bb22b5e428be305461cf4b69"
     },
     {
       "path": "scripts/report_queue.py",
@@ -274,13 +279,13 @@
     },
     {
       "path": "sources/publishers.json",
-      "size": 14973,
-      "sha256": "1136f08cc0d5737cf7a9f1d70d2e1d6c5d0f91a4e50b16fc9381213f15abb05e"
+      "size": 15106,
+      "sha256": "0988ba03b7cf2a6a030b79b12ea9382a9deed0ec9ea0344c8432d271cdaac162"
     },
     {
       "path": "sources/source-checks.json",
-      "size": 11703,
-      "sha256": "71927bdcf7d1ca48f46ac4c17fbf7c32c1a6454fa2c5d743671199e9862b9cad"
+      "size": 12071,
+      "sha256": "70df39b8c04ed17218ad0d8410a8c45f19f85c7dcc6151e6810afb4d313dbb47"
     },
     {
       "path": "templates/AGENT-REPORT.md",

@@ -1,88 +1,75 @@
-# Current Milestone: Legal Evidence Currency and Multilingual Support
+# Current Milestone: Three-Source Verification and Monitoring Pilot
 
-**Status:** Implementation complete — operational monitoring not established\
+**Status:** In progress — evidence captured, review outstanding\
 **Priority:** P0\
-**Working branch:** `feat/source-change-review` (verify before use)\
-**Previous milestone:** MENA research coverage integration — implementation complete on `main` at `4b3c13a` (see git history and `docs/ROADMAP.md`)\
-**Later milestones:** three-source verification and monitoring pilot, then public digital policy research and reviewed Rules as Code. None is authorized.
+**Baseline:** `main` at `4257c1f`\
+**Working branch:** `feat/source-verification-pilot` (verify before use)\
+**Report:** `docs/PILOT-REPORT.md`\
+**Later milestones:** public digital policy research, then reviewed Rules as Code. Neither is authorized.
 
 ## Objective
 
-Make recorded legal evidence explicitly current (or explicitly not checked), traceable to an official publisher and version, and readable across English, French and Arabic — without starting Rules as Code.
-
-The milestone is delivered in bounded work packages. Each package needs its own reviewable pull request; no package may promote a candidate lead to verified law or infer a legal effect.
+Verify and monitor three existing authoritative legal or policy sources already represented by candidate leads. Record real retrieval evidence, distinguish technical observations from legal conclusions, and exercise the human review workflow without performing a broad crawl or creating new legal findings.
 
 ## Authorized work
 
-### Legal evidence currency
-
-- A registry of official publishers cited by existing candidate leads and published records, recording host, jurisdiction, authority type, languages, verification status, monitoring state and retrieval notes. Unknown values stay unknown.
-- Source-check records per candidate, separating retrieval outcome, source freshness and legal verification. A successful request never verifies legal effect; a failed request never erases an earlier successful retrieval.
-- Explicit freshness and stale-source reporting derived from recorded checks, with a fixed `as_of` date so the static build stays deterministic.
-- Instrument identity and version metadata (work, expression, captured item; publication, commencement, repeal and consolidation dates) only where documented, with unknown values preserved.
-- Defect corrections in existing evidence handling: retrieval outcome, source freshness and legal verification are separate; unusual chronology such as retrospective effect is a review warning, not a hard rejection; repository instructions match the trilingual implementation.
-- Immutable change events and human review tasks for detected or suspected changes. No automated legal-effect change.
-
-### Multilingual support
-
-- English, French and Arabic interface support on the existing internationalisation infrastructure. No parallel site.
-- Source language separated from interface language; translation states (original, official translation, human-reviewed research translation, machine-assisted draft, pending, unavailable, unresolved) and translation provenance.
-- Terminology governance for recurring legal and technical concepts.
-- Accessible LTR/RTL layouts, mixed-direction text, keyboard operation and reflow in all three locales. French and Arabic copy remains provisional until native review.
+- Select three existing candidates with documented rationale.
+- Record publisher identity evidence, jurisdictions, languages and retrieval constraints.
+- Retrieve each source once with bounded, respectful requests; record actual HTTP outcomes, content type, length, timestamp and SHA-256.
+- Record capture metadata and checksums without storing or redistributing full text unless permitted.
+- Update source-health records from the actual retrieval result.
+- Record real change observations only if an actual difference is observed; do not create an event for an initial capture with no prior version.
+- Exercise review tasks and decisions with synthetic fixtures where no real change exists.
+- Publish source health, captured version metadata and review status bilingually.
+- Document evidence, failures, limitations and outstanding review.
 
 ## Prohibited work
 
 Do not:
 
-- Implement executable Axiom RuleSpec, Axiom runtime dependencies, rules engines or policy simulation.
-- Conduct new legal research beyond re-checking the existing 23 candidate leads.
-- Add policy domains, countries or jurisdictions.
-- Add automated legal-effect, in-force or compliance determinations.
-- Crawl broadly, bypass access controls, or store copyrighted full text or personal data.
-- Invent publisher identities, authority types, dates, translations or review approvals.
+- Add countries, domains or research questions beyond the three selected candidates.
+- Crawl broadly, schedule a monitoring service, bypass access controls or ignore robots policies.
+- Store or redistribute full text without a permitted basis.
+- Treat a successful retrieval or byte difference as legal verification or an amendment.
+- Generate legal translations, reviewer identities, approvals, dates or checksums.
+- Modify a policy record's legal effect or mark a source legally reviewed.
+- Implement Axiom/RuleSpec, a rules engine or policy simulation.
 - Merge pull requests autonomously.
 - Begin the research-expansion or Rules as Code milestones.
 
-## Work packages
-
-1. **Publisher registry and source-health records** — delivered (PR #14): registry of 25 cited hosts, one not-attempted retrieval record per candidate, validator and trilingual display. Defect correction in this PR separates retrieval outcome, freshness and legal verification.
-2. **Instrument identity and version metadata** — delivered in this work package: reported type/number/year, explicit null authority and version dates, captured-version state, validator and trilingual display.
-3. **French interface foundation** — delivered (PR #16): French catalogue, localized country/domain labels, three-language navigation and language switching, 139-page build and three-locale tests.
-4. **Translation provenance and terminology** — delivered in this work package: optional per-source language expressions, validation, draft terminology registry and accessible expression status on record pages; native review remains outstanding.
-5. **Source-change review workflow** — delivered in this work package: append-only change events, human review decisions, derived review tasks, validation and bilingual public status. No real observation has been recorded.
-
-**Maintenance (this PR): defect corrections** — source-health classification, retrospective-date handling, trilingual instruction reconciliation and regression tests.
-
 ## Completion criteria
 
-- [x] Publisher registry covers every host cited by candidates and records, with explicit unknowns.
-- [x] Every candidate has a source-check record; no check is fabricated.
-- [x] Retrieval outcome, freshness and legal verification are separate and freshness is derived from a fixed `as_of` date.
-- [x] Instrument identity and version metadata are recorded where evidence exists.
-- [x] Change events and review tasks exist for detected changes (WP5).
-- [x] English, French and Arabic navigation works; French and Arabic copy is marked provisional.
-- [x] Translation states and provenance are recorded per text (WP4).
-- [x] Automated accessibility tests pass for all three locales.
-- [x] Python validation, unit tests and the reproducible build pass.
-- [x] Documentation matches the implementation.
-- [x] Work-package pull requests are prepared for human review.
+- [x] Three existing candidates selected with documented reasons.
+- [x] Actual retrieval attempts and outcomes recorded.
+- [x] Publisher identities evidenced or explicitly unresolved.
+- [x] Source versions and capture metadata traceable.
+- [x] Source checks updated from real outcomes; legal verification remains unreviewed.
+- [ ] Human review of source adequacy, identity and legal significance.
+- [x] Change detection workflow exercised with synthetic fixtures only.
+- [x] Monitoring failures and limitations documented.
+- [x] No source promoted to a legal finding.
+- [ ] Native Arabic/French and manual accessibility review.
+- [x] Static build reproducible and automated checks passing.
+- [x] Focused PR prepared for review.
 
 ## Required verification commands
 
 ```bash
-python3 research-toolkit/scripts/registry.py --check
-python3 research-toolkit/incoming/tranche-02/validate.py
 python3 framework/validate.py
+python3 framework/change_events.py --check
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 -m unittest discover -s research-toolkit/tests -p 'test_*.py' -v
+python3 research-toolkit/scripts/registry.py --check
+python3 research-toolkit/scripts/instruments.py --check
+python3 research-toolkit/scripts/import_tranche.py --check
 python3 framework/build.py --region mena
 python3 framework/check_html.py
 npm run test:a11y
 git diff --check
 ```
 
-Manual keyboard, screen-reader, zoom, forced-colour and native-language review must be recorded separately. Automated tests do not establish WCAG conformance.
+Manual keyboard, screen-reader, zoom, forced-colour and native-language review remain separate release conditions. Automated tests do not establish WCAG conformance.
 
 ## Stop condition
 
-Complete and validate one work package at a time, prepare a reviewable pull request, and stop. Do not start the next work package or a later milestone without an explicit instruction.
+Prepare the pilot PR and stop. Do not start a monitoring schedule, recapture, legal review or the next milestone without an explicit instruction.

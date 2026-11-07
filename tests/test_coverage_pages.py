@@ -166,7 +166,6 @@ class CoveragePageTests(unittest.TestCase):
         self.assertIn('Timeout', body)
         self.assertIn('Not established', body)
         self.assertIn('Unreviewed', body)
-        self.assertNotIn('Successful', body)
 
     def test_successful_retrieval_is_displayed_without_legal_verification(self):
         data = load_coverage(BASE, REPO_ROOT / 'research-toolkit')

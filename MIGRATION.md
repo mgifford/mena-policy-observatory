@@ -20,6 +20,8 @@ Translation-provenance work package (additive): source records may carry an opti
 
 Source-change work package (additive): added empty `research-toolkit/monitoring/change-events.jsonl` and `review-decisions.jsonl`, plus derived `research-toolkit/backlog/tasks-change-review.jsonl`. No event, decision, task or legal claim is created; the files are empty by design and the public sources page shows an explicit no-observations state. Existing tasks, candidates, records and source checks are unchanged. The derived task queue is reproducible with `python3 framework/change_events.py --check`.
 
+Three-source pilot (additive): added `research-toolkit/monitoring/source-captures.jsonl` with metadata and SHA-256 for three retrieved sources; bytes are not stored. Updated three source-check records from `not_attempted` to a real `success` with the latest capture metadata; legal verification remains `unreviewed`. No policy record, legal effect or candidate identity changed. Reproducible with `python3 framework/change_events.py --check`.
+
 Research layers remain separate: geographic scope, task status, candidate discovery, source verification, provision extraction, interpretation, translation, Rules as Code and publication are never collapsed into one label. Candidate source leads are displayed as unreviewed discovery leads only; no candidate has been captured, verified, translated or legally reviewed.
 
 Omitted: old duplicated `docs/policies` tree and historical generated HTML, because they were derived outputs. No additional law or verified translation has been invented. Old scripts have not been carried forward where their behavior duplicates the new framework.

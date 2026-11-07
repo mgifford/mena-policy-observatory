@@ -556,5 +556,13 @@
   "change.legal.confirmed_consolidation": "توحيد مؤكد",
   "change.legal.confirmed_translation_update": "تحديث ترجمة مؤكد",
   "change.legal.no_substantive_change": "لا تغيّر قانوني جوهري",
-  "change.legal.indeterminate": "غير محدد"
+  "change.legal.indeterminate": "غير محدد",
+  "source.captures": "النسخ المسترجعة",
+  "source.captures.count": "عمليات الاسترجاع المسجلة: {count}",
+  "source.captures.latest": "أحدث نسخة",
+  "source.captures.captured_at": "تاريخ الاسترجاع",
+  "source.captures.checksum": "بصمة التحقق",
+  "source.captures.metadata_only": "سُجلت البيانات الوصفية والبصمة؛ ولم تُخزن البايتات",
+  "source.captures.none": "لا توجد نسخة مسترجعة مسجلة.",
+  "source.captures.language": "لغة النسخة"
 }

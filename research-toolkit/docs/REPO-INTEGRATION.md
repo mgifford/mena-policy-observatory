@@ -121,6 +121,14 @@ python3 research-toolkit/scripts/instruments.py --check
 - No event changes a policy record's `legal_effect`; no decision marks a source professionally reviewed without a recorded human decision.
 - The empty files mean no observations have been recorded. Operational monitoring requires a separately authorized source pilot.
 
+## Source-capture pilot (three sources)
+
+- `research-toolkit/monitoring/source-captures.jsonl` records capture metadata and SHA-256 for three real retrievals. Bytes are not stored.
+- Capture IDs are content-addressed; a source check must match the latest capture's success status, HTTP status, final URL, content type and last-successful date.
+- Initial captures are versions, not change events. No event exists for a first capture with no previous version.
+- `docs/PILOT-REPORT.md` records selection rationale, publisher evidence, limitations and review requirements.
+- Legal verification remains `unreviewed`; no source is described as current law.
+
 ## CI recommendation
 Add an isolated job for toolkit validator and unit tests, then fold selected checks into the repository's existing build after review. Do not make incomplete candidate sources appear as published legal records.
 

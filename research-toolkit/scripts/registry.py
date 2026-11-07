@@ -30,7 +30,7 @@ DEFAULT_POLICIES = REPO_ROOT / 'regions' / 'mena' / 'data' / 'policies.json'
 DEFAULT_PUBLISHERS = REPO_ROOT / 'research-toolkit' / 'sources' / 'publishers.json'
 DEFAULT_CHECKS = REPO_ROOT / 'research-toolkit' / 'sources' / 'source-checks.json'
 
-AS_OF = '2026-11-06'
+AS_OF = '2026-11-07'
 STALE_AFTER_DAYS = 180
 PUBLISHER_NOTE = ('Derived from a cited source URL. Publisher name, authority type '
                   'and status remain unknown until a human reviewer records them.')
