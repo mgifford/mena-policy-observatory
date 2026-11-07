@@ -198,7 +198,7 @@ class TrancheImportTests(unittest.TestCase):
         sources_before = copy.deepcopy(load_json(SOURCES))
         self.plan(self.package(), sources_before)
         self.assertEqual(self.policies, before)
-        self.assertEqual(len(self.policies), 7)
+        self.assertEqual(len(self.policies), 10)
 
     def test_plan_does_not_mutate_its_inputs(self):
         sources = load_json(SOURCES)
@@ -216,7 +216,7 @@ class TrancheImportTests(unittest.TestCase):
         self.assertEqual(len(report['imported_candidates']), 14)
         self.assertEqual(len(report['imported_tasks']), 14)
         self.assertEqual(report['relationships'], 3)
-        self.assertEqual(report['existing_policy_records']['count'], 7)
+        self.assertEqual(report['existing_policy_records']['count'], 10)
         self.assertEqual(report['canonical_candidate_records'], 23)
         sources = load_json(SOURCES)
         imported = {candidate['id'] for candidate in sources['records']

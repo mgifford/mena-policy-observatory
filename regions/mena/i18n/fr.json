@@ -668,5 +668,6 @@
   "rule.presentation.effective_unknown": "Inconnue",
   "rule.presentation.effective_unresolved": "Non résolue",
   "rule.presentation.effective_conditional": "Conditionnelle",
-  "rule.presentation.effective_retrospective": "Rétrospective"
+  "rule.presentation.effective_retrospective": "Rétrospective",
+  "visualizations.prototype_notice": "Prototype de comparaison de législations. Non autoritatif. La revue juridique, linguistique et d'accessibilité manuelle a été reportée et n'a pas été effectuée ; ne pas utiliser pour une décision de conformité."
 }

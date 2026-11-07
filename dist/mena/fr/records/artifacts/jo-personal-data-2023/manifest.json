@@ -1,0 +1,47 @@
+{
+  "policy_id": "jo-personal-data-2023",
+  "source_document": "https://www.modee.gov.jo/EBV4.0/Root_Storage/EN/1/PDP_Law_-_English_Version-_officail_translation.pdf",
+  "source_markdown": "SOURCE.md",
+  "rulespec": "rule.rulespec.yaml",
+  "rule_status": "no_approved_executable_rules",
+  "original_text_status": "excerpt_or_source_link_only",
+  "ambiguity_register": "INTERPRETATION.md",
+  "related_documents": "RELATED.md",
+  "reviewed_on": "2026-11-07",
+  "interpretation_issues": [
+    {
+      "id": "JO-24-01",
+      "section": "P-01",
+      "observation": "Article (1) states that the Law enters into force six months after publication in the Official Gazette.",
+      "ambiguity": "The publication date and resulting six-month commencement date are not established from the captured English translation.",
+      "severity": "high",
+      "category": "temporal_uncertainty",
+      "status": "unresolved"
+    },
+    {
+      "id": "JO-24-02",
+      "section": "P-02",
+      "observation": "Article (3)(A) applies the Law to data collected or processed before it comes into force.",
+      "ambiguity": "The retroactive application to data processed before commencement needs a clause-level scope analysis.",
+      "severity": "high",
+      "category": "retrospective_application",
+      "status": "unresolved"
+    },
+    {
+      "id": "JO-24-03",
+      "section": "P-03",
+      "observation": "The captured PDF contains English and Arabic text described as an official English translation.",
+      "ambiguity": "The official English translation and the Arabic text may differ; the authoritative-language status is unresolved.",
+      "severity": "high",
+      "category": "translation_authority",
+      "status": "unresolved"
+    }
+  ],
+  "related": [
+    {
+      "title": "Jordan Personal Data Protection Council",
+      "url": "https://www.modee.gov.jo/EN/Pages/Personal_Data_Protection_Council",
+      "relation": "implementing_body"
+    }
+  ]
+}

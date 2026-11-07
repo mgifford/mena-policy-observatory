@@ -4,6 +4,24 @@
   "note": "Publisher identities are recorded from cited URLs only. This registry does not verify authority, coverage or currency.",
   "publishers": [
     {
+      "id": "bdj-mmsp-gov-ma",
+      "host": "bdj.mmsp.gov.ma",
+      "url": "https://bdj.mmsp.gov.ma/",
+      "jurisdictions": [
+        "MA"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "ma-personal-data-09-08"
+      ]
+    },
+    {
       "id": "dga-gov-sa",
       "host": "dga.gov.sa",
       "url": "https://dga.gov.sa/",
@@ -294,7 +312,9 @@
       "cited_by_candidates": [
         "mena-t02-002"
       ],
-      "cited_by_records": []
+      "cited_by_records": [
+        "mena-t02-001"
+      ]
     },
     {
       "id": "www-journalofficiel-dj",
@@ -390,7 +410,9 @@
       "cited_by_candidates": [
         "jo-personal-data-2023"
       ],
-      "cited_by_records": []
+      "cited_by_records": [
+        "jo-personal-data-2023"
+      ]
     },
     {
       "id": "www-moe-gov-ae",

@@ -36,7 +36,7 @@ class CoverageRegistryTests(unittest.TestCase):
     def test_registry_keeps_policy_record_ids(self):
         record_ids = {policy['id'] for policy in self.data.policies}
         self.assertIn('ae-national-digital-accessibility', record_ids)
-        self.assertEqual(len(record_ids), 7)
+        self.assertEqual(len(record_ids), 10)
 
     def test_unknown_country_is_rejected(self):
         data = copy.deepcopy(self.data)
@@ -199,15 +199,15 @@ class CoverageStatusTests(unittest.TestCase):
         self.assertEqual(cells[('AE', 'digital_accessibility')], 'legal_review_pending')
         self.assertEqual(cells[('JO', 'digital_accessibility')], 'candidate_sources_identified')
         self.assertEqual(cells[('DZ', 'digital_accessibility')], 'not_started')
-        self.assertEqual(cells[('DZ', 'digital_rights')], 'candidate_sources_identified')
+        self.assertEqual(cells[('DZ', 'digital_rights')], 'legal_review_pending')
         self.assertEqual(cells[('IL', 'digital_accessibility')], 'not_started')
 
     def test_country_status_aggregates_evidence(self):
         statuses = {country['code']: country['status']
                     for country in build_view(self.data)['countries']}
         self.assertEqual(statuses['AE'], 'legal_review_pending')
-        self.assertEqual(statuses['JO'], 'candidate_sources_identified')
-        self.assertEqual(statuses['DZ'], 'candidate_sources_identified')
+        self.assertEqual(statuses['JO'], 'legal_review_pending')
+        self.assertEqual(statuses['DZ'], 'legal_review_pending')
         self.assertEqual(statuses['IL'], 'not_started')
 
     def test_blocked_task_outranks_other_statuses(self):
@@ -309,7 +309,7 @@ class CoverageStatusTests(unittest.TestCase):
         view = build_view(self.data)
         self.assertEqual(view['totals']['countries'], 24)
         self.assertEqual(view['totals']['domains'], 8)
-        self.assertEqual(view['totals']['records'], 7)
+        self.assertEqual(view['totals']['records'], 10)
         self.assertEqual(view['totals']['candidates'], 23)
         self.assertEqual(view['totals']['tasks'], 54)
 

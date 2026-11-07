@@ -685,5 +685,6 @@
   "rule.presentation.effective_unknown": "Unknown",
   "rule.presentation.effective_unresolved": "Unresolved",
   "rule.presentation.effective_conditional": "Conditional",
-  "rule.presentation.effective_retrospective": "Retrospective"
+  "rule.presentation.effective_retrospective": "Retrospective",
+  "visualizations.prototype_notice": "Proof of concept for comparative legislation review. Not authoritative. Manual legal, language and accessibility review has been deferred and not performed; do not use this for compliance decisions."
 }

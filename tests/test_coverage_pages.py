@@ -202,7 +202,7 @@ class CoveragePageTests(unittest.TestCase):
 
     def test_comparison_page_renders_all_provisions(self):
         body = comparison_body(self.catalogues, 'en', self.view)
-        self.assertEqual(body.count('<tr><th scope="row">'), 14)
+        self.assertEqual(body.count('<tr><th scope="row">'), 23)
         self.assertIn('P-01', body)
 
     def test_home_links_new_coverage_views(self):

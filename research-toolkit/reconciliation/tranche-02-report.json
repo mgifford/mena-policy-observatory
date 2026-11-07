@@ -371,11 +371,14 @@
     "task_stage": "capture"
   },
   "existing_policy_records": {
-    "count": 7,
+    "count": 10,
     "ids": [
       "ae-moe-accessibility",
       "ae-mof-accessibility",
       "ae-national-digital-accessibility",
+      "jo-personal-data-2023",
+      "ma-personal-data-09-08",
+      "mena-t02-001",
       "qa-eaccessibility-2011",
       "qa-eaccessibility-2025-upcoming",
       "sa-dga-web-accessibility-guide",
