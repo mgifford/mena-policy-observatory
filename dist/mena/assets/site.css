@@ -63,3 +63,5 @@ svg text{fill:CanvasText;font-family:system-ui,-apple-system,sans-serif;font-siz
 .synthetic-results dt{margin-block-start:0}
 @media(max-width:40rem){.vis-card dl,.synthetic-results dl{grid-template-columns:1fr}}
 .meta{overflow-wrap:anywhere}
+body{overflow-wrap:anywhere}
+.vis-card,.structure-list>li,.vis-card dl>div{min-width:0}

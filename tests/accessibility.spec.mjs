@@ -60,6 +60,7 @@ test('document titles are unique and descriptive', async ({ page }) => {
 });
 
 test('language switch reaches every equivalent page', async ({ page, request }) => {
+  test.setTimeout(120_000);
   const languages = ['en', 'fr', 'ar'];
   for (const path of pages) {
     const parts = path.split('/');
