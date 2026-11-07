@@ -32,11 +32,27 @@ It may not:
 
 | Record | Jurisdiction | Why selected | Evidence limits |
 |---|---|---|---|
+| `ae-moe-accessibility` | UAE | Two recorded provisions and three questions | No excerpt or bytes captured; dates unknown; no related documents recorded |
+| `ae-mof-accessibility` | UAE | One recorded provision and two questions | No excerpt or bytes captured; dates unknown; one question has no provision link |
 | `ae-national-digital-accessibility` | UAE | Three recorded provisions, three open questions, two related documents, one recorded excerpt | Source bytes not stored; dates and authoritative language unknown; relations unreviewed |
 | `qa-eaccessibility-2011` | Qatar | One provision, two questions, four related documents including a proposed successor, temporal uncertainty | No excerpt or bytes captured; dates unknown; current standing unresolved |
+| `qa-eaccessibility-2025-upcoming` | Qatar | Two draft provisions, two questions, two related documents | Draft/not in force; no excerpt or bytes; dates unknown; relations unreviewed |
+| `sa-dga-web-accessibility-guide` | Saudi Arabia | Two provisions, two questions, one technical-standard link | No excerpt or bytes; dates unknown; guideline normativity unresolved |
 | `sa-mep-accessibility` | Saudi Arabia | Three provisions, three questions, qualifier/scope uncertainty | No excerpt or bytes captured; dates unknown; no related documents recorded |
 
-The three-source monitoring pilot instruments are not used because complete text/provision structure is not captured.
+The initial three records were selected for depth; the four remaining records were added in the authorized expansion on 2026-11-07 using only existing recorded structure. The three-source monitoring pilot instruments are not used because complete text/provision structure is not captured.
+
+## Legal languages versus interface languages
+
+The public interface is English, French and Arabic. That is not a claim that legislation in the region is written only in those languages. Official or authoritative legal languages may include Arabic, French, English, Persian, Turkish, Hebrew, Kurdish and others; source records must state the actual language rather than force a document into the interface set.
+
+This release:
+
+- records source language with BCP47 tags (the source-record schema now accepts tags such as `fa`, `tr`, `he` and `ar`);
+- shows source-language titles, locators and excerpts with `lang`/`dir`, without inventing a translation;
+- keeps interface translations separate from legal-text translations.
+
+Persian/Turkish and other legal-language translations are **not implemented**. A future translation work package must record source language, translation type (official, human research, machine-assisted draft, pending/unavailable), authority, review state and reviewer role where appropriate. No machine output may be presented as official legal text.
 
 ## Completion criteria
 
@@ -77,12 +93,12 @@ Screenshots (1280 px browser width, full page):
 Automated verification at the time of this work:
 
 - `python3 framework/validate.py` — pass.
-- `python3 -m unittest discover -s tests` — 315 tests, pass.
+- `python3 -m unittest discover -s tests` — 316 tests, pass.
 - `python3 -m unittest discover -s research-toolkit/tests` — 15 tests, pass.
 - registry, instruments, import and manifest checks — current.
-- `python3 framework/build.py --region mena` — 154 pages.
+- `python3 framework/build.py --region mena` — 166 pages.
 - `python3 framework/check_html.py` — pass.
-- `npm run test:a11y` — 464 Playwright/axe checks passed (154 pages × 3 checks, plus unique-title/language tests).
+- `npm run test:a11y` — 500 Playwright/axe checks passed (166 pages × 3 checks, plus unique-title/language tests).
 - 320 CSS px reflow checked for the new pages: no page-level horizontal overflow.
 
 ## Accessibility and language gaps

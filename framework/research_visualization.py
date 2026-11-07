@@ -22,8 +22,12 @@ except ImportError:  # run as a script
     from rule_presentation import render_fragment
 
 SELECTED_RECORDS = (
+    'ae-moe-accessibility',
+    'ae-mof-accessibility',
     'ae-national-digital-accessibility',
     'qa-eaccessibility-2011',
+    'qa-eaccessibility-2025-upcoming',
+    'sa-dga-web-accessibility-guide',
     'sa-mep-accessibility',
 )
 SYNTHETIC_FIXTURE = Path('regions/mena/data/visualizations/synthetic-procurement.json')
@@ -56,7 +60,7 @@ def _domain_label(topic: str, lang: str) -> str:
                     return found
         return None
     return walk(data) or topic
-DIRECTIONS = {'en': 'ltr', 'fr': 'ltr', 'ar': 'rtl'}
+DIRECTIONS = {'en': 'ltr', 'fr': 'ltr', 'ar': 'rtl', 'fa': 'rtl', 'he': 'rtl', 'ur': 'rtl', 'tr': 'ltr'}
 EFFECT_KEYS = {
     'not_assessed': 'record.effect.not_assessed',
     'draft_not_in_force': 'record.effect.draft_not_in_force',
