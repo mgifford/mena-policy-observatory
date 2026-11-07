@@ -224,8 +224,8 @@
     },
     {
       "path": "reconciliation/tranche-02-report.json",
-      "size": 10886,
-      "sha256": "449a98a6db070f2a78700c693972c54685066538d989a33a7ed6e2e9a03ed6c3"
+      "size": 10972,
+      "sha256": "6e38a37a4653ec4ebb48ee80a1c46b3b49a0df0047ff9154fb3c777273675d86"
     },
     {
       "path": "schemas/candidate-packet.schema.json",
@@ -279,13 +279,13 @@
     },
     {
       "path": "sources/publishers.json",
-      "size": 15106,
-      "sha256": "0988ba03b7cf2a6a030b79b12ea9382a9deed0ec9ea0344c8432d271cdaac162"
+      "size": 15766,
+      "sha256": "9ca1a62ee095fd74d03e370dc1078ceba12c5c452d70fc8f277e403dfc92e93f"
     },
     {
       "path": "sources/source-checks.json",
-      "size": 12071,
-      "sha256": "70df39b8c04ed17218ad0d8410a8c45f19f85c7dcc6151e6810afb4d313dbb47"
+      "size": 12673,
+      "sha256": "6535bac02a100b574e8e361101dca9e0cd817efd08c1a9512cc49687bf674495"
     },
     {
       "path": "templates/AGENT-REPORT.md",

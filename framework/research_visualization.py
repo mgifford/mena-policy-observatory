@@ -29,6 +29,9 @@ SELECTED_RECORDS = (
     'qa-eaccessibility-2025-upcoming',
     'sa-dga-web-accessibility-guide',
     'sa-mep-accessibility',
+    'mena-t02-001',
+    'jo-personal-data-2023',
+    'ma-personal-data-09-08',
 )
 SYNTHETIC_FIXTURE = Path('regions/mena/data/visualizations/synthetic-procurement.json')
 LANGUAGES = ('en', 'fr', 'ar')
@@ -521,6 +524,7 @@ def visualization_body(strings: dict, lang: str, record: dict, research: dict) -
 
     return '\n'.join([
         f'<h1>{title}</h1>',
+        f'<p class="notice"><strong>{esc(strings["visualizations.prototype_notice"])}</strong></p>',
         f'<p class="notice">{esc(strings["visualizations.structure_notice"])}</p>',
         f'<p class="record-id">{esc(strings["record.record_id"])}: <code>{esc(record["id"])}</code> — '
         f'{esc(strings["home.table.jurisdiction"])}: {esc(record.get("country", ""))}</p>',
@@ -574,6 +578,7 @@ def index_body(strings: dict, lang: str, selected: list[tuple[dict, dict]]) -> s
     cards = ''.join(_card(strings, lang, record, research) for record, research in selected)
     return '\n'.join([
         f'<h1>{esc(strings["visualizations.h1"])}</h1>',
+        f'<p class="notice"><strong>{esc(strings["visualizations.prototype_notice"])}</strong></p>',
         f'<p class="lede">{esc(strings["visualizations.lede"])}</p>',
         f'<p>{esc(strings["visualizations.intro"])}</p>',
         f'<section aria-labelledby="catalogue-h"><h2 id="catalogue-h">{esc(strings["visualizations.catalogue_heading"])}</h2>'
@@ -594,6 +599,7 @@ def synthetic_page_body(strings: dict, lang: str, fixture: dict, catalogues: dic
     fragment = render_fragment(fixture, lang, catalogues[lang])
     return '\n'.join([
         f'<h1>{esc(strings["visualizations.synthetic_page_title"])}</h1>',
+        f'<p class="notice"><strong>{esc(strings["visualizations.prototype_notice"])}</strong></p>',
         f'<p class="notice"><strong>{esc(strings["visualizations.synthetic_notice"])}</strong></p>',
         f'<p>{esc(fixture["summary"][lang])}</p>',
         f'<p>{esc(strings["visualizations.synthetic_demo_notice"])}</p>',

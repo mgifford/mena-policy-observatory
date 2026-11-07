@@ -1,6 +1,6 @@
 # Authorized work package: public legislative visualizations
 
-**Status:** implementation complete pending human review — bounded visualization work package authorized by the repository owner on 2026-11-07. It does **not** mark the three-source monitoring pilot complete and does **not** authorize executable real legislation.
+**Status:** prototype implementation complete; manual legal, language and accessibility review deliberately deferred by the project owner on 2026-11-07. Not authoritative. It does **not** mark the three-source monitoring pilot complete and does **not** authorize executable real legislation.
 
 ## Why this is separate
 
@@ -39,8 +39,13 @@ It may not:
 | `qa-eaccessibility-2025-upcoming` | Qatar | Two draft provisions, two questions, two related documents | Draft/not in force; no excerpt or bytes; dates unknown; relations unreviewed |
 | `sa-dga-web-accessibility-guide` | Saudi Arabia | Two provisions, two questions, one technical-standard link | No excerpt or bytes; dates unknown; guideline normativity unresolved |
 | `sa-mep-accessibility` | Saudi Arabia | Three provisions, three questions, qualifier/scope uncertainty | No excerpt or bytes captured; dates unknown; no related documents recorded |
+| `mena-t02-001` | Algeria | Law 18-07; 3 provisions, 3 questions, 2 recorded links, 1 excerpt | French Gazette edition; Arabic/French authority unresolved; 2025 amendment not consolidated |
+| `jo-personal-data-2023` | Jordan | Law 24/2023; 3 provisions, 3 questions, 1 recorded link, 1 excerpt | Official English translation; publication/commencement and Arabic authority unresolved |
+| `ma-personal-data-09-08` | Morocco | Law 09-08; 3 provisions, 3 questions, 2 recorded links, 1 excerpt | French legal-database text; Arabic authority and implementing decree reconciliation unresolved |
 
-The initial three records were selected for depth; the four remaining records were added in the authorized expansion on 2026-11-07 using only existing recorded structure. The three-source monitoring pilot instruments are not used because complete text/provision structure is not captured.
+The initial three records were selected for depth; four more existing records were added on 2026-11-07, bringing the total to seven. Batch B (Algeria, Jordan, Morocco) was authorized on 2026-11-07 as a prototype expansion. The three-source monitoring pilot instruments are not used because complete text/provision structure is not captured.
+
+**Prototype status:** this is a proof of concept for comparative legislation review and comparison. It is **not authoritative**. Manual legal, language and accessibility review was deliberately deferred by the project owner for this prototype stage and has **not** been performed. Do not use these pages for compliance decisions.
 
 ## Legal languages versus interface languages
 
@@ -96,9 +101,9 @@ Automated verification at the time of this work:
 - `python3 -m unittest discover -s tests` — 316 tests, pass.
 - `python3 -m unittest discover -s research-toolkit/tests` — 15 tests, pass.
 - registry, instruments, import and manifest checks — current.
-- `python3 framework/build.py --region mena` — 166 pages.
+- `python3 framework/build.py --region mena` — 184 pages.
 - `python3 framework/check_html.py` — pass.
-- `npm run test:a11y` — 500 Playwright/axe checks passed (166 pages × 3 checks, plus unique-title/language tests).
+- `npm run test:a11y` — 554 Playwright/axe checks passed (184 pages × 3 checks, plus unique-title/language tests).
 - 320 CSS px reflow checked for the new pages: no page-level horizontal overflow.
 
 ## Accessibility and language gaps

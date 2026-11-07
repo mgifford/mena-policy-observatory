@@ -685,5 +685,6 @@
   "rule.presentation.effective_unknown": "غير معروفة",
   "rule.presentation.effective_unresolved": "غير محسومة",
   "rule.presentation.effective_conditional": "مشروطة",
-  "rule.presentation.effective_retrospective": "أثر رجعي"
+  "rule.presentation.effective_retrospective": "أثر رجعي",
+  "visualizations.prototype_notice": "نموذج أولي للمقارنة التشريعية. غير موثوق. أُجّل التدقيق القانوني واللغوي واليدوي لإمكانية الوصول ولم يُنفذ؛ لا تستخدمه لقرارات الامتثال."
 }

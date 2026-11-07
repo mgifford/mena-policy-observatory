@@ -59,7 +59,7 @@ Three existing candidates have recorded retrieval evidence in `research-toolkit/
 
 ## Legislative visualizations
 
-The public [visualizations](https://mgifford.github.io/mena-policy-observatory/mena/en/visualizations/) section shows recorded source structure for seven existing research records and a clearly labelled synthetic Axiom/L4 demonstration. Source structure is research in progress; candidate interpretation is not legally reviewed; no real reviewed executable rule is published. See [docs/VISUALIZATION-MILESTONE.md](docs/VISUALIZATION-MILESTONE.md).
+The public [visualizations](https://mgifford.github.io/mena-policy-observatory/mena/en/visualizations/) section shows recorded source structure for ten existing research records and a clearly labelled synthetic Axiom/L4 demonstration. **This is a proof of concept for comparative legislation review, not authoritative.** Manual legal, language and accessibility review was deferred and has not been performed. Source structure is research in progress; candidate interpretation is not legally reviewed; no real reviewed executable rule is published. See [docs/VISUALIZATION-MILESTONE.md](docs/VISUALIZATION-MILESTONE.md).
 
 ## Rule presentation (synthetic only)
 

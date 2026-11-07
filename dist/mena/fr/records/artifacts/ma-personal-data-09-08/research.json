@@ -1,0 +1,169 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "ma-personal-data-09-08",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-ma-law-09-08",
+      "title": "Loi n° 09-08 relative à la protection des personnes physiques à l'égard du traitement des données à caractère personnel",
+      "url": "https://bdj.mmsp.gov.ma/Fr/Document/8974-Loi-n-09-08-promulgu%c3%a9e-par-le-dahir-n-1-09-15-du.aspx?KeyPath=",
+      "jurisdiction": "MA",
+      "issuer": "Royaume du Maroc — Ministère de la Transition Numérique et de la Réforme de l'Administration (Banque de Données Juridiques)",
+      "instrument_type": "legislation",
+      "language": "fr",
+      "authoritative_language": "unknown",
+      "publication_date": "2009-02-23",
+      "effective_date": "unknown",
+      "document_version": "Bulletin officiel n° 5711",
+      "archival_url": "https://bdj.mmsp.gov.ma/Ar/Document/8974-Dahir.aspx",
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "recorded",
+      "excerpt": {
+        "text": "L'informatique est au service du citoyen et évolue dans le cadre de la coopération internationale.",
+        "language": "fr",
+        "locator": "Article premier",
+        "artifact": "SOURCE.md"
+      },
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Définitions et objet",
+      "locator": {
+        "kind": "article",
+        "value": "Article premier"
+      },
+      "source_ids": [
+        "src-ma-law-09-08"
+      ],
+      "summary": "La loi définit les données à caractère personnel, le traitement, les données sensibles et les principaux acteurs, et fixe son objet de protection.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "MA-09-08-01"
+      ]
+    },
+    {
+      "id": "P-02",
+      "heading": "Champ d'application territorial et exclusions",
+      "locator": {
+        "kind": "article",
+        "value": "Article 2"
+      },
+      "source_ids": [
+        "src-ma-law-09-08"
+      ],
+      "summary": "Le champ couvre les traitements liés à un responsable établi au Maroc ou à des moyens situés au Maroc, avec des exclusions pour la vie privée, la défense et certains régimes légaux.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "MA-09-08-03"
+      ]
+    },
+    {
+      "id": "P-03",
+      "heading": "Consentement et base de licéité",
+      "locator": {
+        "kind": "article",
+        "value": "Article 4"
+      },
+      "source_ids": [
+        "src-ma-law-09-08"
+      ],
+      "summary": "Le traitement exige en principe le consentement de la personne concernée, sauf dans les cas limitativement prévus par la loi.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "MA-09-08-02"
+      ]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "MA-09-08-01",
+      "provision_id": "P-01",
+      "statement": "La version française publiée sur la Banque de données juridiques n'est pas confirmée comme version faisant foi par rapport au texte arabe.",
+      "observation": "La Banque de données juridiques publie une version française et renvoie à une version arabe.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "translation_authority",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "translation_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "MA-09-08-02",
+      "provision_id": "P-03",
+      "statement": "Les exceptions au consentement et leur articulation avec le décret d'application n° 2-09-165 exigent une lecture clause par clause.",
+      "observation": "L'article 4 énumère des exceptions au consentement.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "consent_and_exceptions",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "MA-09-08-03",
+      "provision_id": "P-02",
+      "statement": "La portée des exclusions et l'application aux responsables hors du Maroc restent à préciser.",
+      "observation": "L'article 2 contient des règles territoriales et plusieurs exclusions.",
+      "alternatives": [],
+      "risk": "medium",
+      "category": "territorial_scope",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-ma-09-08-decree",
+      "target": {
+        "kind": "external_document",
+        "title": "Décret n° 2-09-165 pris pour l'application de la loi n° 09-08",
+        "url": "https://www.cndp.ma/decret-n-2-09-165/",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "reported_implementing_decree",
+      "review_state": "unreviewed",
+      "note": "Implementing decree linked by the regulator; operations not reconciled."
+    },
+    {
+      "id": "rel-ma-09-08-arabic-text",
+      "target": {
+        "kind": "external_document",
+        "title": "Texte arabe de la loi n° 09-08 (Banque de données juridiques)",
+        "url": "https://bdj.mmsp.gov.ma/Ar/Document/8974-Dahir.aspx",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "arabic_text",
+      "review_state": "unreviewed",
+      "note": "Language expression of the same instrument; authoritative-language status unresolved."
+    }
+  ]
+}

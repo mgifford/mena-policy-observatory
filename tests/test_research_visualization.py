@@ -33,9 +33,9 @@ class SourceStructureTests(unittest.TestCase):
         cls.selected = selected_records(BASE)
         cls.policies = json.loads((BASE / 'data' / 'policies.json').read_text(encoding='utf-8'))
 
-    def test_seven_records_selected(self):
+    def test_ten_records_selected(self):
         self.assertEqual([record['id'] for record, _ in self.selected], list(SELECTED_RECORDS))
-        self.assertEqual(len(self.selected), 7)
+        self.assertEqual(len(self.selected), 10)
 
     def test_model_has_every_recorded_node_and_no_invented_id(self):
         for record, research in self.selected:
@@ -174,6 +174,7 @@ class SourceStructureRenderTests(unittest.TestCase):
         for record, _ in self.selected:
             self.assertIn(f'href="{record["id"]}.html"', body)
         self.assertIn('href="synthetic.html"', body)
+        self.assertIn(self.catalogues['en']['visualizations.prototype_notice'], body)
         self.assertIn(self.catalogues['en']['visualizations.synthetic_notice'], body)
         self.assertIn(self.catalogues['en']['visualizations.reviewed_none'], body)
         for record in self.policies:
@@ -195,6 +196,7 @@ class SourceStructureRenderTests(unittest.TestCase):
         fixture = json.loads(FIXTURE.read_text(encoding='utf-8'))
         body = synthetic_page_body(self.catalogues['en'], 'en', fixture, self.catalogues)
         self.assertTrue(fixture['synthetic'])
+        self.assertIn(self.catalogues['en']['visualizations.prototype_notice'], body)
         self.assertIn(self.catalogues['en']['visualizations.synthetic_notice'], body)
         self.assertIn('research/rules-visualization/axiom/procurement.rulespec.yaml', body)
         self.assertIn('research/rules-visualization/l4/procurement.l4', body)

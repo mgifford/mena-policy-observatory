@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "jo-personal-data-2023",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-jo-pdpl-24-2023",
+      "title": "Personal Data Protection Law No. (24) of 2023",
+      "url": "https://www.modee.gov.jo/EBV4.0/Root_Storage/EN/1/PDP_Law_-_English_Version-_officail_translation.pdf",
+      "jurisdiction": "JO",
+      "issuer": "Hashemite Kingdom of Jordan — Ministry of Digital Economy and Entrepreneurship (official English translation)",
+      "instrument_type": "legislation",
+      "language": "en",
+      "authoritative_language": "unknown",
+      "publication_date": "unknown",
+      "effective_date": "unknown",
+      "document_version": "Official English translation",
+      "archival_url": null,
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "recorded",
+      "excerpt": {
+        "text": "This Law shall be cited as the Personal Data Protection Law of the year 2023",
+        "language": "en",
+        "locator": "Article (1)",
+        "artifact": "SOURCE.md"
+      },
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Citation and commencement",
+      "locator": {
+        "kind": "article",
+        "value": "Article (1)"
+      },
+      "source_ids": [
+        "src-jo-pdpl-24-2023"
+      ],
+      "summary": "The Law is cited as the Personal Data Protection Law of 2023 and commences six months after publication in the Official Gazette.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "JO-24-01"
+      ]
+    },
+    {
+      "id": "P-02",
+      "heading": "Temporal application",
+      "locator": {
+        "kind": "article",
+        "value": "Article (3)"
+      },
+      "source_ids": [
+        "src-jo-pdpl-24-2023"
+      ],
+      "summary": "The Law applies to data even if collected or processed before commencement, subject to the stated exclusion for personal use.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "JO-24-02"
+      ]
+    },
+    {
+      "id": "P-03",
+      "heading": "Prior consent and data-subject rights",
+      "locator": {
+        "kind": "article",
+        "value": "Article (4)"
+      },
+      "source_ids": [
+        "src-jo-pdpl-24-2023"
+      ],
+      "summary": "Processing generally requires prior consent or another situation permitted by law, and the data subject is given enumerated rights.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "JO-24-03"
+      ]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "JO-24-01",
+      "provision_id": "P-01",
+      "statement": "The publication date and resulting six-month commencement date are not established from the captured English translation.",
+      "observation": "Article (1) states that the Law enters into force six months after publication in the Official Gazette.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "temporal_uncertainty",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "source_capture",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "JO-24-02",
+      "provision_id": "P-02",
+      "statement": "The retroactive application to data processed before commencement needs a clause-level scope analysis.",
+      "observation": "Article (3)(A) applies the Law to data collected or processed before it comes into force.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "retrospective_application",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "JO-24-03",
+      "provision_id": "P-03",
+      "statement": "The official English translation and the Arabic text may differ; the authoritative-language status is unresolved.",
+      "observation": "The captured PDF contains English and Arabic text described as an official English translation.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "translation_authority",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "translation_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-jo-pdp-council",
+      "target": {
+        "kind": "external_document",
+        "title": "Jordan Personal Data Protection Council",
+        "url": "https://www.modee.gov.jo/EN/Pages/Personal_Data_Protection_Council",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "implementing_body",
+      "review_state": "unreviewed",
+      "note": "Institutional page linked from the official ministry site; not a legal relation determination."
+    }
+  ]
+}

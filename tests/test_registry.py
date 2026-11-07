@@ -49,7 +49,7 @@ class RegistryTests(unittest.TestCase):
                          if check['retrieval_status'] == 'not_attempted']
         attempted = [check for check in checks
                      if check['retrieval_status'] != 'not_attempted']
-        self.assertEqual(len(attempted), 3)
+        self.assertEqual(len(attempted), 6)
         for check in not_attempted:
             self.assertIsNone(check['attempted_at'])
             self.assertIsNone(check['http_status'])

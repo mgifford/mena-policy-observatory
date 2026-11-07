@@ -1,0 +1,52 @@
+{
+  "policy_id": "mena-t02-001",
+  "source_document": "https://www.joradp.dz/FTP/JO-FRANCAIS/2018/F2018034.pdf",
+  "source_markdown": "SOURCE.md",
+  "rulespec": "rule.rulespec.yaml",
+  "rule_status": "no_approved_executable_rules",
+  "original_text_status": "excerpt_or_source_link_only",
+  "ambiguity_register": "INTERPRETATION.md",
+  "related_documents": "RELATED.md",
+  "reviewed_on": "2026-11-07",
+  "interpretation_issues": [
+    {
+      "id": "DZ-18-07-01",
+      "section": "P-01",
+      "observation": "Le Journal officiel n° 34 du 10 juin 2018 publie la loi n° 18-07 ; une loi modificative de 2025 est signalée séparément.",
+      "ambiguity": "L’articulation entre la loi n° 18-07 et la loi modificative n° 25-11 de 2025 n’est pas consolidée dans le texte capté.",
+      "severity": "high",
+      "category": "amendment_and_consolidation",
+      "status": "unresolved"
+    },
+    {
+      "id": "DZ-18-07-02",
+      "section": "P-03",
+      "observation": "L’article 7 énumère plusieurs exceptions au consentement exprès.",
+      "ambiguity": "La portée exacte des exceptions au consentement et leur articulation avec les autres textes applicables exigent une lecture clause par clause.",
+      "severity": "high",
+      "category": "consent_and_exceptions",
+      "status": "unresolved"
+    },
+    {
+      "id": "DZ-18-07-03",
+      "section": "P-02",
+      "observation": "L’article 4 prévoit des règles pour les responsables non établis en Algérie.",
+      "ambiguity": "L’application territoriale aux responsables établis hors d’Algérie et la désignation d’un représentant méritent une vérification clause par clause.",
+      "severity": "medium",
+      "category": "territorial_scope",
+      "status": "unresolved"
+    }
+  ],
+  "related": [
+    {
+      "title": "Loi n° 25-11 du 24 juillet 2025 modifiant et complétant la loi n° 18-07",
+      "url": "https://www.joradp.dz/FTP/JO-FRANCAIS/2025/F2025048.pdf",
+      "relation": "reported_amending_law"
+    },
+    {
+      "title": "Journal officiel n° 34 (édition arabe), 10 juin 2018",
+      "url": "https://www.joradp.dz/FTP/JO-ARABE/2018/A2018034.pdf",
+      "relation": "arabic_gazette_edition"
+    }
+  ]
+}

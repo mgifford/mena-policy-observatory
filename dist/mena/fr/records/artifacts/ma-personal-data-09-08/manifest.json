@@ -1,0 +1,52 @@
+{
+  "policy_id": "ma-personal-data-09-08",
+  "source_document": "https://bdj.mmsp.gov.ma/Fr/Document/8974-Loi-n-09-08-promulgu%c3%a9e-par-le-dahir-n-1-09-15-du.aspx?KeyPath=",
+  "source_markdown": "SOURCE.md",
+  "rulespec": "rule.rulespec.yaml",
+  "rule_status": "no_approved_executable_rules",
+  "original_text_status": "excerpt_or_source_link_only",
+  "ambiguity_register": "INTERPRETATION.md",
+  "related_documents": "RELATED.md",
+  "reviewed_on": "2026-11-07",
+  "interpretation_issues": [
+    {
+      "id": "MA-09-08-01",
+      "section": "P-01",
+      "observation": "La Banque de données juridiques publie une version française et renvoie à une version arabe.",
+      "ambiguity": "La version française publiée sur la Banque de données juridiques n'est pas confirmée comme version faisant foi par rapport au texte arabe.",
+      "severity": "high",
+      "category": "translation_authority",
+      "status": "unresolved"
+    },
+    {
+      "id": "MA-09-08-02",
+      "section": "P-03",
+      "observation": "L'article 4 énumère des exceptions au consentement.",
+      "ambiguity": "Les exceptions au consentement et leur articulation avec le décret d'application n° 2-09-165 exigent une lecture clause par clause.",
+      "severity": "high",
+      "category": "consent_and_exceptions",
+      "status": "unresolved"
+    },
+    {
+      "id": "MA-09-08-03",
+      "section": "P-02",
+      "observation": "L'article 2 contient des règles territoriales et plusieurs exclusions.",
+      "ambiguity": "La portée des exclusions et l'application aux responsables hors du Maroc restent à préciser.",
+      "severity": "medium",
+      "category": "territorial_scope",
+      "status": "unresolved"
+    }
+  ],
+  "related": [
+    {
+      "title": "Décret n° 2-09-165 pris pour l'application de la loi n° 09-08",
+      "url": "https://www.cndp.ma/decret-n-2-09-165/",
+      "relation": "reported_implementing_decree"
+    },
+    {
+      "title": "Texte arabe de la loi n° 09-08 (Banque de données juridiques)",
+      "url": "https://bdj.mmsp.gov.ma/Ar/Document/8974-Dahir.aspx",
+      "relation": "arabic_text"
+    }
+  ]
+}

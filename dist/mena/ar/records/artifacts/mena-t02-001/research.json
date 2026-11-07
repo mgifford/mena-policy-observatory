@@ -1,0 +1,169 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "mena-t02-001",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-dz-law-18-07",
+      "title": "Loi n° 18-07 du 10 juin 2018 relative à la protection des personnes physiques dans le traitement des données à caractère personnel",
+      "url": "https://www.joradp.dz/FTP/JO-FRANCAIS/2018/F2018034.pdf",
+      "jurisdiction": "DZ",
+      "issuer": "République Algérienne Démocratique et Populaire — Journal Officiel",
+      "instrument_type": "legislation",
+      "language": "fr",
+      "authoritative_language": "unknown",
+      "publication_date": "2018-06-10",
+      "effective_date": "unknown",
+      "document_version": "Journal officiel n° 34",
+      "archival_url": "https://www.joradp.dz/FTP/JO-ARABE/2018/A2018034.pdf",
+      "capture": {
+        "captured_at": null,
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "recorded",
+      "excerpt": {
+        "text": "La présente loi a pour objet de fixer les règles de protection des personnes physiques dans le traitement des données à caractère personnel.",
+        "language": "fr",
+        "locator": "Article 1er",
+        "artifact": "SOURCE.md"
+      },
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      }
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Objet de la loi",
+      "locator": {
+        "kind": "article",
+        "value": "Article 1er"
+      },
+      "source_ids": [
+        "src-dz-law-18-07"
+      ],
+      "summary": "La loi fixe les règles de protection des personnes physiques dans le traitement des données à caractère personnel.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "DZ-18-07-01"
+      ]
+    },
+    {
+      "id": "P-02",
+      "heading": "Champ d'application matériel et territorial",
+      "locator": {
+        "kind": "article",
+        "value": "Article 4"
+      },
+      "source_ids": [
+        "src-dz-law-18-07"
+      ],
+      "summary": "Le champ couvre les traitements automatisés et certains traitements non automatisés, avec des règles de rattachement territorial et de représentation.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "DZ-18-07-03"
+      ]
+    },
+    {
+      "id": "P-03",
+      "heading": "Consentement et exceptions",
+      "locator": {
+        "kind": "article",
+        "value": "Article 7"
+      },
+      "source_ids": [
+        "src-dz-law-18-07"
+      ],
+      "summary": "Le traitement exige en principe le consentement exprès, avec plusieurs exceptions liées notamment à la loi, au contrat, à la vie et à l'intérêt public.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "DZ-18-07-02"
+      ]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "DZ-18-07-01",
+      "provision_id": "P-01",
+      "statement": "L’articulation entre la loi n° 18-07 et la loi modificative n° 25-11 de 2025 n’est pas consolidée dans le texte capté.",
+      "observation": "Le Journal officiel n° 34 du 10 juin 2018 publie la loi n° 18-07 ; une loi modificative de 2025 est signalée séparément.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "amendment_and_consolidation",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "DZ-18-07-02",
+      "provision_id": "P-03",
+      "statement": "La portée exacte des exceptions au consentement et leur articulation avec les autres textes applicables exigent une lecture clause par clause.",
+      "observation": "L’article 7 énumère plusieurs exceptions au consentement exprès.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "consent_and_exceptions",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "DZ-18-07-03",
+      "provision_id": "P-02",
+      "statement": "L’application territoriale aux responsables établis hors d’Algérie et la désignation d’un représentant méritent une vérification clause par clause.",
+      "observation": "L’article 4 prévoit des règles pour les responsables non établis en Algérie.",
+      "alternatives": [],
+      "risk": "medium",
+      "category": "territorial_scope",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-dz-18-07-2025-amendment",
+      "target": {
+        "kind": "external_document",
+        "title": "Loi n° 25-11 du 24 juillet 2025 modifiant et complétant la loi n° 18-07",
+        "url": "https://www.joradp.dz/FTP/JO-FRANCAIS/2025/F2025048.pdf",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "reported_amending_law",
+      "review_state": "unreviewed",
+      "note": "Recorded from the official Gazette path; amendment operations not extracted."
+    },
+    {
+      "id": "rel-dz-18-07-arabic-gazette",
+      "target": {
+        "kind": "external_document",
+        "title": "Journal officiel n° 34 (édition arabe), 10 juin 2018",
+        "url": "https://www.joradp.dz/FTP/JO-ARABE/2018/A2018034.pdf",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "arabic_gazette_edition",
+      "review_state": "unreviewed",
+      "note": "Recorded as a language expression of the same Gazette issue; authoritative-language status unresolved."
+    }
+  ]
+}
