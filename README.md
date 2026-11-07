@@ -61,6 +61,10 @@ Three existing candidates have recorded retrieval evidence in `research-toolkit/
 
 The public [visualizations](https://mgifford.github.io/mena-policy-observatory/mena/en/visualizations/) section shows recorded source structure for ten existing research records and a clearly labelled synthetic Axiom/L4 demonstration. **This is a proof of concept for comparative legislation review, not authoritative.** Manual legal, language and accessibility review was deferred and has not been performed. Source structure is research in progress; candidate interpretation is not legally reviewed; no real reviewed executable rule is published. See [docs/VISUALIZATION-MILESTONE.md](docs/VISUALIZATION-MILESTONE.md).
 
+## UAE accessibility deep dive
+
+A source-linked briefing for the UAE conversation is in [docs/UAE-ACCESSIBILITY-DEEPDIVE.md](docs/UAE-ACCESSIBILITY-DEEPDIVE.md). It distinguishes federal law, policy, technical guidance, self-description and the observatory's candidate records. It is a prototype, not legal advice.
+
 ## Rule presentation (synthetic only)
 
 `framework/rule_presentation.py` validates and statically renders a reviewed `rule-presentation/v1` artifact. It is intentionally not attached to the public site; the only artifact is a synthetic fixture. See [docs/RULE-PRESENTATION.md](docs/RULE-PRESENTATION.md).
