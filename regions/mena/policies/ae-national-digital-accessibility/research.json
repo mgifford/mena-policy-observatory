@@ -10,19 +10,19 @@
   "sources": [
     {
       "id": "src-ae-national-policy",
-      "title": "National Digital Accessibility Policy",
-      "url": "https://dgov.tdra.gov.ae/en/publications/national-digital-accessibility-policy",
+      "title": "National Policy for Digital Accessibility (March 2024)",
+      "url": "https://assets.u.ae/api/public/content/84ec9317f73249c8a2594d76705d3c46?v=8a2f9df6",
       "jurisdiction": "AE",
       "issuer": "UAE Telecommunications and Digital Government Regulatory Authority",
       "instrument_type": "national_policy",
       "language": "en",
       "authoritative_language": "unknown",
-      "publication_date": "unknown",
+      "publication_date": "2024-03-18",
       "effective_date": "unknown",
-      "document_version": null,
-      "archival_url": null,
+      "document_version": "Issued March 2024",
+      "archival_url": "https://uaelegislation.gov.ae/ar/policy/details/the-national-digital-accessibility-policy",
       "capture": {
-        "captured_at": null,
+        "captured_at": "2026-11-07T20:04:00Z",
         "bytes_stored": false,
         "sha256": null
       },
@@ -38,7 +38,29 @@
         "status": "not_translated",
         "provenance": null,
         "review_state": "not_reviewed"
-      }
+      },
+      "expressions": [
+        {
+          "id": "expr-ae-policy-ar",
+          "kind": "authority_unresolved",
+          "source_id": "src-ae-national-policy",
+          "instrument_id": "ae-national-digital-accessibility",
+          "instrument_version": "Issued March 2024",
+          "language": "ar",
+          "original_language": "ar",
+          "url": "https://uaelegislation.gov.ae/ar/policy/details/the-national-digital-accessibility-policy",
+          "authority": "UAE Legislation — Ministry of Cabinet Affairs",
+          "translation_method": null,
+          "review_status": "unreviewed",
+          "reviewed_at": null,
+          "reviewer_role": null,
+          "notes": "Arabic policy summary page consulted; full Arabic policy PDF not captured. No claim of equal authority with the English PDF.",
+          "uncertainties": [
+            "Arabic policy page is a summary; full Arabic instrument not compared.",
+            "Which language expression is authoritative is unresolved."
+          ]
+        }
+      ]
     }
   ],
   "provisions": [
@@ -49,11 +71,15 @@
         "kind": "section",
         "value": "National policy: scope and general provisions"
       },
-      "source_ids": ["src-ae-national-policy"],
+      "source_ids": [
+        "src-ae-national-policy"
+      ],
       "summary": "The official national policy includes federal entities and public-service providers; precise contractual reach and enforcement must be interpreted with the original clauses.",
       "effect_assessment": "not_assessed",
       "encoding_status": "blocked",
-      "interpreting_questions": ["AE-01"]
+      "interpreting_questions": [
+        "AE-01"
+      ]
     },
     {
       "id": "P-02",
@@ -62,7 +88,9 @@
         "kind": "article",
         "value": "Article 8"
       },
-      "source_ids": ["src-ae-national-policy"],
+      "source_ids": [
+        "src-ae-national-policy"
+      ],
       "summary": "Article 8 discusses periodic employee training and accessible training materials.",
       "effect_assessment": "not_assessed",
       "encoding_status": "blocked",
@@ -75,11 +103,50 @@
         "kind": "annex",
         "value": "Article 9 and Annex 1"
       },
-      "source_ids": ["src-ae-national-policy"],
+      "source_ids": [
+        "src-ae-national-policy"
+      ],
       "summary": "Article 9 and Annex 1 contain requirements or references to technical standards; verify specific version and exemptions before encoding.",
       "effect_assessment": "not_assessed",
       "encoding_status": "blocked",
-      "interpreting_questions": ["AE-02", "AE-03"]
+      "interpreting_questions": [
+        "AE-02",
+        "AE-03"
+      ]
+    },
+    {
+      "id": "P-04",
+      "heading": "Governance and Digital Accessibility Officer",
+      "locator": {
+        "kind": "section",
+        "value": "Articles 5-6 and Annex 2"
+      },
+      "source_ids": [
+        "src-ae-national-policy"
+      ],
+      "summary": "The policy assigns governance responsibilities and defines a Digital Accessibility Officer role; the officer’s authority and independence are not established from the captured text.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "AE-04"
+      ]
+    },
+    {
+      "id": "P-05",
+      "heading": "Publication, reporting and enforcement",
+      "locator": {
+        "kind": "section",
+        "value": "Articles 12 and 14"
+      },
+      "source_ids": [
+        "src-ae-national-policy"
+      ],
+      "summary": "The policy requires entity policies or statements, compliance reporting and indicators; the captured English text does not state a public penalty schedule.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "AE-05"
+      ]
     }
   ],
   "interpretations": [
@@ -124,6 +191,34 @@
       "requires": "qualified_accessibility_review",
       "reviewer": null,
       "reviewed_at": null
+    },
+    {
+      "id": "AE-04",
+      "provision_id": "P-04",
+      "statement": "Whether the 2024 policy is a binding instrument and what enforcement follows a low compliance percentage or complaint is unresolved.",
+      "observation": "The policy defines governance, a Digital Accessibility Officer role, compliance percentages and Digital Government Enablers indicators.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "governance_and_enforcement",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-05",
+      "provision_id": "P-05",
+      "statement": "The Arabic policy page and the English policy PDF have not been compared, so authoritative-language status and translation provenance remain unresolved.",
+      "observation": "The Arabic policy page and the English policy PDF are both published by official UAE sources.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "translation_authority",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "translation_review",
+      "reviewer": null,
+      "reviewed_at": null
     }
   ],
   "relations": [
@@ -152,6 +247,19 @@
       "recorded_label": "technical_standard",
       "review_state": "unreviewed",
       "note": null
+    },
+    {
+      "id": "rel-ae-national-to-law29",
+      "target": {
+        "kind": "internal_record",
+        "title": "Federal Law No. 29 of 2006",
+        "url": null,
+        "record_id": "ae-federal-law-29-2006"
+      },
+      "relation": "unspecified",
+      "recorded_label": "related_federal_law",
+      "review_state": "unreviewed",
+      "note": "Discovery link only; the policy and law have not been reconciled."
     }
   ]
 }

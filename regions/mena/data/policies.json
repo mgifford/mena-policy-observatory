@@ -6,9 +6,9 @@
     "country": "AE",
     "status": "source_verified",
     "authority": "UAE Telecommunications and Digital Government Regulatory Authority",
-    "source_url": "https://dgov.tdra.gov.ae/en/publications/national-digital-accessibility-policy",
-    "source_title": "National Digital Accessibility Policy",
-    "notes": "National policy covers UAE government digital services and specified service providers and contractors. Official technical annex references WCAG 2.1 Level AA for public service sites. Formal legal enforceability, detailed exceptions and effective dates require qualified review.",
+    "source_url": "https://assets.u.ae/api/public/content/84ec9317f73249c8a2594d76705d3c46?v=8a2f9df6",
+    "source_title": "National Policy for Digital Accessibility (March 2024)",
+    "notes": "Policy issued 18 March 2024 under TDRA; source captured as an official English PDF, with an Arabic policy page recorded as an expression. Legal status, Arabic/English authority and enforcement remain unreviewed. Prototype record, not authoritative.",
     "reviewed_on": "2026-10-31 (metadata snapshot, not legal approval)",
     "rule_spec": null,
     "standard": "WCAG 2.1 AA",
@@ -21,7 +21,7 @@
     "rulespec_path": "policies/ae-national-digital-accessibility/rule.rulespec.yaml",
     "interpretation_path": "policies/ae-national-digital-accessibility/INTERPRETATION.md",
     "related_path": "policies/ae-national-digital-accessibility/RELATED.md",
-    "unresolved_interpretations": 3,
+    "unresolved_interpretations": 5,
     "execution_status": "not_implemented"
   },
   {
@@ -247,6 +247,31 @@
     "interpretation_path": "policies/ma-personal-data-09-08/INTERPRETATION.md",
     "related_path": "policies/ma-personal-data-09-08/RELATED.md",
     "unresolved_interpretations": 3,
+    "execution_status": "not_implemented"
+  },
+  {
+    "id": "ae-federal-law-29-2006",
+    "title": "Federal Law No. (29) of 2006 Concerning the Rights of Persons with Special Needs",
+    "topic": "disability_inclusion",
+    "country": "AE",
+    "status": "source_identified",
+    "authority": "United Arab Emirates — Federal Government (UAE Legislation)",
+    "source_url": "https://uaelegislation.gov.ae/ar/legislations/1172",
+    "source_title": "قانون اتحادي رقم (29) لسنة 2006 في شأن حقوق المعاقين",
+    "notes": "Official Arabic page consulted; English translation recorded separately. Arabic prevails. One amendment is listed; implementing instruments and digital scope remain unreviewed. Prototype record, not authoritative.",
+    "reviewed_on": "2026-11-07 (prototype source inspection; not legal approval)",
+    "rule_spec": null,
+    "standard": "—",
+    "instrument_type": "legislation",
+    "legal_effect": "not_legally_assessed",
+    "scope": "Rights of persons with special needs across health, education, employment, public life and adapted environment; communication/information provisions at Articles 7 and 20.",
+    "language": "en",
+    "primary_source": true,
+    "source_markdown": "policies/ae-federal-law-29-2006/SOURCE.md",
+    "rulespec_path": "policies/ae-federal-law-29-2006/rule.rulespec.yaml",
+    "interpretation_path": "policies/ae-federal-law-29-2006/INTERPRETATION.md",
+    "related_path": "policies/ae-federal-law-29-2006/RELATED.md",
+    "unresolved_interpretations": 4,
     "execution_status": "not_implemented"
   }
 ]

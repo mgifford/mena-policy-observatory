@@ -1,13 +1,13 @@
 {
   "policy_id": "ae-national-digital-accessibility",
-  "source_document": "https://dgov.tdra.gov.ae/en/publications/national-digital-accessibility-policy",
+  "source_document": "https://assets.u.ae/api/public/content/84ec9317f73249c8a2594d76705d3c46?v=8a2f9df6",
   "source_markdown": "SOURCE.md",
   "rulespec": "rule.rulespec.yaml",
   "rule_status": "no_approved_executable_rules",
   "original_text_status": "excerpt_or_source_link_only",
   "ambiguity_register": "INTERPRETATION.md",
   "related_documents": "RELATED.md",
-  "reviewed_on": "2026-10-31",
+  "reviewed_on": "2026-11-07",
   "interpretation_issues": [
     {
       "id": "AE-01",
@@ -35,6 +35,24 @@
       "severity": "high",
       "category": "applicability",
       "status": "unresolved"
+    },
+    {
+      "id": "AE-04",
+      "section": "P-04",
+      "observation": "The policy defines governance, a Digital Accessibility Officer role, compliance percentages and Digital Government Enablers indicators.",
+      "ambiguity": "Whether the 2024 policy is a binding instrument and what enforcement follows a low compliance percentage or complaint is unresolved.",
+      "severity": "high",
+      "category": "governance_and_enforcement",
+      "status": "unresolved"
+    },
+    {
+      "id": "AE-05",
+      "section": "P-05",
+      "observation": "The Arabic policy page and the English policy PDF are both published by official UAE sources.",
+      "ambiguity": "The Arabic policy page and the English policy PDF have not been compared, so authoritative-language status and translation provenance remain unresolved.",
+      "severity": "high",
+      "category": "translation_authority",
+      "status": "unresolved"
     }
   ],
   "related": [
@@ -47,6 +65,11 @@
       "title": "WCAG 2.1",
       "url": "https://www.w3.org/TR/WCAG21/",
       "relation": "technical_standard"
+    },
+    {
+      "title": "Arabic policy page",
+      "url": "https://uaelegislation.gov.ae/ar/policy/details/the-national-digital-accessibility-policy",
+      "relation": "official_language_expression"
     }
   ]
 }

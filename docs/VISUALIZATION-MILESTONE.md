@@ -34,7 +34,8 @@ It may not:
 |---|---|---|---|
 | `ae-moe-accessibility` | UAE | Two recorded provisions and three questions | No excerpt or bytes captured; dates unknown; no related documents recorded |
 | `ae-mof-accessibility` | UAE | One recorded provision and two questions | No excerpt or bytes captured; dates unknown; one question has no provision link |
-| `ae-national-digital-accessibility` | UAE | Three recorded provisions, three open questions, two related documents, one recorded excerpt | Source bytes not stored; dates and authoritative language unknown; relations unreviewed |
+| `ae-national-digital-accessibility` | UAE | Five provisions, five open questions, three recorded links, one excerpt; March 2024 policy | English PDF plus Arabic policy-page expression; legal status and Arabic/English authority unresolved |
+| `ae-federal-law-29-2006` | UAE | Five provisions, four questions, two recorded links, one Arabic excerpt; official English translation expression | Digital scope, Article 23 implementing instrument and consolidated amendment unresolved |
 | `qa-eaccessibility-2011` | Qatar | One provision, two questions, four related documents including a proposed successor, temporal uncertainty | No excerpt or bytes captured; dates unknown; current standing unresolved |
 | `qa-eaccessibility-2025-upcoming` | Qatar | Two draft provisions, two questions, two related documents | Draft/not in force; no excerpt or bytes; dates unknown; relations unreviewed |
 | `sa-dga-web-accessibility-guide` | Saudi Arabia | Two provisions, two questions, one technical-standard link | No excerpt or bytes; dates unknown; guideline normativity unresolved |
@@ -43,7 +44,7 @@ It may not:
 | `jo-personal-data-2023` | Jordan | Law 24/2023; 3 provisions, 3 questions, 1 recorded link, 1 excerpt | Official English translation; publication/commencement and Arabic authority unresolved |
 | `ma-personal-data-09-08` | Morocco | Law 09-08; 3 provisions, 3 questions, 2 recorded links, 1 excerpt | French legal-database text; Arabic authority and implementing decree reconciliation unresolved |
 
-The initial three records were selected for depth; four more existing records were added on 2026-11-07, bringing the total to seven. Batch B (Algeria, Jordan, Morocco) was authorized on 2026-11-07 as a prototype expansion. The three-source monitoring pilot instruments are not used because complete text/provision structure is not captured.
+The initial three records were selected for depth; four more existing records were added on 2026-11-07, bringing the total to seven. Batch B (Algeria, Jordan, Morocco) was authorized on 2026-11-07 as a prototype expansion. The UAE federal law record was added on 2026-11-07 as authorized evidence gathering, bringing the total to eleven. The three-source monitoring pilot instruments are not used because complete text/provision structure is not captured.
 
 **Prototype status:** this is a proof of concept for comparative legislation review and comparison. It is **not authoritative**. Manual legal, language and accessibility review was deliberately deferred by the project owner for this prototype stage and has **not** been performed. Do not use these pages for compliance decisions.
 
@@ -83,6 +84,7 @@ Public routes (built statically for all three locales):
 
 - `dist/mena/{en,fr,ar}/visualizations/index.html`
 - `dist/mena/{en,fr,ar}/visualizations/ae-national-digital-accessibility.html`
+- `dist/mena/{en,fr,ar}/visualizations/ae-federal-law-29-2006.html`
 - `dist/mena/{en,fr,ar}/visualizations/qa-eaccessibility-2011.html`
 - `dist/mena/{en,fr,ar}/visualizations/sa-mep-accessibility.html`
 - `dist/mena/{en,fr,ar}/visualizations/synthetic.html`
@@ -98,12 +100,12 @@ Screenshots (1280 px browser width, full page):
 Automated verification at the time of this work:
 
 - `python3 framework/validate.py` — pass.
-- `python3 -m unittest discover -s tests` — 316 tests, pass.
+- `python3 -m unittest discover -s tests` — 317 tests, pass.
 - `python3 -m unittest discover -s research-toolkit/tests` — 15 tests, pass.
 - registry, instruments, import and manifest checks — current.
-- `python3 framework/build.py --region mena` — 184 pages.
+- `python3 framework/build.py --region mena` — 190 pages.
 - `python3 framework/check_html.py` — pass.
-- `npm run test:a11y` — 554 Playwright/axe checks passed (184 pages × 3 checks, plus unique-title/language tests).
+- `npm run test:a11y` — 572 Playwright/axe checks passed (190 pages × 3 checks, plus unique-title/language tests).
 - 320 CSS px reflow checked for the new pages: no page-level horizontal overflow.
 
 ## Accessibility and language gaps

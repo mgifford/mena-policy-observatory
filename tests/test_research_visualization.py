@@ -33,9 +33,9 @@ class SourceStructureTests(unittest.TestCase):
         cls.selected = selected_records(BASE)
         cls.policies = json.loads((BASE / 'data' / 'policies.json').read_text(encoding='utf-8'))
 
-    def test_ten_records_selected(self):
+    def test_eleven_records_selected(self):
         self.assertEqual([record['id'] for record, _ in self.selected], list(SELECTED_RECORDS))
-        self.assertEqual(len(self.selected), 10)
+        self.assertEqual(len(self.selected), 11)
 
     def test_model_has_every_recorded_node_and_no_invented_id(self):
         for record, research in self.selected:
@@ -83,6 +83,17 @@ class SourceStructureTests(unittest.TestCase):
         self.assertEqual(validator.validate(source, schema), [])
         self.assertEqual(DIRECTIONS['fa'], 'rtl')
         self.assertEqual(DIRECTIONS['tr'], 'ltr')
+
+    def test_uae_law_keeps_arabic_original_and_english_translation(self):
+        record, research = next(
+            (item for item in self.selected if item[0]['id'] == 'ae-federal-law-29-2006'))
+        source = research['sources'][0]
+        self.assertEqual(source['language'], 'ar')
+        self.assertEqual(source['authoritative_language'], 'yes')
+        kinds = {expression['kind'] for expression in source['expressions']}
+        self.assertEqual(kinds, {'original_authoritative', 'official_translation'})
+        self.assertEqual(len(research['provisions']), 5)
+        self.assertEqual(record['legal_effect'], 'not_legally_assessed')
 
     def test_unknown_dates_are_not_fabricated(self):
         for record, research in self.selected:

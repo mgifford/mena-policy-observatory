@@ -1,25 +1,27 @@
 # National Digital Accessibility Policy
 
-> **Source status:** Linked official document; this file is NOT a complete reproduction of the original.
-> **Translation status:** Not a certified Arabic translation.
+> **Source status:** Official policy PDF inspected; this file is NOT a complete reproduction of the original.
+> **Translation status:** English PDF and Arabic policy page are recorded separately; authority is unresolved.
 > **Legal assessment:** not_legally_assessed.
 
 ## Official document
 
 - Country: AE
 - Authority: UAE Telecommunications and Digital Government Regulatory Authority
-- Original source: https://dgov.tdra.gov.ae/en/publications/national-digital-accessibility-policy
-- Source language recorded: en (confirm authoritative original language)
+- Original source: https://assets.u.ae/api/public/content/84ec9317f73249c8a2594d76705d3c46?v=8a2f9df6
+- Arabic policy page: https://uaelegislation.gov.ae/ar/policy/details/the-national-digital-accessibility-policy
+- Source language recorded: en (English PDF; Arabic page recorded separately as an expression)
+- Publication: 18 March 2024
 - Original instrument: national_policy
-- Source review date: 2026-10-31
+- Source review date: 2026-11-07
 
-## Source text (verified, short excerpt)
+## Source text (recorded short excerpt)
 
 > All public service sites must comply with Level AA of the WCAG 2.1.
 
 ## Full original text
 
-The source text has **not** been reproduced in full. Obtain the authoritative original via the linked publisher. Reproduction, licensing, authoritative-language verification, and clause-level extraction must be resolved before publishing a full Markdown transcription.
+The policy text has **not** been reproduced in full. The official English PDF and Arabic policy page are linked above. The Arabic page is a summary and has not been compared clause by clause with the English PDF; authoritative-language status remains unresolved.
 
 ## Transcription protocol
 

@@ -371,8 +371,9 @@
     "task_stage": "capture"
   },
   "existing_policy_records": {
-    "count": 10,
+    "count": 11,
     "ids": [
+      "ae-federal-law-29-2006",
       "ae-moe-accessibility",
       "ae-mof-accessibility",
       "ae-national-digital-accessibility",
