@@ -680,5 +680,10 @@
   "visualizations.evidence.recorded_relation": "علاقة مسجلة",
   "visualizations.excerpt_artifact": "أثر المقتطف المسجل",
   "visualizations.open_source": "فتح المصدر",
-  "visualizations.provision_notice": "عناوين الأحكام ومواضعها وملخصاتها بيانات بحثية مسجلة، وليست اقتباسات من الأداة."
+  "visualizations.provision_notice": "عناوين الأحكام ومواضعها وملخصاتها بيانات بحثية مسجلة، وليست اقتباسات من الأداة.",
+  "rule.presentation.translation_fallback": "يُعرض بعض النص بلغته المتاحة لعدم تسجيل ترجمة مراجعة لهذه اللغة.",
+  "rule.presentation.effective_unknown": "غير معروفة",
+  "rule.presentation.effective_unresolved": "غير محسومة",
+  "rule.presentation.effective_conditional": "مشروطة",
+  "rule.presentation.effective_retrospective": "أثر رجعي"
 }

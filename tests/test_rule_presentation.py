@@ -1,5 +1,6 @@
 import copy
 import html
+import hashlib
 import json
 import sys
 import tempfile
@@ -14,6 +15,7 @@ from framework.rule_presentation import (
     render_all,
     render_page,
     validate_presentation,
+    validate_publication,
 )
 
 FIXTURE = REPO_ROOT / 'regions' / 'mena' / 'data' / 'visualizations' / 'synthetic-procurement.json'
@@ -27,6 +29,9 @@ class RulePresentationValidationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.catalogues = load_catalogues()
+
+    def page_en(self, data):
+        return render_page(data, 'en', self.catalogues['en'])
 
     def test_fixture_is_valid(self):
         self.assertEqual(validate_presentation(fixture()), [])
@@ -104,10 +109,51 @@ class RulePresentationValidationTests(unittest.TestCase):
         data['text']['steps']['ar'].pop()
         self.assertTrue(any('text.steps.ar' in error for error in validate_presentation(data)))
 
-    def test_missing_locale_is_rejected_by_the_schema(self):
+    def test_partial_translation_is_allowed_but_all_missing_is_rejected(self):
         data = fixture()
         del data['title']['fr']
-        self.assertTrue(any('title' in error for error in validate_presentation(data)))
+        del data['text']['steps']['fr']
+        self.assertEqual(validate_presentation(data), [])
+        data = fixture()
+        for code in ('en', 'fr', 'ar'):
+            data['title'][code] = None
+        self.assertTrue(any('at least one language expression' in error
+                            for error in validate_presentation(data)))
+
+    def test_unknown_effective_period_is_allowed_without_dates(self):
+        data = fixture()
+        data['effective_period'] = {'from': None, 'to': None, 'status': 'unknown'}
+        self.assertEqual(validate_presentation(data), [])
+        body = self.page_en(data)
+        self.assertIn('Unknown', body)
+        self.assertNotIn('None', body)
+
+    def test_unknown_status_cannot_invent_a_date(self):
+        data = fixture()
+        data['effective_period']['status'] = 'unknown'
+        self.assertTrue(any('must not invent dates' in error
+                            for error in validate_presentation(data)))
+
+    def test_conditional_period_requires_a_condition(self):
+        data = fixture()
+        data['effective_period'] = {
+            'from': '2026-01-01', 'to': None, 'status': 'conditional',
+            'condition': {'en': 'When the commencement order is made', 'fr': 'Lorsque l’ordre est pris', 'ar': 'عند صدور أمر البدء'},
+        }
+        self.assertEqual(validate_presentation(data), [])
+        body = self.page_en(data)
+        self.assertIn('Conditional', body)
+
+    def test_mapping_references_are_checked(self):
+        data = fixture()
+        data['mappings']['node_steps'].append({'node': 'N99', 'step': 1})
+        self.assertTrue(any('unknown node' in error for error in validate_presentation(data)))
+        data = fixture()
+        data['mappings']['branches'].append({'step': 1, 'true': 'continue', 'false': 'continue'})
+        self.assertTrue(any('same true and false' in error for error in validate_presentation(data)))
+        data = fixture()
+        data['mappings']['tests'].append({'id': 'unknown', 'expected': 'not_an_outcome'})
+        self.assertTrue(any('unknown expected outcome' in error for error in validate_presentation(data)))
 
     def test_invalid_effective_period_is_rejected(self):
         data = fixture()
@@ -115,7 +161,7 @@ class RulePresentationValidationTests(unittest.TestCase):
         self.assertTrue(any('cannot be before' in error for error in validate_presentation(data)))
         data = fixture()
         data['effective_period']['from'] = '2026-02-30'
-        self.assertTrue(any('valid ISO date' in error for error in validate_presentation(data)))
+        self.assertTrue(any('needs a valid from date' in error or 'valid ISO date' in error for error in validate_presentation(data)))
 
     def test_constant_needs_a_value(self):
         data = fixture()
@@ -128,6 +174,85 @@ class RulePresentationValidationTests(unittest.TestCase):
         self.assertTrue(validate_presentation(data))
 
 
+class PublicationGateTests(unittest.TestCase):
+    def real_case(self):
+        data = fixture()
+        data['synthetic'] = False
+        data['review'] = {'status': 'reviewed', 'reviewer_role': 'Legal reviewer',
+                          'reviewed_at': '2026-11-07', 'notes': 'Synthetic test review.'}
+        data['record'] = {'instrument_id': 'instrument-1', 'source_id': 'source-1',
+                          'provision_id': 'provision-1', 'legal_version': '1.0',
+                          'reviewed_interpretation_id': 'interpretation-1'}
+        for source in data['sources']:
+            source['url'] = 'https://gov.example/act#' + source['id'].lower()
+        return data
+
+    def root(self, temporary):
+        root = Path(temporary)
+        (root / 'regions/mena/data').mkdir(parents=True, exist_ok=True)
+        (root / 'regions/mena/policies/instrument-1').mkdir(parents=True, exist_ok=True)
+        (root / 'artifacts').mkdir(exist_ok=True)
+        (root / 'tests').mkdir(exist_ok=True)
+        (root / 'regions/mena/data/policies.json').write_text(
+            json.dumps([{'id': 'instrument-1'}]), encoding='utf-8')
+        (root / 'regions/mena/policies/instrument-1/research.json').write_text(json.dumps({
+            'record_id': 'instrument-1',
+            'sources': [{'id': 'source-1', 'document_version': '1.0',
+                         'effective_date': 'unknown', 'publication_date': 'unknown'}],
+            'provisions': [{'id': 'provision-1', 'source_ids': ['source-1']}],
+            'interpretations': [{'id': 'interpretation-1', 'status': 'resolved',
+                                 'resolution': 'Reviewed synthetic interpretation.',
+                                 'reviewer': 'Reviewer', 'reviewed_at': '2026-11-07'}],
+            'review': {'status': 'reviewed', 'reviewer': 'Reviewer',
+                       'reviewed_at': '2026-11-07', 'scope': 'Synthetic review'},
+            'relations': [],
+        }), encoding='utf-8')
+        artifact = (root / 'artifacts/encoding.json')
+        artifact.write_text('{"engine_version": "0.2.2"}\n', encoding='utf-8')
+        digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
+        (root / 'tests/evidence.json').write_text(
+            '{"results": [{"id": "case-1", "status": "passed"}]}\n', encoding='utf-8')
+        data = self.real_case()
+        data['provenance']['artifact_path'] = 'artifacts/encoding.json'
+        data['provenance']['tests_path'] = 'tests/evidence.json'
+        data['provenance']['artifact_sha256'] = digest
+        return data, root
+
+    def test_real_case_passes_with_resolved_evidence(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            data, root = self.root(temporary)
+            self.assertEqual(validate_publication(data, root), [])
+
+    def test_real_case_rejects_wrong_source(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            data, root = self.root(temporary)
+            data['record']['source_id'] = 'missing'
+            self.assertTrue(any('unknown source_id' in error
+                                for error in validate_publication(data, root)))
+
+    def test_real_case_rejects_unresolved_record(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            data, root = self.root(temporary)
+            research_path = root / 'regions/mena/policies/instrument-1/research.json'
+            research = json.loads(research_path.read_text())
+            research['review']['status'] = 'pending'
+            research_path.write_text(json.dumps(research), encoding='utf-8')
+            self.assertTrue(any('research record itself is not reviewed' in error
+                                for error in validate_publication(data, root)))
+
+    def test_real_case_rejects_bad_artifact_and_test_evidence(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            data, root = self.root(temporary)
+            data['provenance']['artifact_sha256'] = 'b' * 64
+            self.assertTrue(any('artifact checksum' in error
+                                for error in validate_publication(data, root)))
+            data, root = self.root(temporary)
+            (root / 'tests/evidence.json').write_text(
+                '{"results": [{"id": "case-1", "status": "failed"}]}\n', encoding='utf-8')
+            self.assertTrue(any('non-passing' in error
+                                for error in validate_publication(data, root)))
+
+
 class RulePresentationRenderTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -136,6 +261,9 @@ class RulePresentationRenderTests(unittest.TestCase):
 
     def page(self, lang='en', data=None):
         return render_page(data or self.data, lang, self.catalogues[lang])
+
+    def page_en(self, data):
+        return self.page('en', data)
 
     def test_all_locales_render(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -208,6 +336,22 @@ class RulePresentationRenderTests(unittest.TestCase):
         data = copy.deepcopy(self.data)
         render_page(data, 'en', self.catalogues['en'])
         self.assertEqual(data, self.data)
+
+    def test_partial_translation_renders_a_marked_fallback(self):
+        data = copy.deepcopy(self.data)
+        for key in ('title', 'summary', 'disclaimer'):
+            data[key]['fr'] = None
+        data['nodes'][0]['label']['fr'] = None
+        data['ladder'][0]['condition']['fr'] = None
+        data['sources'][0]['label']['fr'] = None
+        data['text']['steps']['fr'] = None
+        body = self.page('fr', data)
+        self.assertIn(html.escape(self.catalogues['fr']['rule.presentation.translation_fallback'], quote=True), body)
+        self.assertIn('Synthetic procurement policy', body)
+        self.assertIn('lang="en"', body)
+
+    def test_publication_gate_exempts_synthetic(self):
+        self.assertEqual(validate_publication(self.data, REPO_ROOT), [])
 
     def test_missing_ui_string_fails_loudly(self):
         strings = dict(self.catalogues['en'])

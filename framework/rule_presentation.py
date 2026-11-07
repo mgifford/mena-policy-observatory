@@ -124,6 +124,110 @@ def _valid_date(value: str) -> bool:
         return False
 
 
+def _has_text(value: object) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _localized_values(obj: object):
+    if not isinstance(obj, dict):
+        return []
+    return [obj.get(lang) for lang in LANGUAGES]
+
+
+def _check_localized(obj: object, path: str, errors: list[str]) -> None:
+    if not isinstance(obj, dict):
+        return
+    present = [lang for lang in LANGUAGES if _has_text(obj.get(lang))]
+    if not present:
+        errors.append(f'{path}: at least one language expression is required')
+
+
+def _validate_mappings(data: dict, errors: list[str]) -> None:
+    mappings = data.get('mappings')
+    if not mappings:
+        return
+    node_ids = {node['id'] for node in data['nodes']}
+    step_numbers = {step['step'] for step in data['ladder']}
+    outcomes = list(data.get('outcomes') or [])
+    if not outcomes:
+        errors.append('mappings: an outcomes list is required when mappings are present')
+    if len(outcomes) != len(set(outcomes)):
+        errors.append('outcomes: duplicate outcome id')
+    outcome_set = set(outcomes)
+    seen_pairs = set()
+    mapped: dict[str, list[int]] = {}
+    for item in mappings['node_steps']:
+        node, step = item['node'], item['step']
+        if node not in node_ids:
+            errors.append(f'mappings.node_steps: unknown node {node}')
+        if step not in step_numbers:
+            errors.append(f'mappings.node_steps: unknown step {step}')
+        if (node, step) in seen_pairs:
+            errors.append(f'mappings.node_steps: duplicate {node}/{step}')
+        seen_pairs.add((node, step))
+        mapped.setdefault(node, []).append(step)
+    for node in data['nodes']:
+        if node['id'] not in mapped:
+            errors.append(f'mappings.node_steps: node {node["id"]} is not mapped')
+    for node in data['nodes']:
+        target = max(mapped.get(node['id'], [0]))
+        for dependency in node['depends']:
+            source = max(mapped.get(dependency, [0]))
+            if source > target:
+                errors.append(f'mappings.node_steps: dependency {dependency} is downstream of {node["id"]}')
+    branch_steps = []
+    for branch in mappings['branches']:
+        step = branch['step']
+        branch_steps.append(step)
+        if step not in step_numbers:
+            errors.append(f'mappings.branches: unknown step {step}')
+        if branch['true'] == branch['false']:
+            errors.append(f'mappings.branches: step {step} has the same true and false target')
+        for value in (branch['true'], branch['false']):
+            if value != 'continue' and value not in outcome_set:
+                errors.append(f'mappings.branches: step {step} has unknown target {value}')
+        if step < len(data['ladder']) and 'continue' not in (branch['true'], branch['false']):
+            errors.append(f'mappings.branches: step {step} cannot reach the next step')
+    if sorted(branch_steps) != sorted(step_numbers):
+        errors.append('mappings.branches: each ladder step needs exactly one branch record')
+    test_ids = []
+    for test in mappings['tests']:
+        test_ids.append(test['id'])
+        if test['expected'] != 'error' and test['expected'] not in outcome_set:
+            errors.append(f'mappings.tests: {test["id"]} has unknown expected outcome {test["expected"]}')
+    if len(test_ids) != len(set(test_ids)):
+        errors.append('mappings.tests: duplicate test id')
+
+
+def _validate_period(data: dict, errors: list[str]) -> None:
+    period = data['effective_period']
+    status = period.get('status')
+    from_date = period.get('from')
+    to_date = period.get('to')
+    if status is None:
+        status = 'known' if from_date is not None else 'unknown'
+    if status in ('unknown', 'unresolved'):
+        if from_date is not None or to_date is not None:
+            errors.append(f'effective_period: status {status} must not invent dates')
+    elif status in ('known', 'conditional', 'retrospective'):
+        if not _valid_date(from_date):
+            errors.append(f'effective_period: status {status} needs a valid from date')
+        if status == 'conditional' and not _has_text((period.get('condition') or {}).get('en')) and not any(
+                _has_text(value) for value in _localized_values(period.get('condition'))):
+            errors.append('effective_period: a conditional period needs a condition')
+    if to_date is not None:
+        if not _valid_date(to_date):
+            errors.append('effective_period.to must be null or a valid ISO date')
+        elif from_date is None:
+            errors.append('effective_period.to needs a from date')
+        elif to_date < from_date:
+            errors.append('effective_period.to cannot be before from')
+    if period.get('condition'):
+        _check_localized(period['condition'], 'effective_period.condition', errors)
+    if period.get('note'):
+        _check_localized(period['note'], 'effective_period.note', errors)
+
+
 def validate_presentation(data: object) -> list[str]:
     """Return shape and cross-field errors for one presentation artifact."""
     errors = _shape_errors(data)
@@ -192,17 +296,36 @@ def validate_presentation(data: object) -> list[str]:
         if step['citation'] not in source_set:
             errors.append(f"ladder step {step['step']}: unknown citation {step['citation']}")
 
+    step_text_present = False
     for lang in LANGUAGES:
-        if len(data['text']['steps'][lang]) != len(steps):
+        explanations = data['text']['steps'].get(lang)
+        if explanations is None:
+            continue
+        step_text_present = True
+        if len(explanations) != len(steps):
             errors.append(f"text.steps.{lang}: needs one explanation per ladder step")
-    if not _valid_date(data['effective_period']['from']):
-        errors.append('effective_period.from must be a valid ISO date')
-    to = data['effective_period']['to']
-    if to is not None:
-        if not _valid_date(to):
-            errors.append('effective_period.to must be null or a valid ISO date')
-        elif to < data['effective_period']['from']:
-            errors.append('effective_period.to cannot be before from')
+    if not step_text_present:
+        errors.append('text.steps: at least one language explanation list is required')
+    _validate_period(data, errors)
+    _validate_mappings(data, errors)
+    for path, localized in (
+            ('title', data['title']), ('summary', data['summary']),
+            ('disclaimer', data['disclaimer']), ('text.unknown', data['text']['unknown']),
+            ('text.limits', data['text']['limits'])):
+        _check_localized(localized, path, errors)
+    for node in data['nodes']:
+        _check_localized(node['label'], f'node {node["id"]}.label', errors)
+    for step in steps:
+        _check_localized(step['condition'], f'ladder {step["step"]}.condition', errors)
+        _check_localized(step['true'], f'ladder {step["step"]}.true', errors)
+        _check_localized(step['false'], f'ladder {step["step"]}.false', errors)
+        _check_localized(step['note'], f'ladder {step["step"]}.note', errors)
+    for source in data['sources']:
+        _check_localized(source['citation'], f'source {source["id"]}.citation', errors)
+        _check_localized(source['label'], f'source {source["id"]}.label', errors)
+    for index, item in enumerate(data['unsupported']):
+        _check_localized(item['label'], f'unsupported[{index}].label', errors)
+        _check_localized(item['reason'], f'unsupported[{index}].reason', errors)
 
     if not str(provenance.get('encoding_id') or '').strip():
         errors.append('provenance: encoding_id is required')
@@ -213,12 +336,169 @@ def validate_presentation(data: object) -> list[str]:
     return errors
 
 
+def validate_publication(data: dict, root: Path | None = None) -> list[str]:
+    """Resolve a non-synthetic presentation against repository evidence.
+
+    This is deliberately separate from syntactic validation. It does not prove
+    legal correctness; it verifies that the named record, source, provision,
+    interpretation, encoding artifact and test evidence exist and agree.
+    Synthetic artefacts are exempt because they are explicitly fictional.
+    """
+    errors = validate_presentation(data)
+    if errors or data.get('synthetic'):
+        return errors
+    base = Path(root) if root else REPO_ROOT
+    record = data.get('record') or {}
+    provenance = data.get('provenance') or {}
+    try:
+        policies = json.loads((base / 'regions/mena/data/policies.json').read_text(encoding='utf-8'))
+        policy = next((item for item in policies if item.get('id') == record.get('instrument_id')), None)
+        if policy is None:
+            return [f'publication: unknown instrument_id {record.get("instrument_id")!r}']
+        research = json.loads((base / 'regions/mena/policies' / record['instrument_id'] / 'research.json').read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError, KeyError) as exc:
+        return [f'publication: cannot resolve record evidence: {exc}']
+    sources = {item.get('id'): item for item in research.get('sources', [])}
+    provisions = {item.get('id'): item for item in research.get('provisions', [])}
+    interpretations = {item.get('id'): item for item in research.get('interpretations', [])}
+    source = sources.get(record.get('source_id'))
+    if source is None:
+        errors.append(f'publication: unknown source_id {record.get("source_id")!r}')
+    provision = provisions.get(record.get('provision_id'))
+    if provision is None:
+        errors.append(f'publication: unknown provision_id {record.get("provision_id")!r}')
+    elif record.get('source_id') not in (provision.get('source_ids') or []):
+        errors.append('publication: the provision does not reference the named source')
+    interpretation = interpretations.get(record.get('reviewed_interpretation_id'))
+    if interpretation is None:
+        errors.append(f'publication: unknown interpretation {record.get("reviewed_interpretation_id")!r}')
+    else:
+        if interpretation.get('status') != 'resolved' or interpretation.get('resolution') is None:
+            errors.append('publication: the reviewed interpretation is not resolved')
+        if not str(interpretation.get('reviewer') or '').strip() or not _valid_date(interpretation.get('reviewed_at') or ''):
+            errors.append('publication: the interpretation needs a reviewer and review date')
+    review = research.get('review') or {}
+    if review.get('status') != 'reviewed':
+        errors.append('publication: the research record itself is not reviewed')
+    if source is not None:
+        versions = {source.get('document_version'), source.get('effective_date'), source.get('publication_date')}
+        versions.discard(None)
+        versions.discard('unknown')
+        if not versions:
+            errors.append('publication: no recorded legal version exists for the source')
+        elif record.get('legal_version') not in versions:
+            errors.append('publication: legal_version does not match the recorded source version')
+    artifact_path = provenance.get('artifact_path')
+    tests_path = provenance.get('tests_path')
+    if not isinstance(artifact_path, str) or not artifact_path:
+        errors.append('publication: artifact_path is required')
+    if not isinstance(tests_path, str) or not tests_path:
+        errors.append('publication: tests_path is required')
+    if isinstance(artifact_path, str) and artifact_path:
+        path = (base / artifact_path).resolve()
+        if not path.is_relative_to(base.resolve()):
+            errors.append('publication: artifact_path escapes the repository root')
+        elif not path.is_file():
+            errors.append('publication: encoding artifact does not exist')
+        else:
+            import hashlib
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            if digest != provenance.get('artifact_sha256'):
+                errors.append('publication: artifact checksum does not match')
+            try:
+                artifact = json.loads(path.read_text(encoding='utf-8'))
+                if artifact.get('engine_version') not in (None, provenance.get('engine_version')):
+                    errors.append('publication: artifact engine version does not match provenance')
+            except (OSError, json.JSONDecodeError):
+                errors.append('publication: encoding artifact is not valid JSON')
+    if isinstance(tests_path, str) and tests_path:
+        path = (base / tests_path).resolve()
+        if not path.is_relative_to(base.resolve()):
+            errors.append('publication: tests_path escapes the repository root')
+        elif not path.is_file():
+            errors.append('publication: test evidence does not exist')
+        else:
+            try:
+                evidence = json.loads(path.read_text(encoding='utf-8'))
+                results = evidence.get('results') if isinstance(evidence, dict) else None
+                if not isinstance(results, list) or not results:
+                    errors.append('publication: test evidence has no results')
+                elif any(not isinstance(item, dict) or item.get('status') != 'passed' for item in results):
+                    errors.append('publication: test evidence contains a non-passing result')
+            except (OSError, json.JSONDecodeError):
+                errors.append('publication: test evidence is not valid JSON')
+    return errors
+
+
 def _esc(value: object) -> str:
     return html.escape(str(value), quote=True)
 
 
-def _loc(value: dict, lang: str) -> str:
-    return str(value[lang])
+def _resolve(value: object, lang: str) -> tuple[str, str]:
+    if isinstance(value, dict):
+        for code in (lang, 'en', 'fr', 'ar'):
+            candidate = value.get(code)
+            if _has_text(candidate):
+                return str(candidate), code
+    return '', lang
+
+
+def _text_raw(value: object, lang: str) -> str:
+    return _resolve(value, lang)[0]
+
+
+def _text_html(value: object, lang: str) -> str:
+    text, used = _resolve(value, lang)
+    if used != lang:
+        direction = DIRECTIONS.get(used, 'ltr')
+        return f'<span lang="{used}" dir="{direction}">{_esc(text)}</span>'
+    return _esc(text)
+
+
+def _steps_for(data: dict, lang: str) -> tuple[list[str], str]:
+    for code in (lang, 'en', 'fr', 'ar'):
+        value = data['text']['steps'].get(code)
+        if isinstance(value, list) and value:
+            return value, code
+    return [], lang
+
+
+def _needs_fallback(data: dict, lang: str) -> bool:
+    localized = [data['title'], data['summary'], data['disclaimer'],
+                 data['text']['unknown'], data['text']['limits']]
+    localized += [node['label'] for node in data['nodes']]
+    localized += [step['condition'] for step in data['ladder']]
+    localized += [step['true'] for step in data['ladder']]
+    localized += [step['false'] for step in data['ladder']]
+    localized += [step['note'] for step in data['ladder']]
+    localized += [source['citation'] for source in data['sources']]
+    localized += [source['label'] for source in data['sources']]
+    localized += [item['label'] for item in data['unsupported']]
+    localized += [item['reason'] for item in data['unsupported']]
+    if data['effective_period'].get('condition'):
+        localized.append(data['effective_period']['condition'])
+    for value in localized:
+        if isinstance(value, dict) and not _has_text(value.get(lang)) and any(
+                _has_text(value.get(code)) for code in LANGUAGES):
+            return True
+    return not _has_text(data['text']['steps'].get(lang)) and any(
+        isinstance(data['text']['steps'].get(code), list) and data['text']['steps'].get(code)
+        for code in LANGUAGES)
+
+
+def _period_text(data: dict, lang: str, strings: dict) -> str:
+    period = data['effective_period']
+    status = period.get('status') or ('known' if period.get('from') else 'unknown')
+    if status in ('unknown', 'unresolved'):
+        return strings[f'rule.presentation.effective_{status}']
+    text = str(period.get('from') or '')
+    if status == 'conditional' and period.get('condition'):
+        text += f" ({strings['rule.presentation.effective_conditional']}: {_text_raw(period['condition'], lang)})"
+    if status == 'retrospective':
+        text += f" ({strings['rule.presentation.effective_retrospective']})"
+    if period.get('to'):
+        text += f" — {period['to']}"
+    return text
 
 
 def _style() -> str:
@@ -317,7 +597,7 @@ def _svg(data: dict, lang: str, strings: dict) -> str:
         shapes.append(
             f'<g class="{cls}"><rect x="{x:.1f}" y="{y:.1f}" width="{width}" height="{height}" rx="9" />'
             f'<text x="{x + width / 2:.1f}" y="{y + 35:.1f}" text-anchor="middle">{_esc(node["id"])}</text></g>')
-    title = f"{_loc(data['title'], lang)} — {strings['rule.presentation.graph']}"
+    title = f"{_text_raw(data['title'], lang)} — {strings['rule.presentation.graph']}"
     return f"""
 <svg viewBox="0 0 {view_width:.0f} {view_height:.0f}" role="img" aria-labelledby="rule-graph-title" aria-describedby="rule-graph-desc" focusable="false">
   <title id="rule-graph-title">{_esc(title)}</title>
@@ -330,8 +610,7 @@ def _svg(data: dict, lang: str, strings: dict) -> str:
 
 def _source_link(data: dict, source_id: str, lang: str) -> str:
     source = next(item for item in data['sources'] if item['id'] == source_id)
-    return (f'<a href="{_esc(source["url"])}"><span lang="{source["language"]}" dir="ltr">'
-            f'{_esc(source["label"][lang])}</span></a> '
+    return (f'<a href="{_esc(source["url"])}">{_text_html(source["label"], lang)}</a> '
             f'<code lang="en" dir="ltr">{_esc(source_id)}</code>')
 
 
@@ -356,28 +635,33 @@ def render_page(data: dict, lang: str, strings: dict[str, str]) -> str:
         value_html = f' — {_esc(value)}' if value else ''
         node_rows.append(
             f'<li><p><strong>{_esc(strings["rule.presentation.node"])} <code lang="en" dir="ltr">{_esc(node["id"])}</code>'
-            f' — {_esc(node["label"][lang])}</strong></p>'
+            f' — {_text_html(node["label"], lang)}</strong></p>'
             f'<p>{_esc(strings["rule.presentation.kind"])}: {_esc(strings["rule.presentation." + node["kind"]])}; '
             f'{_esc(strings["rule.presentation.depends"])}: <code lang="en" dir="ltr">{_esc(depends)}</code>; '
             f'{_esc(strings["rule.presentation.citation"])}: {_source_link(data, node["citation"], lang)}{value_html}</p></li>')
     steps = []
     for step in data['ladder']:
         steps.append(
-            f'<li><h3>{_esc(step["condition"][lang])}</h3>'
-            f'<dl><dt>{_esc(strings["rule.presentation.if_true"])}</dt><dd>{_esc(step["true"][lang])}</dd>'
-            f'<dt>{_esc(strings["rule.presentation.if_false"])}</dt><dd>{_esc(step["false"][lang])}</dd></dl>'
-            f'<p class="cite">{_esc(strings["rule.presentation.citation"])}: {_source_link(data, step["citation"], lang)}. {_esc(step["note"][lang])}</p></li>')
-    explanations = ''.join(f'<li>{_esc(item)}</li>' for item in data['text']['steps'][lang])
-    sources = ''.join(f'<li>{_source_link(data, source["id"], lang)} — {_esc(source["citation"][lang])}</li>'
+            f'<li><h3>{_text_html(step["condition"], lang)}</h3>'
+            f'<dl><dt>{_esc(strings["rule.presentation.if_true"])}</dt><dd>{_text_html(step["true"], lang)}</dd>'
+            f'<dt>{_esc(strings["rule.presentation.if_false"])}</dt><dd>{_text_html(step["false"], lang)}</dd></dl>'
+            f'<p class="cite">{_esc(strings["rule.presentation.citation"])}: {_source_link(data, step["citation"], lang)}. {_text_html(step["note"], lang)}</p></li>')
+    explanation_values, explanation_lang = _steps_for(data, lang)
+    explanations = ''.join(
+        f'<li><span lang="{explanation_lang}" dir="{DIRECTIONS.get(explanation_lang, "ltr")}">{_esc(item)}</span></li>'
+        if explanation_lang != lang else f'<li>{_esc(item)}</li>'
+        for item in explanation_values)
+    sources = ''.join(f'<li>{_source_link(data, source["id"], lang)} — {_text_html(source["citation"], lang)}</li>'
                       for source in data['sources'])
-    unsupported = ''.join(f'<li><strong>{_esc(item["label"][lang])}</strong>: {_esc(item["reason"][lang])}</li>'
+    unsupported = ''.join(f'<li><strong>{_text_html(item["label"], lang)}</strong>: {_text_html(item["reason"], lang)}</li>'
                           for item in data['unsupported'])
     review = data['review']
     artifact_hash = data['provenance'].get('artifact_sha256')
     artifact = artifact_hash or strings['rule.presentation.no_artifact']
     test_results = data['provenance'].get('test_results') or strings['rule.presentation.none']
-    period = data['effective_period']
-    period_text = period['from'] + (f" — {period['to']}" if period['to'] else '')
+    period_text = _period_text(data, lang, strings)
+    period_html = (f'<code lang="en" dir="ltr">{_esc(period_text)}</code>'
+                   if data['effective_period'].get('from') else _esc(period_text))
     review_text = strings['rule.presentation.synthetic'] if synthetic else strings['rule.presentation.reviewed']
     if not synthetic and review.get('reviewer_role'):
         review_text += f" — {review['reviewer_role']} — {review['reviewed_at']}"
@@ -388,7 +672,7 @@ def render_page(data: dict, lang: str, strings: dict[str, str]) -> str:
             f'<dt>{_esc(key)}</dt><dd><code lang="en" dir="ltr">{_esc(record[key])}</code></dd>'
             for key in ('instrument_id', 'source_id', 'provision_id', 'legal_version', 'reviewed_interpretation_id')
         ) + '</dl>'
-    title = data['title'][lang]
+    title = _text_raw(data['title'], lang)
     return f"""<!doctype html>
 <html lang="{lang}" dir="{direction}">
 <head>
@@ -401,11 +685,12 @@ def render_page(data: dict, lang: str, strings: dict[str, str]) -> str:
 <a class="skip" href="#main">{_esc(strings['skip'])}</a>
 <header>
   <p><span class="badge">{_esc(badge)}</span></p>
-  <h1>{_esc(title)}</h1>
-  <p class="lead">{_esc(data['summary'][lang])}</p>
+  <h1>{_text_html(data['title'], lang)}</h1>
+  {f'<p class="notice">{_esc(strings["rule.presentation.translation_fallback"])}</p>' if _needs_fallback(data, lang) else ''}
+  <p class="lead">{_text_html(data["summary"], lang)}</p>
 </header>
 <main id="main" tabindex="-1">
-  <p class="disclaimer">{_esc(data['disclaimer'][lang])}</p>
+  <p class="disclaimer">{_text_html(data["disclaimer"], lang)}</p>
 
   <section aria-labelledby="rule-graph-h">
     <h2 id="rule-graph-h">{_esc(strings['rule.presentation.graph'])}</h2>
@@ -428,8 +713,8 @@ def render_page(data: dict, lang: str, strings: dict[str, str]) -> str:
     <h3>{_esc(strings['rule.presentation.explanation'])}</h3>
     <ol>{explanations}</ol>
     <h3>{_esc(strings["rule.presentation.unknown"])}</h3>
-    <p>{_esc(data['text']['unknown'][lang])}</p>
-    <p>{_esc(data['text']['limits'][lang])}</p>
+    <p>{_text_html(data["text"]["unknown"], lang)}</p>
+    <p>{_text_html(data["text"]["limits"], lang)}</p>
   </section>
 
   <section aria-labelledby="rule-sources-h">
@@ -446,7 +731,7 @@ def render_page(data: dict, lang: str, strings: dict[str, str]) -> str:
     <h2 id="rule-provenance-h">{_esc(strings['rule.presentation.provenance'])}</h2>
     <dl class="provenance">
       <dt>{_esc(strings['rule.presentation.review_status'])}</dt><dd>{_esc(review_text)}</dd>
-      <dt>{_esc(strings['rule.presentation.effective'])}</dt><dd><code lang="en" dir="ltr">{_esc(period_text)}</code></dd>
+      <dt>{_esc(strings['rule.presentation.effective'])}</dt><dd>{period_html}</dd>
       <dt>{_esc(strings['rule.presentation.engine'])}</dt><dd><span lang="en" dir="ltr">{_esc(data['provenance']['engine'])}</span></dd>
       <dt>{_esc(strings['rule.presentation.version'])}</dt><dd><code lang="en" dir="ltr">{_esc(data['provenance']['engine_version'])}</code></dd>
       <dt>{_esc(strings['rule.presentation.artifact'])}</dt><dd>{'<code lang="en" dir="ltr">' + _esc(artifact) + '</code>' if artifact_hash else _esc(artifact)}</dd>
@@ -457,10 +742,10 @@ def render_page(data: dict, lang: str, strings: dict[str, str]) -> str:
 
   <section aria-labelledby="rule-limits-h">
     <h2 id="rule-limits-h">{_esc(strings['rule.presentation.limits'])}</h2>
-    <p>{_esc(data['text']['limits'][lang])}</p>
+    <p>{_text_html(data["text"]["limits"], lang)}</p>
   </section>
 </main>
-<footer><p>{_esc(data['disclaimer'][lang])}</p></footer>
+<footer><p>{_text_html(data["disclaimer"], lang)}</p></footer>
 </body>
 </html>
 """
