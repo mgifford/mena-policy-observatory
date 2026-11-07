@@ -1,0 +1,472 @@
+{
+  "format": "rule-presentation/v1",
+  "id": "synthetic-procurement",
+  "version": "1.0.0",
+  "synthetic": true,
+  "review": {
+    "status": "synthetic_fixture",
+    "reviewer_role": null,
+    "reviewed_at": null,
+    "notes": "Synthetic fixture for renderer tests only. No legal review exists."
+  },
+  "record": null,
+  "title": {
+    "en": "Synthetic procurement policy",
+    "fr": "Politique de passation synthétique",
+    "ar": "سياسة شراء اصطناعية"
+  },
+  "summary": {
+    "en": "A fictional decision table used to test the static rule-presentation renderer. It is not law in any jurisdiction.",
+    "fr": "Une table de décision fictive servant à tester le moteur de présentation statique. Elle n'est du droit d'aucune juridiction.",
+    "ar": "جدول قرار خيالي لاختبار عارض عرض القواعد الساكن. وهو ليس قانونًا في أي ولاية قضائية."
+  },
+  "disclaimer": {
+    "en": "Synthetic demonstration only. No legal effect. The citations are fictional.",
+    "fr": "Démonstration synthétique uniquement. Sans effet juridique. Les citations sont fictives.",
+    "ar": "عرض اصطناعي فقط. لا أثر قانوني. الاستشهادات خيالية."
+  },
+  "effective_period": {
+    "from": "2026-01-01",
+    "to": null
+  },
+  "provenance": {
+    "encoding_id": "synthetic-procurement-rulespec",
+    "engine": "Axiom RuleSpec (research fixture; not executed at render time)",
+    "engine_version": "0.2.2",
+    "artifact_sha256": null,
+    "test_results": "research/rules-visualization/results/axiom-cases.json"
+  },
+  "sources": [
+    {
+      "id": "SP-0",
+      "citation": {
+        "en": "Synthetic procurement scenario, facts 1–5",
+        "fr": "Scénario de passation synthétique, faits 1 à 5",
+        "ar": "سيناريو شراء اصطناعي، الوقائع 1–5"
+      },
+      "label": {
+        "en": "Synthetic fact pattern (fictional)",
+        "fr": "Ensemble de faits synthétique (fictif)",
+        "ar": "مجموعة وقائع اصطناعية (خيالية)"
+      },
+      "url": "https://example.org/synthetic-procurement-policy#facts",
+      "language": "en"
+    },
+    {
+      "id": "SP-1",
+      "citation": {
+        "en": "Coverage, scope, exception and requirement",
+        "fr": "Couverture, champ, exception et exigence",
+        "ar": "التغطية والنطاق والاستثناء والمتطلب"
+      },
+      "label": {
+        "en": "Synthetic procurement policy s.1 (fictional)",
+        "fr": "Politique de passation synthétique, art. 1 (fictif)",
+        "ar": "سياسة الشراء الاصطناعية، المادة 1 (خيالية)"
+      },
+      "url": "https://example.org/synthetic-procurement-policy#s1",
+      "language": "en"
+    },
+    {
+      "id": "SP-2",
+      "citation": {
+        "en": "Open-source consideration above the threshold",
+        "fr": "Examen des logiciels libres au-dessus du seuil",
+        "ar": "النظر في البرمجيات مفتوحة المصدر فوق الحد"
+      },
+      "label": {
+        "en": "Synthetic procurement policy s.2 (fictional)",
+        "fr": "Politique de passation synthétique, art. 2 (fictif)",
+        "ar": "سياسة الشراء الاصطناعية، المادة 2 (خيالية)"
+      },
+      "url": "https://example.org/synthetic-procurement-policy#s2",
+      "language": "en"
+    },
+    {
+      "id": "SP-3",
+      "citation": {
+        "en": "Determination and missing facts",
+        "fr": "Détermination et faits manquants",
+        "ar": "التحديد والوقائع الناقصة"
+      },
+      "label": {
+        "en": "Synthetic procurement policy s.3 (fictional)",
+        "fr": "Politique de passation synthétique, art. 3 (fictif)",
+        "ar": "سياسة الشراء الاصطناعية، المادة 3 (خيالية)"
+      },
+      "url": "https://example.org/synthetic-procurement-policy#s3",
+      "language": "en"
+    },
+    {
+      "id": "SP-4",
+      "citation": {
+        "en": "Synthetic threshold parameter",
+        "fr": "Paramètre de seuil synthétique",
+        "ar": "معامل الحد الاصطناعي"
+      },
+      "label": {
+        "en": "Synthetic procurement policy s.4 (fictional)",
+        "fr": "Politique de passation synthétique, art. 4 (fictif)",
+        "ar": "سياسة الشراء الاصطناعية، المادة 4 (خيالية)"
+      },
+      "url": "https://example.org/synthetic-procurement-policy#s4",
+      "language": "en"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "N1",
+      "kind": "input",
+      "label": {
+        "en": "Public body is covered",
+        "fr": "L'organisme public est visé",
+        "ar": "الهيئة العامة مشمولة"
+      },
+      "dtype": "Boolean",
+      "value": null,
+      "depends": [],
+      "citation": "SP-0"
+    },
+    {
+      "id": "N2",
+      "kind": "input",
+      "label": {
+        "en": "Contract is within scope",
+        "fr": "Le contrat relève du champ",
+        "ar": "العقد ضمن النطاق"
+      },
+      "dtype": "Boolean",
+      "value": null,
+      "depends": [],
+      "citation": "SP-0"
+    },
+    {
+      "id": "N3",
+      "kind": "input",
+      "label": {
+        "en": "An exception applies",
+        "fr": "Une exception s'applique",
+        "ar": "ينطبق استثناء"
+      },
+      "dtype": "Boolean",
+      "value": null,
+      "depends": [],
+      "citation": "SP-0"
+    },
+    {
+      "id": "N4",
+      "kind": "input",
+      "label": {
+        "en": "Contract value (USD)",
+        "fr": "Valeur du contrat (USD)",
+        "ar": "قيمة العقد (دولار أمريكي)"
+      },
+      "dtype": "Decimal",
+      "value": null,
+      "depends": [],
+      "citation": "SP-0"
+    },
+    {
+      "id": "N5",
+      "kind": "input",
+      "label": {
+        "en": "Required facts are complete",
+        "fr": "Les faits requis sont complets",
+        "ar": "الوقائع المطلوبة مكتملة"
+      },
+      "dtype": "Boolean",
+      "value": null,
+      "depends": [],
+      "citation": "SP-0"
+    },
+    {
+      "id": "N6",
+      "kind": "constant",
+      "label": {
+        "en": "Open-source consideration threshold",
+        "fr": "Seuil d'examen des logiciels libres",
+        "ar": "حد النظر في البرمجيات مفتوحة المصدر"
+      },
+      "dtype": "Money",
+      "value": "USD 100,000",
+      "depends": [],
+      "citation": "SP-4"
+    },
+    {
+      "id": "N7",
+      "kind": "computed",
+      "label": {
+        "en": "Procurement requirement applies",
+        "fr": "L'exigence de passation s'applique",
+        "ar": "تنطبق متطلبات الشراء"
+      },
+      "dtype": "Judgment",
+      "value": null,
+      "depends": [
+        "N1",
+        "N2",
+        "N3",
+        "N5"
+      ],
+      "citation": "SP-1"
+    },
+    {
+      "id": "N8",
+      "kind": "computed",
+      "label": {
+        "en": "Open-source consideration required",
+        "fr": "Examen des logiciels libres requis",
+        "ar": "يلزم النظر في البرمجيات مفتوحة المصدر"
+      },
+      "dtype": "Judgment",
+      "value": null,
+      "depends": [
+        "N7",
+        "N4",
+        "N6"
+      ],
+      "citation": "SP-2"
+    },
+    {
+      "id": "N9",
+      "kind": "computed",
+      "label": {
+        "en": "Determination status",
+        "fr": "Statut de la détermination",
+        "ar": "حالة التحديد"
+      },
+      "dtype": "Text",
+      "value": null,
+      "depends": [
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N5",
+        "N6",
+        "N7",
+        "N8"
+      ],
+      "citation": "SP-3"
+    }
+  ],
+  "ladder": [
+    {
+      "step": 1,
+      "condition": {
+        "en": "Are the required facts complete?",
+        "fr": "Les faits requis sont-ils complets ?",
+        "ar": "هل الوقائع المطلوبة مكتملة؟"
+      },
+      "true": {
+        "en": "Continue to coverage",
+        "fr": "Poursuivre vers la couverture",
+        "ar": "المتابعة إلى التغطية"
+      },
+      "false": {
+        "en": "Indeterminate",
+        "fr": "Indéterminé",
+        "ar": "غير محدد"
+      },
+      "citation": "SP-3",
+      "note": {
+        "en": "Missing facts are not treated as false.",
+        "fr": "Les faits manquants ne sont pas traités comme faux.",
+        "ar": "لا تُعامل الوقائع الناقصة على أنها خاطئة."
+      }
+    },
+    {
+      "step": 2,
+      "condition": {
+        "en": "Is the public body covered?",
+        "fr": "L'organisme public est-il visé ?",
+        "ar": "هل الهيئة العامة مشمولة؟"
+      },
+      "true": {
+        "en": "Continue to scope",
+        "fr": "Poursuivre vers le champ",
+        "ar": "المتابعة إلى النطاق"
+      },
+      "false": {
+        "en": "Not applicable",
+        "fr": "Non applicable",
+        "ar": "غير منطبق"
+      },
+      "citation": "SP-1",
+      "note": {
+        "en": "Coverage is a condition, not a legal conclusion.",
+        "fr": "La couverture est une condition, non une conclusion juridique.",
+        "ar": "التغطية شرط وليست استنتاجًا قانونيًا."
+      }
+    },
+    {
+      "step": 3,
+      "condition": {
+        "en": "Is the contract within scope?",
+        "fr": "Le contrat relève-t-il du champ ?",
+        "ar": "هل العقد ضمن النطاق؟"
+      },
+      "true": {
+        "en": "Continue to exceptions",
+        "fr": "Poursuivre vers les exceptions",
+        "ar": "المتابعة إلى الاستثناءات"
+      },
+      "false": {
+        "en": "Outside scope",
+        "fr": "Hors du champ",
+        "ar": "خارج النطاق"
+      },
+      "citation": "SP-1",
+      "note": {
+        "en": "Scope is checked before the exception.",
+        "fr": "Le champ est examiné avant l'exception.",
+        "ar": "يُفحص النطاق قبل الاستثناء."
+      }
+    },
+    {
+      "step": 4,
+      "condition": {
+        "en": "Does an exception apply?",
+        "fr": "Une exception s'applique-t-elle ?",
+        "ar": "هل ينطبق استثناء؟"
+      },
+      "true": {
+        "en": "Exception applies",
+        "fr": "Une exception s'applique",
+        "ar": "ينطبق استثناء"
+      },
+      "false": {
+        "en": "Continue to the threshold",
+        "fr": "Poursuivre vers le seuil",
+        "ar": "المتابعة إلى الحد"
+      },
+      "citation": "SP-1",
+      "note": {
+        "en": "An exception removes the requirement; it does not create a new one.",
+        "fr": "Une exception écarte l'exigence ; elle n'en crée pas une nouvelle.",
+        "ar": "يزيل الاستثناء المتطلب؛ ولا ينشئ متطلبًا جديدًا."
+      }
+    },
+    {
+      "step": 5,
+      "condition": {
+        "en": "Is the contract value at least USD 100,000?",
+        "fr": "La valeur du contrat est-elle d'au moins 100 000 USD ?",
+        "ar": "هل قيمة العقد 100,000 دولار أمريكي على الأقل؟"
+      },
+      "true": {
+        "en": "Open-source consideration required",
+        "fr": "Examen des logiciels libres requis",
+        "ar": "يلزم النظر في البرمجيات مفتوحة المصدر"
+      },
+      "false": {
+        "en": "Requirement without open-source threshold",
+        "fr": "Exigence sans seuil de logiciels libres",
+        "ar": "متطلب دون حد البرمجيات مفتوحة المصدر"
+      },
+      "citation": "SP-2",
+      "note": {
+        "en": "The boundary value itself meets the threshold.",
+        "fr": "La valeur limite atteint elle-même le seuil.",
+        "ar": "قيمة الحد نفسها تستوفي العتبة."
+      }
+    }
+  ],
+  "text": {
+    "steps": {
+      "en": [
+        "Start with facts_complete. If it is false, stop at Indeterminate (SP-3).",
+        "If the facts are complete, check covered_body. If it is false, the outcome is Not applicable (SP-1).",
+        "If the body is covered, check contract_scope_met. If it is false, the outcome is Outside scope (SP-1).",
+        "If the contract is in scope, check exception_applies. If it is true, the outcome is Exception applies (SP-1).",
+        "If no exception applies, compare contract_value with USD 100,000. At or above the threshold, open-source consideration is required (SP-2); below it, the procurement requirement applies without the open-source threshold (SP-2)."
+      ],
+      "fr": [
+        "Commencer par facts_complete. Si la valeur est fausse, arrêter à Indéterminé (SP-3).",
+        "Si les faits sont complets, vérifier covered_body. Si la valeur est fausse, le résultat est Non applicable (SP-1).",
+        "Si l'organisme est visé, vérifier contract_scope_met. Si la valeur est fausse, le résultat est Hors du champ (SP-1).",
+        "Si le contrat relève du champ, vérifier exception_applies. Si la valeur est vraie, le résultat est Une exception s'applique (SP-1).",
+        "Si aucune exception ne s'applique, comparer contract_value avec 100 000 USD. Au seuil ou au-dessus, l'examen des logiciels libres est requis (SP-2) ; en dessous, l'exigence de passation s'applique sans ce seuil (SP-2)."
+      ],
+      "ar": [
+        "ابدأ بـ facts_complete. وإذا كانت القيمة خاطئة، توقف عند «غير محدد» (SP-3).",
+        "إذا كانت الوقائع مكتملة، فافحص covered_body. وإذا كانت القيمة خاطئة، فالنتيجة «غير منطبق» (SP-1).",
+        "إذا كانت الهيئة مشمولة، فافحص contract_scope_met. وإذا كانت القيمة خاطئة، فالنتيجة «خارج النطاق» (SP-1).",
+        "إذا كان العقد ضمن النطاق، فافحص exception_applies. وإذا كانت القيمة صحيحة، فالنتيجة «ينطبق استثناء» (SP-1).",
+        "إذا لم ينطبق استثناء، فقارن contract_value بمبلغ 100,000 دولار أمريكي. وعند الحد أو فوقه، يلزم النظر في البرمجيات مفتوحة المصدر (SP-2)؛ ودون الحد، تنطبق متطلبات الشراء دون هذا الحد (SP-2)."
+      ]
+    },
+    "unknown": {
+      "en": "Missing required facts are not treated as false. This synthetic model reports Indeterminate; the renderer does not infer a legal outcome.",
+      "fr": "Les faits requis manquants ne sont pas traités comme faux. Ce modèle synthétique signale Indéterminé ; le moteur de rendu n'infère aucun résultat juridique.",
+      "ar": "لا تُعامل الوقائع المطلوبة الناقصة على أنها خاطئة. يعرض هذا النموذج الاصطناعي «غير محدد»؛ ولا يستنتج العارض نتيجة قانونية."
+    },
+    "limits": {
+      "en": "Synthetic fixture. The presentation is static and is not an execution engine; no real instrument or legal effect is represented.",
+      "fr": "Fixture synthétique. La présentation est statique et ne constitue pas un moteur d’exécution ; aucun instrument ni effet juridique réel n’est représenté.",
+      "ar": "نموذج اصطناعي. العرض ساكن وليس محرك تنفيذ؛ ولا يمثل أي أداة أو أثر قانوني حقيقي."
+    }
+  },
+  "unsupported": [
+    {
+      "label": {
+        "en": "Deontic modality",
+        "fr": "Modalité déontique",
+        "ar": "الجهة الإلزامية"
+      },
+      "reason": {
+        "en": "Obligation, permission and prohibition are not first-class in RuleSpec. L4 can express them with PARTY, MUST, MAY and SHANT.",
+        "fr": "L'obligation, la permission et l'interdiction ne sont pas natives dans RuleSpec. L4 peut les exprimer avec PARTY, MUST, MAY et SHANT.",
+        "ar": "الالتزام والإذن والحظر ليست عناصر أصلية في RuleSpec. يمكن لـ L4 التعبير عنها باستخدام PARTY وMUST وMAY وSHANT."
+      }
+    },
+    {
+      "label": {
+        "en": "Amendment and version history",
+        "fr": "Historique des modifications et versions",
+        "ar": "تاريخ التعديلات والإصدارات"
+      },
+      "reason": {
+        "en": "Effective dates can be encoded, but a reviewed instrument-version and amendment graph is external metadata; this prototype does not model it.",
+        "fr": "Les dates d'effet peuvent être encodées, mais un graphe révisé des versions et modifications de l'instrument reste une métadonnée externe ; ce prototype ne le modélise pas.",
+        "ar": "يمكن ترميز تواريخ السريان، لكن رسم إصدارات الأداة والتعديلات المراجَع بيانات وصفية خارجية؛ ولا يمثلها هذا النموذج."
+      }
+    },
+    {
+      "label": {
+        "en": "Translation provenance",
+        "fr": "Provenance des traductions",
+        "ar": "مصدر الترجمات"
+      },
+      "reason": {
+        "en": "Neither engine records official, reviewed or machine-assisted translation status. The interface translations here are provisional.",
+        "fr": "Aucun des deux moteurs n'enregistre le statut officiel, révisé ou assisté par machine d'une traduction. Les traductions d'interface sont provisoires.",
+        "ar": "لا يسجل أي من المحركين حالة الترجمة الرسمية أو المراجعة أو الآلية. ترجمات الواجهة هنا مؤقتة."
+      }
+    },
+    {
+      "label": {
+        "en": "Real legal text and citation verification",
+        "fr": "Texte juridique réel et vérification des citations",
+        "ar": "النص القانوني الحقيقي والتحقق من الاستشهادات"
+      },
+      "reason": {
+        "en": "All sources are fictional. No real instrument, provision, date or legal effect is encoded.",
+        "fr": "Toutes les sources sont fictives. Aucun instrument, article, date ou effet juridique réel n’est encodé.",
+        "ar": "جميع المصادر خيالية. لا تُشفّر أي أداة أو مادة أو تاريخ أو أثر قانوني حقيقي."
+      }
+    },
+    {
+      "label": {
+        "en": "Contradiction detection",
+        "fr": "Détection des contradictions",
+        "ar": "كشف التناقض"
+      },
+      "reason": {
+        "en": "Both engines applied the ladder order to contradictory facts; neither reported a contradiction.",
+        "fr": "Les deux moteurs ont appliqué l'ordre de l'échelle à des faits contradictoires ; aucun n'a signalé de contradiction.",
+        "ar": "طبق المحركان ترتيب السلم على وقائع متعارضة؛ ولم يبلغ أي منهما عن تناقض."
+      }
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Rule presentation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "id", "version", "synthetic", "review", "record", "title", "summary", "disclaimer", "effective_period", "provenance", "sources", "nodes", "ladder", "text", "unsupported"],
+  "properties": {
+    "format": {"enum": ["rule-presentation/v1"]},
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "synthetic": {"type": "boolean"},
+    "review": {"$ref": "#/$defs/review"},
+    "record": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/record"}]},
+    "title": {"$ref": "#/$defs/localized"},
+    "summary": {"$ref": "#/$defs/localized"},
+    "disclaimer": {"$ref": "#/$defs/localized"},
+    "effective_period": {"$ref": "#/$defs/effective_period"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "nodes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/node"}},
+    "ladder": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/ladder_step"}},
+    "text": {"$ref": "#/$defs/text"},
+    "unsupported": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/unsupported"}}
+  },
+  "$defs": {
+    "localized": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "fr", "ar"],
+      "properties": {
+        "en": {"type": "string", "minLength": 1},
+        "fr": {"type": "string", "minLength": 1},
+        "ar": {"type": "string", "minLength": 1}
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reviewer_role", "reviewed_at", "notes"],
+      "properties": {
+        "status": {"enum": ["synthetic_fixture", "reviewed"]},
+        "reviewer_role": {"type": ["string", "null"]},
+        "reviewed_at": {"type": ["string", "null"]},
+        "notes": {"type": "string", "minLength": 1}
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instrument_id", "source_id", "provision_id", "legal_version", "reviewed_interpretation_id"],
+      "properties": {
+        "instrument_id": {"type": "string", "minLength": 1},
+        "source_id": {"type": "string", "minLength": 1},
+        "provision_id": {"type": "string", "minLength": 1},
+        "legal_version": {"type": "string", "minLength": 1},
+        "reviewed_interpretation_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "effective_period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to"],
+      "properties": {
+        "from": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "to": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["encoding_id", "engine", "engine_version", "artifact_sha256", "test_results"],
+      "properties": {
+        "encoding_id": {"type": "string", "minLength": 1},
+        "engine": {"type": "string", "minLength": 1},
+        "engine_version": {"type": "string", "minLength": 1},
+        "artifact_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "test_results": {"type": ["string", "null"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "citation", "label", "url", "language"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Z]{2,10}-[0-9]+$"},
+        "citation": {"$ref": "#/$defs/localized"},
+        "label": {"$ref": "#/$defs/localized"},
+        "url": {"type": "string", "pattern": "^https://"},
+        "language": {"type": "string", "pattern": "^[a-z]{2,3}$"}
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "label", "dtype", "value", "depends", "citation"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^N[0-9]+$"},
+        "kind": {"enum": ["input", "constant", "computed"]},
+        "label": {"$ref": "#/$defs/localized"},
+        "dtype": {"type": "string", "minLength": 1},
+        "value": {"type": ["string", "null"]},
+        "depends": {"type": "array", "items": {"type": "string", "pattern": "^N[0-9]+$"}},
+        "citation": {"type": "string", "pattern": "^[A-Z]{2,10}-[0-9]+$"}
+      }
+    },
+    "ladder_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "condition", "true", "false", "citation", "note"],
+      "properties": {
+        "step": {"type": "integer"},
+        "condition": {"$ref": "#/$defs/localized"},
+        "true": {"$ref": "#/$defs/localized"},
+        "false": {"$ref": "#/$defs/localized"},
+        "citation": {"type": "string", "pattern": "^[A-Z]{2,10}-[0-9]+$"},
+        "note": {"$ref": "#/$defs/localized"}
+      }
+    },
+    "localized_text_list": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "fr", "ar"],
+      "properties": {
+        "en": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "fr": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "ar": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["steps", "unknown", "limits"],
+      "properties": {
+        "steps": {"$ref": "#/$defs/localized_text_list"},
+        "unknown": {"$ref": "#/$defs/localized"},
+        "limits": {"$ref": "#/$defs/localized"}
+      }
+    },
+    "unsupported": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "reason"],
+      "properties": {
+        "label": {"$ref": "#/$defs/localized"},
+        "reason": {"$ref": "#/$defs/localized"}
+      }
+    }
+  }
+}
