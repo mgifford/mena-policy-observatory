@@ -1,0 +1,352 @@
+{
+  "version": "1",
+  "scope": "Working terminology for research and interface use. These are not legal definitions, do not establish equivalent meaning across jurisdictions, and must not be cited as legal authority.",
+  "translation_status": "Arabic and French labels are candidate drafts. Definitions and context are recorded in English pending professional translation.",
+  "concepts": [
+    {
+      "id": "legislation",
+      "labels": {
+        "en": "Legislation",
+        "fr": "Législation",
+        "ar": "تشريع"
+      },
+      "definition": {
+        "language": "en",
+        "text": "A legal instrument enacted through a legislature; used here as a research category, not a finding that a particular instrument is in force."
+      },
+      "context": {
+        "language": "en",
+        "text": "Classifies records and candidate leads whose instrument is enacted by a legislature."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "May include primary and delegated legislation depending on the jurisdiction."
+      ]
+    },
+    {
+      "id": "regulation",
+      "labels": {
+        "en": "Regulation",
+        "fr": "Règlement",
+        "ar": "لائحة تنظيمية"
+      },
+      "definition": {
+        "language": "en",
+        "text": "A rule made under authority delegated by legislation; the term does not itself establish delegated authority or commencement."
+      },
+      "context": {
+        "language": "en",
+        "text": "Classifies delegated instruments and implementing rules."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Delegated authority and commencement must be verified per instrument."
+      ]
+    },
+    {
+      "id": "binding",
+      "labels": {
+        "en": "Binding",
+        "fr": "Contraignant",
+        "ar": "ملزم"
+      },
+      "definition": {
+        "language": "en",
+        "text": "A research label for an instrument whose legal effect is recorded as binding after review; it is not inferred from publication alone."
+      },
+      "context": {
+        "language": "en",
+        "text": "Describes legal-effect findings, never source discovery status."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Never inferred from a government URL or a successful retrieval."
+      ]
+    },
+    {
+      "id": "guidance",
+      "labels": {
+        "en": "Guidance",
+        "fr": "Orientations",
+        "ar": "إرشادات"
+      },
+      "definition": {
+        "language": "en",
+        "text": "Official explanatory or advisory material that may not create legal obligations; its status is recorded per instrument."
+      },
+      "context": {
+        "language": "en",
+        "text": "Distinguishes guidance from legislation and policy in source metadata."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Official guidance may still describe mandatory requirements; verify the instrument itself."
+      ]
+    },
+    {
+      "id": "amendment",
+      "labels": {
+        "en": "Amendment",
+        "fr": "Modification",
+        "ar": "تعديل"
+      },
+      "definition": {
+        "language": "en",
+        "text": "An instrument or provision that changes another instrument; the amendment is recorded separately from the consolidated text."
+      },
+      "context": {
+        "language": "en",
+        "text": "Describes instrument relationships, not a detected website change."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "A changed file is not an amendment until reviewed."
+      ]
+    },
+    {
+      "id": "repeal",
+      "labels": {
+        "en": "Repeal",
+        "fr": "Abrogation",
+        "ar": "إلغاء"
+      },
+      "definition": {
+        "language": "en",
+        "text": "The removal of an instrument or provision from legal effect, recorded only where documented."
+      },
+      "context": {
+        "language": "en",
+        "text": "Describes an instrument relationship or date; never inferred from a missing page."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "A missing source page is not evidence of repeal."
+      ]
+    },
+    {
+      "id": "commencement",
+      "labels": {
+        "en": "Commencement",
+        "fr": "Entrée en vigueur",
+        "ar": "بدء السريان"
+      },
+      "definition": {
+        "language": "en",
+        "text": "The date or condition on which an instrument or provision begins to have legal effect, kept separate from publication and adoption."
+      },
+      "context": {
+        "language": "en",
+        "text": "Used for version and date metadata where documented."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Publication, adoption and commencement remain separate dates."
+      ]
+    },
+    {
+      "id": "accessibility",
+      "labels": {
+        "en": "Accessibility",
+        "fr": "Accessibilité",
+        "ar": "إمكانية الوصول"
+      },
+      "definition": {
+        "language": "en",
+        "text": "The research theme covering access to services, information and environments for people with disabilities; the project does not use it as a compliance rating."
+      },
+      "context": {
+        "language": "en",
+        "text": "Groups digital, physical and inclusion records without implying legal obligation."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Not a compliance score and not a legal-effect finding."
+      ]
+    },
+    {
+      "id": "disability_inclusion",
+      "labels": {
+        "en": "Disability inclusion",
+        "fr": "Inclusion des personnes handicapées",
+        "ar": "إدماج الأشخاص ذوي الإعاقة"
+      },
+      "definition": {
+        "language": "en",
+        "text": "A policy area covering participation and accommodation of people with disabilities; recorded separately from accessibility standards."
+      },
+      "context": {
+        "language": "en",
+        "text": "Used for policy-area classification and candidate metadata."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Terminology differs across jurisdictions and languages."
+      ]
+    },
+    {
+      "id": "privacy",
+      "labels": {
+        "en": "Privacy",
+        "fr": "Vie privée",
+        "ar": "الخصوصية"
+      },
+      "definition": {
+        "language": "en",
+        "text": "A policy area covering limits on intrusion and control over personal information; it is not synonymous with data protection in every jurisdiction."
+      },
+      "context": {
+        "language": "en",
+        "text": "Classifies records and candidate leads on privacy."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Not interchangeable with data protection without checking scope."
+      ]
+    },
+    {
+      "id": "data_protection",
+      "labels": {
+        "en": "Data protection",
+        "fr": "Protection des données",
+        "ar": "حماية البيانات"
+      },
+      "definition": {
+        "language": "en",
+        "text": "A policy area covering rules for processing personal data; terminology and scope vary by jurisdiction."
+      },
+      "context": {
+        "language": "en",
+        "text": "Used for policy-area and candidate metadata; not a finding of legal effect."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Scope and authority vary by jurisdiction."
+      ]
+    },
+    {
+      "id": "public_procurement",
+      "labels": {
+        "en": "Public procurement",
+        "fr": "Marchés publics",
+        "ar": "المشتريات العامة"
+      },
+      "definition": {
+        "language": "en",
+        "text": "The process by which public bodies acquire goods and services, including the rules governing tenders, awards and contracts."
+      },
+      "context": {
+        "language": "en",
+        "text": "Research theme for future procurement work; no records are published yet."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Future research theme, not an authorized current work package."
+      ]
+    },
+    {
+      "id": "open_source_software",
+      "labels": {
+        "en": "Open-source software",
+        "fr": "Logiciel libre",
+        "ar": "البرمجيات مفتوحة المصدر"
+      },
+      "definition": {
+        "language": "en",
+        "text": "Software whose licence permits use, study, modification and redistribution under stated conditions; endorsement is not a purchasing mandate."
+      },
+      "context": {
+        "language": "en",
+        "text": "Research theme for future work; no records are published yet."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Licence terms and procurement mandates are distinct questions."
+      ]
+    },
+    {
+      "id": "digital_sovereignty",
+      "labels": {
+        "en": "Digital sovereignty",
+        "fr": "Souveraineté numérique",
+        "ar": "السيادة الرقمية"
+      },
+      "definition": {
+        "language": "en",
+        "text": "A contested policy concept concerning control over digital infrastructure, data and technology; it is not reducible to data localisation."
+      },
+      "context": {
+        "language": "en",
+        "text": "Research theme for future work; no records are published yet."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "A contested term; preserve source-specific usage."
+      ]
+    },
+    {
+      "id": "environmental_sustainability",
+      "labels": {
+        "en": "Environmental sustainability",
+        "fr": "Durabilité environnementale",
+        "ar": "الاستدامة البيئية"
+      },
+      "definition": {
+        "language": "en",
+        "text": "A policy area covering environmental impacts and reporting obligations; voluntary standards are not treated as binding law."
+      },
+      "context": {
+        "language": "en",
+        "text": "Research theme for future work; no records are published yet."
+      },
+      "jurisdictions": [],
+      "provenance": "Project research vocabulary drafted for internal consistency; labels are candidate translations and not approved legal terminology.",
+      "review_state": "draft",
+      "review_history": [],
+      "notes": [
+        "Voluntary frameworks are not automatically binding."
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 **Status:** In progress\
 **Priority:** P0\
-**Working branch:** `fix/evidence-defects` (verify before use)\
+**Working branch:** `feat/translation-provenance` (verify before use)\
 **Previous milestone:** MENA research coverage integration — implementation complete on `main` at `4b3c13a` (see git history and `docs/ROADMAP.md`)\
 **Later milestones:** public digital policy research, then reviewed Rules as Code. Neither is authorized.
 
@@ -48,8 +48,8 @@ Do not:
 1. **Publisher registry and source-health records** — delivered (PR #14): registry of 25 cited hosts, one not-attempted retrieval record per candidate, validator and trilingual display. Defect correction in this PR separates retrieval outcome, freshness and legal verification.
 2. **Instrument identity and version metadata** — delivered in this work package: reported type/number/year, explicit null authority and version dates, captured-version state, validator and trilingual display.
 3. **French interface foundation** — delivered (PR #16): French catalogue, localized country/domain labels, three-language navigation and language switching, 139-page build and three-locale tests.
-4. **Translation provenance and terminology** — next: states, provenance, reviewed glossary.
-5. **Source-change review workflow** — change events, review tasks, stale-source warnings.
+4. **Translation provenance and terminology** — delivered in this work package: optional per-source language expressions, validation, draft terminology registry and accessible expression status on record pages; native review remains outstanding.
+5. **Source-change review workflow** — next: change events, review tasks, stale-source warnings.
 
 **Maintenance (this PR): defect corrections** — source-health classification, retrospective-date handling, trilingual instruction reconciliation and regression tests.
 
@@ -61,7 +61,7 @@ Do not:
 - [x] Instrument identity and version metadata are recorded where evidence exists.
 - [ ] Change events and review tasks exist for detected changes (WP5).
 - [x] English, French and Arabic navigation works; French and Arabic copy is marked provisional.
-- [ ] Translation states and provenance are recorded per text (WP4).
+- [x] Translation states and provenance are recorded per text (WP4).
 - [x] Automated accessibility tests pass for all three locales.
 - [x] Python validation, unit tests and the reproducible build pass.
 - [x] Documentation matches the implementation.

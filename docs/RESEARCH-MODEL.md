@@ -31,7 +31,7 @@ Deliberate limits:
 - **Dates** are an ISO date or the literal `"unknown"`. Free text such as "sometime in 2011" is rejected. An unknown date is not treated as absent, late or invalid law.
 - **Capture** records `bytes_stored`. A SHA-256 is only allowed when captured bytes actually exist in the repository, and stored bytes require a checksum and timestamp. No checksum is invented for a document that was only linked.
 - **Excerpts** are copied from one of the declared Markdown artifacts, and the validator requires the exact text to still occur in that file. `excerpt_status` must agree with whether an excerpt is present: `recorded`, `not_recorded` or `not_permitted`.
-- **Translation** is a separate axis with its own status and review state. A source can be authenticated and still untranslated, or translated and still not legally reviewed. A named translation needs recorded provenance; `native_reviewed` without provenance is rejected.
+- **Translation** is a separate axis with its own status and review state. A source can be authenticated and still untranslated, or translated and still not legally reviewed. A named translation needs recorded provenance; `native_reviewed` without provenance is rejected. Optional per-source **language expressions** record individual texts in more detail (see below); existing records without expressions remain valid.
 
 A recorded source means the research located the document. It does not mean the legal effect was verified.
 
@@ -129,6 +129,27 @@ Two files record what is known about source currency, separately from legal effe
   - **Legal verification:** `unreviewed`, `in_review`, `verified`, `disputed` or `superseded`, with `evidence` and `reviewed_at`. Verified, disputed and superseded records require both. A successful HTTP request never promotes legal verification.
 
 A retrieval record says what happened when the source was requested. It does not establish that the source is current, that an instrument is in force, or that its content was legally reviewed. A missing record is not evidence of absence.
+
+### Language expressions
+
+A source may carry an optional `expressions` array. Each expression identifies one recorded text:
+
+- `id`, `kind`, `source_id` and `instrument_id`;
+- `language` and `original_language` as BCP47 tags;
+- optional `instrument_version`, `url`, `authority`, `translation_method`, `notes` and `uncertainties`;
+- `review_status` (`unreviewed`, `in_review`, `reviewed`, `native_reviewed`, `disputed`) and, for reviewed states, `reviewed_at` and `reviewer_role`.
+
+Kinds are `original_authoritative`, `additional_authoritative`, `official_translation`, `research_translation`, `machine_assisted_draft`, `translation_pending`, `translation_unavailable` and `authority_unresolved`. The list separates the original text, additional authoritative expressions, official translations, project translations, machine drafts and missing or unresolved translations. An expression is recorded only where evidence exists; absence means no expression record, not a fabricated one.
+
+The validator rejects unknown kinds or review states, invalid language tags, mismatched source/instrument references, duplicate expression IDs or language/kind pairs, more than one original per source, an original whose language differs from the source language, official or additional authoritative expressions without an authority, URLs that are not https, pending or unavailable translations carrying a URL or authority, unresolved authority claiming review, machine-assisted drafts claiming review, reviewed states without a reviewer role and ISO date, and unreviewed states carrying review metadata. The original source content and existing translation block are never rewritten.
+
+### Terminology registry
+
+`regions/mena/data/terminology.json` records candidate terminology for concepts already used by the project: legislation, regulation, binding, guidance, amendment, repeal, commencement, accessibility, disability inclusion, privacy, data protection, public procurement, open-source software, digital sovereignty and environmental sustainability.
+
+Each concept has a stable ID, English/French/Arabic labels, an English definition and context, optional jurisdiction variations, provenance, `review_state`, `review_history` and notes. All initial concepts are `draft` with no review history; the French and Arabic labels are candidate drafts, and the file explicitly states that it is not a legal glossary.
+
+`framework/terminology.py` validates the registry: unique IDs, three nonempty labels without HTML, BCP47 definition/context language, known jurisdictions, provenance, notes and review history. A concept may be `reviewed` only with an approved review entry; the validator never creates one.
 
 ### Instrument identity and versions
 

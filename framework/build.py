@@ -112,6 +112,28 @@ TRANSLATION_KEYS = {
     'draft': 'record.translation.draft',
     'complete': 'record.translation.complete',
 }
+EXPRESSION_KIND_KEYS = {
+    'original_authoritative': 'expression.kind.original_authoritative',
+    'additional_authoritative': 'expression.kind.additional_authoritative',
+    'official_translation': 'expression.kind.official_translation',
+    'research_translation': 'expression.kind.research_translation',
+    'machine_assisted_draft': 'expression.kind.machine_assisted_draft',
+    'translation_pending': 'expression.kind.translation_pending',
+    'translation_unavailable': 'expression.kind.translation_unavailable',
+    'authority_unresolved': 'expression.kind.authority_unresolved',
+}
+EXPRESSION_REVIEW_KEYS = {
+    'unreviewed': 'expression.review.unreviewed',
+    'in_review': 'expression.review.in_review',
+    'reviewed': 'expression.review.reviewed',
+    'native_reviewed': 'expression.review.native_reviewed',
+    'disputed': 'expression.review.disputed',
+}
+EXPRESSION_METHOD_KEYS = {
+    'human': 'expression.method.human',
+    'machine_assisted': 'expression.method.machine_assisted',
+    'unknown': 'expression.method.unknown',
+}
 TRANSLATION_REVIEW_KEYS = {
     'not_reviewed': 'record.translation.not_reviewed',
     'native_reviewed': 'record.translation.native_reviewed',
@@ -688,6 +710,51 @@ def source_sections(strings, lang, research):
             f'{esc(label(strings, TRANSLATION_REVIEW_KEYS, translation.get("review_state"), "record.source.not_recorded"))}</dd>',
         ]
 
+        expressions = source.get('expressions') or []
+        if expressions:
+            expression_items = []
+            for expression in expressions:
+                kind = esc(label(strings, EXPRESSION_KIND_KEYS, expression.get('kind'),
+                                 'record.not_classified'))
+                language = expression.get('language', '')
+                review = esc(label(strings, EXPRESSION_REVIEW_KEYS,
+                                   expression.get('review_status'), 'source.not_recorded'))
+                meta = [f'{esc(strings["expression.original_language"])}: '
+                        f'{code(expression.get("original_language", ""))}']
+                if expression.get('authority'):
+                    meta.append(f'{esc(strings["expression.authority"])}: '
+                                f'{foreign(expression["authority"], lang)}')
+                if expression.get('instrument_version'):
+                    meta.append(f'{esc(strings["expression.version"])}: '
+                                f'{foreign(expression["instrument_version"], lang)}')
+                if expression.get('translation_method'):
+                    meta.append(f'{esc(strings["expression.method"])}: '
+                                f'{esc(label(strings, EXPRESSION_METHOD_KEYS,
+                                            expression["translation_method"], "expression.method.unknown"))}')
+                if expression.get('reviewed_at'):
+                    meta.append(f'{esc(strings["expression.reviewed_at"])}: '
+                                f'{code(expression["reviewed_at"])}')
+                if expression.get('reviewer_role'):
+                    meta.append(f'{esc(strings["expression.reviewer_role"])}: '
+                                f'{foreign(expression["reviewer_role"], lang)}')
+                if expression.get('notes'):
+                    meta.append(foreign(expression['notes'], lang))
+                link = ''
+                if expression.get('url'):
+                    link = (f'<p><a href="{esc(expression["url"])}">'
+                            f'{esc(strings["expression.open"])} '
+                            f'({code(language)})</a></p>')
+                expression_items.append(
+                    f'<li><strong>{kind}</strong> — {code(language)} — {review}'
+                    f'<p class="meta">{"; ".join(meta)}</p>{link}</li>')
+            rows.append(
+                f'<dt>{esc(strings["record.expressions_heading"])}</dt>'
+                f'<dd><ul>{"".join(expression_items)}</ul></dd>')
+        else:
+            rows.append(
+                f'<dt>{esc(strings["record.expressions_heading"])}</dt>'
+                f'<dd>{esc(strings["record.expressions_none"])}</dd>')
+
         excerpt = source.get('excerpt')
         if isinstance(excerpt, dict):
             excerpt_lang = excerpt.get('language', 'en')
@@ -709,6 +776,7 @@ def source_sections(strings, lang, research):
     return [
         f'<section><h2>{esc(strings["record.sources_heading"])}</h2>'
         f'<p class="notice">{esc(strings["record.sources_notice"])}</p>'
+        f'<p class="notice">{esc(strings["record.expressions_notice"])}</p>'
         f'{"".join(items)}</section>'
     ]
 

@@ -11,9 +11,11 @@ import sys
 try:  # imported as framework.validate
     from .coverage import load_coverage, validate_coverage
     from .research import validate_region as validate_region_research
+    from .terminology import validate_terminology
 except ImportError:  # run as a script
     from coverage import load_coverage, validate_coverage
     from research import validate_region as validate_region_research
+    from terminology import validate_terminology
 
 REGIONS = ('mena',)
 COVERAGE_REGION = 'mena'
@@ -60,6 +62,7 @@ def main() -> int:
         errors.extend(validate_region_research(root / 'regions' / region, region, warnings))
     errors.extend(validate_coverage(load_coverage(
         root / 'regions' / COVERAGE_REGION, root / 'research-toolkit')))
+    errors.extend(validate_terminology(root / 'regions' / COVERAGE_REGION))
 
     for warning in warnings:
         print(f'WARNING: {warning}')

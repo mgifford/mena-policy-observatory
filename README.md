@@ -33,7 +33,7 @@ npm run test:a11y
 
 ## Trilingual content
 
-Interface and homepage strings live in `regions/mena/i18n/en.json`, `fr.json` and `ar.json`. The build fails if the three catalogues declare different keys, and unit tests check placeholders and value hygiene. French and Arabic page copy are drafts pending native-speaker review. Policy record fields have no French or Arabic translation; on those pages they are shown in their source language with `lang`/`dir` marking and an explicit notice.
+Interface and homepage strings live in `regions/mena/i18n/en.json`, `fr.json` and `ar.json`. Policy records can also record optional language expressions (original, additional authoritative, official translation, research translation, machine draft, pending, unavailable or unresolved) with per-text authority, method and review provenance. Candidate terminology lives in `regions/mena/data/terminology.json` and is explicitly draft, not a legal glossary. The build fails if the three catalogues declare different keys, and unit tests check placeholders and value hygiene. French and Arabic page copy are drafts pending native-speaker review. Policy record fields have no French or Arabic translation; on those pages they are shown in their source language with `lang`/`dir` marking and an explicit notice.
 
 ## Research coverage views
 

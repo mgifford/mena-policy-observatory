@@ -16,6 +16,8 @@ Instrument-identity work package (additive): `research-toolkit/sources/instrumen
 
 Source-health defect correction (non-breaking data migration): `research-toolkit/sources/source-checks.json` moves to version 2 fields. Legacy `status`/`checked_at` records migrate to `retrieval_status`, `attempted_at` and `last_successful_retrieval`, and gain a separate `legal_verification` object. All 23 current records are `not_attempted` and `unreviewed`; no retrieval, freshness or verification claim is created. `registry.py --check` reproduces the file. Retrospective effective dates now produce a validation warning instead of an error; no source date is changed.
 
+Translation-provenance work package (additive): source records may carry an optional `expressions` array for language expressions and translations. No existing research record is changed or required to add one; records without expressions remain valid and show an explicit "no expression record" state. Added `regions/mena/data/terminology.json` (15 draft concepts) and terminology validation. No source text, translation, reviewer or legal claim is fabricated.
+
 Research layers remain separate: geographic scope, task status, candidate discovery, source verification, provision extraction, interpretation, translation, Rules as Code and publication are never collapsed into one label. Candidate source leads are displayed as unreviewed discovery leads only; no candidate has been captured, verified, translated or legally reviewed.
 
 Omitted: old duplicated `docs/policies` tree and historical generated HTML, because they were derived outputs. No additional law or verified translation has been invented. Old scripts have not been carried forward where their behavior duplicates the new framework.
