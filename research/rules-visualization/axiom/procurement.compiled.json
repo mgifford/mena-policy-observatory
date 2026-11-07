@@ -1,0 +1,828 @@
+{
+  "artifact_format_version": 3,
+  "engine_version": "0.2.2",
+  "engine_build": {
+    "commit": "d41d29d251b6eb0de6542f5899a93d317f3f0dcf",
+    "dirty": false
+  },
+  "source_closure": {
+    "root": "xx:policies/procurement",
+    "modules": [
+      {
+        "target": "xx:policies/procurement",
+        "sha256": "90997db538fd395144fe1294f66d852f2cada2e092c8a0aa56c71410060015f7"
+      }
+    ],
+    "digest": "sha256:855c7317f34bc53563e60efc0bac528d6856e3fe1a916f7ba064cd56ccbf42c1"
+  },
+  "program": {
+    "module": {
+      "title": "Synthetic procurement policy (fictional demonstration only)",
+      "summary": "Fictional procurement rule used only to compare rule engines and\nvisualisation. It is not law in any jurisdiction and has no legal effect.\n"
+    },
+    "units": [
+      {
+        "name": "GBP",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "USD",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "EUR",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "CHF",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "NOK",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "GHS",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "GHp",
+        "kind": "currency",
+        "minor_units": 0
+      },
+      {
+        "name": "NGN",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "UGX",
+        "kind": "currency",
+        "minor_units": 0
+      },
+      {
+        "name": "ZMW",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "ETB",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "RWF",
+        "kind": "currency",
+        "minor_units": 0
+      },
+      {
+        "name": "TZS",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "DKK",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "AMD",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "ILS",
+        "kind": "currency",
+        "minor_units": 2
+      },
+      {
+        "name": "count",
+        "kind": "count"
+      },
+      {
+        "name": "person",
+        "kind": "count"
+      },
+      {
+        "name": "ratio",
+        "kind": "ratio"
+      },
+      {
+        "name": "status",
+        "kind": "custom",
+        "label": "judgment"
+      }
+    ],
+    "relations": [],
+    "parameters": [
+      {
+        "id": "xx:policies/procurement#open_source_threshold",
+        "name": "open_source_threshold",
+        "unit": "USD",
+        "indexed_by": null,
+        "source": null,
+        "source_url": null,
+        "versions": [
+          {
+            "effective_from": "2026-01-01",
+            "values": {
+              "0": {
+                "kind": "integer",
+                "value": 100000
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "derived": [
+      {
+        "id": "xx:policies/procurement#procurement_obligation",
+        "name": "procurement_obligation",
+        "entity": "Procurement",
+        "dtype": "judgment",
+        "unit": null,
+        "period": null,
+        "source": "Synthetic procurement policy s.1 (fictional)",
+        "source_url": "https://example.org/synthetic-procurement-policy",
+        "semantics": "judgment",
+        "expr": {
+          "kind": "and",
+          "items": [
+            {
+              "kind": "and",
+              "items": [
+                {
+                  "kind": "and",
+                  "items": [
+                    {
+                      "kind": "comparison",
+                      "left": {
+                        "kind": "input",
+                        "name": "facts_complete"
+                      },
+                      "op": "eq",
+                      "right": {
+                        "kind": "literal",
+                        "value": {
+                          "kind": "bool",
+                          "value": true
+                        }
+                      }
+                    },
+                    {
+                      "kind": "comparison",
+                      "left": {
+                        "kind": "input",
+                        "name": "covered_body"
+                      },
+                      "op": "eq",
+                      "right": {
+                        "kind": "literal",
+                        "value": {
+                          "kind": "bool",
+                          "value": true
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "comparison",
+                  "left": {
+                    "kind": "input",
+                    "name": "contract_scope_met"
+                  },
+                  "op": "eq",
+                  "right": {
+                    "kind": "literal",
+                    "value": {
+                      "kind": "bool",
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "not",
+              "item": {
+                "kind": "comparison",
+                "left": {
+                  "kind": "input",
+                  "name": "exception_applies"
+                },
+                "op": "eq",
+                "right": {
+                  "kind": "literal",
+                  "value": {
+                    "kind": "bool",
+                    "value": true
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "versions": [
+          {
+            "effective_from": "2026-01-01",
+            "semantics": "judgment",
+            "expr": {
+              "kind": "and",
+              "items": [
+                {
+                  "kind": "and",
+                  "items": [
+                    {
+                      "kind": "and",
+                      "items": [
+                        {
+                          "kind": "comparison",
+                          "left": {
+                            "kind": "input",
+                            "name": "facts_complete"
+                          },
+                          "op": "eq",
+                          "right": {
+                            "kind": "literal",
+                            "value": {
+                              "kind": "bool",
+                              "value": true
+                            }
+                          }
+                        },
+                        {
+                          "kind": "comparison",
+                          "left": {
+                            "kind": "input",
+                            "name": "covered_body"
+                          },
+                          "op": "eq",
+                          "right": {
+                            "kind": "literal",
+                            "value": {
+                              "kind": "bool",
+                              "value": true
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "comparison",
+                      "left": {
+                        "kind": "input",
+                        "name": "contract_scope_met"
+                      },
+                      "op": "eq",
+                      "right": {
+                        "kind": "literal",
+                        "value": {
+                          "kind": "bool",
+                          "value": true
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "not",
+                  "item": {
+                    "kind": "comparison",
+                    "left": {
+                      "kind": "input",
+                      "name": "exception_applies"
+                    },
+                    "op": "eq",
+                    "right": {
+                      "kind": "literal",
+                      "value": {
+                        "kind": "bool",
+                        "value": true
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "xx:policies/procurement#open_source_consideration_required",
+        "name": "open_source_consideration_required",
+        "entity": "Procurement",
+        "dtype": "judgment",
+        "unit": null,
+        "period": null,
+        "source": "Synthetic procurement policy s.2 (fictional)",
+        "source_url": "https://example.org/synthetic-procurement-policy",
+        "semantics": "judgment",
+        "expr": {
+          "kind": "and",
+          "items": [
+            {
+              "kind": "derived",
+              "name": "procurement_obligation"
+            },
+            {
+              "kind": "comparison",
+              "left": {
+                "kind": "input",
+                "name": "contract_value"
+              },
+              "op": "gte",
+              "right": {
+                "kind": "parameter_lookup",
+                "parameter": "open_source_threshold",
+                "index": {
+                  "kind": "literal",
+                  "value": {
+                    "kind": "integer",
+                    "value": 0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "versions": [
+          {
+            "effective_from": "2026-01-01",
+            "semantics": "judgment",
+            "expr": {
+              "kind": "and",
+              "items": [
+                {
+                  "kind": "derived",
+                  "name": "procurement_obligation"
+                },
+                {
+                  "kind": "comparison",
+                  "left": {
+                    "kind": "input",
+                    "name": "contract_value"
+                  },
+                  "op": "gte",
+                  "right": {
+                    "kind": "parameter_lookup",
+                    "parameter": "open_source_threshold",
+                    "index": {
+                      "kind": "literal",
+                      "value": {
+                        "kind": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "xx:policies/procurement#determination",
+        "name": "determination",
+        "entity": "Procurement",
+        "dtype": "text",
+        "unit": null,
+        "period": null,
+        "source": "Synthetic procurement policy s.3 (fictional)",
+        "source_url": "https://example.org/synthetic-procurement-policy",
+        "semantics": "scalar",
+        "expr": {
+          "kind": "if",
+          "condition": {
+            "kind": "not",
+            "item": {
+              "kind": "comparison",
+              "left": {
+                "kind": "input",
+                "name": "facts_complete"
+              },
+              "op": "eq",
+              "right": {
+                "kind": "literal",
+                "value": {
+                  "kind": "bool",
+                  "value": true
+                }
+              }
+            }
+          },
+          "then_expr": {
+            "kind": "literal",
+            "value": {
+              "kind": "text",
+              "value": "indeterminate"
+            }
+          },
+          "else_expr": {
+            "kind": "if",
+            "condition": {
+              "kind": "not",
+              "item": {
+                "kind": "comparison",
+                "left": {
+                  "kind": "input",
+                  "name": "covered_body"
+                },
+                "op": "eq",
+                "right": {
+                  "kind": "literal",
+                  "value": {
+                    "kind": "bool",
+                    "value": true
+                  }
+                }
+              }
+            },
+            "then_expr": {
+              "kind": "literal",
+              "value": {
+                "kind": "text",
+                "value": "not_applicable"
+              }
+            },
+            "else_expr": {
+              "kind": "if",
+              "condition": {
+                "kind": "not",
+                "item": {
+                  "kind": "comparison",
+                  "left": {
+                    "kind": "input",
+                    "name": "contract_scope_met"
+                  },
+                  "op": "eq",
+                  "right": {
+                    "kind": "literal",
+                    "value": {
+                      "kind": "bool",
+                      "value": true
+                    }
+                  }
+                }
+              },
+              "then_expr": {
+                "kind": "literal",
+                "value": {
+                  "kind": "text",
+                  "value": "outside_scope"
+                }
+              },
+              "else_expr": {
+                "kind": "if",
+                "condition": {
+                  "kind": "comparison",
+                  "left": {
+                    "kind": "input",
+                    "name": "exception_applies"
+                  },
+                  "op": "eq",
+                  "right": {
+                    "kind": "literal",
+                    "value": {
+                      "kind": "bool",
+                      "value": true
+                    }
+                  }
+                },
+                "then_expr": {
+                  "kind": "literal",
+                  "value": {
+                    "kind": "text",
+                    "value": "exception_applies"
+                  }
+                },
+                "else_expr": {
+                  "kind": "if",
+                  "condition": {
+                    "kind": "comparison",
+                    "left": {
+                      "kind": "input",
+                      "name": "contract_value"
+                    },
+                    "op": "gte",
+                    "right": {
+                      "kind": "parameter_lookup",
+                      "parameter": "open_source_threshold",
+                      "index": {
+                        "kind": "literal",
+                        "value": {
+                          "kind": "integer",
+                          "value": 0
+                        }
+                      }
+                    }
+                  },
+                  "then_expr": {
+                    "kind": "literal",
+                    "value": {
+                      "kind": "text",
+                      "value": "open_source_consideration_required"
+                    }
+                  },
+                  "else_expr": {
+                    "kind": "literal",
+                    "value": {
+                      "kind": "text",
+                      "value": "procurement_requirement_without_open_source_threshold"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "versions": [
+          {
+            "effective_from": "2026-01-01",
+            "semantics": "scalar",
+            "expr": {
+              "kind": "if",
+              "condition": {
+                "kind": "not",
+                "item": {
+                  "kind": "comparison",
+                  "left": {
+                    "kind": "input",
+                    "name": "facts_complete"
+                  },
+                  "op": "eq",
+                  "right": {
+                    "kind": "literal",
+                    "value": {
+                      "kind": "bool",
+                      "value": true
+                    }
+                  }
+                }
+              },
+              "then_expr": {
+                "kind": "literal",
+                "value": {
+                  "kind": "text",
+                  "value": "indeterminate"
+                }
+              },
+              "else_expr": {
+                "kind": "if",
+                "condition": {
+                  "kind": "not",
+                  "item": {
+                    "kind": "comparison",
+                    "left": {
+                      "kind": "input",
+                      "name": "covered_body"
+                    },
+                    "op": "eq",
+                    "right": {
+                      "kind": "literal",
+                      "value": {
+                        "kind": "bool",
+                        "value": true
+                      }
+                    }
+                  }
+                },
+                "then_expr": {
+                  "kind": "literal",
+                  "value": {
+                    "kind": "text",
+                    "value": "not_applicable"
+                  }
+                },
+                "else_expr": {
+                  "kind": "if",
+                  "condition": {
+                    "kind": "not",
+                    "item": {
+                      "kind": "comparison",
+                      "left": {
+                        "kind": "input",
+                        "name": "contract_scope_met"
+                      },
+                      "op": "eq",
+                      "right": {
+                        "kind": "literal",
+                        "value": {
+                          "kind": "bool",
+                          "value": true
+                        }
+                      }
+                    }
+                  },
+                  "then_expr": {
+                    "kind": "literal",
+                    "value": {
+                      "kind": "text",
+                      "value": "outside_scope"
+                    }
+                  },
+                  "else_expr": {
+                    "kind": "if",
+                    "condition": {
+                      "kind": "comparison",
+                      "left": {
+                        "kind": "input",
+                        "name": "exception_applies"
+                      },
+                      "op": "eq",
+                      "right": {
+                        "kind": "literal",
+                        "value": {
+                          "kind": "bool",
+                          "value": true
+                        }
+                      }
+                    },
+                    "then_expr": {
+                      "kind": "literal",
+                      "value": {
+                        "kind": "text",
+                        "value": "exception_applies"
+                      }
+                    },
+                    "else_expr": {
+                      "kind": "if",
+                      "condition": {
+                        "kind": "comparison",
+                        "left": {
+                          "kind": "input",
+                          "name": "contract_value"
+                        },
+                        "op": "gte",
+                        "right": {
+                          "kind": "parameter_lookup",
+                          "parameter": "open_source_threshold",
+                          "index": {
+                            "kind": "literal",
+                            "value": {
+                              "kind": "integer",
+                              "value": 0
+                            }
+                          }
+                        }
+                      },
+                      "then_expr": {
+                        "kind": "literal",
+                        "value": {
+                          "kind": "text",
+                          "value": "open_source_consideration_required"
+                        }
+                      },
+                      "else_expr": {
+                        "kind": "literal",
+                        "value": {
+                          "kind": "text",
+                          "value": "procurement_requirement_without_open_source_threshold"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "interface": {
+      "entities": [
+        {
+          "kind": "Procurement",
+          "id_template": "Procurement:{index}",
+          "instances": {
+            "source": "supplied"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "name": "contract_scope_met",
+          "legal_id": "xx:policies/procurement#input.contract_scope_met",
+          "entities": [
+            "Procurement"
+          ],
+          "dtype": "bool",
+          "dtype_basis": "usage",
+          "default": null,
+          "values": null,
+          "values_basis": null,
+          "election": null
+        },
+        {
+          "name": "contract_value",
+          "legal_id": "xx:policies/procurement#input.contract_value",
+          "entities": [
+            "Procurement"
+          ],
+          "dtype": null,
+          "dtype_basis": null,
+          "default": null,
+          "values": null,
+          "values_basis": null,
+          "election": null
+        },
+        {
+          "name": "covered_body",
+          "legal_id": "xx:policies/procurement#input.covered_body",
+          "entities": [
+            "Procurement"
+          ],
+          "dtype": "bool",
+          "dtype_basis": "usage",
+          "default": null,
+          "values": null,
+          "values_basis": null,
+          "election": null
+        },
+        {
+          "name": "exception_applies",
+          "legal_id": "xx:policies/procurement#input.exception_applies",
+          "entities": [
+            "Procurement"
+          ],
+          "dtype": "bool",
+          "dtype_basis": "usage",
+          "default": null,
+          "values": null,
+          "values_basis": null,
+          "election": null
+        },
+        {
+          "name": "facts_complete",
+          "legal_id": "xx:policies/procurement#input.facts_complete",
+          "entities": [
+            "Procurement"
+          ],
+          "dtype": "bool",
+          "dtype_basis": "usage",
+          "default": null,
+          "values": null,
+          "values_basis": null,
+          "election": null
+        }
+      ],
+      "relations": []
+    }
+  },
+  "metadata": {
+    "evaluation_order": [
+      "determination",
+      "procurement_obligation",
+      "open_source_consideration_required"
+    ],
+    "fast_path": {
+      "strategy": "generic_bulk",
+      "compatible": true,
+      "blockers": []
+    },
+    "input_catalog": [
+      {
+        "slot": "contract_scope_met",
+        "canonical_request_name": "xx:policies/procurement#input.contract_scope_met",
+        "request_names": [
+          "xx:policies/procurement#input.contract_scope_met"
+        ]
+      },
+      {
+        "slot": "contract_value",
+        "canonical_request_name": "xx:policies/procurement#input.contract_value",
+        "request_names": [
+          "xx:policies/procurement#input.contract_value"
+        ]
+      },
+      {
+        "slot": "covered_body",
+        "canonical_request_name": "xx:policies/procurement#input.covered_body",
+        "request_names": [
+          "xx:policies/procurement#input.covered_body"
+        ]
+      },
+      {
+        "slot": "exception_applies",
+        "canonical_request_name": "xx:policies/procurement#input.exception_applies",
+        "request_names": [
+          "xx:policies/procurement#input.exception_applies"
+        ]
+      },
+      {
+        "slot": "facts_complete",
+        "canonical_request_name": "xx:policies/procurement#input.facts_complete",
+        "request_names": [
+          "xx:policies/procurement#input.facts_complete"
+        ]
+      }
+    ]
+  }
+}

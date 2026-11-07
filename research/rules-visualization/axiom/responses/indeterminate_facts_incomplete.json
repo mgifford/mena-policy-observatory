@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "relation_binding": "strict",
+    "requested_mode": "explain",
+    "actual_mode": "explain",
+    "fallback_reason": null
+  },
+  "results": [
+    {
+      "entity_id": "procurement:1",
+      "period": {
+        "period_kind": "month",
+        "start": "2026-01-01",
+        "end": "2026-02-01"
+      },
+      "outputs": {
+        "xx:policies/procurement#determination": {
+          "kind": "scalar",
+          "name": "determination",
+          "id": "xx:policies/procurement#determination",
+          "dtype": "text",
+          "unit": null,
+          "value": {
+            "kind": "text",
+            "value": "indeterminate"
+          }
+        },
+        "xx:policies/procurement#open_source_consideration_required": {
+          "kind": "judgment",
+          "name": "open_source_consideration_required",
+          "id": "xx:policies/procurement#open_source_consideration_required",
+          "unit": null,
+          "outcome": "not_holds"
+        },
+        "xx:policies/procurement#procurement_obligation": {
+          "kind": "judgment",
+          "name": "procurement_obligation",
+          "id": "xx:policies/procurement#procurement_obligation",
+          "unit": null,
+          "outcome": "not_holds"
+        }
+      },
+      "trace": {
+        "xx:policies/procurement#determination": {
+          "kind": "scalar",
+          "name": "determination",
+          "id": "xx:policies/procurement#determination",
+          "entity_id": "procurement:1",
+          "dtype": "text",
+          "unit": null,
+          "value": {
+            "kind": "text",
+            "value": "indeterminate"
+          },
+          "source": "Synthetic procurement policy s.3 (fictional)",
+          "source_url": "https://example.org/synthetic-procurement-policy",
+          "executed_expression": "(if not ((input(\"facts_complete\") == true)) then \"indeterminate\" else (if not ((input(\"covered_body\") == true)) then \"not_applicable\" else (if not ((input(\"contract_scope_met\") == true)) then \"outside_scope\" else (if (input(\"exception_applies\") == true) then \"exception_applies\" else (if (input(\"contract_value\") >= xx:policies/procurement#open_source_threshold[0]) then \"open_source_consideration_required\" else \"procurement_requirement_without_open_source_threshold\")))))",
+          "dependencies": [],
+          "not_evaluated_dependencies": [
+            {
+              "dependency": "xx:policies/procurement#open_source_threshold",
+              "reason": "branch_not_selected"
+            }
+          ]
+        },
+        "xx:policies/procurement#open_source_consideration_required": {
+          "kind": "judgment",
+          "name": "open_source_consideration_required",
+          "id": "xx:policies/procurement#open_source_consideration_required",
+          "entity_id": "procurement:1",
+          "unit": null,
+          "outcome": "not_holds",
+          "source": "Synthetic procurement policy s.2 (fictional)",
+          "source_url": "https://example.org/synthetic-procurement-policy",
+          "executed_expression": "(xx:policies/procurement#procurement_obligation and (input(\"contract_value\") >= xx:policies/procurement#open_source_threshold[0]))",
+          "dependencies": [
+            "xx:policies/procurement#procurement_obligation"
+          ],
+          "not_evaluated_dependencies": [
+            {
+              "dependency": "xx:policies/procurement#open_source_threshold",
+              "reason": "short_circuit"
+            }
+          ]
+        },
+        "xx:policies/procurement#procurement_obligation": {
+          "kind": "judgment",
+          "name": "procurement_obligation",
+          "id": "xx:policies/procurement#procurement_obligation",
+          "entity_id": "procurement:1",
+          "unit": null,
+          "outcome": "not_holds",
+          "source": "Synthetic procurement policy s.1 (fictional)",
+          "source_url": "https://example.org/synthetic-procurement-policy",
+          "executed_expression": "((((input(\"facts_complete\") == true) and (input(\"covered_body\") == true)) and (input(\"contract_scope_met\") == true)) and not ((input(\"exception_applies\") == true)))",
+          "dependencies": []
+        }
+      }
+    }
+  ]
+}

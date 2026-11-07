@@ -1,0 +1,50 @@
+-- Synthetic procurement policy. Fictional demonstration only; not law.
+
+DECLARE ProcurementOutcome IS ONE OF
+    NotApplicable
+    OutsideScope
+    ExceptionApplies
+    OpenSourceConsiderationRequired
+    RequirementWithoutOpenSource
+    Indeterminate
+
+GIVEN covered_body IS A MAYBE BOOLEAN
+      contract_scope_met IS A MAYBE BOOLEAN
+      exception_applies IS A MAYBE BOOLEAN
+      contract_value IS A NUMBER
+GIVETH A ProcurementOutcome
+`procurement outcome` covered_body contract_scope_met exception_applies contract_value MEANS
+    CONSIDER covered_body
+    WHEN NOTHING THEN Indeterminate
+    WHEN JUST FALSE THEN NotApplicable
+    WHEN JUST TRUE THEN
+        CONSIDER contract_scope_met
+        WHEN NOTHING THEN Indeterminate
+        WHEN JUST FALSE THEN OutsideScope
+        WHEN JUST TRUE THEN
+            CONSIDER exception_applies
+            WHEN NOTHING THEN Indeterminate
+            WHEN JUST TRUE THEN ExceptionApplies
+            WHEN JUST FALSE THEN
+                IF contract_value >= 100000
+                THEN OpenSourceConsiderationRequired
+                ELSE RequirementWithoutOpenSource
+
+DECLARE Party IS ONE OF ContractingAuthority
+DECLARE Action IS ONE OF consider_open_source
+GIVEN outcome IS A ProcurementOutcome
+GIVETH A MAYBE (DEONTIC Party Action)
+`open source duty` outcome MEANS
+    CONSIDER outcome
+    WHEN OpenSourceConsiderationRequired THEN
+        JUST (PARTY ContractingAuthority MUST consider_open_source WITHIN 30)
+    OTHERWISE NOTHING
+
+#EVAL `procurement outcome` (JUST TRUE) (JUST TRUE) (JUST FALSE) 150000
+#EVALTRACE `procurement outcome` (JUST TRUE) (JUST TRUE) (JUST FALSE) 150000
+#EVAL `procurement outcome` (JUST TRUE) (JUST FALSE) (JUST FALSE) 150000
+#EVAL `procurement outcome` (JUST TRUE) (JUST TRUE) (JUST TRUE) 150000
+#EVAL `procurement outcome` NOTHING (JUST TRUE) (JUST FALSE) 150000
+#EVAL `procurement outcome` (JUST TRUE) (JUST TRUE) (JUST FALSE) 100000
+#EVAL `procurement outcome` (JUST TRUE) (JUST FALSE) (JUST TRUE) 150000
+#EVAL `open source duty` OpenSourceConsiderationRequired

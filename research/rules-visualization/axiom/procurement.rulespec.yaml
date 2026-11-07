@@ -1,0 +1,60 @@
+format: rulespec/v1
+module:
+  title: Synthetic procurement policy (fictional demonstration only)
+  summary: |
+    Fictional procurement rule used only to compare rule engines and
+    visualisation. It is not law in any jurisdiction and has no legal effect.
+inputs:
+  - {name: facts_complete, entity: Procurement, dtype: Boolean}
+  - {name: covered_body, entity: Procurement, dtype: Boolean}
+  - {name: contract_scope_met, entity: Procurement, dtype: Boolean}
+  - {name: exception_applies, entity: Procurement, dtype: Boolean}
+  - {name: contract_value, entity: Procurement, dtype: Money, unit: USD, period: Month}
+rules:
+  - name: open_source_threshold
+    kind: parameter
+    dtype: Money
+    unit: USD
+    versions:
+      - effective_from: '2026-01-01'
+        formula: '100000'
+  - name: procurement_obligation
+    kind: derived
+    entity: Procurement
+    dtype: Judgment
+    sources:
+      - citation: "Synthetic procurement policy s.1 (fictional)"
+        url: https://example.org/synthetic-procurement-policy
+    versions:
+      - effective_from: '2026-01-01'
+        formula: facts_complete and covered_body and contract_scope_met and not exception_applies
+  - name: open_source_consideration_required
+    kind: derived
+    entity: Procurement
+    dtype: Judgment
+    sources:
+      - citation: "Synthetic procurement policy s.2 (fictional)"
+        url: https://example.org/synthetic-procurement-policy
+    versions:
+      - effective_from: '2026-01-01'
+        formula: procurement_obligation and contract_value >= open_source_threshold
+  - name: determination
+    kind: derived
+    entity: Procurement
+    dtype: Text
+    sources:
+      - citation: "Synthetic procurement policy s.3 (fictional)"
+        url: https://example.org/synthetic-procurement-policy
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |
+          if not facts_complete: "indeterminate"
+          else:
+            if not covered_body: "not_applicable"
+            else:
+              if not contract_scope_met: "outside_scope"
+              else:
+                if exception_applies: "exception_applies"
+                else:
+                  if contract_value >= open_source_threshold: "open_source_consideration_required"
+                  else: "procurement_requirement_without_open_source_threshold"

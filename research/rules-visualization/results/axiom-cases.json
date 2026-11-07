@@ -1,0 +1,68 @@
+{
+  "all_met": {
+    "status": "success",
+    "outputs": {
+      "determination": "open_source_consideration_required",
+      "open_source_consideration_required": "holds",
+      "procurement_obligation": "holds"
+    },
+    "request": "axiom/requests/all_met.json",
+    "response": "axiom/responses/all_met.json"
+  },
+  "scope_not_met": {
+    "status": "success",
+    "outputs": {
+      "determination": "outside_scope",
+      "open_source_consideration_required": "not_holds",
+      "procurement_obligation": "not_holds"
+    },
+    "request": "axiom/requests/scope_not_met.json",
+    "response": "axiom/responses/scope_not_met.json"
+  },
+  "exception_applies": {
+    "status": "success",
+    "outputs": {
+      "determination": "exception_applies",
+      "open_source_consideration_required": "not_holds",
+      "procurement_obligation": "not_holds"
+    },
+    "request": "axiom/requests/exception_applies.json",
+    "response": "axiom/responses/exception_applies.json"
+  },
+  "missing_fact": {
+    "status": "error",
+    "error": "missing input `xx:policies/procurement#input.covered_body` for entity `procurement:1` over 2026-01-01..2026-02-01",
+    "request": "axiom/requests/missing_fact.json",
+    "response": "axiom/responses/missing_fact.error.txt"
+  },
+  "boundary_100000": {
+    "status": "success",
+    "outputs": {
+      "determination": "open_source_consideration_required",
+      "open_source_consideration_required": "holds",
+      "procurement_obligation": "holds"
+    },
+    "request": "axiom/requests/boundary_100000.json",
+    "response": "axiom/responses/boundary_100000.json"
+  },
+  "indeterminate_facts_incomplete": {
+    "status": "success",
+    "outputs": {
+      "determination": "indeterminate",
+      "open_source_consideration_required": "not_holds",
+      "procurement_obligation": "not_holds"
+    },
+    "request": "axiom/requests/indeterminate_facts_incomplete.json",
+    "response": "axiom/responses/indeterminate_facts_incomplete.json"
+  },
+  "contradictory_scope_and_exception": {
+    "status": "success",
+    "outputs": {
+      "determination": "outside_scope",
+      "open_source_consideration_required": "not_holds",
+      "procurement_obligation": "not_holds"
+    },
+    "request": "axiom/requests/contradictory_scope_and_exception.json",
+    "response": "axiom/responses/contradictory_scope_and_exception.json"
+  }
+}

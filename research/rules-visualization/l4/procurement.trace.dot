@@ -1,0 +1,39 @@
+digraph {
+    graph [rankdir=TB];
+    node [shape=box,style=rounded];
+    0 [label="`procurement outcome` OF (JUST OF TRUE), (JUST OF TRUE), (JUST OF FALSE), 150000\n────────────────\nOpenSourceConsiderationRequired"
+      ,fillcolor="#d0e8f2"
+      ,style=filled];
+    1 [label="JUST OF TRUE\n────────────────\nJUST OF TRUE"
+      ,fillcolor="#d0e8f2"
+      ,style=filled];
+    2 [label="JUST OF TRUE\n────────────────\nJUST OF TRUE"
+      ,fillcolor="#d0e8f2"
+      ,style=filled];
+    3 [label="JUST OF FALSE\n────────────────\nJUST OF FALSE"
+      ,fillcolor="#d0e8f2"
+      ,style=filled];
+    4 [label="`procurement outcome`\n────────────────\n<function>"
+      ,fillcolor="#d0e8f2"
+      ,style=filled];
+    5 [label="contract_value AT LEAST 100000\n────────────────\nTRUE"
+      ,fillcolor="#d0e8f2"
+      ,style=filled];
+    0 -> 1 [color="#2ca02c"
+           ,penwidth=2
+           ,fontsize=10];
+    0 -> 2 [color="#2ca02c"
+           ,penwidth=2
+           ,fontsize=10];
+    0 -> 3 [color="#2ca02c"
+           ,penwidth=2
+           ,fontsize=10];
+    0 -> 4 [color="#2ca02c"
+           ,penwidth=2
+           ,fontsize=10];
+    0 -> 5 [color="#2ca02c"
+           ,penwidth=2
+           ,fontsize=10
+           ,label=IF
+           ,dir=back];
+}

@@ -1,0 +1,27 @@
+{
+  "all_met": {
+    "value": "OpenSourceConsiderationRequired"
+  },
+  "all_met_trace": {
+    "value": "OpenSourceConsiderationRequired"
+  },
+  "scope_not_met": {
+    "value": "OutsideScope"
+  },
+  "exception_applies": {
+    "value": "ExceptionApplies"
+  },
+  "missing_fact": {
+    "value": "Indeterminate"
+  },
+  "boundary_100000": {
+    "value": "OpenSourceConsiderationRequired"
+  },
+  "contradictory_scope_and_exception": {
+    "value": "OutsideScope"
+  },
+  "open_source_duty": {
+    "value": "JUST OF (PARTY ContractingAuthority\nMUST consider_open_source\nWITHIN 30\nHENCE FULFILLED)"
+  },
+  "_note": "Values parsed from l4/procurement.run.json (#EVAL order in procurement.l4). The trace case duplicates all_met because #EVALTRACE also evaluates it."
+}

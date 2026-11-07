@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rules-engine comparison: synthetic procurement policy</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #17202a; --muted: #4d5966; --paper: #ffffff; --wash: #f3f6f9;
+  --line: #6b7785; --accent: #0b4f8a; --accent-ink: #ffffff;
+  --input: #dcecf8; --constant: #f3e8c8; --computed: #e2e8f5;
+}
+* { box-sizing: border-box; }
+html { font-family: system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif; line-height: 1.55; }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.skip { position: absolute; inset-inline-start: 0.5rem; inset-block-start: -4rem; background: var(--ink); color: var(--paper); padding: 0.6rem 0.9rem; z-index: 5; }
+.skip:focus { inset-block-start: 0.5rem; }
+header, main, footer { max-inline-size: 68rem; margin-inline: auto; padding-inline: 1rem; }
+header { padding-block: 1.2rem 0.6rem; }
+.badge { display: inline-block; border: 2px solid var(--ink); border-radius: 0.4rem; padding: 0.15rem 0.45rem; font-weight: 700; font-size: 0.82rem; }
+h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.15; margin-block: 0.6rem 0.4rem; }
+h2 { font-size: clamp(1.25rem, 2.5vw, 1.6rem); margin-block: 2rem 0.6rem; border-block-end: 2px solid var(--line); padding-block-end: 0.25rem; }
+h3 { font-size: 1.05rem; margin-block: 0 0.35rem; }
+.node-input rect { fill: var(--input); stroke: #17202a; stroke-width: 2; }
+.node-constant rect { fill: var(--constant); stroke: #17202a; stroke-width: 2; }
+.node-computed rect { fill: var(--computed); stroke: #17202a; stroke-width: 2; }
+.node-id { font-weight: 700; }
+svg text { font-family: system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif; font-size: 14px; fill: #17202a; }
+.edge { fill: none; stroke: #4d5966; stroke-width: 2; }
+p, li { max-inline-size: 68ch; }
+.lead { font-size: 1.08rem; color: var(--muted); }
+nav.langs ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; margin-block: 0.5rem; }
+nav.langs a { display: inline-block; border: 1px solid var(--line); border-radius: 0.35rem; padding: 0.35rem 0.6rem; text-decoration: none; }
+nav.langs a[aria-current="page"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+section { margin-block: 1.4rem; }
+figure { margin: 1rem 0 1.5rem; }
+figcaption { color: var(--muted); margin-block-start: 0.4rem; }
+.graph-scroll { overflow-x: auto; border: 2px solid var(--line); border-radius: 0.5rem; background: var(--paper); }
+.graph-scroll:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+svg { display: block; inline-size: 100%; block-size: auto; min-inline-size: 46rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; margin-block: 0.4rem; }
+.legend span::before { content: ""; display: inline-block; inline-size: 0.8rem; block-size: 0.8rem; margin-inline-end: 0.35rem; border: 2px solid var(--line); vertical-align: -0.1rem; }
+.legend .li::before { background: var(--input); }
+.legend .lc::before { background: var(--constant); }
+.legend .lp::before { background: var(--computed); }
+.table-scroll { overflow-x: auto; max-inline-size: 100%; margin-block: 0.8rem 1.2rem; }
+.table-scroll:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+table { border-collapse: collapse; inline-size: 100%; margin-block: 0.8rem 1.2rem; }
+caption { text-align: start; font-weight: 700; padding-block-end: 0.4rem; }
+th, td { border: 1px solid var(--line); padding: 0.45rem 0.55rem; text-align: start; vertical-align: top; }
+th { background: var(--wash); }
+code, .id { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+.foreign { unicode-bidi: isolate; }
+.ladder { list-style: none; padding: 0; margin: 0; }
+.ladder li { border: 2px solid var(--line); border-radius: 0.5rem; padding: 0.8rem 1rem; margin-block-end: 0.75rem; background: var(--wash); }
+.ladder .step { font-weight: 800; color: var(--muted); margin: 0 0 0.2rem; }
+.ladder dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 0.75rem; margin-block: 0.5rem; }
+.ladder dt { font-weight: 700; }
+.ladder dd { margin: 0; }
+.cite { font-size: 0.92rem; color: var(--muted); }
+.note { font-size: 0.92rem; }
+.disclaimer { border-inline-start: 6px solid var(--ink); background: var(--wash); padding: 0.8rem 1rem; }
+.integration { overflow-wrap: anywhere; }
+footer { border-block-start: 2px solid var(--line); margin-block-start: 2.5rem; padding-block: 1rem 2rem; color: var(--muted); font-size: 0.92rem; }
+@media (max-width: 40rem) {
+  body { font-size: 1rem; }
+  header, main, footer { padding-inline: 0.75rem; }
+  table { font-size: 0.92rem; }
+}
+@media (forced-colors: active) {
+  .graph-scroll, .ladder li, .disclaimer { border-color: CanvasText; }
+  nav.langs a[aria-current="page"] { background: Highlight; color: HighlightText; }
+}
+@media print { .skip, nav.langs { display: none; } a { color: inherit; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header>
+  <p><span class="badge">Synthetic demonstration — not law</span></p>
+  <nav class="langs" aria-label="Language"><ul><li><a lang="en" hreflang="en" href="../en/" aria-current="page">English</a></li><li><a lang="fr" hreflang="fr" href="../fr/">Français</a></li><li><a lang="ar" hreflang="ar" href="../ar/">العربية</a></li></ul></nav>
+  <h1>Rules-engine comparison: synthetic procurement policy</h1>
+  <p class="lead">A fictional procurement rule encoded in Axiom RuleSpec and Legalese L4, with two visual views and a complete linear explanation. Nothing on this page is legal advice or existing law.</p>
+</header>
+<main id="main" tabindex="-1">
+  <p class="disclaimer">Synthetic research prototype. No legal effect. No real instrument is encoded. Translations are provisional and not official legal translations.</p>
+
+  <section aria-labelledby="summary-h">
+    <h2 id="summary-h">What the demonstration shows</h2>
+    <p>The same five conditions and one threshold produce the same outcomes in both engines for complete facts, scope, exception, boundary and contradictory cases. Missing facts diverge: Axiom returns a missing-input error, while L4 models them as Indeterminate.</p>
+  </section>
+
+  <section aria-labelledby="graph-h">
+    <h2 id="graph-h">Dependency graph</h2>
+    <p>The diagram is a visual summary. The table after it is the complete, navigable equivalent.</p>
+    <figure>
+
+    <div class="graph-scroll" tabindex="0" role="region" aria-label="Dependency graph for the synthetic procurement determination">
+      <svg viewBox="0 0 1020 680" role="img" aria-labelledby="graph-title" aria-describedby="graph-desc" focusable="false" direction="ltr">
+        <title id="graph-title">Dependency graph for the synthetic procurement determination</title>
+        <desc id="graph-desc">Numbered nodes show inputs, a threshold constant and computed outputs. The table below gives every node, its dependencies and its citation.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#17202a" />
+          </marker>
+        </defs>
+        <path class="edge" d="M 140 124 C 140 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 300 124 C 300 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 460 124 C 460 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 780 124 C 780 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 370 314 C 370 367.0, 570 367.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 620 124 C 620 272.0, 570 272.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 940 124 C 940 272.0, 570 272.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 140 124 C 140 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 300 124 C 300 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 460 124 C 460 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 620 124 C 620 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 780 124 C 780 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 940 124 C 940 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 370 314 C 370 447.0, 570 447.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 570 474 C 570 527.0, 570 527.0, 570 580" marker-end="url(#arrow)" />
+        <g class="node-input"><rect x="70" y="70" width="140" height="54" rx="9" /><text x="140" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N1</tspan></text><text x="140" y="108" text-anchor="middle" direction="ltr">Covered body</text></g><g class="node-input"><rect x="230" y="70" width="140" height="54" rx="9" /><text x="300" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N2</tspan></text><text x="300" y="108" text-anchor="middle" direction="ltr">In scope</text></g><g class="node-input"><rect x="390" y="70" width="140" height="54" rx="9" /><text x="460" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N3</tspan></text><text x="460" y="108" text-anchor="middle" direction="ltr">Exception</text></g><g class="node-input"><rect x="550" y="70" width="140" height="54" rx="9" /><text x="620" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N4</tspan></text><text x="620" y="108" text-anchor="middle" direction="ltr">Value</text></g><g class="node-input"><rect x="710" y="70" width="140" height="54" rx="9" /><text x="780" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N5</tspan></text><text x="780" y="108" text-anchor="middle" direction="ltr">Facts complete</text></g><g class="node-constant"><rect x="870" y="70" width="140" height="54" rx="9" /><text x="940" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N6</tspan></text><text x="940" y="108" text-anchor="middle" direction="ltr">Threshold</text></g><g class="node-computed"><rect x="300" y="260" width="140" height="54" rx="9" /><text x="370" y="278" text-anchor="middle" direction="ltr"><tspan class="node-id">N7</tspan></text><text x="370" y="298" text-anchor="middle" direction="ltr">Requirement</text></g><g class="node-computed"><rect x="500" y="420" width="140" height="54" rx="9" /><text x="570" y="438" text-anchor="middle" direction="ltr"><tspan class="node-id">N8</tspan></text><text x="570" y="458" text-anchor="middle" direction="ltr">Open-source</text></g><g class="node-computed"><rect x="500" y="580" width="140" height="54" rx="9" /><text x="570" y="598" text-anchor="middle" direction="ltr"><tspan class="node-id">N9</tspan></text><text x="570" y="618" text-anchor="middle" direction="ltr">Status</text></g>
+      </svg>
+    </div>
+    <div class="legend" role="group" aria-label="Node kinds"><span class="li">Input</span><span class="lc">Constant</span><span class="lp">Computed</span></div>
+
+      <figcaption>Numbered nodes show inputs, a threshold constant and computed outputs. The table below gives every node, its dependencies and its citation.</figcaption>
+    </figure>
+    <p class="note">The diagram scrolls horizontally on narrow screens; the table below reflows.</p>
+
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Dependency graph: nodes and dependencies">
+    <table>
+      <caption>Dependency graph: nodes and dependencies</caption>
+      <thead><tr><th scope="col">Node</th><th scope="col">Label</th>
+      <th scope="col">Kind</th><th scope="col">Dtype</th><th scope="col">Value</th>
+      <th scope="col">Depends on</th><th scope="col">Citation</th></tr></thead>
+      <tbody><tr><th scope="row"><code lang="en" dir="ltr">N1</code></th><td>Public body is covered</td><td>Input</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N2</code></th><td>Contract is within scope</td><td>Input</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N3</code></th><td>An exception applies</td><td>Input</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N4</code></th><td>Contract value (USD)</td><td>Input</td><td><code lang="en" dir="ltr">Decimal</code></td><td><code lang="en" dir="ltr">Decimal</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N5</code></th><td>Required facts are complete</td><td>Input</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N6</code></th><td>Open-source consideration threshold</td><td>Constant</td><td><code lang="en" dir="ltr">Money</code></td><td><code lang="en" dir="ltr">USD 100,000</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-4</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N7</code></th><td>Procurement requirement applies</td><td>Computed</td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">N1, N2, N3, N5</code></td><td><code lang="en" dir="ltr">SP-1</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N8</code></th><td>Open-source consideration required</td><td>Computed</td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">N7, N4, N6</code></td><td><code lang="en" dir="ltr">SP-2</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N9</code></th><td>Determination status</td><td>Computed</td><td><code lang="en" dir="ltr">Text</code></td><td><code lang="en" dir="ltr">Text</code></td><td><code lang="en" dir="ltr">N1, N2, N3, N4, N5, N6, N7, N8</code></td><td><code lang="en" dir="ltr">SP-3</code></td></tr></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="ladder-h">
+    <h2 id="ladder-h">Ladder: evaluation order</h2>
+    <p>The ladder is read from step 1 to step 5. Each step is a condition; the branch taken is stated in text.</p>
+    <ol class="ladder">
+        <li>
+          <p class="step">Step 1</p>
+          <h3>Are the required facts complete?</h3>
+          <dl>
+            <dt>If true</dt><dd>Continue to coverage</dd>
+            <dt>If false</dt><dd>Indeterminate</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-3</code>. Missing facts are not treated as false.</p>
+        </li>
+        <li>
+          <p class="step">Step 2</p>
+          <h3>Is the public body covered?</h3>
+          <dl>
+            <dt>If true</dt><dd>Continue to scope</dd>
+            <dt>If false</dt><dd>Not applicable</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-1</code>. Coverage is a condition, not a legal conclusion.</p>
+        </li>
+        <li>
+          <p class="step">Step 3</p>
+          <h3>Is the contract within scope?</h3>
+          <dl>
+            <dt>If true</dt><dd>Continue to exceptions</dd>
+            <dt>If false</dt><dd>Outside scope</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-1</code>. Scope is checked before the exception.</p>
+        </li>
+        <li>
+          <p class="step">Step 4</p>
+          <h3>Does an exception apply?</h3>
+          <dl>
+            <dt>If true</dt><dd>Exception applies</dd>
+            <dt>If false</dt><dd>Continue to the threshold</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-1</code>. An exception removes the requirement; it does not create a new one.</p>
+        </li>
+        <li>
+          <p class="step">Step 5</p>
+          <h3>Is the contract value at least USD 100,000?</h3>
+          <dl>
+            <dt>If true</dt><dd>Open-source consideration required</dd>
+            <dt>If false</dt><dd>Requirement without open-source threshold</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-2</code>. The boundary value itself meets the threshold.</p>
+        </li></ol>
+  </section>
+
+  <section aria-labelledby="text-h">
+    <h2 id="text-h">Accessible text equivalent</h2>
+    <p>This is the complete linear explanation, including every condition, branch, outcome and citation. It is not a summary of a visual-only decision.</p>
+
+    <ol>
+      <li>Step 1: Are the required facts complete? if false: <strong>Indeterminate</strong> (<code lang="en" dir="ltr">SP-3</code>). if true: Continue to coverage.</li>
+      <li>Step 2: Is the public body covered? if false: <strong>Not applicable</strong> (<code lang="en" dir="ltr">SP-1</code>). if true: Continue to scope.</li>
+      <li>Step 3: Is the contract within scope? if false: <strong>Outside scope</strong> (<code lang="en" dir="ltr">SP-1</code>). if true: Continue to exceptions.</li>
+      <li>Step 4: Does an exception apply? if true: <strong>Exception applies</strong> (<code lang="en" dir="ltr">SP-1</code>). if false: Continue to the threshold (<code lang="en" dir="ltr">SP-1</code>).</li>
+      <li>Step 5: Is the contract value at least USD 100,000? if true: <strong>Open-source consideration required</strong> (<code lang="en" dir="ltr">SP-2</code>). if false: <strong>Requirement without open-source threshold</strong>.</li>
+    </ol>
+    <h3>Unknown and missing facts</h3>
+    <p>Missing required facts are not treated as false. L4 uses MAYBE and returns Indeterminate. Axiom has no undetermined literal in this RuleSpec; the determination status carries “indeterminate”, while the judgment outputs are not-holds when facts_complete is false. A missing input in Axiom is a request error.</p>
+  </section>
+
+  <section aria-labelledby="tests-h">
+    <h2 id="tests-h">Recorded engine results</h2>
+    <p>These are actual outputs from the pinned engine builds, not expected values. The requests, responses and L4 output are committed with the prototype.</p>
+
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Recorded engine results table">
+    <table>
+      <caption>Recorded engine results</caption>
+      <thead><tr><th scope="col">Case</th><th scope="col">Facts</th>
+      <th scope="col">Axiom RuleSpec</th><th scope="col">Legalese L4</th><th scope="col">Agreement</th></tr></thead>
+      <tbody><tr><th scope="row">All conditions met</th><td>Facts complete; covered; in scope; no exception; USD 150,000</td><td><span class="foreign" lang="en" dir="ltr">determination = open_source_consideration_required; both judgments = holds</span></td><td><span class="foreign" lang="en" dir="ltr">OpenSourceConsiderationRequired</span></td><td>Same outcome</td></tr><tr><th scope="row">Scope condition not met</th><td>Facts complete; covered; outside scope; no exception; USD 150,000</td><td><span class="foreign" lang="en" dir="ltr">determination = outside_scope; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">OutsideScope</span></td><td>Same outcome</td></tr><tr><th scope="row">Exception applies</th><td>Facts complete; covered; in scope; exception true; USD 150,000</td><td><span class="foreign" lang="en" dir="ltr">determination = exception_applies; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">ExceptionApplies</span></td><td>Same outcome</td></tr><tr><th scope="row">Missing required input</th><td>covered_body omitted; other facts supplied</td><td><span class="foreign" lang="en" dir="ltr">Execution error: missing input covered_body</span></td><td><span class="foreign" lang="en" dir="ltr">Indeterminate</span></td><td>Different semantics: error versus indeterminate</td></tr><tr><th scope="row">Boundary value: USD 100,000</th><td>Facts complete; covered; in scope; no exception; exactly USD 100,000</td><td><span class="foreign" lang="en" dir="ltr">determination = open_source_consideration_required; both judgments = holds</span></td><td><span class="foreign" lang="en" dir="ltr">OpenSourceConsiderationRequired</span></td><td>Same outcome; threshold is inclusive</td></tr><tr><th scope="row">Facts incomplete</th><td>facts_complete false; other facts true; USD 150,000</td><td><span class="foreign" lang="en" dir="ltr">determination = indeterminate; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">Indeterminate</span></td><td>Partial: text status matches; Axiom judgments are not undetermined</td></tr><tr><th scope="row">Contradictory scope and exception</th><td>Facts complete; covered; outside scope; exception true; USD 150,000</td><td><span class="foreign" lang="en" dir="ltr">determination = outside_scope; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">OutsideScope</span></td><td>Same outcome; scope is checked first</td></tr></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="sources-h">
+    <h2 id="sources-h">Synthetic source references</h2>
+    <p>The citations are fictional and point to a synthetic document. They demonstrate traceability only.</p>
+    <ul><li><code lang="en" dir="ltr">SP-0</code> — Synthetic procurement scenario, facts 1–5. <a href="https://example.org/synthetic-procurement-policy#facts">Synthetic fact pattern (fictional)</a></li><li><code lang="en" dir="ltr">SP-1</code> — Coverage, scope, exception and requirement. <a href="https://example.org/synthetic-procurement-policy#s1">Synthetic procurement policy s.1 (fictional)</a></li><li><code lang="en" dir="ltr">SP-2</code> — Open-source consideration above the threshold. <a href="https://example.org/synthetic-procurement-policy#s2">Synthetic procurement policy s.2 (fictional)</a></li><li><code lang="en" dir="ltr">SP-3</code> — Determination and missing facts. <a href="https://example.org/synthetic-procurement-policy#s3">Synthetic procurement policy s.3 (fictional)</a></li><li><code lang="en" dir="ltr">SP-4</code> — Synthetic threshold parameter. <a href="https://example.org/synthetic-procurement-policy#s4">Synthetic procurement policy s.4 (fictional)</a></li></ul>
+  </section>
+
+  <section aria-labelledby="integration-h">
+    <h2 id="integration-h">Proposed observatory link (not implemented)</h2>
+    <p>A future reviewed record could carry this chain. The prototype does not attach to any real instrument or change legal-effect status.</p>
+    <p class="integration">Instrument ID → source ID → provision ID → legal version → original-language citation → reviewed interpretation → rule encoding → presentation model → visualization artifact → engine version → test results</p>
+  </section>
+
+  <section aria-labelledby="unsupported-h">
+    <h2 id="unsupported-h">Unsupported or out of scope</h2>
+    <ul><li><strong>Deontic modality</strong>: Obligation, permission and prohibition are not first-class in RuleSpec. L4 can express them with PARTY, MUST, MAY and SHANT.</li><li><strong>Amendment and version history</strong>: Effective dates can be encoded, but a reviewed instrument-version and amendment graph is external metadata; this prototype does not model it.</li><li><strong>Translation provenance</strong>: Neither engine records official, reviewed or machine-assisted translation status. The interface translations here are provisional.</li><li><strong>Real legal text and citation verification</strong>: All sources are fictional. No real instrument, provision, date or legal effect is encoded.</li><li><strong>Contradiction detection</strong>: Both engines applied the ladder order to contradictory facts; neither reported a contradiction.</li></ul>
+  </section>
+
+  <section aria-labelledby="limits-h">
+    <h2 id="limits-h">Limits of this prototype</h2>
+    <p>The examples are synthetic; no real legislation is encoded. The graphs are generated from a curated presentation model, not automatically from the Axiom artifact. The L4 trace is a GraphViz DOT file; no SVG was rendered because GraphViz is not installed in this environment.</p>
+    <h3>Accessibility findings</h3>
+    <p>Static HTML and SVG, with one small progressive-enhancement script for keyboard scrolling; no canvas, drag, hover-only content or external JavaScript. Automated axe checks, keyboard tab order, scroll-key operation, 320 CSS px reflow, forced-colours and reduced-motion checks were run. Manual screen-reader, real 400% browser zoom and native Arabic/French review were not performed. Axe reported no violations; the SVG-text colour-contrast check was incomplete, so the actual foreground/background pairs were calculated manually at 13.39:1–16.45:1.</p>
+  </section>
+
+  <p><a href="../">Back to prototype index</a> · <a href="../../README.md">Prototype source</a></p>
+</main>
+<script>
+(() => {
+  document.querySelectorAll('.graph-scroll, .table-scroll').forEach((region) => {
+    region.addEventListener('keydown', (event) => {
+      const amount = 60;
+      const rtl = getComputedStyle(region).direction === 'rtl';
+      if (event.key === 'ArrowRight') {
+        region.scrollLeft += rtl ? -amount : amount;
+        event.preventDefault();
+      } else if (event.key === 'ArrowLeft') {
+        region.scrollLeft += rtl ? amount : -amount;
+        event.preventDefault();
+      }
+    });
+  });
+})();
+</script>
+<footer>
+  <p lang="en" dir="ltr">Prototype: <code>synthetic-procurement-v1</code>. Axiom <code>0.2.2</code>
+  (<code>d41d29d</code>), L4 <code>1.6.109</code>
+  (<code>4c887e0</code>).</p>
+</footer>
+</body>
+</html>

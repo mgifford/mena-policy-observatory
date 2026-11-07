@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مقارنة محركات القواعد: سياسة شراء اصطناعية</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #17202a; --muted: #4d5966; --paper: #ffffff; --wash: #f3f6f9;
+  --line: #6b7785; --accent: #0b4f8a; --accent-ink: #ffffff;
+  --input: #dcecf8; --constant: #f3e8c8; --computed: #e2e8f5;
+}
+* { box-sizing: border-box; }
+html { font-family: system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif; line-height: 1.55; }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.skip { position: absolute; inset-inline-start: 0.5rem; inset-block-start: -4rem; background: var(--ink); color: var(--paper); padding: 0.6rem 0.9rem; z-index: 5; }
+.skip:focus { inset-block-start: 0.5rem; }
+header, main, footer { max-inline-size: 68rem; margin-inline: auto; padding-inline: 1rem; }
+header { padding-block: 1.2rem 0.6rem; }
+.badge { display: inline-block; border: 2px solid var(--ink); border-radius: 0.4rem; padding: 0.15rem 0.45rem; font-weight: 700; font-size: 0.82rem; }
+h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.15; margin-block: 0.6rem 0.4rem; }
+h2 { font-size: clamp(1.25rem, 2.5vw, 1.6rem); margin-block: 2rem 0.6rem; border-block-end: 2px solid var(--line); padding-block-end: 0.25rem; }
+h3 { font-size: 1.05rem; margin-block: 0 0.35rem; }
+.node-input rect { fill: var(--input); stroke: #17202a; stroke-width: 2; }
+.node-constant rect { fill: var(--constant); stroke: #17202a; stroke-width: 2; }
+.node-computed rect { fill: var(--computed); stroke: #17202a; stroke-width: 2; }
+.node-id { font-weight: 700; }
+svg text { font-family: system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif; font-size: 14px; fill: #17202a; }
+.edge { fill: none; stroke: #4d5966; stroke-width: 2; }
+p, li { max-inline-size: 68ch; }
+.lead { font-size: 1.08rem; color: var(--muted); }
+nav.langs ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; margin-block: 0.5rem; }
+nav.langs a { display: inline-block; border: 1px solid var(--line); border-radius: 0.35rem; padding: 0.35rem 0.6rem; text-decoration: none; }
+nav.langs a[aria-current="page"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+section { margin-block: 1.4rem; }
+figure { margin: 1rem 0 1.5rem; }
+figcaption { color: var(--muted); margin-block-start: 0.4rem; }
+.graph-scroll { overflow-x: auto; border: 2px solid var(--line); border-radius: 0.5rem; background: var(--paper); }
+.graph-scroll:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+svg { display: block; inline-size: 100%; block-size: auto; min-inline-size: 46rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; margin-block: 0.4rem; }
+.legend span::before { content: ""; display: inline-block; inline-size: 0.8rem; block-size: 0.8rem; margin-inline-end: 0.35rem; border: 2px solid var(--line); vertical-align: -0.1rem; }
+.legend .li::before { background: var(--input); }
+.legend .lc::before { background: var(--constant); }
+.legend .lp::before { background: var(--computed); }
+.table-scroll { overflow-x: auto; max-inline-size: 100%; margin-block: 0.8rem 1.2rem; }
+.table-scroll:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+table { border-collapse: collapse; inline-size: 100%; margin-block: 0.8rem 1.2rem; }
+caption { text-align: start; font-weight: 700; padding-block-end: 0.4rem; }
+th, td { border: 1px solid var(--line); padding: 0.45rem 0.55rem; text-align: start; vertical-align: top; }
+th { background: var(--wash); }
+code, .id { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+.foreign { unicode-bidi: isolate; }
+.ladder { list-style: none; padding: 0; margin: 0; }
+.ladder li { border: 2px solid var(--line); border-radius: 0.5rem; padding: 0.8rem 1rem; margin-block-end: 0.75rem; background: var(--wash); }
+.ladder .step { font-weight: 800; color: var(--muted); margin: 0 0 0.2rem; }
+.ladder dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 0.75rem; margin-block: 0.5rem; }
+.ladder dt { font-weight: 700; }
+.ladder dd { margin: 0; }
+.cite { font-size: 0.92rem; color: var(--muted); }
+.note { font-size: 0.92rem; }
+.disclaimer { border-inline-start: 6px solid var(--ink); background: var(--wash); padding: 0.8rem 1rem; }
+.integration { overflow-wrap: anywhere; }
+footer { border-block-start: 2px solid var(--line); margin-block-start: 2.5rem; padding-block: 1rem 2rem; color: var(--muted); font-size: 0.92rem; }
+@media (max-width: 40rem) {
+  body { font-size: 1rem; }
+  header, main, footer { padding-inline: 0.75rem; }
+  table { font-size: 0.92rem; }
+}
+@media (forced-colors: active) {
+  .graph-scroll, .ladder li, .disclaimer { border-color: CanvasText; }
+  nav.langs a[aria-current="page"] { background: Highlight; color: HighlightText; }
+}
+@media print { .skip, nav.langs { display: none; } a { color: inherit; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">انتقل إلى المحتوى الرئيسي</a>
+<header>
+  <p><span class="badge">عرض اصطناعي — ليس قانونًا</span></p>
+  <nav class="langs" aria-label="اللغة"><ul><li><a lang="en" hreflang="en" href="../en/">English</a></li><li><a lang="fr" hreflang="fr" href="../fr/">Français</a></li><li><a lang="ar" hreflang="ar" href="../ar/" aria-current="page">العربية</a></li></ul></nav>
+  <h1>مقارنة محركات القواعد: سياسة شراء اصطناعية</h1>
+  <p class="lead">قاعدة شراء خيالية مشفرة في Axiom RuleSpec وLegalese L4، مع عرضين مرئيين وشرح خطي كامل. لا شيء في هذه الصفحة مشورة قانونية أو قانون قائم.</p>
+</header>
+<main id="main" tabindex="-1">
+  <p class="disclaimer">نموذج بحثي اصطناعي. لا أثر قانوني. لا تُشفّر أي أداة حقيقية. الترجمات مؤقتة وليست ترجمات قانونية رسمية.</p>
+
+  <section aria-labelledby="summary-h">
+    <h2 id="summary-h">ما يوضحه العرض</h2>
+    <p>تنتج الشروط الخمسة نفسها والحد نفسه النتائج نفسها في المحركين عند اكتمال الوقائع والنطاق والاستثناء والحد والحالات المتعارضة. تختلف الوقائع الناقصة: يعيد Axiom خطأ إدخال ناقص، بينما يمثلها L4 على أنها غير محددة.</p>
+  </section>
+
+  <section aria-labelledby="graph-h">
+    <h2 id="graph-h">رسم التبعيات</h2>
+    <p>الرسم ملخص مرئي. والجدول الذي يليه هو المكافئ الكامل القابل للتنقل.</p>
+    <figure>
+
+    <div class="graph-scroll" tabindex="0" role="region" aria-label="رسم تبعيات التحديد الاصطناعي">
+      <svg viewBox="0 0 1020 680" role="img" aria-labelledby="graph-title" aria-describedby="graph-desc" focusable="false" direction="ltr">
+        <title id="graph-title">رسم تبعيات التحديد الاصطناعي</title>
+        <desc id="graph-desc">تعرض عقد مرقمة المدخلات وحدًا ثابتًا والمخرجات المحسوبة. يقدم الجدول أدناه كل عقدة وتبعياتها والاستشهاد بها.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#17202a" />
+          </marker>
+        </defs>
+        <path class="edge" d="M 140 124 C 140 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 300 124 C 300 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 460 124 C 460 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 780 124 C 780 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 370 314 C 370 367.0, 570 367.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 620 124 C 620 272.0, 570 272.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 940 124 C 940 272.0, 570 272.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 140 124 C 140 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 300 124 C 300 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 460 124 C 460 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 620 124 C 620 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 780 124 C 780 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 940 124 C 940 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 370 314 C 370 447.0, 570 447.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 570 474 C 570 527.0, 570 527.0, 570 580" marker-end="url(#arrow)" />
+        <g class="node-input"><rect x="70" y="70" width="140" height="54" rx="9" /><text x="140" y="88" text-anchor="middle" direction="rtl"><tspan class="node-id">N1</tspan></text><text x="140" y="108" text-anchor="middle" direction="rtl">هيئة مشمولة</text></g><g class="node-input"><rect x="230" y="70" width="140" height="54" rx="9" /><text x="300" y="88" text-anchor="middle" direction="rtl"><tspan class="node-id">N2</tspan></text><text x="300" y="108" text-anchor="middle" direction="rtl">ضمن النطاق</text></g><g class="node-input"><rect x="390" y="70" width="140" height="54" rx="9" /><text x="460" y="88" text-anchor="middle" direction="rtl"><tspan class="node-id">N3</tspan></text><text x="460" y="108" text-anchor="middle" direction="rtl">استثناء</text></g><g class="node-input"><rect x="550" y="70" width="140" height="54" rx="9" /><text x="620" y="88" text-anchor="middle" direction="rtl"><tspan class="node-id">N4</tspan></text><text x="620" y="108" text-anchor="middle" direction="rtl">القيمة</text></g><g class="node-input"><rect x="710" y="70" width="140" height="54" rx="9" /><text x="780" y="88" text-anchor="middle" direction="rtl"><tspan class="node-id">N5</tspan></text><text x="780" y="108" text-anchor="middle" direction="rtl">وقائع مكتملة</text></g><g class="node-constant"><rect x="870" y="70" width="140" height="54" rx="9" /><text x="940" y="88" text-anchor="middle" direction="rtl"><tspan class="node-id">N6</tspan></text><text x="940" y="108" text-anchor="middle" direction="rtl">الحد</text></g><g class="node-computed"><rect x="300" y="260" width="140" height="54" rx="9" /><text x="370" y="278" text-anchor="middle" direction="rtl"><tspan class="node-id">N7</tspan></text><text x="370" y="298" text-anchor="middle" direction="rtl">المتطلب</text></g><g class="node-computed"><rect x="500" y="420" width="140" height="54" rx="9" /><text x="570" y="438" text-anchor="middle" direction="rtl"><tspan class="node-id">N8</tspan></text><text x="570" y="458" text-anchor="middle" direction="rtl">مفتوح المصدر</text></g><g class="node-computed"><rect x="500" y="580" width="140" height="54" rx="9" /><text x="570" y="598" text-anchor="middle" direction="rtl"><tspan class="node-id">N9</tspan></text><text x="570" y="618" text-anchor="middle" direction="rtl">الحالة</text></g>
+      </svg>
+    </div>
+    <div class="legend" role="group" aria-label="أنواع العقد"><span class="li">مدخل</span><span class="lc">ثابت</span><span class="lp">محسوب</span></div>
+
+      <figcaption>تعرض عقد مرقمة المدخلات وحدًا ثابتًا والمخرجات المحسوبة. يقدم الجدول أدناه كل عقدة وتبعياتها والاستشهاد بها.</figcaption>
+    </figure>
+    <p class="note">يتم التمرير الأفقي للرسم على الشاشات الضيقة؛ ويعاد تدفق الجدول أدناه.</p>
+
+    <div class="table-scroll" tabindex="0" role="region" aria-label="رسم التبعيات: العقد والتبعيات">
+    <table>
+      <caption>رسم التبعيات: العقد والتبعيات</caption>
+      <thead><tr><th scope="col">العقدة</th><th scope="col">التسمية</th>
+      <th scope="col">النوع</th><th scope="col">Dtype</th><th scope="col">القيمة</th>
+      <th scope="col">يعتمد على</th><th scope="col">الاستشهاد</th></tr></thead>
+      <tbody><tr><th scope="row"><code lang="en" dir="ltr">N1</code></th><td>الهيئة العامة مشمولة</td><td>مدخل</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N2</code></th><td>العقد ضمن النطاق</td><td>مدخل</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N3</code></th><td>ينطبق استثناء</td><td>مدخل</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N4</code></th><td>قيمة العقد (دولار أمريكي)</td><td>مدخل</td><td><code lang="en" dir="ltr">Decimal</code></td><td><code lang="en" dir="ltr">Decimal</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N5</code></th><td>الوقائع المطلوبة مكتملة</td><td>مدخل</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N6</code></th><td>حد النظر في البرمجيات مفتوحة المصدر</td><td>ثابت</td><td><code lang="en" dir="ltr">Money</code></td><td><code lang="en" dir="ltr">USD 100,000</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-4</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N7</code></th><td>تنطبق متطلبات الشراء</td><td>محسوب</td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">N1, N2, N3, N5</code></td><td><code lang="en" dir="ltr">SP-1</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N8</code></th><td>يلزم النظر في البرمجيات مفتوحة المصدر</td><td>محسوب</td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">N7, N4, N6</code></td><td><code lang="en" dir="ltr">SP-2</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N9</code></th><td>حالة التحديد</td><td>محسوب</td><td><code lang="en" dir="ltr">Text</code></td><td><code lang="en" dir="ltr">Text</code></td><td><code lang="en" dir="ltr">N1, N2, N3, N4, N5, N6, N7, N8</code></td><td><code lang="en" dir="ltr">SP-3</code></td></tr></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="ladder-h">
+    <h2 id="ladder-h">السلم: ترتيب التقييم</h2>
+    <p>يُقرأ السلم من الخطوة 1 إلى الخطوة 5. كل خطوة شرط؛ ويُذكر الفرع المتخذ نصًا.</p>
+    <ol class="ladder">
+        <li>
+          <p class="step">الخطوة 1</p>
+          <h3>هل الوقائع المطلوبة مكتملة؟</h3>
+          <dl>
+            <dt>إذا صح</dt><dd>المتابعة إلى التغطية</dd>
+            <dt>إذا لم يصح</dt><dd>غير محدد</dd>
+          </dl>
+          <p class="cite">الاستشهاد: <code lang="en" dir="ltr">SP-3</code>. لا تُعامل الوقائع الناقصة على أنها خاطئة.</p>
+        </li>
+        <li>
+          <p class="step">الخطوة 2</p>
+          <h3>هل الهيئة العامة مشمولة؟</h3>
+          <dl>
+            <dt>إذا صح</dt><dd>المتابعة إلى النطاق</dd>
+            <dt>إذا لم يصح</dt><dd>غير منطبق</dd>
+          </dl>
+          <p class="cite">الاستشهاد: <code lang="en" dir="ltr">SP-1</code>. التغطية شرط وليست استنتاجًا قانونيًا.</p>
+        </li>
+        <li>
+          <p class="step">الخطوة 3</p>
+          <h3>هل العقد ضمن النطاق؟</h3>
+          <dl>
+            <dt>إذا صح</dt><dd>المتابعة إلى الاستثناءات</dd>
+            <dt>إذا لم يصح</dt><dd>خارج النطاق</dd>
+          </dl>
+          <p class="cite">الاستشهاد: <code lang="en" dir="ltr">SP-1</code>. يُفحص النطاق قبل الاستثناء.</p>
+        </li>
+        <li>
+          <p class="step">الخطوة 4</p>
+          <h3>هل ينطبق استثناء؟</h3>
+          <dl>
+            <dt>إذا صح</dt><dd>ينطبق استثناء</dd>
+            <dt>إذا لم يصح</dt><dd>المتابعة إلى الحد</dd>
+          </dl>
+          <p class="cite">الاستشهاد: <code lang="en" dir="ltr">SP-1</code>. يزيل الاستثناء المتطلب؛ ولا ينشئ متطلبًا جديدًا.</p>
+        </li>
+        <li>
+          <p class="step">الخطوة 5</p>
+          <h3>هل قيمة العقد 100,000 دولار أمريكي على الأقل؟</h3>
+          <dl>
+            <dt>إذا صح</dt><dd>يلزم النظر في البرمجيات مفتوحة المصدر</dd>
+            <dt>إذا لم يصح</dt><dd>متطلب دون حد البرمجيات مفتوحة المصدر</dd>
+          </dl>
+          <p class="cite">الاستشهاد: <code lang="en" dir="ltr">SP-2</code>. قيمة الحد نفسها تستوفي العتبة.</p>
+        </li></ol>
+  </section>
+
+  <section aria-labelledby="text-h">
+    <h2 id="text-h">المكافئ النصي الميسر</h2>
+    <p>هذا هو الشرح الخطي الكامل، بما في ذلك كل شرط وفرع ونتيجة واستشهاد. وهو ليس ملخصًا لقرار بصري فقط.</p>
+
+    <ol>
+      <li>الخطوة 1: هل الوقائع المطلوبة مكتملة؟ إذا لم يصح: <strong>غير محدد</strong> (<code lang="en" dir="ltr">SP-3</code>). إذا صح: المتابعة إلى التغطية.</li>
+      <li>الخطوة 2: هل الهيئة العامة مشمولة؟ إذا لم يصح: <strong>غير منطبق</strong> (<code lang="en" dir="ltr">SP-1</code>). إذا صح: المتابعة إلى النطاق.</li>
+      <li>الخطوة 3: هل العقد ضمن النطاق؟ إذا لم يصح: <strong>خارج النطاق</strong> (<code lang="en" dir="ltr">SP-1</code>). إذا صح: المتابعة إلى الاستثناءات.</li>
+      <li>الخطوة 4: هل ينطبق استثناء؟ إذا صح: <strong>ينطبق استثناء</strong> (<code lang="en" dir="ltr">SP-1</code>). إذا لم يصح: المتابعة إلى الحد (<code lang="en" dir="ltr">SP-1</code>).</li>
+      <li>الخطوة 5: هل قيمة العقد 100,000 دولار أمريكي على الأقل؟ إذا صح: <strong>يلزم النظر في البرمجيات مفتوحة المصدر</strong> (<code lang="en" dir="ltr">SP-2</code>). إذا لم يصح: <strong>متطلب دون حد البرمجيات مفتوحة المصدر</strong>.</li>
+    </ol>
+    <h3>المجهول والوقائع الناقصة</h3>
+    <p>لا تُعامل الوقائع المطلوبة الناقصة على أنها خاطئة. يستخدم L4 نوع MAYBE ويعيد «غير محدد». لا يوجد في Axiom حرفي «غير محدد» في هذا RuleSpec؛ تحمل حالة التحديد «غير محدد»، بينما تكون أحكام Axiom غير محققة عندما تكون facts_complete خاطئة. الإدخال الناقص في Axiom خطأ في الطلب.</p>
+  </section>
+
+  <section aria-labelledby="tests-h">
+    <h2 id="tests-h">نتائج المحركين المسجلة</h2>
+    <p>هذه مخرجات فعلية من إصدارات المحركات المثبتة، وليست قيمًا متوقعة. الطلبات والاستجابات ومخرجات L4 محفوظة مع النموذج.</p>
+
+    <div class="table-scroll" tabindex="0" role="region" aria-label="جدول نتائج المحركين المسجلة">
+    <table>
+      <caption>نتائج المحركين المسجلة</caption>
+      <thead><tr><th scope="col">الحالة</th><th scope="col">الوقائع</th>
+      <th scope="col">Axiom RuleSpec</th><th scope="col">Legalese L4</th><th scope="col">الاتفاق</th></tr></thead>
+      <tbody><tr><th scope="row">تحققت جميع الشروط</th><td>الوقائع مكتملة؛ مشمول؛ ضمن النطاق؛ لا استثناء؛ 150,000 دولار</td><td><span class="foreign" lang="en" dir="ltr">determination = open_source_consideration_required; both judgments = holds</span></td><td><span class="foreign" lang="en" dir="ltr">OpenSourceConsiderationRequired</span></td><td>النتيجة نفسها</td></tr><tr><th scope="row">شرط النطاق غير مستوفى</th><td>الوقائع مكتملة؛ مشمول؛ خارج النطاق؛ لا استثناء؛ 150,000 دولار</td><td><span class="foreign" lang="en" dir="ltr">determination = outside_scope; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">OutsideScope</span></td><td>النتيجة نفسها</td></tr><tr><th scope="row">ينطبق استثناء</th><td>الوقائع مكتملة؛ مشمول؛ ضمن النطاق؛ الاستثناء صحيح؛ 150,000 دولار</td><td><span class="foreign" lang="en" dir="ltr">determination = exception_applies; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">ExceptionApplies</span></td><td>النتيجة نفسها</td></tr><tr><th scope="row">مدخل مطلوب ناقص</th><td>حذف covered_body؛ وتقديم وقائع أخرى</td><td><span class="foreign" lang="en" dir="ltr">Execution error: missing input covered_body</span></td><td><span class="foreign" lang="en" dir="ltr">Indeterminate</span></td><td>دلالات مختلفة: خطأ مقابل غير محدد</td></tr><tr><th scope="row">قيمة الحد: 100,000 دولار</th><td>الوقائع مكتملة؛ مشمول؛ ضمن النطاق؛ لا استثناء؛ 100,000 دولار بالضبط</td><td><span class="foreign" lang="en" dir="ltr">determination = open_source_consideration_required; both judgments = holds</span></td><td><span class="foreign" lang="en" dir="ltr">OpenSourceConsiderationRequired</span></td><td>النتيجة نفسها؛ الحد شامل</td></tr><tr><th scope="row">الوقائع غير مكتملة</th><td>facts_complete خطأ؛ وقائع أخرى صحيحة؛ 150,000 دولار</td><td><span class="foreign" lang="en" dir="ltr">determination = indeterminate; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">Indeterminate</span></td><td>جزئي: الحالة النصية متطابقة؛ أحكام Axiom ليست غير محددة</td></tr><tr><th scope="row">نطاق واستثناء متعارضان</th><td>الوقائع مكتملة؛ مشمول؛ خارج النطاق؛ الاستثناء صحيح؛ 150,000 دولار</td><td><span class="foreign" lang="en" dir="ltr">determination = outside_scope; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">OutsideScope</span></td><td>النتيجة نفسها؛ يُفحص النطاق أولاً</td></tr></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="sources-h">
+    <h2 id="sources-h">مراجع المصادر الاصطناعية</h2>
+    <p>الاستشهادات خيالية وتشير إلى وثيقة اصطناعية. وهي توضح التتبع فقط.</p>
+    <ul><li><code lang="en" dir="ltr">SP-0</code> — سيناريو شراء اصطناعي، الوقائع 1–5. <a href="https://example.org/synthetic-procurement-policy#facts">مجموعة وقائع اصطناعية (خيالية)</a></li><li><code lang="en" dir="ltr">SP-1</code> — التغطية والنطاق والاستثناء والمتطلب. <a href="https://example.org/synthetic-procurement-policy#s1">سياسة الشراء الاصطناعية، المادة 1 (خيالية)</a></li><li><code lang="en" dir="ltr">SP-2</code> — النظر في البرمجيات مفتوحة المصدر فوق الحد. <a href="https://example.org/synthetic-procurement-policy#s2">سياسة الشراء الاصطناعية، المادة 2 (خيالية)</a></li><li><code lang="en" dir="ltr">SP-3</code> — التحديد والوقائع الناقصة. <a href="https://example.org/synthetic-procurement-policy#s3">سياسة الشراء الاصطناعية، المادة 3 (خيالية)</a></li><li><code lang="en" dir="ltr">SP-4</code> — معامل الحد الاصطناعي. <a href="https://example.org/synthetic-procurement-policy#s4">سياسة الشراء الاصطناعية، المادة 4 (خيالية)</a></li></ul>
+  </section>
+
+  <section aria-labelledby="integration-h">
+    <h2 id="integration-h">الربط المقترح بالمرصد (غير منفذ)</h2>
+    <p>يمكن لسجل مراجع مستقبلي أن يحمل هذه السلسلة. لا يرتبط النموذج بأي أداة حقيقية ولا يغيّر أي حالة أثر قانوني.</p>
+    <p class="integration">معرف الأداة ← معرف المصدر ← معرف الحكم ← النسخة القانونية ← الاستشهاد باللغة الأصلية ← التفسير المراجع ← ترميز القاعدة ← نموذج العرض ← أثر التصور ← إصدار المحرك ← نتائج الاختبار</p>
+  </section>
+
+  <section aria-labelledby="unsupported-h">
+    <h2 id="unsupported-h">غير مدعوم أو خارج النطاق</h2>
+    <ul><li><strong>الجهة الإلزامية</strong>: الالتزام والإذن والحظر ليست عناصر أصلية في RuleSpec. يمكن لـ L4 التعبير عنها باستخدام PARTY وMUST وMAY وSHANT.</li><li><strong>تاريخ التعديلات والإصدارات</strong>: يمكن ترميز تواريخ السريان، لكن رسم إصدارات الأداة والتعديلات المراجَع بيانات وصفية خارجية؛ ولا يمثلها هذا النموذج.</li><li><strong>مصدر الترجمات</strong>: لا يسجل أي من المحركين حالة الترجمة الرسمية أو المراجعة أو الآلية. ترجمات الواجهة هنا مؤقتة.</li><li><strong>النص القانوني الحقيقي والتحقق من الاستشهادات</strong>: جميع المصادر خيالية. لا تُشفّر أي أداة أو مادة أو تاريخ أو أثر قانوني حقيقي.</li><li><strong>كشف التناقض</strong>: طبق المحركان ترتيب السلم على وقائع متعارضة؛ ولم يبلغ أي منهما عن تناقض.</li></ul>
+  </section>
+
+  <section aria-labelledby="limits-h">
+    <h2 id="limits-h">حدود هذا النموذج</h2>
+    <p>الأمثلة اصطناعية؛ ولا تُشفّر أي تشريعات حقيقية. تُولّد الرسوم من نموذج عرض منسق، وليس تلقائيًا من أثر Axiom. أثر L4 ملف GraphViz DOT؛ ولم يُنتج SVG لأن GraphViz غير مثبت في هذه البيئة.</p>
+    <h3>نتائج إمكانية الوصول</h3>
+    <p>HTML وSVG ساكنان، مع برنامج صغير للتحسين التدريجي للتمرير بلوحة المفاتيح؛ بلا canvas أو سحب أو محتوى يظهر عند التحويم أو JavaScript خارجي. أُجريت فحوص axe آلية وترتيب التنقل بلوحة المفاتيح وتشغيل مفاتيح التمرير وإعادة التدفق عند 320 بكسل CSS والألوان القسرية وتقليل الحركة. لم تُجرَ اختبارات قارئ الشاشة اليدوية ولا التكبير الحقيقي 400% ولا المراجعة الأصلية العربية/الفرنسية. لم تسجل axe أي مخالفة؛ وكان فحص تباين نص SVG غير مكتمل، لذلك حُسبت أزواج الألوان الفعلية يدويًا بنسبة 13.39:1–16.45:1.</p>
+  </section>
+
+  <p><a href="../">العودة إلى فهرس النموذج</a> · <a href="../../README.md">مصدر النموذج</a></p>
+</main>
+<script>
+(() => {
+  document.querySelectorAll('.graph-scroll, .table-scroll').forEach((region) => {
+    region.addEventListener('keydown', (event) => {
+      const amount = 60;
+      const rtl = getComputedStyle(region).direction === 'rtl';
+      if (event.key === 'ArrowRight') {
+        region.scrollLeft += rtl ? -amount : amount;
+        event.preventDefault();
+      } else if (event.key === 'ArrowLeft') {
+        region.scrollLeft += rtl ? amount : -amount;
+        event.preventDefault();
+      }
+    });
+  });
+})();
+</script>
+<footer>
+  <p lang="en" dir="ltr">Prototype: <code>synthetic-procurement-v1</code>. Axiom <code>0.2.2</code>
+  (<code>d41d29d</code>), L4 <code>1.6.109</code>
+  (<code>4c887e0</code>).</p>
+</footer>
+</body>
+</html>
