@@ -680,5 +680,10 @@
   "visualizations.evidence.recorded_relation": "Recorded relation",
   "visualizations.excerpt_artifact": "Recorded excerpt artifact",
   "visualizations.open_source": "Open source",
-  "visualizations.provision_notice": "Provision headings, locators and summaries are recorded research metadata, not quotations from the instrument."
+  "visualizations.provision_notice": "Provision headings, locators and summaries are recorded research metadata, not quotations from the instrument.",
+  "rule.presentation.translation_fallback": "Some presentation text is shown in its available language because no reviewed translation is recorded for this locale.",
+  "rule.presentation.effective_unknown": "Unknown",
+  "rule.presentation.effective_unresolved": "Unresolved",
+  "rule.presentation.effective_conditional": "Conditional",
+  "rule.presentation.effective_retrospective": "Retrospective"
 }
