@@ -1,6 +1,6 @@
 # Roadmap
 
-**Status:** the three-source verification and monitoring pilot (`docs/CURRENT-MILESTONE.md`) is in progress; the milestones after it are **not authorized**. Each requires an explicit instruction, its own milestone document and a human-reviewed pull request.
+**Status:** the three-source verification and monitoring pilot (`docs/CURRENT-MILESTONE.md`) is in progress. A separate bounded visualization work package is authorized in `docs/VISUALIZATION-MILESTONE.md`; it does not complete the pilot and does not authorize executable real legislation. Later milestones are **not authorized** and require an explicit instruction, their own milestone document and a human-reviewed pull request.
 
 **Direction:** the observatory documents and explains law and policy that already exist. Proposed or hypothetical rules are a separate, labelled capability and never appear as current obligations.
 

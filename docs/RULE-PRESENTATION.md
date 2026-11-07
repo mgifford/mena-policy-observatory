@@ -6,7 +6,7 @@ The design recommendation in [RULES-ENGINE-COMPARISON.md](RULES-ENGINE-COMPARISO
 
 - `regions/mena/schemas/rule-presentation.schema.json` — the `rule-presentation/v1` shape.
 - `framework/rule_presentation.py` — shape and review-gate validation, plus a standard-library static HTML/SVG renderer.
-- `tests/fixtures/rule-presentation/synthetic-procurement.json` — a fictional fixture from the research prototype.
+- `regions/mena/data/visualizations/synthetic-procurement.json` — a fictional fixture from the research prototype.
 - `tests/test_rule_presentation.py` — validation, gate, rendering, trilingual and structural tests.
 
 No Axiom/L4 runtime, dependency, API, model call or client-side execution is used. The renderer never changes a policy record or legal-effect status.
@@ -60,10 +60,10 @@ Run:
 
 ```bash
 python3 framework/rule_presentation.py \
-  tests/fixtures/rule-presentation/synthetic-procurement.json --check
+  regions/mena/data/visualizations/synthetic-procurement.json --check
 
 python3 framework/rule_presentation.py \
-  tests/fixtures/rule-presentation/synthetic-procurement.json --out /tmp/rule-render
+  regions/mena/data/visualizations/synthetic-procurement.json --out /tmp/rule-render
 ```
 
 ## What is deliberately not done
@@ -112,4 +112,4 @@ The fixture is synthetic and deliberately not in `dist/`.
 
 ## Rollback
 
-Delete `regions/mena/schemas/rule-presentation.schema.json`, `framework/rule_presentation.py`, `tests/test_rule_presentation.py`, `tests/fixtures/rule-presentation/` and this document, and revert the i18n keys. No data migration or public page change is involved.
+Delete `regions/mena/schemas/rule-presentation.schema.json`, `framework/rule_presentation.py`, `tests/test_rule_presentation.py`, `regions/mena/data/visualizations/` and this document, and revert the i18n keys. No data migration or public page change is involved.

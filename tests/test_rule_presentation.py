@@ -16,7 +16,7 @@ from framework.rule_presentation import (
     validate_presentation,
 )
 
-FIXTURE = REPO_ROOT / 'tests' / 'fixtures' / 'rule-presentation' / 'synthetic-procurement.json'
+FIXTURE = REPO_ROOT / 'regions' / 'mena' / 'data' / 'visualizations' / 'synthetic-procurement.json'
 
 
 def fixture():

@@ -13,9 +13,25 @@ import shutil
 try:  # imported as framework.build
     from .coverage import build_view, load_coverage
     from .research import RESEARCH_FILENAME, load_research
+    from .research_visualization import (
+        SELECTED_RECORDS,
+        SYNTHETIC_FIXTURE,
+        index_body as visualizations_index_body,
+        selected_records,
+        synthetic_page_body,
+        visualization_body,
+    )
 except ImportError:  # run as a script
     from coverage import build_view, load_coverage
     from research import RESEARCH_FILENAME, load_research
+    from research_visualization import (
+        SELECTED_RECORDS,
+        SYNTHETIC_FIXTURE,
+        index_body as visualizations_index_body,
+        selected_records,
+        synthetic_page_body,
+        visualization_body,
+    )
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_URL = 'https://github.com/mgifford/mena-policy-observatory'
@@ -495,6 +511,7 @@ def page(catalogues, lang, title, body, depth, alt_hrefs, description,
 <li><a href="{local}domains/index.html">{esc(strings['nav.domains'])}</a></li>
 <li><a href="{local}tasks/index.html">{esc(strings['nav.tasks'])}</a></li>
 <li><a href="{local}sources/index.html">{esc(strings['nav.sources'])}</a></li>
+<li><a href="{local}visualizations/index.html">{esc(strings['nav.visualizations'])}</a></li>
 <li><a href="{REPOSITORY_URL}">{esc(strings['nav.repository'])}</a></li>
 </ul>
 </nav>
@@ -937,6 +954,11 @@ def record_body(catalogues, lang, record, base, research=None):
         f'<p><strong>{esc(strings["record.rule_status"])}:</strong> {esc(rule_status)}</p>',
     ]
     parts.extend(research_sections(strings, lang, research))
+    if record_id in SELECTED_RECORDS:
+        parts.append(
+            f'<section><h2>{esc(strings["visualizations.record_heading"])}</h2>'
+            f'<p><a href="../visualizations/{esc(record_id)}.html">'
+            f'{esc(strings["visualizations.record_link"])}</a></p></section>')
 
     artifacts = []
     for filename, key in ARTIFACT_KEYS.items():
@@ -1610,6 +1632,7 @@ def build(region):
             'tasks': strings['tasks.h1'],
             'sources': strings['sources.h1'],
             'comparison': strings['comparison.h1'],
+            'visualizations': strings['visualizations.h1'],
         }
 
         def write_section(name, suffix, body_html, description):
@@ -1644,6 +1667,40 @@ def build(region):
         write_section('comparison', 'index.html',
                       comparison_body(catalogues, lang, view),
                       strings['comparison.description'])
+
+        selected = selected_records(base)
+        write_section('visualizations', 'index.html',
+                      visualizations_index_body(strings, lang, selected),
+                      strings['visualizations.description'])
+        for record, research in selected:
+            record_id = record['id']
+            crumb = breadcrumb_trail([
+                home_crumb,
+                ('index.html', esc(strings['visualizations.h1']), False),
+                (None, esc(record.get('title', record_id)), True),
+            ])
+            (lang_dir / 'visualizations' / f'{record_id}.html').write_text(
+                page(catalogues, lang,
+                     f'{record.get("title", record_id)} — {strings["visualizations.h1"]} — {title}',
+                     visualization_body(strings, lang, record, research), 2,
+                     {code: f'../../{code}/visualizations/{record_id}.html' for code in others},
+                     strings['visualizations.description'], crumb),
+                encoding='utf-8',
+            )
+        fixture = json.loads((ROOT / SYNTHETIC_FIXTURE).read_text(encoding='utf-8'))
+        crumb = breadcrumb_trail([
+            home_crumb,
+            ('index.html', esc(strings['visualizations.h1']), False),
+            (None, esc(strings['visualizations.synthetic_page_title']), True),
+        ])
+        (lang_dir / 'visualizations' / 'synthetic.html').write_text(
+            page(catalogues, lang,
+                 f'{strings["visualizations.synthetic_page_title"]} — {title}',
+                 synthetic_page_body(strings, lang, fixture, catalogues), 2,
+                 {code: f'../../{code}/visualizations/synthetic.html' for code in others},
+                 strings['visualizations.synthetic_demo_notice'], crumb),
+            encoding='utf-8',
+        )
 
         for country in view['countries']:
             country_code = country['code']
@@ -1738,6 +1795,7 @@ def build_root(region='mena'):
 <li><a href="mena/en/">{esc(en['nav.home'])}</a></li>
 <li><a href="mena/en/#method">{esc(en['nav.method'])}</a></li>
 <li><a href="mena/en/#records">{esc(en['nav.records'])}</a></li>
+<li><a href="mena/en/visualizations/">{esc(en['nav.visualizations'])}</a></li>
 <li><a href="{REPOSITORY_URL}">{esc(en['nav.repository'])}</a></li>
 </ul>
 </nav>
