@@ -9,7 +9,9 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from framework.build import load_i18n, record_body
 from framework.research import load_research
+from framework.schema_lite import Validator
 from framework.research_visualization import (
+    DIRECTIONS,
     SELECTED_RECORDS,
     SYNTHETIC_FIXTURE,
     build_structure,
@@ -31,9 +33,9 @@ class SourceStructureTests(unittest.TestCase):
         cls.selected = selected_records(BASE)
         cls.policies = json.loads((BASE / 'data' / 'policies.json').read_text(encoding='utf-8'))
 
-    def test_three_records_selected(self):
+    def test_seven_records_selected(self):
         self.assertEqual([record['id'] for record, _ in self.selected], list(SELECTED_RECORDS))
-        self.assertEqual(len(self.selected), 3)
+        self.assertEqual(len(self.selected), 7)
 
     def test_model_has_every_recorded_node_and_no_invented_id(self):
         for record, research in self.selected:
@@ -71,6 +73,16 @@ class SourceStructureTests(unittest.TestCase):
             for relation in model['relations']:
                 if relation['relation'] == 'unspecified':
                     self.assertNotEqual(relation['recorded_label'], 'amends')
+
+    def test_source_languages_support_persian_and_turkish_tags(self):
+        source = copy.deepcopy(self.selected[0][1]['sources'][0])
+        source['language'] = 'fa'
+        source['translation']['target_language'] = 'tr'
+        validator = Validator(BASE / 'schemas')
+        schema = validator.schema('source-record.schema.json')
+        self.assertEqual(validator.validate(source, schema), [])
+        self.assertEqual(DIRECTIONS['fa'], 'rtl')
+        self.assertEqual(DIRECTIONS['tr'], 'ltr')
 
     def test_unknown_dates_are_not_fabricated(self):
         for record, research in self.selected:
@@ -174,13 +186,10 @@ class SourceStructureRenderTests(unittest.TestCase):
             self.assertIn(self.catalogues[lang]['visualizations.h1'], body)
             self.assertIn(f'href="{self.selected[0][0]["id"]}.html"', body)
 
-    def test_record_page_links_selected_record(self):
-        body = record_body(self.catalogues, 'en', self.record, BASE, self.research)
-        self.assertIn(f'href="../visualizations/{self.record["id"]}.html"', body)
-        other = next(record for record in self.policies if record['id'] not in SELECTED_RECORDS)
-        other_research = load_research(BASE / 'policies' / other['id'])
-        other_body = record_body(self.catalogues, 'en', other, BASE, other_research)
-        self.assertNotIn(f'href="../visualizations/{other["id"]}.html"', other_body)
+    def test_record_page_links_every_selected_record(self):
+        for record, research in self.selected:
+            body = record_body(self.catalogues, 'en', record, BASE, research)
+            self.assertIn(f'href="../visualizations/{record["id"]}.html"', body)
 
     def test_synthetic_demo_is_clearly_labelled_and_links_evidence(self):
         fixture = json.loads(FIXTURE.read_text(encoding='utf-8'))

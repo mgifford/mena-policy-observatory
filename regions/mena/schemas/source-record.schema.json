@@ -58,7 +58,7 @@
     },
     "language": {
       "type": "string",
-      "pattern": "^[a-z]{2}$"
+      "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
     },
     "authoritative_language": {
       "description": "Whether the consulted copy is the authoritative version. 'unknown' means it has not been established.",
@@ -176,7 +176,7 @@
             "string",
             "null"
           ],
-          "pattern": "^[a-z]{2}$"
+          "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
         },
         "status": {
           "enum": [
