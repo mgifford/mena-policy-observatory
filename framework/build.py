@@ -314,6 +314,30 @@ LEGAL_VERIFICATION_KEYS = {
     status: f'source.legal_verification.{status}'
     for status in ('unreviewed', 'in_review', 'verified', 'disputed', 'superseded')
 }
+CHANGE_TECHNICAL_KEYS = {
+    value: f'change.technical.{value}'
+    for value in ('new_content', 'bytes_changed', 'text_changed', 'metadata_changed',
+                  'url_changed', 'format_changed', 'no_observed_change', 'indeterminate')
+}
+CHANGE_POTENTIAL_KEYS = {
+    value: f'change.potential.{value}'
+    for value in ('possible_new_instrument', 'possible_amendment', 'possible_repeal',
+                  'possible_correction', 'possible_consolidation',
+                  'possible_translation_update', 'possible_effective_date_change',
+                  'relationship_unresolved', 'none')
+}
+CHANGE_REVIEW_KEYS = {
+    value: f'change.review.{value}'
+    for value in ('not_required', 'awaiting_review', 'reviewed_no_change',
+                  'reviewed_substantive', 'reviewed_technical', 'further_evidence',
+                  'interpretation_pending', 'translation_review', 'indeterminate')
+}
+CHANGE_LEGAL_KEYS = {
+    value: f'change.legal.{value}'
+    for value in ('confirmed_amendment', 'confirmed_repeal', 'confirmed_correction',
+                  'confirmed_consolidation', 'confirmed_translation_update',
+                  'no_substantive_change', 'indeterminate')
+}
 RETRIEVAL_ERROR_KEYS = {
     category: f'source.retrieval.error.{category}'
     for category in ('timeout', 'dns', 'tls', 'http_error', 'blocked',
@@ -1379,6 +1403,27 @@ def sources_body(catalogues, lang, view):
         verification = candidate.get('legal_verification') or {}
         details.append((strings['source.legal_verification'],
                         esc(legal_verification_text(strings, verification.get('status')))))
+        changes = candidate.get('change_events') or []
+        if changes:
+            latest = candidate.get('latest_change') or {}
+            count_line = t(strings, 'source.changes.count', count=len(changes))
+            summary = (f'{esc(strings["change.detected"])}: '
+                       f'{code(latest.get("detected_at", ""))} — '
+                       f'{esc(label(strings, CHANGE_TECHNICAL_KEYS, latest.get("technical_change"), "change.technical.indeterminate"))} — '
+                       f'{esc(label(strings, CHANGE_POTENTIAL_KEYS, latest.get("potential_legal_change"), "change.potential.relationship_unresolved"))} — '
+                       f'{esc(label(strings, CHANGE_REVIEW_KEYS, candidate.get("change_review_status"), "change.review.indeterminate"))}')
+            decision = candidate.get('latest_change_decision') or {}
+            if decision.get('legal_change'):
+                summary += (f' — {esc(strings["change.reviewed_change"])}: '
+                            f'{esc(label(strings, CHANGE_LEGAL_KEYS, decision.get("legal_change"), "change.legal.indeterminate"))}')
+            task_ids = candidate.get('change_task_ids') or []
+            if task_ids:
+                summary += (f' — {esc(strings["change.task"])}: '
+                            f'{" ".join(code(task_id) for task_id in task_ids)}')
+            details.append((strings['source.changes'],
+                            f'<p>{esc(count_line)}</p><p>{summary}</p>'))
+        else:
+            details.append((strings['source.changes'], esc(strings['source.changes.none'])))
         if instrument:
             dates = instrument.get('dates') if isinstance(instrument.get('dates'), dict) else {}
 
@@ -1468,6 +1513,7 @@ def sources_body(catalogues, lang, view):
         f'<p class="notice">{esc(strings["sources.pending_review"])}</p>',
         f'<p class="notice">{esc(strings["sources.currency_notice"])}</p>',
         f'<p class="notice">{esc(strings["sources.instrument_notice"])}</p>',
+        f'<p class="notice">{esc(strings["source.changes.notice"])}</p>',
         f'<p>{esc(count_line)}</p>',
         '\n'.join(sections),
         f'<p><a href="../index.html">{esc(strings["sources.back"])}</a></p>',

@@ -1,6 +1,6 @@
 # Roadmap
 
-**Status:** the active milestone (`docs/CURRENT-MILESTONE.md`) is in progress; the milestones after it are **not authorized**. Each requires an explicit instruction, its own milestone document and a human-reviewed pull request.
+**Status:** the active milestone (`docs/CURRENT-MILESTONE.md`) is implementation-complete but not operationally validated; the milestones after it are **not authorized**. Each requires an explicit instruction, its own milestone document and a human-reviewed pull request.
 
 **Direction:** the observatory documents and explains law and policy that already exist. Proposed or hypothetical rules are a separate, labelled capability and never appear as current obligations.
 
@@ -45,7 +45,21 @@
 7. No candidate promoted to a verified source or legal finding.
 8. Documentation and a reviewable pull request.
 
-## Milestone 2 — Existing public digital policy research
+## Milestone 2 (proposed) — Three-source verification and monitoring pilot
+
+**Not authorized.** Verify and monitor three existing authoritative legal sources already represented by candidate leads.
+
+- Record publisher identity, authority, languages and retrieval constraints for the three sources.
+- Capture permitted evidence with timestamps and checksums where allowed; record explicit access limitations.
+- Run bounded, deterministic source checks and record actual retrieval outcomes.
+- Record real change observations only if a difference is observed; otherwise record none and do not fabricate.
+- Exercise the review workflow with human decisions and review tasks.
+- Publish source health, latest observation and review status without implying complete national coverage.
+- Preserve unreviewed legal status and legal-effect fields.
+
+Completion requires actual evidence, a documented selection rationale and a reviewable PR. Synthetic fixtures alone do not complete this milestone.
+
+## Milestone 3 — Existing public digital policy research
 
 Research programmes on digital procurement, open-source software, digital sovereignty, and environmental sustainability and climate requirements, using authoritative existing instruments.
 
@@ -53,7 +67,7 @@ Research programmes on digital procurement, open-source software, digital sovere
 - No rankings or scores without a reviewed methodology.
 - Procurement and contracting data, and sustainability frameworks, remain evidence about implementation or good practice, not sources of legal obligation.
 
-## Milestone 3 — Reviewed Rules as Code
+## Milestone 4 — Reviewed Rules as Code
 
 Deferred until source, version and interpretation review are operational. Axiom and comparable engines remain unselected and are not dependencies.
 

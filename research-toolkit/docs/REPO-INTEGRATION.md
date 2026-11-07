@@ -112,6 +112,15 @@ python3 research-toolkit/scripts/instruments.py
 python3 research-toolkit/scripts/instruments.py --check
 ```
 
+## Source-change review (work package 5)
+
+- `research-toolkit/monitoring/change-events.jsonl` is append-only. Each event records the observation, evidence references and a potential legal change; it does not assert an amendment.
+- `research-toolkit/monitoring/review-decisions.jsonl` records human decisions separately. Reviewed conclusions exist only here, with reviewer role, date and evidence.
+- `research-toolkit/backlog/tasks-change-review.jsonl` is derived from events and decisions; `framework/change_events.py --check` fails when it is stale or an event is invalid.
+- Event identity uses candidate, previous/new reference and technical change type, so repeated imports do not duplicate events.
+- No event changes a policy record's `legal_effect`; no decision marks a source professionally reviewed without a recorded human decision.
+- The empty files mean no observations have been recorded. Operational monitoring requires a separately authorized source pilot.
+
 ## CI recommendation
 Add an isolated job for toolkit validator and unit tests, then fold selected checks into the repository's existing build after review. Do not make incomplete candidate sources appear as published legal records.
 

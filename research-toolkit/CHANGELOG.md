@@ -1,5 +1,11 @@
 # Toolkit change record
 
+## v8 (2026-11-06)
+- Added append-only source-change observations and human review decisions under `monitoring/`, plus derived `backlog/tasks-change-review.jsonl`.
+- `framework/change_events.py` validates events/decisions, derives idempotent review tasks and supports `--check`.
+- Technical changes, potential legal changes and reviewed conclusions remain distinct; no automatic legal-effect change.
+- All files are empty until a real observation is recorded; synthetic fixtures exercise the workflow in tests.
+
 ## v7 (2026-11-06)
 - Source records may carry optional language expressions with kind, BCP47 language, original language, authority, method, review state/date/role and uncertainty notes; existing records are unchanged.
 - Validator rejects mismatched references, duplicate expressions, unauthorised review promotion and incomplete reviewed metadata.

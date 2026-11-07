@@ -15,6 +15,7 @@ python3 research-toolkit/scripts/report_queue.py research-toolkit/backlog/tasks.
 python3 research-toolkit/scripts/import_tranche.py --check
 python3 research-toolkit/scripts/registry.py --check
 python3 research-toolkit/scripts/instruments.py --check
+python3 framework/change_events.py --check
 python3 research-toolkit/scripts/manifest.py research-toolkit --output research-toolkit/MANIFEST.json --check
 python3 -m http.server 8000 --directory dist
 ```
@@ -43,7 +44,7 @@ The site publishes trilingual (EN/FR/AR) coverage views generated from recorded 
 - **Policy areas** (`domains.json`): eight research domains grouped into five themes, with subtopics. English identifiers are canonical; Arabic labels are provisional drafts.
 - **Coverage matrix**: one cell per jurisdiction and policy area, showing derived research status.
 - **Research queue**: discovery and review tasks from `research-toolkit/backlog/`, including the 14 verification tasks supplied with tranche 02.
-- **Candidate sources**: unreviewed discovery leads from `research-toolkit/sources/candidate-sources.json`, shown as link-and-metadata only, with the reported instrument identity, publisher host, publisher-registry status, version dates, captured-version state, retrieval outcome, source freshness and legal-verification state. Types and numbers are parsed from reported titles and are not verified. Without a recorded retrieval, freshness is reported as not established rather than assumed, and legal verification stays unreviewed.
+- **Candidate sources**: unreviewed discovery leads from `research-toolkit/sources/candidate-sources.json`, shown as link-and-metadata only, with the reported instrument identity, publisher host, publisher-registry status, version dates, captured-version state, retrieval outcome, source freshness, legal-verification state, and any recorded source-change observation with its human review status and task. Types and numbers are parsed from reported titles and are not verified. Without a recorded retrieval, freshness is reported as not established rather than assumed, and legal verification stays unreviewed. No change observation means none was recorded by this project, not that legislation is unchanged.
 - **Comparison**: recorded provisions flattened for side-by-side reading.
 
 `framework/coverage.py` loads and validates the registries, derives every status from recorded evidence, and separates candidate discovery from source verification. Status vocabulary is about research activity, not compliance: `not_started`, `source_discovery`, `candidate_sources_identified`, `evidence_captured`, `provision_extraction`, `legal_review_pending`, `reviewed_findings`, `blocked`. An empty or not-started cell means this repository has not researched the combination; it is not evidence that no law or policy exists.

@@ -1,10 +1,10 @@
 # Current Milestone: Legal Evidence Currency and Multilingual Support
 
-**Status:** In progress\
+**Status:** Implementation complete — operational monitoring not established\
 **Priority:** P0\
-**Working branch:** `feat/translation-provenance` (verify before use)\
+**Working branch:** `feat/source-change-review` (verify before use)\
 **Previous milestone:** MENA research coverage integration — implementation complete on `main` at `4b3c13a` (see git history and `docs/ROADMAP.md`)\
-**Later milestones:** public digital policy research, then reviewed Rules as Code. Neither is authorized.
+**Later milestones:** three-source verification and monitoring pilot, then public digital policy research and reviewed Rules as Code. None is authorized.
 
 ## Objective
 
@@ -49,7 +49,7 @@ Do not:
 2. **Instrument identity and version metadata** — delivered in this work package: reported type/number/year, explicit null authority and version dates, captured-version state, validator and trilingual display.
 3. **French interface foundation** — delivered (PR #16): French catalogue, localized country/domain labels, three-language navigation and language switching, 139-page build and three-locale tests.
 4. **Translation provenance and terminology** — delivered in this work package: optional per-source language expressions, validation, draft terminology registry and accessible expression status on record pages; native review remains outstanding.
-5. **Source-change review workflow** — next: change events, review tasks, stale-source warnings.
+5. **Source-change review workflow** — delivered in this work package: append-only change events, human review decisions, derived review tasks, validation and bilingual public status. No real observation has been recorded.
 
 **Maintenance (this PR): defect corrections** — source-health classification, retrospective-date handling, trilingual instruction reconciliation and regression tests.
 
@@ -59,7 +59,7 @@ Do not:
 - [x] Every candidate has a source-check record; no check is fabricated.
 - [x] Retrieval outcome, freshness and legal verification are separate and freshness is derived from a fixed `as_of` date.
 - [x] Instrument identity and version metadata are recorded where evidence exists.
-- [ ] Change events and review tasks exist for detected changes (WP5).
+- [x] Change events and review tasks exist for detected changes (WP5).
 - [x] English, French and Arabic navigation works; French and Arabic copy is marked provisional.
 - [x] Translation states and provenance are recorded per text (WP4).
 - [x] Automated accessibility tests pass for all three locales.
