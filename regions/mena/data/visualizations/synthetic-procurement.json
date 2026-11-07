@@ -468,5 +468,138 @@
         "ar": "طبق المحركان ترتيب السلم على وقائع متعارضة؛ ولم يبلغ أي منهما عن تناقض."
       }
     }
-  ]
+  ],
+  "outcomes": [
+    "open_source_consideration_required",
+    "procurement_requirement_without_open_source_threshold",
+    "not_applicable",
+    "outside_scope",
+    "exception_applies",
+    "indeterminate"
+  ],
+  "mappings": {
+    "node_steps": [
+      {
+        "node": "N5",
+        "step": 1
+      },
+      {
+        "node": "N1",
+        "step": 2
+      },
+      {
+        "node": "N2",
+        "step": 3
+      },
+      {
+        "node": "N3",
+        "step": 4
+      },
+      {
+        "node": "N4",
+        "step": 5
+      },
+      {
+        "node": "N6",
+        "step": 5
+      },
+      {
+        "node": "N7",
+        "step": 1
+      },
+      {
+        "node": "N7",
+        "step": 2
+      },
+      {
+        "node": "N7",
+        "step": 3
+      },
+      {
+        "node": "N7",
+        "step": 4
+      },
+      {
+        "node": "N8",
+        "step": 5
+      },
+      {
+        "node": "N9",
+        "step": 1
+      },
+      {
+        "node": "N9",
+        "step": 2
+      },
+      {
+        "node": "N9",
+        "step": 3
+      },
+      {
+        "node": "N9",
+        "step": 4
+      },
+      {
+        "node": "N9",
+        "step": 5
+      }
+    ],
+    "branches": [
+      {
+        "step": 1,
+        "true": "continue",
+        "false": "indeterminate"
+      },
+      {
+        "step": 2,
+        "true": "continue",
+        "false": "not_applicable"
+      },
+      {
+        "step": 3,
+        "true": "continue",
+        "false": "outside_scope"
+      },
+      {
+        "step": 4,
+        "true": "exception_applies",
+        "false": "continue"
+      },
+      {
+        "step": 5,
+        "true": "open_source_consideration_required",
+        "false": "procurement_requirement_without_open_source_threshold"
+      }
+    ],
+    "tests": [
+      {
+        "id": "all_met",
+        "expected": "open_source_consideration_required"
+      },
+      {
+        "id": "scope_not_met",
+        "expected": "outside_scope"
+      },
+      {
+        "id": "exception_applies",
+        "expected": "exception_applies"
+      },
+      {
+        "id": "missing_fact",
+        "expected": "error"
+      },
+      {
+        "id": "boundary_100000",
+        "expected": "open_source_consideration_required"
+      },
+      {
+        "id": "indeterminate_facts_incomplete",
+        "expected": "indeterminate"
+      },
+      {
+        "id": "contradictory_scope_and_exception",
+        "expected": "outside_scope"
+      }
+    ]
+  }
 }

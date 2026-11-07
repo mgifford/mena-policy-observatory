@@ -663,5 +663,10 @@
   "visualizations.evidence.recorded_relation": "Relation consignée",
   "visualizations.excerpt_artifact": "Artefact de l’extrait consigné",
   "visualizations.open_source": "Ouvrir la source",
-  "visualizations.provision_notice": "Les intitulés, localisateurs et résumés des dispositions sont des métadonnées de recherche consignées, et non des citations de l’instrument."
+  "visualizations.provision_notice": "Les intitulés, localisateurs et résumés des dispositions sont des métadonnées de recherche consignées, et non des citations de l’instrument.",
+  "rule.presentation.translation_fallback": "Une partie du texte est affichée dans sa langue disponible car aucune traduction révisée n'est consignée pour cette locale.",
+  "rule.presentation.effective_unknown": "Inconnue",
+  "rule.presentation.effective_unresolved": "Non résolue",
+  "rule.presentation.effective_conditional": "Conditionnelle",
+  "rule.presentation.effective_retrospective": "Rétrospective"
 }
