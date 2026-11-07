@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-07",
+  "environment": {
+    "browser": "Chromium via Playwright 1.64.1",
+    "axe_core": "4.14.0",
+    "viewport": "1280x900; narrow reflow 320x800",
+    "pages": [
+      "prototype/en/index.html",
+      "prototype/fr/index.html",
+      "prototype/ar/index.html"
+    ]
+  },
+  "automated_axe": {
+    "tags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21a",
+      "wcag21aa",
+      "wcag22aa"
+    ],
+    "default": {
+      "violations": 0,
+      "passes": 28,
+      "incomplete": 1,
+      "inapplicable": 36,
+      "incomplete_rule": "color-contrast",
+      "incomplete_nodes": {
+        "en": 18,
+        "fr": 18,
+        "ar": 11
+      },
+      "note": "SVG text on a filled rect: axe cannot determine the background. Manual ratios are 13.39:1 to 16.45:1 for the foreground/background pairs used. Node counts reflect label overlap per locale."
+    },
+    "forced_colors_and_reduced_motion": {
+      "violations": 0,
+      "passes": 28,
+      "incomplete": 1,
+      "inapplicable": 36,
+      "incomplete_rule": "color-contrast",
+      "incomplete_nodes": {
+        "en": 18,
+        "fr": 18,
+        "ar": 11
+      }
+    }
+  },
+  "reflow_320": {
+    "document_scroll_width": 320,
+    "document_client_width": 320,
+    "graph_region": {
+      "scroll_width": 736,
+      "client_width": 292,
+      "tabindex": 0
+    },
+    "table_regions": "focusable and horizontally scrollable",
+    "result": "no page-level horizontal overflow"
+  },
+  "keyboard": {
+    "first_tab": "skip link -> #main",
+    "focus_order": "language links, graph scroll region, dependency table region, ladder links, test table region, source links",
+    "graph_arrow_scroll": "at 320px, English scrollLeft 0 to 120 after two ArrowRight presses",
+    "rtl_arrow_scroll": "at 320px, Arabic scrollLeft 0 to -120 after two ArrowRight presses",
+    "focus_outline": "3px solid, offset 3px",
+    "traps": "none observed"
+  },
+  "zoom": {
+    "tested": "320 CSS px viewport, the layout equivalent used for 400% on a 1280 px page",
+    "not_tested": "real browser 400% zoom and text-spacing override"
+  },
+  "manual": {
+    "screen_reader": "not performed",
+    "native_french_arabic": "not performed",
+    "real_zoom": "not performed",
+    "touch/print": "not performed"
+  },
+  "contrast_manual": {
+    "#17202a on #dcecf8": "13.63:1",
+    "#17202a on #f3e8c8": "13.46:1",
+    "#17202a on #e2e8f5": "13.39:1",
+    "#17202a on #ffffff": "16.45:1",
+    "#4d5966 on #f3f6f9": "6.59:1",
+    "#0b4f8a on #ffffff": "8.40:1"
+  },
+  "limitations": [
+    "Axe cannot decide whether the text equivalent is complete or the translations are accurate.",
+    "The SVG is an atomic image; the complete equivalent is the node table and the linear explanation.",
+    "The prototype has one small inline script for keyboard scrolling; all content remains in HTML and is readable without it.",
+    "No WCAG conformance is claimed."
+  ]
+}

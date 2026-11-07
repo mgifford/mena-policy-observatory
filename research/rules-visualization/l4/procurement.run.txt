@@ -1,0 +1,142 @@
+Info | updateFileDiagnostics published different from new diagnostics - file diagnostics:
+File:     procurement.l4
+  Hidden:   no
+  Range:    43:1-43:72
+  Source:   eval
+  Severity: DiagnosticSeverity_Information
+  Code:     eval/result
+  Message:  OpenSourceConsiderationRequired
+File:     procurement.l4
+  Hidden:   no
+  Range:    44:1-44:77
+  Source:   eval
+  Severity: DiagnosticSeverity_Information
+  Code:     eval/result
+  Message:  OpenSourceConsiderationRequired
+File:     procurement.l4
+  Hidden:   no
+  Range:    45:1-45:73
+  Source:   eval
+  Severity: DiagnosticSeverity_Information
+  Code:     eval/result
+  Message:  OutsideScope
+File:     procurement.l4
+  Hidden:   no
+  Range:    46:1-46:71
+  Source:   eval
+  Severity: DiagnosticSeverity_Information
+  Code:     eval/result
+  Message:  ExceptionApplies
+File:     procurement.l4
+  Hidden:   no
+  Range:    47:1-47:68
+  Source:   eval
+  Severity: DiagnosticSeverity_Information
+  Code:     eval/result
+  Message:  Indeterminate
+File:     procurement.l4
+  Hidden:   no
+  Range:    48:1-48:72
+  Source:   eval
+  Severity: DiagnosticSeverity_Information
+  Code:     eval/result
+  Message:  OpenSourceConsiderationRequired
+File:     procurement.l4
+  Hidden:   no
+  Range:    49:1-49:72
+  Source:   eval
+  Severity: DiagnosticSeverity_Information
+  Code:     eval/result
+  Message:  OutsideScope
+File:     procurement.l4
+  Hidden:   no
+  Range:    50:1-50:57
+  Source:   eval
+  Severity: DiagnosticSeverity_Information
+  Code:     eval/result
+  Message:
+    JUST OF (PARTY ContractingAuthority
+    MUST consider_open_source
+    WITHIN 30
+    HENCE FULFILLED)
+Evaluation[1] @ procurement.l4:43:1-72
+
+Result:
+  OpenSourceConsiderationRequired
+
+
+Trace:
+  (no trace captured; add #EVALTRACE to the directive)
+
+
+Evaluation[2] @ procurement.l4:44:1-77
+
+Result:
+  OpenSourceConsiderationRequired
+
+
+Trace:
+  (no trace captured; add #EVALTRACE to the directive)
+
+
+Evaluation[3] @ procurement.l4:45:1-73
+
+Result:
+  OutsideScope
+
+
+Trace:
+  (no trace captured; add #EVALTRACE to the directive)
+
+
+Evaluation[4] @ procurement.l4:46:1-71
+
+Result:
+  ExceptionApplies
+
+
+Trace:
+  (no trace captured; add #EVALTRACE to the directive)
+
+
+Evaluation[5] @ procurement.l4:47:1-68
+
+Result:
+  Indeterminate
+
+
+Trace:
+  (no trace captured; add #EVALTRACE to the directive)
+
+
+Evaluation[6] @ procurement.l4:48:1-72
+
+Result:
+  OpenSourceConsiderationRequired
+
+
+Trace:
+  (no trace captured; add #EVALTRACE to the directive)
+
+
+Evaluation[7] @ procurement.l4:49:1-72
+
+Result:
+  OutsideScope
+
+
+Trace:
+  (no trace captured; add #EVALTRACE to the directive)
+
+
+Evaluation[8] @ procurement.l4:50:1-57
+
+Result:
+  JUST OF (PARTY ContractingAuthority
+  MUST consider_open_source
+  WITHIN 30
+  HENCE FULFILLED)
+
+
+Trace:
+  (no trace captured; add #EVALTRACE to the directive)

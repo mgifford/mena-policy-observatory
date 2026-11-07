@@ -1,0 +1,87 @@
+{
+  "mode": "explain",
+  "dataset": {
+    "inputs": [
+      {
+        "name": "xx:policies/procurement#input.facts_complete",
+        "entity": "Procurement",
+        "entity_id": "procurement:1",
+        "interval": {
+          "start": "2026-01-01",
+          "end": "2026-02-01"
+        },
+        "value": {
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "name": "xx:policies/procurement#input.covered_body",
+        "entity": "Procurement",
+        "entity_id": "procurement:1",
+        "interval": {
+          "start": "2026-01-01",
+          "end": "2026-02-01"
+        },
+        "value": {
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "name": "xx:policies/procurement#input.contract_scope_met",
+        "entity": "Procurement",
+        "entity_id": "procurement:1",
+        "interval": {
+          "start": "2026-01-01",
+          "end": "2026-02-01"
+        },
+        "value": {
+          "kind": "bool",
+          "value": false
+        }
+      },
+      {
+        "name": "xx:policies/procurement#input.exception_applies",
+        "entity": "Procurement",
+        "entity_id": "procurement:1",
+        "interval": {
+          "start": "2026-01-01",
+          "end": "2026-02-01"
+        },
+        "value": {
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "name": "xx:policies/procurement#input.contract_value",
+        "entity": "Procurement",
+        "entity_id": "procurement:1",
+        "interval": {
+          "start": "2026-01-01",
+          "end": "2026-02-01"
+        },
+        "value": {
+          "kind": "decimal",
+          "value": "150000"
+        }
+      }
+    ]
+  },
+  "queries": [
+    {
+      "entity_id": "procurement:1",
+      "period": {
+        "period_kind": "month",
+        "start": "2026-01-01",
+        "end": "2026-02-01"
+      },
+      "outputs": [
+        "xx:policies/procurement#procurement_obligation",
+        "xx:policies/procurement#open_source_consideration_required",
+        "xx:policies/procurement#determination"
+      ]
+    }
+  ]
+}

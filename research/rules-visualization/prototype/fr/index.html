@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparaison de moteurs de règles : politique de passation synthétique</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #17202a; --muted: #4d5966; --paper: #ffffff; --wash: #f3f6f9;
+  --line: #6b7785; --accent: #0b4f8a; --accent-ink: #ffffff;
+  --input: #dcecf8; --constant: #f3e8c8; --computed: #e2e8f5;
+}
+* { box-sizing: border-box; }
+html { font-family: system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif; line-height: 1.55; }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.skip { position: absolute; inset-inline-start: 0.5rem; inset-block-start: -4rem; background: var(--ink); color: var(--paper); padding: 0.6rem 0.9rem; z-index: 5; }
+.skip:focus { inset-block-start: 0.5rem; }
+header, main, footer { max-inline-size: 68rem; margin-inline: auto; padding-inline: 1rem; }
+header { padding-block: 1.2rem 0.6rem; }
+.badge { display: inline-block; border: 2px solid var(--ink); border-radius: 0.4rem; padding: 0.15rem 0.45rem; font-weight: 700; font-size: 0.82rem; }
+h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.15; margin-block: 0.6rem 0.4rem; }
+h2 { font-size: clamp(1.25rem, 2.5vw, 1.6rem); margin-block: 2rem 0.6rem; border-block-end: 2px solid var(--line); padding-block-end: 0.25rem; }
+h3 { font-size: 1.05rem; margin-block: 0 0.35rem; }
+.node-input rect { fill: var(--input); stroke: #17202a; stroke-width: 2; }
+.node-constant rect { fill: var(--constant); stroke: #17202a; stroke-width: 2; }
+.node-computed rect { fill: var(--computed); stroke: #17202a; stroke-width: 2; }
+.node-id { font-weight: 700; }
+svg text { font-family: system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif; font-size: 14px; fill: #17202a; }
+.edge { fill: none; stroke: #4d5966; stroke-width: 2; }
+p, li { max-inline-size: 68ch; }
+.lead { font-size: 1.08rem; color: var(--muted); }
+nav.langs ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; margin-block: 0.5rem; }
+nav.langs a { display: inline-block; border: 1px solid var(--line); border-radius: 0.35rem; padding: 0.35rem 0.6rem; text-decoration: none; }
+nav.langs a[aria-current="page"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+section { margin-block: 1.4rem; }
+figure { margin: 1rem 0 1.5rem; }
+figcaption { color: var(--muted); margin-block-start: 0.4rem; }
+.graph-scroll { overflow-x: auto; border: 2px solid var(--line); border-radius: 0.5rem; background: var(--paper); }
+.graph-scroll:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+svg { display: block; inline-size: 100%; block-size: auto; min-inline-size: 46rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; margin-block: 0.4rem; }
+.legend span::before { content: ""; display: inline-block; inline-size: 0.8rem; block-size: 0.8rem; margin-inline-end: 0.35rem; border: 2px solid var(--line); vertical-align: -0.1rem; }
+.legend .li::before { background: var(--input); }
+.legend .lc::before { background: var(--constant); }
+.legend .lp::before { background: var(--computed); }
+.table-scroll { overflow-x: auto; max-inline-size: 100%; margin-block: 0.8rem 1.2rem; }
+.table-scroll:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+table { border-collapse: collapse; inline-size: 100%; margin-block: 0.8rem 1.2rem; }
+caption { text-align: start; font-weight: 700; padding-block-end: 0.4rem; }
+th, td { border: 1px solid var(--line); padding: 0.45rem 0.55rem; text-align: start; vertical-align: top; }
+th { background: var(--wash); }
+code, .id { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+.foreign { unicode-bidi: isolate; }
+.ladder { list-style: none; padding: 0; margin: 0; }
+.ladder li { border: 2px solid var(--line); border-radius: 0.5rem; padding: 0.8rem 1rem; margin-block-end: 0.75rem; background: var(--wash); }
+.ladder .step { font-weight: 800; color: var(--muted); margin: 0 0 0.2rem; }
+.ladder dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 0.75rem; margin-block: 0.5rem; }
+.ladder dt { font-weight: 700; }
+.ladder dd { margin: 0; }
+.cite { font-size: 0.92rem; color: var(--muted); }
+.note { font-size: 0.92rem; }
+.disclaimer { border-inline-start: 6px solid var(--ink); background: var(--wash); padding: 0.8rem 1rem; }
+.integration { overflow-wrap: anywhere; }
+footer { border-block-start: 2px solid var(--line); margin-block-start: 2.5rem; padding-block: 1rem 2rem; color: var(--muted); font-size: 0.92rem; }
+@media (max-width: 40rem) {
+  body { font-size: 1rem; }
+  header, main, footer { padding-inline: 0.75rem; }
+  table { font-size: 0.92rem; }
+}
+@media (forced-colors: active) {
+  .graph-scroll, .ladder li, .disclaimer { border-color: CanvasText; }
+  nav.langs a[aria-current="page"] { background: Highlight; color: HighlightText; }
+}
+@media print { .skip, nav.langs { display: none; } a { color: inherit; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu principal</a>
+<header>
+  <p><span class="badge">Démonstration synthétique — sans valeur juridique</span></p>
+  <nav class="langs" aria-label="Langue"><ul><li><a lang="en" hreflang="en" href="../en/">English</a></li><li><a lang="fr" hreflang="fr" href="../fr/" aria-current="page">Français</a></li><li><a lang="ar" hreflang="ar" href="../ar/">العربية</a></li></ul></nav>
+  <h1>Comparaison de moteurs de règles : politique de passation synthétique</h1>
+  <p class="lead">Une règle de passation fictive encodée en Axiom RuleSpec et en Legalese L4, avec deux vues visuelles et une explication linéaire complète. Rien ici n&#x27;est un avis juridique ni du droit existant.</p>
+</header>
+<main id="main" tabindex="-1">
+  <p class="disclaimer">Prototype de recherche synthétique. Sans effet juridique. Aucun instrument réel n&#x27;est encodé. Traductions provisoires, non officielles.</p>
+
+  <section aria-labelledby="summary-h">
+    <h2 id="summary-h">Ce que la démonstration montre</h2>
+    <p>Les mêmes cinq conditions et le même seuil produisent les mêmes résultats dans les deux moteurs pour les faits complets, le champ, l&#x27;exception, la limite et les cas contradictoires. Les faits manquants divergent : Axiom renvoie une erreur d&#x27;entrée manquante, tandis que L4 les modélise comme Indéterminé.</p>
+  </section>
+
+  <section aria-labelledby="graph-h">
+    <h2 id="graph-h">Graphe de dépendances</h2>
+    <p>Le schéma est un résumé visuel. Le tableau qui suit en est l&#x27;équivalent complet et navigable.</p>
+    <figure>
+
+    <div class="graph-scroll" tabindex="0" role="region" aria-label="Graphe de dépendances de la détermination synthétique">
+      <svg viewBox="0 0 1020 680" role="img" aria-labelledby="graph-title" aria-describedby="graph-desc" focusable="false" direction="ltr">
+        <title id="graph-title">Graphe de dépendances de la détermination synthétique</title>
+        <desc id="graph-desc">Des nœuds numérotés représentent les entrées, un seuil constant et les sorties calculées. Le tableau ci-dessous donne chaque nœud, ses dépendances et sa citation.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#17202a" />
+          </marker>
+        </defs>
+        <path class="edge" d="M 140 124 C 140 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 300 124 C 300 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 460 124 C 460 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 780 124 C 780 192.0, 370 192.0, 370 260" marker-end="url(#arrow)" /><path class="edge" d="M 370 314 C 370 367.0, 570 367.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 620 124 C 620 272.0, 570 272.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 940 124 C 940 272.0, 570 272.0, 570 420" marker-end="url(#arrow)" /><path class="edge" d="M 140 124 C 140 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 300 124 C 300 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 460 124 C 460 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 620 124 C 620 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 780 124 C 780 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 940 124 C 940 352.0, 570 352.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 370 314 C 370 447.0, 570 447.0, 570 580" marker-end="url(#arrow)" /><path class="edge" d="M 570 474 C 570 527.0, 570 527.0, 570 580" marker-end="url(#arrow)" />
+        <g class="node-input"><rect x="70" y="70" width="140" height="54" rx="9" /><text x="140" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N1</tspan></text><text x="140" y="108" text-anchor="middle" direction="ltr">Organisme visé</text></g><g class="node-input"><rect x="230" y="70" width="140" height="54" rx="9" /><text x="300" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N2</tspan></text><text x="300" y="108" text-anchor="middle" direction="ltr">Dans le champ</text></g><g class="node-input"><rect x="390" y="70" width="140" height="54" rx="9" /><text x="460" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N3</tspan></text><text x="460" y="108" text-anchor="middle" direction="ltr">Exception</text></g><g class="node-input"><rect x="550" y="70" width="140" height="54" rx="9" /><text x="620" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N4</tspan></text><text x="620" y="108" text-anchor="middle" direction="ltr">Valeur</text></g><g class="node-input"><rect x="710" y="70" width="140" height="54" rx="9" /><text x="780" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N5</tspan></text><text x="780" y="108" text-anchor="middle" direction="ltr">Faits complets</text></g><g class="node-constant"><rect x="870" y="70" width="140" height="54" rx="9" /><text x="940" y="88" text-anchor="middle" direction="ltr"><tspan class="node-id">N6</tspan></text><text x="940" y="108" text-anchor="middle" direction="ltr">Seuil</text></g><g class="node-computed"><rect x="300" y="260" width="140" height="54" rx="9" /><text x="370" y="278" text-anchor="middle" direction="ltr"><tspan class="node-id">N7</tspan></text><text x="370" y="298" text-anchor="middle" direction="ltr">Exigence</text></g><g class="node-computed"><rect x="500" y="420" width="140" height="54" rx="9" /><text x="570" y="438" text-anchor="middle" direction="ltr"><tspan class="node-id">N8</tspan></text><text x="570" y="458" text-anchor="middle" direction="ltr">Logiciels libres</text></g><g class="node-computed"><rect x="500" y="580" width="140" height="54" rx="9" /><text x="570" y="598" text-anchor="middle" direction="ltr"><tspan class="node-id">N9</tspan></text><text x="570" y="618" text-anchor="middle" direction="ltr">Statut</text></g>
+      </svg>
+    </div>
+    <div class="legend" role="group" aria-label="Types de nœuds"><span class="li">Entrée</span><span class="lc">Constante</span><span class="lp">Calculé</span></div>
+
+      <figcaption>Des nœuds numérotés représentent les entrées, un seuil constant et les sorties calculées. Le tableau ci-dessous donne chaque nœud, ses dépendances et sa citation.</figcaption>
+    </figure>
+    <p class="note">Le schéma défile horizontalement sur les écrans étroits ; le tableau ci-dessous se réorganise.</p>
+
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Graphe de dépendances : nœuds et dépendances">
+    <table>
+      <caption>Graphe de dépendances : nœuds et dépendances</caption>
+      <thead><tr><th scope="col">Nœud</th><th scope="col">Libellé</th>
+      <th scope="col">Type</th><th scope="col">Dtype</th><th scope="col">Valeur</th>
+      <th scope="col">Dépend de</th><th scope="col">Citation</th></tr></thead>
+      <tbody><tr><th scope="row"><code lang="en" dir="ltr">N1</code></th><td>L&#x27;organisme public est visé</td><td>Entrée</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N2</code></th><td>Le contrat relève du champ</td><td>Entrée</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N3</code></th><td>Une exception s&#x27;applique</td><td>Entrée</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N4</code></th><td>Valeur du contrat (USD)</td><td>Entrée</td><td><code lang="en" dir="ltr">Decimal</code></td><td><code lang="en" dir="ltr">Decimal</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N5</code></th><td>Les faits requis sont complets</td><td>Entrée</td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">Boolean</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-0</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N6</code></th><td>Seuil d&#x27;examen des logiciels libres</td><td>Constante</td><td><code lang="en" dir="ltr">Money</code></td><td><code lang="en" dir="ltr">USD 100,000</code></td><td><code lang="en" dir="ltr">—</code></td><td><code lang="en" dir="ltr">SP-4</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N7</code></th><td>L&#x27;exigence de passation s&#x27;applique</td><td>Calculé</td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">N1, N2, N3, N5</code></td><td><code lang="en" dir="ltr">SP-1</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N8</code></th><td>Examen des logiciels libres requis</td><td>Calculé</td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">Judgment</code></td><td><code lang="en" dir="ltr">N7, N4, N6</code></td><td><code lang="en" dir="ltr">SP-2</code></td></tr><tr><th scope="row"><code lang="en" dir="ltr">N9</code></th><td>Statut de la détermination</td><td>Calculé</td><td><code lang="en" dir="ltr">Text</code></td><td><code lang="en" dir="ltr">Text</code></td><td><code lang="en" dir="ltr">N1, N2, N3, N4, N5, N6, N7, N8</code></td><td><code lang="en" dir="ltr">SP-3</code></td></tr></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="ladder-h">
+    <h2 id="ladder-h">Échelle : ordre d&#x27;évaluation</h2>
+    <p>L&#x27;échelle se lit de l&#x27;étape 1 à l&#x27;étape 5. Chaque étape est une condition ; la branche suivie est indiquée en texte.</p>
+    <ol class="ladder">
+        <li>
+          <p class="step">Étape 1</p>
+          <h3>Les faits requis sont-ils complets ?</h3>
+          <dl>
+            <dt>Si vrai</dt><dd>Poursuivre vers la couverture</dd>
+            <dt>Si faux</dt><dd>Indéterminé</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-3</code>. Les faits manquants ne sont pas traités comme faux.</p>
+        </li>
+        <li>
+          <p class="step">Étape 2</p>
+          <h3>L&#x27;organisme public est-il visé ?</h3>
+          <dl>
+            <dt>Si vrai</dt><dd>Poursuivre vers le champ</dd>
+            <dt>Si faux</dt><dd>Non applicable</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-1</code>. La couverture est une condition, non une conclusion juridique.</p>
+        </li>
+        <li>
+          <p class="step">Étape 3</p>
+          <h3>Le contrat relève-t-il du champ ?</h3>
+          <dl>
+            <dt>Si vrai</dt><dd>Poursuivre vers les exceptions</dd>
+            <dt>Si faux</dt><dd>Hors du champ</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-1</code>. Le champ est examiné avant l&#x27;exception.</p>
+        </li>
+        <li>
+          <p class="step">Étape 4</p>
+          <h3>Une exception s&#x27;applique-t-elle ?</h3>
+          <dl>
+            <dt>Si vrai</dt><dd>Une exception s&#x27;applique</dd>
+            <dt>Si faux</dt><dd>Poursuivre vers le seuil</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-1</code>. Une exception écarte l&#x27;exigence ; elle n&#x27;en crée pas une nouvelle.</p>
+        </li>
+        <li>
+          <p class="step">Étape 5</p>
+          <h3>La valeur du contrat est-elle d&#x27;au moins 100 000 USD ?</h3>
+          <dl>
+            <dt>Si vrai</dt><dd>Examen des logiciels libres requis</dd>
+            <dt>Si faux</dt><dd>Exigence sans seuil de logiciels libres</dd>
+          </dl>
+          <p class="cite">Citation: <code lang="en" dir="ltr">SP-2</code>. La valeur limite atteint elle-même le seuil.</p>
+        </li></ol>
+  </section>
+
+  <section aria-labelledby="text-h">
+    <h2 id="text-h">Équivalent textuel accessible</h2>
+    <p>Il s&#x27;agit de l&#x27;explication linéaire complète, avec chaque condition, branche, résultat et citation. Ce n&#x27;est pas un résumé d&#x27;une décision uniquement visuelle.</p>
+
+    <ol>
+      <li>Étape 1: Les faits requis sont-ils complets ? si faux: <strong>Indéterminé</strong> (<code lang="en" dir="ltr">SP-3</code>). si vrai: Poursuivre vers la couverture.</li>
+      <li>Étape 2: L&#x27;organisme public est-il visé ? si faux: <strong>Non applicable</strong> (<code lang="en" dir="ltr">SP-1</code>). si vrai: Poursuivre vers le champ.</li>
+      <li>Étape 3: Le contrat relève-t-il du champ ? si faux: <strong>Hors du champ</strong> (<code lang="en" dir="ltr">SP-1</code>). si vrai: Poursuivre vers les exceptions.</li>
+      <li>Étape 4: Une exception s&#x27;applique-t-elle ? si vrai: <strong>Une exception s&#x27;applique</strong> (<code lang="en" dir="ltr">SP-1</code>). si faux: Poursuivre vers le seuil (<code lang="en" dir="ltr">SP-1</code>).</li>
+      <li>Étape 5: La valeur du contrat est-elle d&#x27;au moins 100 000 USD ? si vrai: <strong>Examen des logiciels libres requis</strong> (<code lang="en" dir="ltr">SP-2</code>). si faux: <strong>Exigence sans seuil de logiciels libres</strong>.</li>
+    </ol>
+    <h3>Inconnu et faits manquants</h3>
+    <p>Les faits requis manquants ne sont pas traités comme faux. L4 utilise MAYBE et renvoie Indéterminé. Axiom n&#x27;a pas de littéral indéterminé dans ce RuleSpec ; le statut de détermination porte « indéterminé », tandis que les jugements sont non-vrais lorsque facts_complete est faux. Une entrée manquante dans Axiom est une erreur de requête.</p>
+  </section>
+
+  <section aria-labelledby="tests-h">
+    <h2 id="tests-h">Résultats réels des moteurs</h2>
+    <p>Ce sont des sorties réelles des versions épinglées, et non des valeurs attendues. Les requêtes, réponses et sorties L4 sont versionnées avec le prototype.</p>
+
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Résultats réels des moteurs">
+    <table>
+      <caption>Résultats réels des moteurs</caption>
+      <thead><tr><th scope="col">Cas</th><th scope="col">Faits</th>
+      <th scope="col">Axiom RuleSpec</th><th scope="col">Legalese L4</th><th scope="col">Concordance</th></tr></thead>
+      <tbody><tr><th scope="row">Toutes les conditions remplies</th><td>Faits complets ; visé ; dans le champ ; aucune exception ; 150 000 USD</td><td><span class="foreign" lang="en" dir="ltr">determination = open_source_consideration_required; both judgments = holds</span></td><td><span class="foreign" lang="en" dir="ltr">OpenSourceConsiderationRequired</span></td><td>Même résultat</td></tr><tr><th scope="row">Condition de champ non remplie</th><td>Faits complets ; visé ; hors champ ; aucune exception ; 150 000 USD</td><td><span class="foreign" lang="en" dir="ltr">determination = outside_scope; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">OutsideScope</span></td><td>Même résultat</td></tr><tr><th scope="row">Une exception s&#x27;applique</th><td>Faits complets ; visé ; dans le champ ; exception vraie ; 150 000 USD</td><td><span class="foreign" lang="en" dir="ltr">determination = exception_applies; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">ExceptionApplies</span></td><td>Même résultat</td></tr><tr><th scope="row">Entrée requise manquante</th><td>covered_body omis ; autres faits fournis</td><td><span class="foreign" lang="en" dir="ltr">Execution error: missing input covered_body</span></td><td><span class="foreign" lang="en" dir="ltr">Indeterminate</span></td><td>Sémantique différente : erreur contre indéterminé</td></tr><tr><th scope="row">Valeur limite : 100 000 USD</th><td>Faits complets ; visé ; dans le champ ; aucune exception ; exactement 100 000 USD</td><td><span class="foreign" lang="en" dir="ltr">determination = open_source_consideration_required; both judgments = holds</span></td><td><span class="foreign" lang="en" dir="ltr">OpenSourceConsiderationRequired</span></td><td>Même résultat ; seuil inclusif</td></tr><tr><th scope="row">Faits incomplets</th><td>facts_complete faux ; autres faits vrais ; 150 000 USD</td><td><span class="foreign" lang="en" dir="ltr">determination = indeterminate; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">Indeterminate</span></td><td>Partiel : le statut textuel correspond ; les jugements Axiom ne sont pas indéterminés</td></tr><tr><th scope="row">Champ et exception contradictoires</th><td>Faits complets ; visé ; hors champ ; exception vraie ; 150 000 USD</td><td><span class="foreign" lang="en" dir="ltr">determination = outside_scope; both judgments = not_holds</span></td><td><span class="foreign" lang="en" dir="ltr">OutsideScope</span></td><td>Même résultat ; le champ est examiné d&#x27;abord</td></tr></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="sources-h">
+    <h2 id="sources-h">Références sources synthétiques</h2>
+    <p>Les citations sont fictives et renvoient à un document synthétique. Elles ne démontrent que la traçabilité.</p>
+    <ul><li><code lang="en" dir="ltr">SP-0</code> — Scénario de passation synthétique, faits 1 à 5. <a href="https://example.org/synthetic-procurement-policy#facts">Ensemble de faits synthétique (fictif)</a></li><li><code lang="en" dir="ltr">SP-1</code> — Couverture, champ, exception et exigence. <a href="https://example.org/synthetic-procurement-policy#s1">Politique de passation synthétique, art. 1 (fictif)</a></li><li><code lang="en" dir="ltr">SP-2</code> — Examen des logiciels libres au-dessus du seuil. <a href="https://example.org/synthetic-procurement-policy#s2">Politique de passation synthétique, art. 2 (fictif)</a></li><li><code lang="en" dir="ltr">SP-3</code> — Détermination et faits manquants. <a href="https://example.org/synthetic-procurement-policy#s3">Politique de passation synthétique, art. 3 (fictif)</a></li><li><code lang="en" dir="ltr">SP-4</code> — Paramètre de seuil synthétique. <a href="https://example.org/synthetic-procurement-policy#s4">Politique de passation synthétique, art. 4 (fictif)</a></li></ul>
+  </section>
+
+  <section aria-labelledby="integration-h">
+    <h2 id="integration-h">Lien proposé avec l&#x27;observatoire (non mis en œuvre)</h2>
+    <p>Une future fiche révisée pourrait porter cette chaîne. Le prototype ne se rattache à aucun instrument réel et ne modifie aucun statut d&#x27;effet juridique.</p>
+    <p class="integration">Identifiant d&#x27;instrument → identifiant de source → identifiant de disposition → version juridique → citation en langue originale → interprétation révisée → encodage de règle → modèle de présentation → artefact de visualisation → version du moteur → résultats de tests</p>
+  </section>
+
+  <section aria-labelledby="unsupported-h">
+    <h2 id="unsupported-h">Non pris en charge ou hors périmètre</h2>
+    <ul><li><strong>Modalité déontique</strong>: L&#x27;obligation, la permission et l&#x27;interdiction ne sont pas natives dans RuleSpec. L4 peut les exprimer avec PARTY, MUST, MAY et SHANT.</li><li><strong>Historique des modifications et versions</strong>: Les dates d&#x27;effet peuvent être encodées, mais un graphe révisé des versions et modifications de l&#x27;instrument reste une métadonnée externe ; ce prototype ne le modélise pas.</li><li><strong>Provenance des traductions</strong>: Aucun des deux moteurs n&#x27;enregistre le statut officiel, révisé ou assisté par machine d&#x27;une traduction. Les traductions d&#x27;interface sont provisoires.</li><li><strong>Texte juridique réel et vérification des citations</strong>: Toutes les sources sont fictives. Aucun instrument, article, date ou effet juridique réel n’est encodé.</li><li><strong>Détection des contradictions</strong>: Les deux moteurs ont appliqué l&#x27;ordre de l&#x27;échelle à des faits contradictoires ; aucun n&#x27;a signalé de contradiction.</li></ul>
+  </section>
+
+  <section aria-labelledby="limits-h">
+    <h2 id="limits-h">Limites de ce prototype</h2>
+    <p>Les exemples sont synthétiques ; aucune législation réelle n&#x27;est encodée. Les graphes sont générés à partir d&#x27;un modèle de présentation curaté, non automatiquement depuis l&#x27;artefact Axiom. La trace L4 est un fichier GraphViz DOT ; aucun SVG n&#x27;a été produit car GraphViz n&#x27;est pas installé dans cet environnement.</p>
+    <h3>Constats d&#x27;accessibilité</h3>
+    <p>HTML et SVG statiques, avec un petit script d&#x27;amélioration progressive pour le défilement au clavier ; sans canvas, glisser-déposer, contenu au survol ni JavaScript externe. Des contrôles axe automatisés, l&#x27;ordre de tabulation, le défilement au clavier, le reflux à 320 px CSS, les couleurs forcées et la réduction des mouvements ont été testés. Les tests manuels avec lecteur d&#x27;écran, le zoom réel à 400 % et la revue native arabe/française n&#x27;ont pas été effectués. Axe n&#x27;a signalé aucune violation ; la vérification du contraste du texte SVG était incomplète, les paires réelles ont donc été calculées manuellement (13,39:1 à 16,45:1).</p>
+  </section>
+
+  <p><a href="../">Retour à l&#x27;index du prototype</a> · <a href="../../README.md">Source du prototype</a></p>
+</main>
+<script>
+(() => {
+  document.querySelectorAll('.graph-scroll, .table-scroll').forEach((region) => {
+    region.addEventListener('keydown', (event) => {
+      const amount = 60;
+      const rtl = getComputedStyle(region).direction === 'rtl';
+      if (event.key === 'ArrowRight') {
+        region.scrollLeft += rtl ? -amount : amount;
+        event.preventDefault();
+      } else if (event.key === 'ArrowLeft') {
+        region.scrollLeft += rtl ? amount : -amount;
+        event.preventDefault();
+      }
+    });
+  });
+})();
+</script>
+<footer>
+  <p lang="en" dir="ltr">Prototype: <code>synthetic-procurement-v1</code>. Axiom <code>0.2.2</code>
+  (<code>d41d29d</code>), L4 <code>1.6.109</code>
+  (<code>4c887e0</code>).</p>
+</footer>
+</body>
+</html>
