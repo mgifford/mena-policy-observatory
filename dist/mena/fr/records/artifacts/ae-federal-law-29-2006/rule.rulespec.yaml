@@ -1,0 +1,6 @@
+# RuleSpec scaffold — no approved rules
+# Prototype only. Do not encode the law as executable logic without review.
+format: rulespec/v1
+module:
+  title: "Federal Law No. 29 of 2006 — unapproved source scaffold"
+rules: []

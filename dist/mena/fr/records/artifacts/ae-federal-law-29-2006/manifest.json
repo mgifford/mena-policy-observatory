@@ -1,0 +1,61 @@
+{
+  "policy_id": "ae-federal-law-29-2006",
+  "source_document": "https://uaelegislation.gov.ae/ar/legislations/1172",
+  "source_markdown": "SOURCE.md",
+  "rulespec": "rule.rulespec.yaml",
+  "rule_status": "no_approved_executable_rules",
+  "original_text_status": "excerpt_or_source_link_only",
+  "ambiguity_register": "INTERPRETATION.md",
+  "related_documents": "RELATED.md",
+  "reviewed_on": "2026-11-07",
+  "interpretation_issues": [
+    {
+      "id": "AE-LAW29-01",
+      "section": "P-03",
+      "observation": "Article 7 covers expression, Braille, sign language, other communication means and information; Article 20(2) lists electronic texts, sign language, Braille, audio and multimedia.",
+      "ambiguity": "Whether Articles 7 and 20 apply to government websites, apps and digital services, or only to the formats and services expressly listed, requires legal review.",
+      "severity": "high",
+      "category": "digital_scope",
+      "status": "unresolved"
+    },
+    {
+      "id": "AE-LAW29-02",
+      "section": "P-05",
+      "observation": "Article 23 requires the competent authorities to set engineering standards and a Cabinet decision to issue controls and exemptions.",
+      "ambiguity": "The implementing Cabinet decision and technical standards contemplated by Article 23 are not captured; their content and current status are unresolved.",
+      "severity": "high",
+      "category": "implementing_instrument",
+      "status": "unresolved"
+    },
+    {
+      "id": "AE-LAW29-03",
+      "section": "P-01",
+      "observation": "The Law, the 2018 Cabinet Resolution and the 2024 policy address different aspects of disability inclusion and digital accessibility.",
+      "ambiguity": "The relationship between this 2006 Law, Cabinet Resolution 43/2018 and the 2024 National Digital Accessibility Policy needs a consolidated reading.",
+      "severity": "high",
+      "category": "instrument_relationship",
+      "status": "unresolved"
+    },
+    {
+      "id": "AE-LAW29-04",
+      "section": "P-03",
+      "observation": "The UAE Legislation platform provides an English translation and states that the Arabic text prevails in case of conflict.",
+      "ambiguity": "The official English translation and the Arabic text may differ; Arabic prevails and native legal review is outstanding.",
+      "severity": "high",
+      "category": "translation_authority",
+      "status": "unresolved"
+    }
+  ],
+  "related": [
+    {
+      "title": "Cabinet Resolution No. 43 of 2018 Regarding Supporting Special Needs (People of Determination) Work",
+      "url": "https://uaelegislation.gov.ae/en/legislations/1174",
+      "relation": "related_cabinet_resolution"
+    },
+    {
+      "title": "National Digital Accessibility Policy",
+      "url": null,
+      "relation": "national_digital_accessibility_policy"
+    }
+  ]
+}

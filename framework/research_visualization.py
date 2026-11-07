@@ -29,6 +29,7 @@ SELECTED_RECORDS = (
     'qa-eaccessibility-2025-upcoming',
     'sa-dga-web-accessibility-guide',
     'sa-mep-accessibility',
+    'ae-federal-law-29-2006',
     'mena-t02-001',
     'jo-personal-data-2023',
     'ma-personal-data-09-08',

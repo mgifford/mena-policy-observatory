@@ -1,0 +1,258 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "ae-federal-law-29-2006",
+  "artifacts": {
+    "source_notes": "SOURCE.md",
+    "provisions": "PROVISIONS.md",
+    "interpretations": "INTERPRETATION.md",
+    "related": "RELATED.md"
+  },
+  "sources": [
+    {
+      "id": "src-ae-federal-law-29-2006",
+      "title": "قانون اتحادي رقم (29) لسنة 2006 في شأن حقوق المعاقين",
+      "url": "https://uaelegislation.gov.ae/ar/legislations/1172",
+      "jurisdiction": "AE",
+      "issuer": "United Arab Emirates — Federal Government (UAE Legislation)",
+      "instrument_type": "legislation",
+      "language": "ar",
+      "authoritative_language": "yes",
+      "publication_date": "2006-08-26",
+      "effective_date": "2006-08-26",
+      "document_version": "Official Gazette No. 453; last updated 16 December 2009",
+      "archival_url": "https://uaelegislation.gov.ae/en/legislations/1172",
+      "capture": {
+        "captured_at": "2026-11-07T20:15:38Z",
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "recorded",
+      "excerpt": {
+        "text": "تكفل الدولة للمعاق ممارسة حقه في التعبير وإبداء الرأي باستخدام طريقة (برايل) ولغة الإشارة وغيرها من طرق التواصل، وحقه في طلب المعلومات وتلقيها ونقلها على قدم المساواة مع الآخرين.",
+        "language": "ar",
+        "locator": "Article 7",
+        "artifact": "SOURCE.md"
+      },
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
+      },
+      "expressions": [
+        {
+          "id": "expr-ae-law29-ar",
+          "kind": "original_authoritative",
+          "source_id": "src-ae-federal-law-29-2006",
+          "instrument_id": "ae-federal-law-29-2006",
+          "instrument_version": "Official Gazette No. 453",
+          "language": "ar",
+          "original_language": "ar",
+          "url": "https://uaelegislation.gov.ae/ar/legislations/1172",
+          "authority": "United Arab Emirates — Federal Government (UAE Legislation)",
+          "translation_method": null,
+          "review_status": "unreviewed",
+          "reviewed_at": null,
+          "reviewer_role": null,
+          "notes": "Official Arabic page; the platform states Arabic prevails. Native legal review is outstanding.",
+          "uncertainties": [
+            "No capture bytes or checksum stored.",
+            "The text was last updated on the platform in 2009; current consolidation is not independently verified."
+          ]
+        },
+        {
+          "id": "expr-ae-law29-en",
+          "kind": "official_translation",
+          "source_id": "src-ae-federal-law-29-2006",
+          "instrument_id": "ae-federal-law-29-2006",
+          "instrument_version": "Official Gazette No. 453",
+          "language": "en",
+          "original_language": "ar",
+          "url": "https://uaelegislation.gov.ae/en/legislations/1172",
+          "authority": "United Arab Emirates — Federal Government (UAE Legislation)",
+          "translation_method": "unknown",
+          "review_status": "unreviewed",
+          "reviewed_at": null,
+          "reviewer_role": null,
+          "notes": "Official English translation page; the platform states the Arabic text prevails. Translator and review history are not recorded.",
+          "uncertainties": [
+            "English translation may differ from the Arabic text.",
+            "No native translation review performed."
+          ]
+        }
+      ]
+    }
+  ],
+  "provisions": [
+    {
+      "id": "P-01",
+      "heading": "Definitions and discrimination",
+      "locator": {
+        "kind": "article",
+        "value": "Article 1"
+      },
+      "source_ids": [
+        "src-ae-federal-law-29-2006"
+      ],
+      "summary": "The Law defines disability, the disability card and discrimination, including distinctions that prejudice rights or equal enjoyment of rights.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "AE-LAW29-01"
+      ]
+    },
+    {
+      "id": "P-02",
+      "heading": "Equality and non-discrimination",
+      "locator": {
+        "kind": "article",
+        "value": "Articles 2-3"
+      },
+      "source_ids": [
+        "src-ae-federal-law-29-2006"
+      ],
+      "summary": "The Law aims to secure rights and services and requires equality and non-discrimination across legislation, policies and development programmes.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": []
+    },
+    {
+      "id": "P-03",
+      "heading": "Communication and information rights",
+      "locator": {
+        "kind": "article",
+        "value": "Article 7"
+      },
+      "source_ids": [
+        "src-ae-federal-law-29-2006"
+      ],
+      "summary": "The State is to secure expression and opinion through Braille, sign language and other communication means, and the right to request, receive and transmit information on an equal footing.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "AE-LAW29-01",
+        "AE-LAW29-04"
+      ]
+    },
+    {
+      "id": "P-04",
+      "heading": "Accessible cultural materials",
+      "locator": {
+        "kind": "article",
+        "value": "Article 20(2)"
+      },
+      "source_ids": [
+        "src-ae-federal-law-29-2006"
+      ],
+      "summary": "The State is to provide literary and cultural materials in available forms, including electronic texts, sign language, Braille, audio and multimedia.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "AE-LAW29-01"
+      ]
+    },
+    {
+      "id": "P-05",
+      "heading": "Adapted environment and facilities",
+      "locator": {
+        "kind": "article",
+        "value": "Articles 22-23"
+      },
+      "source_ids": [
+        "src-ae-federal-law-29-2006"
+      ],
+      "summary": "The Law recognises a right to an adapted environment and requires engineering standards for public facilities, applying to the government and private sectors unless exempted.",
+      "effect_assessment": "not_assessed",
+      "encoding_status": "blocked",
+      "interpreting_questions": [
+        "AE-LAW29-02"
+      ]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "AE-LAW29-01",
+      "provision_id": "P-03",
+      "statement": "Whether Articles 7 and 20 apply to government websites, apps and digital services, or only to the formats and services expressly listed, requires legal review.",
+      "observation": "Article 7 covers expression, Braille, sign language, other communication means and information; Article 20(2) lists electronic texts, sign language, Braille, audio and multimedia.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "digital_scope",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-LAW29-02",
+      "provision_id": "P-05",
+      "statement": "The implementing Cabinet decision and technical standards contemplated by Article 23 are not captured; their content and current status are unresolved.",
+      "observation": "Article 23 requires the competent authorities to set engineering standards and a Cabinet decision to issue controls and exemptions.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "implementing_instrument",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "source_capture",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-LAW29-03",
+      "provision_id": "P-01",
+      "statement": "The relationship between this 2006 Law, Cabinet Resolution 43/2018 and the 2024 National Digital Accessibility Policy needs a consolidated reading.",
+      "observation": "The Law, the 2018 Cabinet Resolution and the 2024 policy address different aspects of disability inclusion and digital accessibility.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "instrument_relationship",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "qualified_legal_review",
+      "reviewer": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "AE-LAW29-04",
+      "provision_id": "P-03",
+      "statement": "The official English translation and the Arabic text may differ; Arabic prevails and native legal review is outstanding.",
+      "observation": "The UAE Legislation platform provides an English translation and states that the Arabic text prevails in case of conflict.",
+      "alternatives": [],
+      "risk": "high",
+      "category": "translation_authority",
+      "status": "unresolved",
+      "resolution": null,
+      "requires": "translation_review",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-ae-law29-cabinet43",
+      "target": {
+        "kind": "external_document",
+        "title": "Cabinet Resolution No. 43 of 2018 Regarding Supporting Special Needs (People of Determination) Work",
+        "url": "https://uaelegislation.gov.ae/en/legislations/1174",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "related_cabinet_resolution",
+      "review_state": "unreviewed",
+      "note": "Issued 29 July 2018; effective 1 August 2018; Official Gazette No. 633. Employment/support measure, not a digital-accessibility standard."
+    },
+    {
+      "id": "rel-ae-law29-policy",
+      "target": {
+        "kind": "internal_record",
+        "title": "National Digital Accessibility Policy",
+        "url": null,
+        "record_id": "ae-national-digital-accessibility"
+      },
+      "relation": "unspecified",
+      "recorded_label": "national_digital_accessibility_policy",
+      "review_state": "unreviewed",
+      "note": "Discovery link only; the 2006 Law and 2024 policy have not been reconciled."
+    }
+  ]
+}

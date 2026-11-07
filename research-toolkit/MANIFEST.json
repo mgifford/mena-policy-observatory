@@ -224,8 +224,8 @@
     },
     {
       "path": "reconciliation/tranche-02-report.json",
-      "size": 10972,
-      "sha256": "6e38a37a4653ec4ebb48ee80a1c46b3b49a0df0047ff9154fb3c777273675d86"
+      "size": 11004,
+      "sha256": "15889972698d0bfa491b48db394eed0b3b400f292a20e481021ac5cdde0a8f27"
     },
     {
       "path": "schemas/candidate-packet.schema.json",
@@ -279,8 +279,8 @@
     },
     {
       "path": "sources/publishers.json",
-      "size": 15766,
-      "sha256": "9ca1a62ee095fd74d03e370dc1078ceba12c5c452d70fc8f277e403dfc92e93f"
+      "size": 16360,
+      "sha256": "6b5ea0ee7f4468a8a169c4c928ee260e41a7ecfa9043604c56e3022efa8bc43f"
     },
     {
       "path": "sources/source-checks.json",

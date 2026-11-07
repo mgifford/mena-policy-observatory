@@ -26,6 +26,25 @@
 - **Risk:** high; `applicability`
 - **Status:** requires human review; no approved executable compliance outcome
 
+
+No resolutions approved. Future resolutions must contain reviewer, date, authoritative evidence, alternative interpretations, accepted interpretation and test-case links.
+
+### AE-04: Governance and enforcement
+
+- **Section:** Governance, Digital Accessibility Officer, reporting
+- **Source observation:** The policy defines governance, a Digital Accessibility Officer role, compliance percentages and Digital Government Enablers indicators.
+- **Unresolved interpretation:** Whether the 2024 policy is a binding instrument and what enforcement follows a low compliance percentage or complaint is unresolved.
+- **Risk:** high; `governance_and_enforcement`
+- **Status:** requires human review; no approved executable compliance outcome
+
+### AE-05: Arabic and English authority
+
+- **Section:** Policy language expressions
+- **Source observation:** The Arabic policy page and the English policy PDF are both published by official UAE sources.
+- **Unresolved interpretation:** The Arabic policy page and the English policy PDF have not been compared, so authoritative-language status and translation provenance remain unresolved.
+- **Risk:** high; `translation_authority`
+- **Status:** requires human review; no approved executable compliance outcome
+
 ## Decision log
 
 No resolutions approved. Future resolutions must contain reviewer, date, authoritative evidence, alternative interpretations, accepted interpretation and test-case links.

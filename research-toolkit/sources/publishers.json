@@ -4,6 +4,24 @@
   "note": "Publisher identities are recorded from cited URLs only. This registry does not verify authority, coverage or currency.",
   "publishers": [
     {
+      "id": "assets-u-ae",
+      "host": "assets.u.ae",
+      "url": "https://assets.u.ae/",
+      "jurisdictions": [
+        "AE"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "ae-national-digital-accessibility"
+      ]
+    },
+    {
       "id": "bdj-mmsp-gov-ma",
       "host": "bdj.mmsp.gov.ma",
       "url": "https://bdj.mmsp.gov.ma/",
@@ -37,24 +55,6 @@
       "cited_by_candidates": [],
       "cited_by_records": [
         "sa-dga-web-accessibility-guide"
-      ]
-    },
-    {
-      "id": "dgov-tdra-gov-ae",
-      "host": "dgov.tdra.gov.ae",
-      "url": "https://dgov.tdra.gov.ae/",
-      "jurisdictions": [
-        "AE"
-      ],
-      "publisher_name": null,
-      "authority_type": "unknown",
-      "verification_status": "unverified",
-      "languages": [],
-      "monitoring": "not_configured",
-      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
-      "cited_by_candidates": [],
-      "cited_by_records": [
-        "ae-national-digital-accessibility"
       ]
     },
     {
@@ -257,6 +257,24 @@
         "eg-disability-law-10-2018"
       ],
       "cited_by_records": []
+    },
+    {
+      "id": "uaelegislation-gov-ae",
+      "host": "uaelegislation.gov.ae",
+      "url": "https://uaelegislation.gov.ae/",
+      "jurisdictions": [
+        "AE"
+      ],
+      "publisher_name": null,
+      "authority_type": "unknown",
+      "verification_status": "unverified",
+      "languages": [],
+      "monitoring": "not_configured",
+      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "cited_by_candidates": [],
+      "cited_by_records": [
+        "ae-federal-law-29-2006"
+      ]
     },
     {
       "id": "www-bdl-gov-lb",
