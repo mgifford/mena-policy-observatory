@@ -57,6 +57,10 @@ A candidate source lead is never promoted to a verified source or a legal findin
 
 Three existing candidates have recorded retrieval evidence in `research-toolkit/monitoring/source-captures.jsonl`: Algeria Law 25-11 (Official Gazette PDF), Bahrain Law 30/2018 (Legislation and Legal Opinion Commission landing page) and Oman's National Digital Accessibility Policy (MTCIT policy page). Bytes were hashed and not stored; no legal effect, authenticity or currency is established. See `docs/PILOT-REPORT.md` for selection reasons, checksums, limitations and outstanding review.
 
+## Legislative visualizations
+
+The public [visualizations](https://mgifford.github.io/mena-policy-observatory/mena/en/visualizations/) section shows recorded source structure for three existing research records and a clearly labelled synthetic Axiom/L4 demonstration. Source structure is research in progress; candidate interpretation is not legally reviewed; no real reviewed executable rule is published. See [docs/VISUALIZATION-MILESTONE.md](docs/VISUALIZATION-MILESTONE.md).
+
 ## Rule presentation (synthetic only)
 
 `framework/rule_presentation.py` validates and statically renders a reviewed `rule-presentation/v1` artifact. It is intentionally not attached to the public site; the only artifact is a synthetic fixture. See [docs/RULE-PRESENTATION.md](docs/RULE-PRESENTATION.md).
