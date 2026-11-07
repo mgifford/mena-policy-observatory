@@ -1379,7 +1379,10 @@ def sources_body(catalogues, lang, view):
         ]
         publisher = candidate.get('publisher')
         if publisher:
-            details.append((strings['source.publisher'], code(publisher.get('host', ''))))
+            publisher_value = code(publisher.get('host', ''))
+            if publisher.get('publisher_name'):
+                publisher_value += f' — {foreign(publisher["publisher_name"], lang)}'
+            details.append((strings['source.publisher'], publisher_value))
             details.append((strings['source.registry'],
                             esc(publisher_status_text(strings, publisher.get('verification_status')))))
         else:
@@ -1403,6 +1406,23 @@ def sources_body(catalogues, lang, view):
         verification = candidate.get('legal_verification') or {}
         details.append((strings['source.legal_verification'],
                         esc(legal_verification_text(strings, verification.get('status')))))
+        captures = candidate.get('source_captures') or []
+        if captures:
+            latest_capture = candidate.get('latest_capture') or {}
+            capture_count = t(strings, 'source.captures.count', count=len(captures))
+            capture_html = (f'<p>{esc(capture_count)} — '
+                            f'{esc(strings["source.captures.latest"])}: '
+                            f'{code(latest_capture.get("capture_id", ""))}</p>'
+                            f'<p class="meta">{esc(strings["source.captures.captured_at"])}: '
+                            f'{code(latest_capture.get("captured_at", ""))} — '
+                            f'{esc(strings["source.captures.checksum"])}: '
+                            f'{code(str(latest_capture.get("sha256", ""))[:12])} — '
+                            f'{esc(strings["source.captures.language"])}: '
+                            f'{code(latest_capture.get("language", ""))} — '
+                            f'{esc(strings["source.captures.metadata_only"])}</p>')
+        else:
+            capture_html = esc(strings['source.captures.none'])
+        details.append((strings['source.captures'], capture_html))
         changes = candidate.get('change_events') or []
         if changes:
             latest = candidate.get('latest_change') or {}

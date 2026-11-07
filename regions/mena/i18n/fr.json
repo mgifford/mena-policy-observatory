@@ -539,5 +539,13 @@
   "change.legal.confirmed_consolidation": "Consolidation confirmée",
   "change.legal.confirmed_translation_update": "Mise à jour de traduction confirmée",
   "change.legal.no_substantive_change": "Aucun changement juridique substantiel",
-  "change.legal.indeterminate": "Indéterminé"
+  "change.legal.indeterminate": "Indéterminé",
+  "source.captures": "Versions capturées",
+  "source.captures.count": "Captures consignées : {count}",
+  "source.captures.latest": "Dernière capture",
+  "source.captures.captured_at": "Capturée",
+  "source.captures.checksum": "SHA-256",
+  "source.captures.metadata_only": "Métadonnées et empreinte consignées ; octets non stockés",
+  "source.captures.none": "Aucune version capturée n'est consignée.",
+  "source.captures.language": "Langue capturée"
 }

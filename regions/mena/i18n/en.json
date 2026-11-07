@@ -556,5 +556,13 @@
   "change.legal.confirmed_consolidation": "Confirmed consolidation",
   "change.legal.confirmed_translation_update": "Confirmed translation update",
   "change.legal.no_substantive_change": "No substantive legal change",
-  "change.legal.indeterminate": "Indeterminate"
+  "change.legal.indeterminate": "Indeterminate",
+  "source.captures": "Captured versions",
+  "source.captures.count": "Recorded captures: {count}",
+  "source.captures.latest": "Latest capture",
+  "source.captures.captured_at": "Captured",
+  "source.captures.checksum": "SHA-256",
+  "source.captures.metadata_only": "Metadata and checksum recorded; bytes not stored",
+  "source.captures.none": "No captured version is recorded.",
+  "source.captures.language": "Captured language"
 }

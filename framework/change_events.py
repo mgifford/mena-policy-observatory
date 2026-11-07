@@ -25,6 +25,7 @@ DEFAULT_TOOLKIT = REPO_ROOT / 'research-toolkit'
 EVENT_FILE = 'monitoring/change-events.jsonl'
 DECISION_FILE = 'monitoring/review-decisions.jsonl'
 TASK_FILE = 'backlog/tasks-change-review.jsonl'
+CAPTURE_FILE = 'monitoring/source-captures.jsonl'
 
 RETRIEVAL_OUTCOMES = ('success', 'failed', 'blocked', 'not_attempted', 'unknown')
 TECHNICAL_CHANGES = (
@@ -55,7 +56,11 @@ CONFIRMED_LEGAL_CHANGES = (
     'confirmed_amendment', 'confirmed_repeal', 'confirmed_correction',
     'confirmed_consolidation', 'confirmed_translation_update',
 )
+CAPTURE_METHODS = ('http_get', 'manual', 'other')
+CAPTURE_STORAGE = ('not_stored', 'stored_elsewhere')
 SLUG = re.compile(r'^[a-z0-9-]+$')
+SHA256 = re.compile(r'^[0-9a-f]{64}$')
+BCP47 = re.compile(r'^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$')
 TIMESTAMP = re.compile(
     r'^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})$')
 ISO_DATE = re.compile(r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
@@ -93,6 +98,10 @@ def load_review_decisions(toolkit=DEFAULT_TOOLKIT) -> list[dict]:
 
 def load_change_tasks(toolkit=DEFAULT_TOOLKIT) -> list[dict]:
     return read_jsonl(Path(toolkit) / TASK_FILE)
+
+
+def load_source_captures(toolkit=DEFAULT_TOOLKIT) -> list[dict]:
+    return read_jsonl(Path(toolkit) / CAPTURE_FILE)
 
 
 def timestamp_date(value) -> date | None:
@@ -334,6 +343,93 @@ def _validate_decision(decision, label, event_ids, as_of, errors, seen_ids):
         errors.append(f'{label}: uncertainties must be an array of nonempty strings')
 
 
+def validate_source_captures(captures, candidates, publishers, checks, as_of=None) -> list[str]:
+    """Validate captured source items and their link to the latest source check."""
+    errors: list[str] = []
+    candidate_map = {candidate.get('id'): candidate for candidate in candidates}
+    publisher_map = {publisher.get('id'): publisher for publisher in publishers}
+    check_map = {check.get('candidate_id'): check for check in checks}
+    seen = set()
+    by_candidate = {}
+    for index, capture in enumerate(captures, start=1):
+        capture_id = capture.get('capture_id')
+        label = f'capture {capture_id or index}'
+        if not isinstance(capture_id, str) or not SLUG.match(capture_id):
+            errors.append(f'{label}: capture_id must be a stable lowercase slug')
+        elif capture_id in seen:
+            errors.append(f'{label}: duplicate capture_id')
+        else:
+            seen.add(capture_id)
+        candidate_id = capture.get('candidate_id')
+        candidate = candidate_map.get(candidate_id)
+        if candidate is None:
+            errors.append(f'{label}: unknown candidate {candidate_id!r}')
+        publisher = publisher_map.get(capture.get('publisher_id'))
+        if publisher is None:
+            errors.append(f'{label}: unknown publisher {capture.get("publisher_id")!r}')
+        elif candidate is not None:
+            host = (urlsplit(str(candidate.get('source_url') or '')).hostname or '').lower()
+            if publisher.get('host') != host:
+                errors.append(f'{label}: publisher does not match the candidate host')
+        for field in ('url', 'final_url'):
+            value = capture.get(field)
+            if not isinstance(value, str) or not value.startswith('https://'):
+                errors.append(f'{label}: {field} must be an https URL')
+        captured = timestamp_date(capture.get('captured_at'))
+        if captured is None:
+            errors.append(f'{label}: captured_at must be an ISO 8601 timestamp with a zone')
+        elif as_of is not None and captured > as_of:
+            errors.append(f'{label}: captured_at is after the fixed as_of date')
+        http_status = capture.get('http_status')
+        if not isinstance(http_status, int) or isinstance(http_status, bool) or \
+                not 100 <= http_status <= 599:
+            errors.append(f'{label}: http_status must be an integer HTTP status')
+        content_type = capture.get('content_type')
+        if not isinstance(content_type, str) or not content_type.strip():
+            errors.append(f'{label}: content_type must be nonempty')
+        length = capture.get('content_length')
+        if not isinstance(length, int) or isinstance(length, bool) or length < 0:
+            errors.append(f'{label}: content_length must be a nonnegative integer')
+        if not isinstance(capture.get('sha256'), str) or not SHA256.match(capture['sha256']):
+            errors.append(f'{label}: sha256 must be 64 lowercase hex characters')
+        if capture.get('retrieval_method') not in CAPTURE_METHODS:
+            errors.append(f'{label}: unknown retrieval_method')
+        if capture.get('storage') not in CAPTURE_STORAGE:
+            errors.append(f'{label}: unknown storage state')
+        if not isinstance(capture.get('language'), str) or not BCP47.match(capture['language']):
+            errors.append(f'{label}: language must be a BCP47 tag')
+        if not isinstance(capture.get('notes'), str) or not capture['notes'].strip():
+            errors.append(f'{label}: notes must be nonempty')
+        by_candidate.setdefault(candidate_id, []).append(capture)
+
+    for candidate_id, items in by_candidate.items():
+        latest = max(items, key=lambda capture: str(capture.get('captured_at')))
+        check = check_map.get(candidate_id)
+        if check is None:
+            errors.append(f'capture: candidate {candidate_id!r} has no source-check record')
+            continue
+        latest_date = timestamp_date(latest.get('captured_at'))
+        if check.get('retrieval_status') != 'success':
+            errors.append(f'capture {latest.get("capture_id")}: source check is not successful')
+        if latest_date and check.get('last_successful_retrieval') != latest_date.isoformat():
+            errors.append(f'capture {latest.get("capture_id")}: '
+                          'last_successful_retrieval does not match the latest capture')
+        attempted = check.get('attempted_at')
+        if latest_date and isinstance(attempted, str) and ISO_DATE.match(attempted):
+            try:
+                attempted_date = date.fromisoformat(attempted)
+            except ValueError:
+                attempted_date = None
+            if attempted_date and attempted_date < latest_date:
+                errors.append(f'capture {latest.get("capture_id")}: '
+                              'source-check attempted_at is before the latest capture')
+        for field in ('http_status', 'final_url', 'content_type'):
+            if check.get(field) != latest.get(field):
+                errors.append(f'capture {latest.get("capture_id")}: source-check {field} '
+                              'does not match the latest capture')
+    return errors
+
+
 def validate_change_records(events, decisions, tasks, candidates, publishers,
                             instruments, as_of=None) -> list[str]:
     """Validate events, decisions and the derived review-task queue."""
@@ -381,12 +477,16 @@ def run(toolkit=DEFAULT_TOOLKIT, check=False) -> int:
     events = read_jsonl(toolkit / EVENT_FILE)
     decisions = read_jsonl(toolkit / DECISION_FILE)
     tasks = read_jsonl(toolkit / TASK_FILE)
+    captures = read_jsonl(toolkit / CAPTURE_FILE)
+    checks = json.loads((toolkit / 'sources' / 'source-checks.json')
+                        .read_text(encoding='utf-8')).get('checks', [])
     expected = dump_jsonl(derive_tasks(events, candidates, decisions))
     expected_tasks = derive_tasks(events, candidates, decisions)
     path = toolkit / TASK_FILE
     validation_tasks = tasks if check else expected_tasks
     errors = validate_change_records(events, decisions, validation_tasks, candidates,
                                      publishers, instruments, as_of)
+    errors.extend(validate_source_captures(captures, candidates, publishers, checks, as_of))
     if not check and not errors:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(expected, encoding='utf-8')
@@ -400,7 +500,8 @@ def run(toolkit=DEFAULT_TOOLKIT, check=False) -> int:
             print(f'STALE: {path}')
             return 1
     print(f'{len(events)} change events, {len(decisions)} review decisions, '
-          f'{len(derive_tasks(events, candidates, decisions))} review tasks')
+          f'{len(derive_tasks(events, candidates, decisions))} review tasks, '
+          f'{len(captures)} captures')
     return 0
 
 

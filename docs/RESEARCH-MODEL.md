@@ -186,7 +186,17 @@ Observations remain traceable: the event line is never rewritten; decisions are 
 
 Validation rejects: malformed event/decision IDs, duplicate event IDs or observations, unknown candidates/publishers/instruments, jurisdiction or publisher mismatches, unknown vocabularies, non-successful retrieval asserting a document change, contradictory classification, missing evidence references or references that omit the compared versions, invalid or future timestamps relative to the fixed `as_of`, task-ID mismatches, confirmed legal changes without a confirming decision, unsupported review outcomes, decisions without evidence or explanation, and stale or extra derived tasks. A successful retrieval or a decision never changes a policy record's `legal_effect`.
 
-An empty event file means no observations have been recorded by this project; it does not mean legislation is unchanged. The public sources page shows the latest observation, technical and potential legal labels, review status and review task where events exist, and an explicit empty state otherwise.
+An empty event file means no observations have been recorded by this project; it does not mean legislation is unchanged.
+
+### Captured source items
+
+`research-toolkit/monitoring/source-captures.jsonl` records metadata for retrieved source bytes: capture ID, candidate and publisher, URL and final URL, capture timestamp, HTTP status, content type, byte length, SHA-256, retrieval method, storage state, language and notes.
+
+The pilot stores **metadata and checksums only**; bytes are hashed and not retained. A capture ID is content-addressed (`cap-<candidate>-<sha256 prefix>`), so recapturing identical bytes yields the same identity. `storage: not_stored` is explicit, and no full text is redistributed.
+
+The validator rejects mismatched candidate/publisher hosts, non-HTTPS URLs, malformed or future timestamps, invalid HTTP status, content type, length or checksum, unknown method/storage, invalid language tags, duplicate capture IDs, and a source check that does not match the latest capture's success status, HTTP status, final URL, content type, last-successful date and attempted date. A capture never changes legal verification.
+
+Initial captures are versions, not change events. A comparison becomes possible only when a later capture is recorded; the absence of an event means no comparison has been made by this project. The public sources page shows the latest observation, technical and potential legal labels, review status and review task where events exist, and an explicit empty state otherwise.
 
 ## Running the checks
 

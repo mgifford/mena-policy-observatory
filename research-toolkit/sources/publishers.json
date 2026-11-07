@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "as_of": "2026-11-06",
+  "as_of": "2026-11-07",
   "note": "Publisher identities are recorded from cited URLs only. This registry does not verify authority, coverage or currency.",
   "publishers": [
     {
@@ -283,12 +283,14 @@
       "jurisdictions": [
         "DZ"
       ],
-      "publisher_name": null,
-      "authority_type": "unknown",
+      "publisher_name": "Journal Officiel",
+      "authority_type": "gazette",
       "verification_status": "unverified",
-      "languages": [],
+      "languages": [
+        "fr"
+      ],
       "monitoring": "not_configured",
-      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "retrieval_notes": "Publisher identity observed on the retrieved page or document metadata; not independently verified.",
       "cited_by_candidates": [
         "mena-t02-002"
       ],
@@ -339,12 +341,15 @@
       "jurisdictions": [
         "BH"
       ],
-      "publisher_name": null,
-      "authority_type": "unknown",
+      "publisher_name": "Legislation and Legal Opinion Commission",
+      "authority_type": "legislation_portal",
       "verification_status": "unverified",
-      "languages": [],
+      "languages": [
+        "ar",
+        "en"
+      ],
       "monitoring": "not_configured",
-      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "retrieval_notes": "Publisher identity observed on the retrieved page or document metadata; not independently verified.",
       "cited_by_candidates": [
         "bh-personal-data-30-2018"
       ],
@@ -412,12 +417,15 @@
       "jurisdictions": [
         "OM"
       ],
-      "publisher_name": null,
-      "authority_type": "unknown",
+      "publisher_name": "Ministry of Transport, Communications and Information Technology",
+      "authority_type": "ministry",
       "verification_status": "unverified",
-      "languages": [],
+      "languages": [
+        "ar",
+        "en"
+      ],
       "monitoring": "not_configured",
-      "retrieval_notes": "Derived from a cited source URL. Publisher name, authority type and status remain unknown until a human reviewer records them.",
+      "retrieval_notes": "Publisher identity observed on the retrieved page or document metadata; not independently verified.",
       "cited_by_candidates": [
         "om-national-digital-accessibility"
       ],
