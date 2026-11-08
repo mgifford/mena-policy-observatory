@@ -10,7 +10,7 @@
 
 ### Legal evidence currency
 
-- **Bounded publisher registry.** Record the official publishers already cited by the 23 candidate leads and the seven policy records: authority type, jurisdiction, languages, retrieval constraints, maintainer and review priority. No new countries or domains; no broad crawling.
+- **Bounded publisher registry.** Record the official publishers already cited by the 23 candidate leads and the current policy records: authority type, jurisdiction, languages, retrieval constraints, maintainer and review priority. No new countries or domains; no broad crawling.
 - **Instrument identity and versions.** Distinguish legal work, expression and captured item. Record publication, adoption, commencement, expiry, repeal and consolidation dates where documented; keep `unknown` explicit. Record amendments and corrections as unreviewed relationships until reviewed.
 - **Source checks and freshness.** Deterministic, idempotent checks that record last successful check, last failed check, last detected change and explicit unavailable/blocked states. Source health is tracked separately from legal change.
 - **Change events.** Record immutable monitoring events (new instrument, amendment, repeal, consolidation, translation update, technical change, unknown) and open human review tasks. No automated legal-effect change.

@@ -10,7 +10,7 @@ Target WCAG 2.2 AA, without implying automated checks prove conformance.
 - Run toolkit unit tests for candidate packet validation, queue duplicate detection, and deterministic manifest checks; validate the positive packet fixture and all 40 queued tasks in CI.
 - Lint every generated HTML page for document language/direction, one `main` landmark with `tabindex="-1"`, one `h1`, heading order, a working skip link, unique descriptive titles, `dir` on foreign-language elements, table captions and `th` scope, resolvable local links, and non-empty link names.
 - Rebuild the site and fail if committed `dist/` differs from generated output.
-- Run Playwright + axe-core on all 139 generated HTML pages, plus keyboard skip-link focus, 320 CSS pixel reflow, unique titles, `hreflang` alternates, and language-switch equivalence across English, French and Arabic for every page.
+- Run Playwright + axe-core on all generated HTML pages, plus keyboard skip-link focus, 320 CSS pixel reflow, unique titles, `hreflang` alternates, and language-switch equivalence across English, French and Arabic for every page.
 - Render coverage matrices, jurisdiction and policy-area tables and task queues as captioned tables, and candidate source leads as one section per lead with a heading and a description list. Wide tables sit in a labelled, focusable scroll region so keyboard users can reach hidden columns.
 - Mark every candidate source lead as an unreviewed discovery lead; show recorded metadata and a link only, never reproduce source text.
 

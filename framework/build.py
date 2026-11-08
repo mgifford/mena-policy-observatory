@@ -37,6 +37,11 @@ ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_URL = 'https://github.com/mgifford/mena-policy-observatory'
 WORKFLOW_URL = REPOSITORY_URL + '/blob/main/docs/WORKFLOW.md'
 AUDIT_URL = REPOSITORY_URL + '/blob/main/docs/BASELINE-AUDIT.md'
+RESEARCH_MODEL_URL = REPOSITORY_URL + '/blob/main/docs/RESEARCH-MODEL.md'
+ACCESSIBILITY_URL = REPOSITORY_URL + '/blob/main/ACCESSIBILITY.md'
+CONTRIBUTING_URL = REPOSITORY_URL + '/blob/main/CONTRIBUTING.md'
+RULES_DOC_URL = REPOSITORY_URL + '/blob/main/docs/RULES-ENGINE-COMPARISON.md'
+FEATURED_VISUALIZATION_ID = 'ae-national-digital-accessibility'
 ESCWA_URL = ('https://www.unescwa.org/sites/default/files/pubs/pdf/'
              'technical-guidelines-digital-accessibility-empower-older-persons-english.pdf')
 
@@ -540,153 +545,194 @@ def breadcrumb_html(strings, home_href, current_label, current_is_foreign):
             f'<li><span aria-current="page">{label_html}</span></li></ol>')
 
 
-def home_body(catalogues, lang, cfg, policies, view):
+def home_stats(policies, view):
+    """Derive the homepage summary from the canonical coverage view."""
+    countries = view.get('countries') or []
+    domains = view.get('domains') or []
+    covered_countries = [country for country in countries if country.get('records')]
+    record_domains = [domain for domain in domains if domain.get('records')]
+    candidates = view.get('candidates') or []
+    successful_retrievals = sum(
+        1 for candidate in candidates
+        if candidate.get('retrieval_status') == 'success'
+    )
+    reviewed = sum(
+        1 for policy in policies
+        if policy.get('legal_effect') in ('binding_confirmed', 'nonbinding_confirmed')
+    )
+    remaining = len(countries) - len(covered_countries)
+    discovery = [
+        country for country in countries
+        if not country.get('records') and (country.get('candidates') or country.get('tasks'))
+    ]
+    no_research = [
+        country for country in countries
+        if not country.get('records') and not country.get('candidates') and not country.get('tasks')
+    ]
+    return {
+        'records': len(policies),
+        'covered': len(covered_countries),
+        'total': len(countries),
+        'domains': len(record_domains),
+        'candidates': len(candidates),
+        'retrievals': successful_retrievals,
+        'reviewed': reviewed,
+        'remaining': remaining,
+        'discovery': len(discovery),
+        'no_research': len(no_research),
+        'covered_countries': covered_countries,
+        'record_domains': record_domains,
+    }
+
+
+def _home_country_list(countries, lang):
+    return ''.join(
+        f'<li><a href="countries/{esc(country.get("code"))}.html">'
+        f'{country_name(country, lang)}</a></li>'
+        for country in countries
+    )
+
+
+def _home_domain_list(domains, lang):
+    return ''.join(
+        f'<li><a href="domains/{esc(domain.get("id"))}.html">'
+        f'{domain_name(domain, lang)}</a></li>'
+        for domain in domains
+    )
+
+
+def home_body(catalogues, lang, cfg, policies, view, stats=None):
+    """Render the homepage as a task-oriented research discovery page."""
     strings = catalogues[lang]
-    countries = view['countries']
-    records = len(policies)
-    covered = len({record.get('country') for record in policies})
-    total = len(countries)
-    encoded = sum(1 for record in policies
-                  if record.get('execution_status') not in
-                  (None, 'not_implemented', 'scaffold', 'not_encoded'))
-    reviewed = sum(1 for record in policies
-                   if record.get('legal_effect') in ('binding_confirmed', 'nonbinding_confirmed'))
-    country_names = {country['code']: country['name'] for country in countries}
+    stats = stats or home_stats(policies, view)
+    countries_with_records = stats['covered_countries']
+    domains_with_records = stats['record_domains']
+    featured = next(
+        (policy for policy in policies if policy.get('id') == FEATURED_VISUALIZATION_ID),
+        None,
+    )
+
+    paths = (
+        ('countries/index.html', 'home.paths.find.title', 'home.paths.find.body'),
+        ('comparison/index.html', 'home.paths.compare.title', 'home.paths.compare.body'),
+        ('visualizations/index.html', 'home.paths.visualize.title', 'home.paths.visualize.body'),
+        ('sources/index.html', 'home.paths.evidence.title', 'home.paths.evidence.body'),
+    )
+    path_items = ''.join(
+        f'<li><a href="{esc(href)}"><strong>{esc(strings[title])}</strong>'
+        f'<span>{esc(strings[body])}</span></a></li>'
+        for href, title, body in paths
+    )
+
+    stat_rows = (
+        ('home.snapshot.total', 'total'),
+        ('home.snapshot.jurisdictions', 'covered'),
+        ('home.snapshot.records', 'records'),
+        ('home.snapshot.domains', 'domains'),
+        ('home.snapshot.candidates', 'candidates'),
+        ('home.snapshot.retrievals', 'retrievals'),
+        ('home.snapshot.reviewed', 'reviewed'),
+    )
+    stat_items = ''.join(
+        f'<div class="stat"><dt>{esc(strings[label_key])}</dt>'
+        f'<dd>{stats[value_key]}</dd></div>'
+        for label_key, value_key in stat_rows
+    )
 
     parts = [
         f'<h1>{esc(cfg["title"][lang])}</h1>',
         f'<p class="lede">{esc(strings["home.lede"])}</p>',
         f'<section><h2>{esc(strings["home.what.heading"])}</h2>'
         f'<p>{esc(strings["home.what.body"])}</p></section>',
-        f'<section><h2>{esc(strings["home.why.heading"])}</h2>'
-        f'<p>{esc(strings["home.why.body"])}</p><ul>'
-        f'<li>{esc(strings["home.why.item1"])}</li>'
-        f'<li>{esc(strings["home.why.item2"])}</li>'
-        f'<li>{esc(strings["home.why.item3"])}</li></ul></section>',
-        f'<section><h2>{esc(strings["home.pilot.heading"])}</h2>'
-        f'<p>{esc(t(strings, "home.pilot.body", records=records, covered=covered, total=total))}</p></section>',
-        f'<section><h2>{esc(strings["home.ric.heading"])}</h2>'
-        f'<p>{esc(strings["home.ric.body1"])}</p>'
-        f'<p>{esc(strings["home.ric.body2"])}</p>',
-        f'<p class="notice">{esc(strings["home.ric.certification"])}</p>',
+        f'<section class="home-paths"><h2>{esc(strings["home.paths.heading"])}</h2>'
+        f'<nav aria-label="{esc(strings["home.paths.label"])}"><ul>{path_items}</ul></nav></section>',
+        f'<section id="records"><h2>{esc(strings["home.snapshot.heading"])}</h2>'
+        f'<p>{esc(strings["home.snapshot.summary"])}</p>'
+        f'<dl class="stat-grid">{stat_items}</dl>'
+        f'<h3>{esc(strings["home.snapshot.jurisdictions_label"])}</h3>'
+        f'<ul class="inline-list">{_home_country_list(countries_with_records, lang)}</ul>'
+        f'<h3>{esc(strings["home.snapshot.domains_label"])}</h3>'
+        f'<ul class="inline-list">{_home_domain_list(domains_with_records, lang)}</ul>'
+        f'<p>{esc(t(strings, "home.snapshot.discovery", remaining=stats["remaining"], discovery=stats["discovery"]))}</p>'
+        f'<p>{esc(t(strings, "home.snapshot.no_research", none=stats["no_research"]))}</p>'
+        f'<p>{esc(strings["home.snapshot.retrieval_note"])}</p>'
+        f'<p>{esc(strings["home.snapshot.review_note"])}</p>'
+        f'<p><a href="coverage/index.html">{esc(strings["home.snapshot.coverage_link"])}</a></p>'
+        f'</section>',
     ]
-    if lang != 'en':
-        parts.append(
-            f'<p class="terms">{esc(strings["home.ric.english_terms"])}: '
-            f'<span lang="en" dir="ltr">Rules as Code · Axiom · RuleSpec</span></p>'
-        )
-    parts.append('</section>')
 
-    steps = ('source', 'clause', 'interpretation', 'candidate', 'test', 'review')
-    step_items = ''.join(
-        f'<li><strong>{esc(strings[f"home.step.{key}.title"])}</strong> '
-        f'<span>{esc(strings[f"home.step.{key}.body"])}</span></li>'
-        for key in steps
+    if featured is not None:
+        featured_title = foreign(featured.get('title', featured.get('id')), lang,
+                                 featured.get('language', 'en'))
+        parts.append(
+            f'<section class="feature"><h2>{esc(strings["home.featured.heading"])}</h2>'
+            f'<p class="notice"><strong>{esc(strings["home.featured.status"])}</strong></p>'
+            f'<h3><a href="visualizations/{esc(FEATURED_VISUALIZATION_ID)}.html">{featured_title}</a></h3>'
+            f'<p>{esc(strings["home.featured.body"])}</p><ul>'
+            + ''.join(
+                f'<li>{esc(strings[f"home.featured.item{index}"])}</li>'
+                for index in range(1, 6)
+            )
+            + f'</ul><p><a href="visualizations/{esc(FEATURED_VISUALIZATION_ID)}.html">'
+            f'{esc(strings["home.featured.link"])}</a> · '
+            f'<a href="visualizations/index.html">{esc(strings["home.featured.catalogue_link"])}</a></p></section>'
+        )
+
+    parts.append(
+        f'<section class="synthetic-card"><h2>{esc(strings["home.synthetic.heading"])}</h2>'
+        f'<p class="notice"><strong>{esc(strings["home.synthetic.status"])}</strong></p>'
+        f'<p>{esc(strings["home.synthetic.body"])}</p><ul>'
+        + ''.join(
+            f'<li>{esc(strings[f"home.synthetic.item{index}"])}</li>'
+            for index in range(1, 5)
+        )
+        + f'</ul><p><a href="visualizations/synthetic.html">{esc(strings["home.synthetic.link"])}</a> · '
+        f'<a href="{RULES_DOC_URL}">{esc(strings["home.synthetic.doc_link"])}</a></p>'
+        f'<p>{esc(strings["home.synthetic.engine_note"])}</p></section>'
+    )
+
+    stages = ('source', 'capture', 'provision', 'interpretation', 'review', 'encoding')
+    stage_items = ''.join(
+        f'<li><strong>{esc(strings[f"home.stage.{key}.title"])}</strong> '
+        f'<span>{esc(strings[f"home.stage.{key}.body"])}</span></li>'
+        for key in stages
     )
     parts.append(
         f'<section id="method"><h2>{esc(strings["home.pipeline.heading"])}</h2>'
         f'<p>{esc(strings["home.pipeline.intro"])}</p>'
-        f'<ol class="steps">{step_items}</ol></section>'
+        f'<ol class="steps">{stage_items}</ol>'
+        f'<p class="notice">{esc(strings["home.pipeline.note"])}</p></section>'
     )
 
-    claims = ''.join(f'<li>{esc(strings[f"home.claims.item{index}"])}</li>' for index in range(1, 6))
     parts.append(
-        f'<section><h2>{esc(strings["home.missing.heading"])}</h2>'
-        f'<p>{esc(strings["home.missing.body"])}</p></section>'
+        f'<section><h2>{esc(strings["home.limits.heading"])}</h2>'
+        f'<p>{esc(strings["home.limits.body"])}</p>'
+        f'<p>{esc(strings["home.limits.evidence"])}</p>'
+        f'<p>{esc(strings["home.missing.body"])}</p>'
+        f'<ul><li><a href="coverage/index.html">{esc(strings["home.limits.coverage_link"])}</a></li>'
+        f'<li><a href="countries/index.html">{esc(strings["home.limits.countries_link"])}</a></li>'
+        f'<li><a href="domains/index.html">{esc(strings["home.limits.domains_link"])}</a></li>'
+        f'<li><a href="tasks/index.html">{esc(strings["home.limits.tasks_link"])}</a></li>'
+        f'<li><a href="sources/index.html">{esc(strings["home.limits.sources_link"])}</a></li></ul></section>'
+    )
+
+    claims = ''.join(
+        f'<li>{esc(strings[f"home.claims.item{index}"])}</li>'
+        for index in range(1, 7)
+    )
+    parts.append(
         f'<section><h2>{esc(strings["home.claims.heading"])}</h2><ul>{claims}</ul></section>'
-    )
-
-    status_items = [
-        t(strings, 'home.status.records', records=records),
-        t(strings, 'home.status.coverage', covered=covered, total=total),
-        t(strings, 'home.status.rules', encoded=encoded, records=records),
-        t(strings, 'home.status.review', reviewed=reviewed, records=records),
-        strings['home.status.arabic'],
-    ]
-    parts.append(
-        f'<section><h2>{esc(strings["home.status.heading"])}</h2><ul>'
-        + ''.join(f'<li>{esc(item)}</li>' for item in status_items)
-        + '</ul></section>'
-    )
-
-    rows = []
-    for record in policies:
-        record_id = record['id']
-        title = foreign(record.get('title', record_id), lang)
-        country = foreign(country_names.get(record.get('country'), record.get('country', '')), lang)
-        standard = foreign(record.get('standard') or '—', lang)
-        legal = esc(label(strings, LEGAL_STATUS_KEYS, record.get('legal_effect')))
-        rows.append(
-            f'<tr><th scope="row">{title}</th><td>{country}</td><td>{standard}</td>'
-            f'<td>{legal}</td><td><a href="records/{esc(record_id)}.html">'
-            f'{esc(strings["home.comparison.link"])}</a></td></tr>'
-        )
-    parts.append(
-        f'<section id="records"><h2>{esc(strings["home.comparison.heading"])}</h2>'
-        f'<p>{esc(strings["home.comparison.intro"])}</p>'
-        f'<div class="table-scroll" role="region" aria-label="{esc(strings["home.comparison.heading"])}" tabindex="0">'
-        f'<table><caption>{esc(strings["home.comparison.caption"])}</caption><thead><tr>'
-        f'<th scope="col">{esc(strings["home.table.document"])}</th>'
-        f'<th scope="col">{esc(strings["home.table.jurisdiction"])}</th>'
-        f'<th scope="col">{esc(strings["home.table.standard"])}</th>'
-        f'<th scope="col">{esc(strings["home.table.legal"])}</th>'
-        f'<th scope="col">{esc(strings["home.table.evidence"])}</th>'
-        f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div></section>'
-    )
-
-    coverage_rows = []
-    for country in countries:
-        country_cell = (f'<a href="countries/{esc(country["code"])}.html">'
-                        f'{country_name(country, lang)}</a>')
-        coverage_rows.append(
-            f'<tr><th scope="row">{country_cell}</th>'
-            f'<td>{len(country["records"])}</td>'
-            f'<td>{esc(status_text(strings, country["status"]))}</td></tr>'
-        )
-    parts.append(
-        f'<section><h2>{esc(strings["home.coverage.heading"])}</h2>'
-        f'<p>{esc(strings["home.coverage.note"])}</p>'
-        f'<div class="table-scroll" role="region" aria-label="{esc(strings["home.coverage.heading"])}" tabindex="0">'
-        f'<table><caption>{esc(strings["home.coverage.caption"])}</caption><thead><tr>'
-        f'<th scope="col">{esc(strings["home.table.jurisdiction"])}</th>'
-        f'<th scope="col">{esc(strings["home.table.records"])}</th>'
-        f'<th scope="col">{esc(strings["home.coverage.status_heading"])}</th>'
-        f'</tr></thead><tbody>{"".join(coverage_rows)}</tbody></table></div></section>'
-    )
-
-    domain_items = ''.join(
-        f'<li><a href="domains/{esc(domain["id"])}.html">{domain_name(domain, lang)}</a> — '
-        f'{esc(status_text(strings, domain["status"]))}</li>'
-        for domain in view['domains']
-    )
-    parts.append(
-        f'<section><h2>{esc(strings["home.domains.heading"])}</h2>'
-        f'<p>{esc(strings["home.domains.note"])}</p><ul>{domain_items}</ul></section>'
-    )
-
-    page_links = ''.join(
-        f'<li><a href="{href}">{esc(strings[key])}</a></li>'
-        for href, key in (
-            ('coverage/index.html', 'home.pages.matrix'),
-            ('countries/index.html', 'home.pages.countries'),
-            ('domains/index.html', 'home.pages.domains'),
-            ('tasks/index.html', 'home.pages.tasks'),
-            ('sources/index.html', 'home.pages.sources'),
-            ('comparison/index.html', 'home.pages.comparison'),
-        )
-    )
-    parts.append(
-        f'<section><h2>{esc(strings["home.pages.heading"])}</h2>'
-        f'<p>{esc(strings["home.pages.body"])}</p><ul>{page_links}</ul></section>'
     )
 
     parts.append(
         f'<section><h2>{esc(strings["home.resources.heading"])}</h2><ul>'
         f'<li><a href="{WORKFLOW_URL}">{esc(strings["home.resources.method"])}</a></li>'
+        f'<li><a href="{RESEARCH_MODEL_URL}">{esc(strings["home.resources.provenance"])}</a></li>'
+        f'<li><a href="{ACCESSIBILITY_URL}">{esc(strings["home.resources.accessibility"])}</a></li>'
+        f'<li><a href="{CONTRIBUTING_URL}">{esc(strings["home.resources.contribution"])}</a></li>'
+        f'<li><a href="{RULES_DOC_URL}">{esc(strings["home.resources.rules_doc"])}</a></li>'
         f'<li><a href="{AUDIT_URL}">{esc(strings["home.resources.audit"])}</a></li>'
         f'<li><a href="{REPOSITORY_URL}">{esc(strings["home.resources.repo"])}</a></li>'
-        f'<li><a href="{ESCWA_URL}">{esc(strings["home.resources.escwa"])}</a>'
-        f' {esc(strings["home.resources.escwa_note"])}</li>'
         f'</ul></section>'
     )
     return '\n'.join(parts)
@@ -1617,10 +1663,14 @@ def build(region):
         strings = catalogues[lang]
         others = other_languages(lang)
         alt_hrefs = {code: f'../{code}/' for code in others}
-        body = home_body(catalogues, lang, cfg, policies, view)
+        stats = home_stats(policies, view)
+        body = home_body(catalogues, lang, cfg, policies, view, stats=stats)
+        description = t(strings, 'home.description', **{
+            key: stats[key] for key in ('records', 'covered', 'total', 'domains')
+        })
         (lang_dir / 'index.html').write_text(
             page(catalogues, lang, strings['home.title'], body, 1, alt_hrefs,
-                 strings['home.description']),
+                 description),
             encoding='utf-8',
         )
 

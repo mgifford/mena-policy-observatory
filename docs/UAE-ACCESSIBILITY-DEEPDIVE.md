@@ -90,7 +90,7 @@ The strongest current public chain is therefore **policy + governance + technica
 - The UAE's official language is Arabic. The UAE Legislation platform states on its legislation pages that the English version is provided for accuracy but **the Arabic text prevails** in case of conflict ([example](https://uaelegislation.gov.ae/en/legislations/1174)).
 - The 2024 policy PDF is an English edition; the policy page is also available through the official legislation platform. Do not assume the English PDF is the authoritative expression without confirmation.
 - Our UAE records currently use **English source pages** and mark authoritative language as unknown. This is a real limitation for any legal comparison.
-- For a bilingual comparison, capture the Arabic policy/legal text, record the source language and translation status, and have Arabic review before drawing wording-sensitive conclusions.
+- For an Arabic/English comparison, capture the Arabic policy/legal text, record the source language and translation status, and have Arabic review before drawing wording-sensitive conclusions.
 - English is widely used in UAE government digital services, but interface English does not make English the authoritative legal text.
 
 ## Accessibility practice: questions the public evidence raises
