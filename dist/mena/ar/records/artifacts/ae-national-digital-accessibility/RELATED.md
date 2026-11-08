@@ -10,3 +10,7 @@ These are discovery links, not legal determinations of incorporation or superses
   Relationship: `official_language_expression`. Arabic/English authority unresolved.
 - [Federal Law No. 29 of 2006](../ae-federal-law-29-2006/SOURCE.md)
   Relationship: `related_federal_law`. Discovery link; not reconciled.
+- [Full Arabic policy PDF](https://assets.u.ae/api/public/content/4108f4f6ade849fb92d5ffcb67c2a416?v=35bf36ee)
+  Relationship: `official_language_expression`. Clause comparison with the English PDF outstanding.
+- [UAE Legislation amendment list for Federal Law No. 29 of 2006](https://uaelegislation.gov.ae/ar/legislations/1172/modifications)
+  Relationship: `amendment_list`. One 2009 amendment listed; consolidated text not captured.

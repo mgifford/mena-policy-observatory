@@ -253,6 +253,19 @@
       "recorded_label": "national_digital_accessibility_policy",
       "review_state": "unreviewed",
       "note": "Discovery link only; the 2006 Law and 2024 policy have not been reconciled."
+    },
+    {
+      "id": "rel-ae-law29-amendment-list",
+      "target": {
+        "kind": "external_document",
+        "title": "UAE Legislation — amendments page for Federal Law No. 29 of 2006",
+        "url": "https://uaelegislation.gov.ae/ar/legislations/1172/modifications",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "amendment_list",
+      "review_state": "unreviewed",
+      "note": "One 2009 amendment is listed. The consolidated text and the amendment’s substantive effect were not captured; no change is inferred."
     }
   ]
 }

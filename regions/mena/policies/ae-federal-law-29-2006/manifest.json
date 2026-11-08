@@ -56,6 +56,11 @@
       "title": "National Digital Accessibility Policy",
       "url": null,
       "relation": "national_digital_accessibility_policy"
+    },
+    {
+      "title": "UAE Legislation amendment list",
+      "url": "https://uaelegislation.gov.ae/ar/legislations/1172/modifications",
+      "relation": "amendment_list"
     }
   ]
 }

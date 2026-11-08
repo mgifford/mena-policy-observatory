@@ -34,8 +34,8 @@ It may not:
 |---|---|---|---|
 | `ae-moe-accessibility` | UAE | Two recorded provisions and three questions | No excerpt or bytes captured; dates unknown; no related documents recorded |
 | `ae-mof-accessibility` | UAE | One recorded provision and two questions | No excerpt or bytes captured; dates unknown; one question has no provision link |
-| `ae-national-digital-accessibility` | UAE | Five provisions, five open questions, three recorded links, one excerpt; March 2024 policy | English PDF plus Arabic policy-page expression; legal status and Arabic/English authority unresolved |
-| `ae-federal-law-29-2006` | UAE | Five provisions, four questions, two recorded links, one Arabic excerpt; official English translation expression | Digital scope, Article 23 implementing instrument and consolidated amendment unresolved |
+| `ae-national-digital-accessibility` | UAE | Five provisions, five open questions, four recorded links, two excerpts; March 2024 policy | English PDF plus full Arabic PDF; legal status and Arabic/English authority unresolved |
+| `ae-federal-law-29-2006` | UAE | Five provisions, four questions, three recorded links, one Arabic excerpt; official English translation expression | Digital scope, Article 23 implementing instrument and consolidated amendment unresolved |
 | `qa-eaccessibility-2011` | Qatar | One provision, two questions, four related documents including a proposed successor, temporal uncertainty | No excerpt or bytes captured; dates unknown; current standing unresolved |
 | `qa-eaccessibility-2025-upcoming` | Qatar | Two draft provisions, two questions, two related documents | Draft/not in force; no excerpt or bytes; dates unknown; relations unreviewed |
 | `sa-dga-web-accessibility-guide` | Saudi Arabia | Two provisions, two questions, one technical-standard link | No excerpt or bytes; dates unknown; guideline normativity unresolved |

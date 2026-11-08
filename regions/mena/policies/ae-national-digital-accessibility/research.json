@@ -38,26 +38,58 @@
         "status": "not_translated",
         "provenance": null,
         "review_state": "not_reviewed"
+      }
+    },
+    {
+      "id": "src-ae-national-policy-ar-2024",
+      "title": "السياسة الوطنية للنفاذية الرقمية (مارس 2024)",
+      "url": "https://assets.u.ae/api/public/content/4108f4f6ade849fb92d5ffcb67c2a416?v=35bf36ee",
+      "jurisdiction": "AE",
+      "issuer": "الهيئة العامة لتنظيم قطاع الاتصالات والحكومة الرقمية",
+      "instrument_type": "national_policy",
+      "language": "ar",
+      "authoritative_language": "unknown",
+      "publication_date": "2024-03-18",
+      "effective_date": "unknown",
+      "document_version": "صدرت في مارس 2024",
+      "archival_url": "https://uaelegislation.gov.ae/ar/policy/details/the-national-digital-accessibility-policy",
+      "capture": {
+        "captured_at": "2026-11-07T22:54:00Z",
+        "bytes_stored": false,
+        "sha256": null
+      },
+      "excerpt_status": "recorded",
+      "excerpt": {
+        "text": "يختص نطاق السياسة بالخدمات التي تُقدّم رقمياً في الدولة للنفاذ إلى الخدمات الحكومية",
+        "language": "ar",
+        "locator": "المادة (3) — نطاق السياسة",
+        "artifact": "SOURCE.md"
+      },
+      "translation": {
+        "target_language": null,
+        "status": "not_translated",
+        "provenance": null,
+        "review_state": "not_reviewed"
       },
       "expressions": [
         {
-          "id": "expr-ae-policy-ar",
+          "id": "expr-ae-policy-ar-2024",
           "kind": "authority_unresolved",
-          "source_id": "src-ae-national-policy",
+          "source_id": "src-ae-national-policy-ar-2024",
           "instrument_id": "ae-national-digital-accessibility",
-          "instrument_version": "Issued March 2024",
+          "instrument_version": "مارس 2024",
           "language": "ar",
           "original_language": "ar",
-          "url": "https://uaelegislation.gov.ae/ar/policy/details/the-national-digital-accessibility-policy",
-          "authority": "UAE Legislation — Ministry of Cabinet Affairs",
+          "url": "https://assets.u.ae/api/public/content/4108f4f6ade849fb92d5ffcb67c2a416?v=35bf36ee",
+          "authority": "الهيئة العامة لتنظيم قطاع الاتصالات والحكومة الرقمية",
           "translation_method": null,
           "review_status": "unreviewed",
           "reviewed_at": null,
           "reviewer_role": null,
-          "notes": "Arabic policy summary page consulted; full Arabic policy PDF not captured. No claim of equal authority with the English PDF.",
+          "notes": "Official Arabic PDF inspected; no capture bytes or checksum stored. Full clause-level comparison with the English PDF is outstanding.",
           "uncertainties": [
-            "Arabic policy page is a summary; full Arabic instrument not compared.",
-            "Which language expression is authoritative is unresolved."
+            "Arabic and English expressions have not been compared clause by clause.",
+            "Which expression is authoritative is unresolved."
           ]
         }
       ]
@@ -72,7 +104,8 @@
         "value": "National policy: scope and general provisions"
       },
       "source_ids": [
-        "src-ae-national-policy"
+        "src-ae-national-policy",
+        "src-ae-national-policy-ar-2024"
       ],
       "summary": "The official national policy includes federal entities and public-service providers; precise contractual reach and enforcement must be interpreted with the original clauses.",
       "effect_assessment": "not_assessed",
@@ -89,7 +122,8 @@
         "value": "Article 8"
       },
       "source_ids": [
-        "src-ae-national-policy"
+        "src-ae-national-policy",
+        "src-ae-national-policy-ar-2024"
       ],
       "summary": "Article 8 discusses periodic employee training and accessible training materials.",
       "effect_assessment": "not_assessed",
@@ -104,7 +138,8 @@
         "value": "Article 9 and Annex 1"
       },
       "source_ids": [
-        "src-ae-national-policy"
+        "src-ae-national-policy",
+        "src-ae-national-policy-ar-2024"
       ],
       "summary": "Article 9 and Annex 1 contain requirements or references to technical standards; verify specific version and exemptions before encoding.",
       "effect_assessment": "not_assessed",
@@ -122,7 +157,8 @@
         "value": "Articles 5-6 and Annex 2"
       },
       "source_ids": [
-        "src-ae-national-policy"
+        "src-ae-national-policy",
+        "src-ae-national-policy-ar-2024"
       ],
       "summary": "The policy assigns governance responsibilities and defines a Digital Accessibility Officer role; the officer’s authority and independence are not established from the captured text.",
       "effect_assessment": "not_assessed",
@@ -139,7 +175,8 @@
         "value": "Articles 12 and 14"
       },
       "source_ids": [
-        "src-ae-national-policy"
+        "src-ae-national-policy",
+        "src-ae-national-policy-ar-2024"
       ],
       "summary": "The policy requires entity policies or statements, compliance reporting and indicators; the captured English text does not state a public penalty schedule.",
       "effect_assessment": "not_assessed",
@@ -260,6 +297,19 @@
       "recorded_label": "related_federal_law",
       "review_state": "unreviewed",
       "note": "Discovery link only; the policy and law have not been reconciled."
+    },
+    {
+      "id": "rel-ae-national-amendment",
+      "target": {
+        "kind": "external_document",
+        "title": "UAE Legislation — amendments page for Federal Law No. 29 of 2006",
+        "url": "https://uaelegislation.gov.ae/ar/legislations/1172/modifications",
+        "record_id": null
+      },
+      "relation": "unspecified",
+      "recorded_label": "amendment_list",
+      "review_state": "unreviewed",
+      "note": "One 2009 amendment is listed; consolidated text and substantive effect are not captured or inferred."
     }
   ]
 }
