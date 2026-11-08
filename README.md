@@ -85,10 +85,10 @@ Country scope does not imply reviewed law. Source identification does not establ
 
 Add primary sources to `regions/mena/policies/` and maintain records in `regions/mena/data/policies.json`. Preserve original-language source text where licensing permits and link all claims to exact clauses. See `ACCESSIBILITY.md`, `CONTRIBUTING.md`, and `MIGRATION.md`.
 
-## Research expansion (October 2026)
+## Research records and homepage discovery
 
-This version has seven policy records: four original national/guidance records, and three additional agency policy records (UAE Ministry of Education, UAE Ministry of Finance, Saudi Ministry of Economy and Planning). Each record now links to `PROVISIONS.md` research notes and a structured ambiguity register in its original artifacts.
+This version has eleven policy records across six jurisdictions and three policy areas. They include national and agency records from the UAE, Saudi Arabia and Qatar, plus records for Algeria, Jordan and Morocco. Each record links to `PROVISIONS.md` research notes and a structured ambiguity register in its original artifacts.
 
-The expansion does **not** create legally approved RuleSpec. Official source pages are linked; full primary-source transcriptions and native-language legal reviews are still needed. The regional UN ESCWA report is a secondary comparison source, not a substitute for legislation.
+The homepage derives its research snapshot from `policies.json`, `countries.json`, `domains.json` and the coverage model. It does not duplicate the full jurisdiction table; that table remains on the coverage pages. The expansion does **not** create legally approved RuleSpec. Official source pages are linked; full primary-source transcriptions and native-language legal reviews are still needed. The regional UN ESCWA report is a secondary comparison source, not a substitute for legislation.
 
 The next editorial phase should cover Egypt, Oman, Jordan, Morocco and Bahrain, but should only add findings once specific official instruments are independently verified.

@@ -100,7 +100,7 @@ Screenshots (1280 px browser width, full page):
 Automated verification at the time of this work:
 
 - `python3 framework/validate.py` — pass.
-- `python3 -m unittest discover -s tests` — 317 tests, pass.
+- `python3 -m unittest discover -s tests` — 331 tests, pass.
 - `python3 -m unittest discover -s research-toolkit/tests` — 15 tests, pass.
 - registry, instruments, import and manifest checks — current.
 - `python3 framework/build.py --region mena` — 190 pages.

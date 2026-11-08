@@ -20,7 +20,7 @@ Verify and monitor three existing authoritative legal or policy sources already 
 - Update source-health records from the actual retrieval result.
 - Record real change observations only if an actual difference is observed; do not create an event for an initial capture with no prior version.
 - Exercise review tasks and decisions with synthetic fixtures where no real change exists.
-- Publish source health, captured version metadata and review status bilingually.
+- Publish source health, captured version metadata and review status in the three interface languages.
 - Document evidence, failures, limitations and outstanding review.
 
 ## Prohibited work

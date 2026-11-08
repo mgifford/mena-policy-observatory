@@ -65,3 +65,20 @@ svg text{fill:CanvasText;font-family:system-ui,-apple-system,sans-serif;font-siz
 .meta{overflow-wrap:anywhere}
 body{overflow-wrap:anywhere}
 .vis-card,.structure-list>li,.vis-card dl>div{min-width:0}
+/* Homepage research discovery */
+.home-paths ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;list-style:none;margin:1rem 0 0;padding:0}
+.home-paths a{display:block;height:100%;border:2px solid CanvasText;padding:1rem;background:Canvas;color:LinkText;text-decoration:none}
+.home-paths strong{display:block;margin-block-end:.35rem;text-decoration:underline;text-underline-offset:.17em}
+.home-paths span{display:block;color:CanvasText}
+.home-paths a:focus-visible,.inline-list a:focus-visible,.feature a:focus-visible{outline:3px solid Highlight;outline-offset:3px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:.75rem;margin:1rem 0}
+.stat-grid .stat{border:1px solid GrayText;padding:.75rem 1rem;min-width:0}
+.stat-grid dt{font-weight:700;margin:0}
+.stat-grid dd{margin:.25rem 0 0;font-size:1.6rem;font-variant-numeric:tabular-nums}
+.inline-list{display:flex;flex-wrap:wrap;gap:.4rem 1rem;list-style:none;margin:.5rem 0 1rem;padding:0}
+.feature{border:2px solid CanvasText;padding:1rem;margin-block-start:1.75rem}
+.feature h3{margin-block-start:.5rem}
+@media(max-width:40rem){
+ .home-paths ul,.stat-grid{grid-template-columns:1fr}
+}
+section.synthetic-card{border:3px solid CanvasText;padding:1rem;margin-block-start:1.75rem}

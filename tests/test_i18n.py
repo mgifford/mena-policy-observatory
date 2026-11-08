@@ -58,8 +58,8 @@ class I18nCatalogueTests(unittest.TestCase):
 
     def test_placeholders_are_filled(self):
         self.assertEqual(
-            t(self.en, 'home.status.records', records=7),
-            '7 research records are published, all on digital accessibility.',
+            t(self.en, 'home.snapshot.discovery', remaining=18, discovery=18),
+            'Of the remaining 18 jurisdictions, 18 have candidate sources or queued discovery tasks.',
         )
 
 
