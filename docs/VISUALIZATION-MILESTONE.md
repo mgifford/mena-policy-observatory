@@ -105,7 +105,7 @@ Automated verification at the time of this work:
 - registry, instruments, import and manifest checks — current.
 - `python3 framework/build.py --region mena` — 190 pages.
 - `python3 framework/check_html.py` — pass.
-- `npm run test:a11y` — 572 Playwright/axe checks passed (190 pages × 3 checks, plus unique-title/language tests).
+- `npm run test:a11y` — 578 Playwright/axe checks passed (190 pages × 3 checks, plus unique-title/language tests).
 - 320 CSS px reflow checked for the new pages: no page-level horizontal overflow.
 
 ## Accessibility and language gaps

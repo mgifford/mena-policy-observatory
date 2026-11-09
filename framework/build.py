@@ -259,6 +259,7 @@ def foreign(value, page_lang, value_lang='en'):
 
 LANGUAGES = ('en', 'fr', 'ar')
 LANGUAGE_NAMES = {'en': 'English', 'fr': 'Français', 'ar': 'العربية'}
+CONTINUE_KEYS = {'en': 'root.continue_english', 'fr': 'root.continue_french', 'ar': 'root.continue_arabic'}
 
 
 def other_languages(lang):
@@ -1822,65 +1823,93 @@ def build_root(region='mena'):
     base = ROOT / 'regions' / region
     cfg = load(base / 'region.json')
     catalogues = load_i18n(base, tuple(cfg['languages']))
-    en, fr, ar = catalogues['en'], catalogues['fr'], catalogues['ar']
+    languages = tuple(cfg['languages'])
+    default_lang = languages[0]
+    default = catalogues[default_lang]
+    default_name = LANGUAGE_NAMES[default_lang]
+    default_url = f'mena/{default_lang}/'
+    alternates = ''.join(
+        f'<link rel="alternate" hreflang="{code}" href="mena/{code}/">\n'
+        for code in languages
+    )
+    language_links = ''.join(
+        f'<li><a href="mena/{code}/" hreflang="{code}" lang="{code}" '
+        f'dir="{direction(code)}">{esc(LANGUAGE_NAMES[code])}</a></li>'
+        for code in languages if code != default_lang
+    )
+    language_sections = ''.join(
+        f'<section lang="{code}" dir="{direction(code)}">'
+        f'<h2>{esc(catalogues[code]["root.h1"])}</h2>'
+        f'<p>{esc(catalogues[code]["root.summary"])}</p>'
+        f'<p><a href="mena/{code}/" hreflang="{code}" lang="{code}" dir="{direction(code)}">'
+        f'{esc(catalogues[code].get(CONTINUE_KEYS.get(code), catalogues[code]["root.choose"]))}</a></p>'
+        f'</section>'
+        for code in languages if code != default_lang
+    )
+    supported = json.dumps({code: f'mena/{code}/' for code in languages}, ensure_ascii=False)
+    redirect_script = """<script>
+(function () {
+  var supported = __SUPPORTED__;
+  var defaultTarget = supported[__DEFAULT__];
+  var requested = new URLSearchParams(location.search).get('lang');
+  var candidates = requested ? [requested] : (navigator.languages || [navigator.language || '']);
+  var target = null;
+  for (var i = 0; i < candidates.length; i += 1) {
+    var code = String(candidates[i] || '').toLowerCase().split('-')[0];
+    if (supported[code]) { target = supported[code]; break; }
+  }
+  if (target && (requested || target !== defaultTarget) && !location.hash) {
+    location.replace(target);
+  }
+})();
+</script>"""
+    redirect_script = (redirect_script
+                       .replace('__SUPPORTED__', supported)
+                       .replace('__DEFAULT__', json.dumps(default_lang, ensure_ascii=False)))
     (ROOT / 'dist').mkdir(parents=True, exist_ok=True)
     (ROOT / 'dist' / 'index.html').write_text(f"""<!doctype html>
-<html lang="en" dir="ltr">
+<html lang="{default_lang}" dir="{direction(default_lang)}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{esc(en['root.title'])}</title>
-<meta name="description" content="{esc(en['site.description'])}">
-<link rel="alternate" hreflang="en" href="mena/en/">
-<link rel="alternate" hreflang="fr" href="mena/fr/">
-<link rel="alternate" hreflang="ar" href="mena/ar/">
+<title>{esc(default['root.title'])}</title>
+<meta name="description" content="{esc(default['site.description'])}">
+{alternates}<link rel="alternate" hreflang="x-default" href="{default_url}">
 <link rel="stylesheet" href="mena/assets/site.css">
 </head>
 <body>
-<a class="skip" href="#main">{esc(en['skip'])}</a>
+<a class="skip" href="#main">{esc(default['skip'])}</a>
 <header class="site-header">
-<p class="brand"><a href="mena/en/">{esc(en['site.title'])}</a></p>
-<nav class="site-nav" aria-label="{esc(en['nav.label'])}">
+<p class="brand"><a href="{default_url}">{esc(default['site.title'])}</a></p>
+<nav class="site-nav" aria-label="{esc(default['nav.label'])}">
 <ul>
-<li><a href="mena/en/">{esc(en['nav.home'])}</a></li>
-<li><a href="mena/en/#method">{esc(en['nav.method'])}</a></li>
-<li><a href="mena/en/#records">{esc(en['nav.records'])}</a></li>
-<li><a href="mena/en/visualizations/">{esc(en['nav.visualizations'])}</a></li>
-<li><a href="{REPOSITORY_URL}">{esc(en['nav.repository'])}</a></li>
+<li><a href="{default_url}">{esc(default['nav.home'])}</a></li>
+<li><a href="{default_url}#method">{esc(default['nav.method'])}</a></li>
+<li><a href="{default_url}#records">{esc(default['nav.records'])}</a></li>
+<li><a href="mena/{default_lang}/visualizations/">{esc(default['nav.visualizations'])}</a></li>
+<li><a href="{REPOSITORY_URL}">{esc(default['nav.repository'])}</a></li>
 </ul>
 </nav>
-<nav class="language" aria-label="{esc(en['nav.language'])}">
-<ul>
-<li><a href="mena/fr/" hreflang="fr" lang="fr" dir="ltr">Français</a></li>
-<li><a href="mena/ar/" hreflang="ar" lang="ar" dir="rtl">العربية</a></li>
-</ul>
+<nav class="language" aria-label="{esc(default['nav.language'])}">
+<ul>{language_links}</ul>
 </nav>
 </header>
 <main id="main" tabindex="-1">
-<h1>{esc(en['root.h1'])}</h1>
-<p class="lede">{esc(en['root.summary'])}</p>
-<h2>{esc(en['root.choose'])}</h2>
-<p><a href="mena/en/">{esc(en['root.continue_english'])}</a></p>
-<section lang="fr" dir="ltr">
-<h2>{esc(fr['root.h1'])}</h2>
-<p>{esc(fr['root.summary'])}</p>
-<p><a href="mena/fr/">{esc(fr['root.continue_french'])}</a></p>
-</section>
-<section lang="ar" dir="rtl">
-<h2>{esc(ar['root.h1'])}</h2>
-<p>{esc(ar['root.summary'])}</p>
-<p><a href="mena/ar/">{esc(ar['root.continue_arabic'])}</a></p>
-</section>
-<p class="note">{esc(en['root.note'])}</p>
-<p><a href="{REPOSITORY_URL}">{esc(en['root.repo'])}</a></p>
+<h1>{esc(default['root.h1'])}</h1>
+<p class="lede">{esc(default['root.summary'])}</p>
+<h2>{esc(default['root.choose'])}</h2>
+<p><a href="{default_url}" hreflang="{default_lang}" lang="{default_lang}" dir="{direction(default_lang)}">{esc(default[CONTINUE_KEYS.get(default_lang, 'root.choose')])}</a></p>
+{language_sections}
+<p class="note">{esc(default['root.note'])}</p>
+<p><a href="{REPOSITORY_URL}">{esc(default['root.repo'])}</a></p>
 </main>
 <footer>
-<p>{esc(en['footer.note'])}</p>
+<p>{esc(default['footer.note'])}</p>
 </footer>
+{redirect_script}
 </body>
 </html>
 """, encoding='utf-8')
-
 
 def main():
     parser = argparse.ArgumentParser()
