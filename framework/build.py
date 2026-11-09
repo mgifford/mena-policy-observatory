@@ -700,6 +700,11 @@ def home_body(catalogues, lang, cfg, policies, view, stats=None):
     parts = [
         f'<h1>{esc(cfg["title"][lang])}</h1>',
         f'<p class="lede">{esc(strings["home.lede"])}</p>',
+        f'<section class="start-here"><h2>{esc(strings["home.start.heading"])}</h2>'
+        f'<p>{esc(strings["home.start.body"])}</p>'
+        f'<p><a href="visualizations/synthetic.html">{esc(strings["home.start.rules"])}</a> · '
+        f'<a href="countries/index.html">{esc(strings["home.start.research"])}</a> · '
+        f'<a href="index.html#method">{esc(strings["home.start.method"])}</a></p></section>',
         f'<section><h2>{esc(strings["home.what.heading"])}</h2>'
         f'<p>{esc(strings["home.what.body"])}</p></section>',
         f'<section class="home-paths"><h2>{esc(strings["home.paths.heading"])}</h2>'
@@ -1882,15 +1887,14 @@ def build_root(region='mena'):
         f'dir="{direction(code)}">{esc(LANGUAGE_NAMES[code])}</a></li>'
         for code in languages if code != default_lang
     )
-    language_sections = ''.join(
-        f'<section lang="{code}" dir="{direction(code)}">'
-        f'<h2>{esc(catalogues[code]["root.h1"])}</h2>'
-        f'<p>{esc(catalogues[code]["root.summary"])}</p>'
-        f'<p><a href="mena/{code}/" hreflang="{code}" lang="{code}" dir="{direction(code)}">'
-        f'{esc(catalogues[code].get(CONTINUE_KEYS.get(code), catalogues[code]["root.choose"]))}</a></p>'
-        f'</section>'
-        for code in languages if code != default_lang
+    language_cards = ''.join(
+        f'<li><a href="mena/{code}/" hreflang="{code}" lang="{code}" dir="{direction(code)}">'
+        f'<strong>{esc(LANGUAGE_NAMES[code])}</strong></a></li>'
+        for code in languages
     )
+    start_rules_url = f'mena/{default_lang}/visualizations/synthetic.html'
+    start_research_url = f'mena/{default_lang}/countries/index.html'
+    start_method_url = f'mena/{default_lang}/index.html#method'
     supported = json.dumps({code: f'mena/{code}/' for code in languages}, ensure_ascii=False)
     redirect_script = """<script>
 (function () {
@@ -1926,16 +1930,6 @@ def build_root(region='mena'):
 <a class="skip" href="#main">{esc(default['skip'])}</a>
 <header class="site-header">
 <p class="brand"><a href="{default_url}">{esc(default['site.title'])}</a></p>
-<nav class="site-nav" aria-label="{esc(default['nav.label'])}">
-<ul>
-<li><a href="{default_url}">{esc(default['nav.home'])}</a></li>
-<li><a href="{default_url}#method">{esc(default['nav.method'])}</a></li>
-<li><a href="{default_url}#rules-as-code">{esc(default['nav.rules'])}</a></li>
-<li><a href="{default_url}#records">{esc(default['nav.records'])}</a></li>
-<li><a href="mena/{default_lang}/visualizations/">{esc(default['nav.visualizations'])}</a></li>
-<li><a href="{REPOSITORY_URL}">{esc(default['nav.repository'])}</a></li>
-</ul>
-</nav>
 <nav class="language" aria-label="{esc(default['nav.language'])}">
 <ul>{language_links}</ul>
 </nav>
@@ -1943,9 +1937,15 @@ def build_root(region='mena'):
 <main id="main" tabindex="-1">
 <h1>{esc(default['root.h1'])}</h1>
 <p class="lede">{esc(default['root.summary'])}</p>
-<h2>{esc(default['root.choose'])}</h2>
-<p><a href="{default_url}" hreflang="{default_lang}" lang="{default_lang}" dir="{direction(default_lang)}">{esc(default[CONTINUE_KEYS.get(default_lang, 'root.choose')])}</a></p>
-{language_sections}
+<section class="start-here"><h2>{esc(default['root.start_heading'])}</h2>
+<p>{esc(default['root.start_body'])}</p>
+<ul class="start-paths">
+<li><a href="{start_rules_url}"><strong>{esc(default['root.start_rules'])}</strong></a></li>
+<li><a href="{start_research_url}"><strong>{esc(default['root.start_research'])}</strong></a></li>
+<li><a href="{start_method_url}"><strong>{esc(default['root.start_method'])}</strong></a></li>
+</ul></section>
+<section><h2>{esc(default['root.choose'])}</h2>
+<ul class="language-grid">{language_cards}</ul></section>
 <p class="note">{esc(default['root.note'])}</p>
 <p><a href="{REPOSITORY_URL}">{esc(default['root.repo'])}</a></p>
 </main>

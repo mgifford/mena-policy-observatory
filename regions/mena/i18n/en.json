@@ -17,7 +17,7 @@
   "breadcrumb.label": "Breadcrumb",
   "footer.note": "Independent research, not legal advice or an official interpretation.",
   "footer.repo": "Source code and research notes",
-  "root.title": "MENA Policy Observatory — Choose a language",
+  "root.title": "MENA Policy Observatory — Start here",
   "root.h1": "MENA Policy Observatory",
   "root.summary": "This site records what official sources and recorded research say about legislation and public policy, where each claim comes from, and what still needs review. It is research, not legal advice.",
   "root.choose": "Choose a language",
@@ -702,5 +702,15 @@
   "rule.presentation.effective_unresolved": "Unresolved",
   "rule.presentation.effective_conditional": "Conditional",
   "rule.presentation.effective_retrospective": "Retrospective",
-  "visualizations.prototype_notice": "Proof of concept for comparative legislation review. Not authoritative. Manual legal, language and accessibility review has been deferred and not performed; do not use this for compliance decisions."
+  "visualizations.prototype_notice": "Proof of concept for comparative legislation review. Not authoritative. Manual legal, language and accessibility review has been deferred and not performed; do not use this for compliance decisions.",
+  "root.start_heading": "Start here",
+  "root.start_body": "New to Rules as Code? It turns written rules into machine-readable logic. Start with the synthetic Axiom/Legalese example, or browse the research.",
+  "root.start_rules": "See Rules as Code",
+  "root.start_research": "Browse legislation and policy",
+  "root.start_method": "How evidence is reviewed",
+  "home.start.heading": "New here?",
+  "home.start.body": "Start with Rules as Code to see the machine-readable and visual example, or browse the recorded research.",
+  "home.start.rules": "See Rules as Code",
+  "home.start.research": "Browse jurisdictions",
+  "home.start.method": "How evidence is reviewed"
 }

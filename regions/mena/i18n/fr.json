@@ -17,7 +17,7 @@
   "breadcrumb.label": "Fil d'Ariane",
   "footer.note": "Recherche indépendante, pas de conseil juridique ni d'interprétation officielle.",
   "footer.repo": "Code source et notes de recherche",
-  "root.title": "Observatoire des politiques MENA — Choisir une langue",
+  "root.title": "Observatoire des politiques MENA — Commencer ici",
   "root.h1": "Observatoire des politiques MENA",
   "root.summary": "Ce site consigne ce que disent les sources officielles et la recherche consignée sur la législation et les politiques publiques, l'origine de chaque affirmation et ce qui reste à vérifier. Il s'agit de recherche, pas de conseil juridique.",
   "root.choose": "Choisir une langue",
@@ -702,5 +702,15 @@
   "rule.presentation.effective_unresolved": "Non résolue",
   "rule.presentation.effective_conditional": "Conditionnelle",
   "rule.presentation.effective_retrospective": "Rétrospective",
-  "visualizations.prototype_notice": "Prototype de comparaison de législations. Non autoritatif. La revue juridique, linguistique et d'accessibilité manuelle a été reportée et n'a pas été effectuée ; ne pas utiliser pour une décision de conformité."
+  "visualizations.prototype_notice": "Prototype de comparaison de législations. Non autoritatif. La revue juridique, linguistique et d'accessibilité manuelle a été reportée et n'a pas été effectuée ; ne pas utiliser pour une décision de conformité.",
+  "root.start_heading": "Commencer ici",
+  "root.start_body": "Vous découvrez Rules as Code ? Cette approche transforme des règles écrites en logique lisible par machine. Commencez par l’exemple synthétique Axiom/Legalese ou parcourez la recherche.",
+  "root.start_rules": "Voir Rules as Code",
+  "root.start_research": "Parcourir la législation et les politiques",
+  "root.start_method": "Comment les preuves sont examinées",
+  "home.start.heading": "Vous découvrez ?",
+  "home.start.body": "Commencez par Rules as Code pour voir l’exemple lisible par machine et sa visualisation, ou parcourez la recherche consignée.",
+  "home.start.rules": "Voir Rules as Code",
+  "home.start.research": "Parcourir les juridictions",
+  "home.start.method": "Comment les preuves sont examinées"
 }

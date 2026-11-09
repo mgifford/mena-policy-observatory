@@ -189,6 +189,25 @@ class HomepageResearchDiscoveryTests(unittest.TestCase):
         self.assertNotIn('<table', body)
         self.assertIn('<dl class="stat-grid">', body)
 
+    def test_homepage_has_a_short_start_here_orientation(self):
+        body = self.body()
+        self.assertIn(self.catalogues['en']['home.start.heading'], body)
+        self.assertIn(self.catalogues['en']['home.start.rules'], body)
+        self.assertIn('href="visualizations/synthetic.html"', body)
+        self.assertIn('href="countries/index.html"', body)
+        self.assertIn('href="index.html#method"', body)
+
+    def test_root_is_a_short_start_here_and_language_chooser(self):
+        root = (REPO_ROOT / 'dist' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('<html lang="en"', root)
+        self.assertIn(self.catalogues['en']['root.start_heading'], root)
+        self.assertIn(self.catalogues['en']['root.start_rules'], root)
+        self.assertIn('mena/en/visualizations/synthetic.html', root)
+        self.assertIn('mena/fr/', root)
+        self.assertIn('mena/ar/', root)
+        self.assertNotIn('class="site-nav"', root)
+        self.assertIn('location.replace', root)
+
     def test_metadata_is_trilingual_and_uses_derived_counts(self):
         for lang in ('en', 'fr', 'ar'):
             strings = self.catalogues[lang]
