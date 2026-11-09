@@ -17,9 +17,11 @@ from pathlib import Path
 try:  # imported as framework.research_visualization
     from .research import load_research
     from .rule_presentation import render_fragment
+    from .rules_examples import code_excerpts
 except ImportError:  # run as a script
     from research import load_research
     from rule_presentation import render_fragment
+    from rules_examples import code_excerpts
 
 SELECTED_RECORDS = (
     'ae-moe-accessibility',
@@ -598,17 +600,43 @@ def index_body(strings: dict, lang: str, selected: list[tuple[dict, dict]]) -> s
 
 def synthetic_page_body(strings: dict, lang: str, fixture: dict, catalogues: dict) -> str:
     fragment = render_fragment(fixture, lang, catalogues[lang])
+    excerpts = code_excerpts()
+    axiom_url = ('https://github.com/mgifford/mena-policy-observatory/blob/main/'
+                 'research/rules-visualization/axiom/procurement.rulespec.yaml')
+    l4_url = ('https://github.com/mgifford/mena-policy-observatory/blob/main/'
+              'research/rules-visualization/l4/procurement.l4')
+
+    def code_card(heading_key, note_key, code, url, source_key):
+        return (
+            f'<article class="code-card"><h3>{esc(strings[heading_key])}</h3>'
+            f'<p>{esc(strings[note_key])}</p>'
+            f'<div class="code-scroll" role="region" aria-label="{esc(strings[heading_key])}" tabindex="0">'
+            f'<pre><code lang="en" dir="ltr">{esc(code)}</code></pre></div>'
+            f'<p><a href="{url}">{esc(strings[source_key])}</a></p></article>'
+        )
+
     return '\n'.join([
         f'<h1>{esc(strings["visualizations.synthetic_page_title"])}</h1>',
         f'<p class="notice"><strong>{esc(strings["visualizations.prototype_notice"])}</strong></p>',
         f'<p class="notice"><strong>{esc(strings["visualizations.synthetic_notice"])}</strong></p>',
         f'<p>{esc(fixture["summary"][lang])}</p>',
         f'<p>{esc(strings["visualizations.synthetic_demo_notice"])}</p>',
+        f'<section aria-labelledby="rules-machine-h"><h2 id="rules-machine-h">{esc(strings["visualizations.rules_machine_heading"])}</h2>'
+        f'<p>{esc(strings["visualizations.code_excerpt_note"])}</p><div class="code-grid">'
+        + code_card('visualizations.axiom_code_heading', 'visualizations.axiom_code_note',
+                    excerpts['axiom'], axiom_url, 'visualizations.synthetic_source_axiom')
+        + code_card('visualizations.l4_code_heading', 'visualizations.l4_code_note',
+                    excerpts['l4'], l4_url, 'visualizations.synthetic_source_l4')
+        + '</div></section>',
+        f'<section id="legalese-visualization" aria-labelledby="legalese-visual-h">'
+        f'<h2 id="legalese-visual-h">{esc(strings["visualizations.legalese_visual_heading"])}</h2>'
+        f'<p>{esc(strings["visualizations.legalese_visual_note"])}</p>',
         fragment,
+        '</section>',
         f'<section aria-labelledby="synthetic-evidence-h"><h2 id="synthetic-evidence-h">{esc(strings["visualizations.synthetic_evidence_heading"])}</h2>'
         f'<ul>'
-        f'<li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/axiom/procurement.rulespec.yaml">{esc(strings["visualizations.synthetic_source_axiom"])}</a></li>'
-        f'<li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/l4/procurement.l4">{esc(strings["visualizations.synthetic_source_l4"])}</a></li>'
+        f'<li><a href="{axiom_url}">{esc(strings["visualizations.synthetic_source_axiom"])}</a></li>'
+        f'<li><a href="{l4_url}">{esc(strings["visualizations.synthetic_source_l4"])}</a></li>'
         f'<li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/results/axiom-cases.json">{esc(strings["visualizations.synthetic_tests"])}</a></li>'
         f'<li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/docs/RULES-ENGINE-COMPARISON.md">{esc(strings["visualizations.synthetic_comparison"])}</a></li>'
         f'</ul></section>',

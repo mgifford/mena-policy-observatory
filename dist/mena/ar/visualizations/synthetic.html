@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>عرض اصطناعي للشراء — مرصد سياسات الشرق الأوسط وشمال أفريقيا</title>
+<title>القواعد كشيفرة: عرض شراء اصطناعي — مرصد سياسات الشرق الأوسط وشمال أفريقيا</title>
 <meta name="description" content="هذه سياسة شراء خيالية باستشهادات خيالية. وليست قانونًا في أي ولاية، ولم تخضع لمراجعة قانونية، وليست خدمة قرار.">
 <link rel="alternate" hreflang="en" href="../../en/visualizations/synthetic.html">
 <link rel="alternate" hreflang="fr" href="../../fr/visualizations/synthetic.html">
@@ -18,6 +18,7 @@
 <ul>
 <li><a href="../index.html">الرئيسية</a></li>
 <li><a href="../index.html#method">كيف يعمل المرصد</a></li>
+<li><a href="../index.html#rules-as-code">القواعد كشيفرة</a></li>
 <li><a href="../index.html#records">سجلات السياسات</a></li>
 <li><a href="../coverage/index.html">التغطية</a></li>
 <li><a href="../countries/index.html">البلدان</a></li>
@@ -33,12 +34,43 @@
 </nav>
 </header>
 <main id="main" tabindex="-1">
-<nav class="breadcrumb" aria-label="مسار التنقل"><ol><li><a href="../index.html">الرئيسية</a></li><li><span class="breadcrumb-separator" aria-hidden="true">/</span><a href="index.html">التصوير المرئي للتشريعات</a></li><li><span class="breadcrumb-separator" aria-hidden="true">/</span><span aria-current="page">عرض اصطناعي للشراء</span></li></ol></nav>
-<h1>عرض اصطناعي للشراء</h1>
+<nav class="breadcrumb" aria-label="مسار التنقل"><ol><li><a href="../index.html">الرئيسية</a></li><li><span class="breadcrumb-separator" aria-hidden="true">/</span><a href="index.html">التصوير المرئي للتشريعات</a></li><li><span class="breadcrumb-separator" aria-hidden="true">/</span><span aria-current="page">القواعد كشيفرة: عرض شراء اصطناعي</span></li></ol></nav>
+<h1>القواعد كشيفرة: عرض شراء اصطناعي</h1>
 <p class="notice"><strong>نموذج أولي للمقارنة التشريعية. غير موثوق. أُجّل التدقيق القانوني واللغوي واليدوي لإمكانية الوصول ولم يُنفذ؛ لا تستخدمه لقرارات الامتثال.</strong></p>
 <p class="notice"><strong>مثال اصطناعي. ليس تشريعًا حقيقيًا.</strong></p>
 <p>جدول قرار خيالي لاختبار عارض عرض القواعد الساكن. وهو ليس قانونًا في أي ولاية قضائية.</p>
 <p>هذه سياسة شراء خيالية باستشهادات خيالية. وليست قانونًا في أي ولاية، ولم تخضع لمراجعة قانونية، وليست خدمة قرار.</p>
+<section aria-labelledby="rules-machine-h"><h2 id="rules-machine-h">مصادر قابلة للقراءة الآلية</h2><p>مقتطفات قصيرة من المصادر الاصطناعية المحفوظة. لا يوجد تشريع حقيقي مرمّز.</p><div class="code-grid"><article class="code-card"><h3>أكسيوم — مقتطف قابل للقراءة الآلية</h3><p>تُعلن المدخلات والأحكام المشتقة في بيانات منظمة. يُجمّع المصدر الكامل إلى أثر لأكسيوم، ولا تنفذه هذه الصفحة الساكنة.</p><div class="code-scroll" role="region" aria-label="أكسيوم — مقتطف قابل للقراءة الآلية" tabindex="0"><pre><code lang="en" dir="ltr">- name: procurement_obligation
+    kind: derived
+    entity: Procurement
+    dtype: Judgment
+    sources:
+      - citation: &quot;Synthetic procurement policy s.1 (fictional)&quot;
+        url: https://example.org/synthetic-procurement-policy
+    versions:
+      - effective_from: &#x27;2026-01-01&#x27;
+        formula: facts_complete and covered_body and contract_scope_met and not exception_applies
+  - name: open_source_consideration_required
+    kind: derived
+    entity: Procurement</code></pre></div><p><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/axiom/procurement.rulespec.yaml">مصدر قاعدة أكسيوم</a></p></article><article class="code-card"><h3>ليغاليز — مقتطف قابل للقراءة الآلية</h3><p>تُعبّر خطوات النظر والشرط وقيم الاحتمال والواجب مباشرة. وتعرض الصفحة الاصطناعية الكاملة سلسلة القرار ورسم التبعيات.</p><div class="code-scroll" role="region" aria-label="ليغاليز — مقتطف قابل للقراءة الآلية" tabindex="0"><pre><code lang="en" dir="ltr">`procurement outcome` covered_body contract_scope_met exception_applies contract_value MEANS
+    CONSIDER covered_body
+    WHEN NOTHING THEN Indeterminate
+    WHEN JUST FALSE THEN NotApplicable
+    WHEN JUST TRUE THEN
+        CONSIDER contract_scope_met
+        WHEN NOTHING THEN Indeterminate
+        WHEN JUST FALSE THEN OutsideScope
+        WHEN JUST TRUE THEN
+            CONSIDER exception_applies
+            WHEN NOTHING THEN Indeterminate
+            WHEN JUST TRUE THEN ExceptionApplies
+            WHEN JUST FALSE THEN
+                IF contract_value &gt;= 100000
+                THEN OpenSourceConsiderationRequired
+                ELSE RequirementWithoutOpenSource
+
+DECLARE Party IS ONE OF ContractingAuthority</code></pre></div><p><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/l4/procurement.l4">مصدر قاعدة إل 4</a></p></article></div></section>
+<section id="legalese-visualization" aria-labelledby="legalese-visual-h"><h2 id="legalese-visual-h">تصور على نمط ليغاليز</h2><p>تُعرض سلسلة القرار والرسم أدناه من نموذج عرض منظم، وليس من ملف ليغاليز آليًا. وهي تعرض بنية القرار الاصطناعية نفسها، لا تنفيذًا لقانون حقيقي.</p>
 <p class="disclaimer">عرض اصطناعي فقط. لا أثر قانوني. الاستشهادات خيالية.</p>
 
   <section aria-labelledby="rule-graph-h">
@@ -100,6 +132,7 @@
     <h2 id="rule-limits-h">الحدود</h2>
     <p>نموذج اصطناعي. العرض ساكن وليس محرك تنفيذ؛ ولا يمثل أي أداة أو أثر قانوني حقيقي.</p>
   </section>
+</section>
 <section aria-labelledby="synthetic-evidence-h"><h2 id="synthetic-evidence-h">المصادر وأدلة الاختبار</h2><ul><li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/axiom/procurement.rulespec.yaml">مصدر قاعدة أكسيوم</a></li><li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/l4/procurement.l4">مصدر قاعدة إل 4</a></li><li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/results/axiom-cases.json">سيناريوهات الاختبار والمخرجات المسجلة</a></li><li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/docs/RULES-ENGINE-COMPARISON.md">مقارنة أكسيوم وإل 4</a></li></ul></section>
 <section aria-labelledby="synthetic-results-h"><h2 id="synthetic-results-h">نتائج المحركين المسجلة</h2><p>مخرجات فعلية من التجارب الاصطناعية المثبتة. حالة الوقائع الناقصة خطأ في أكسيوم ونتيجة غير محددة في إل 4؛ والنموذجان غير متكافئين.</p><ul class="synthetic-results"><li><strong lang="en" dir="ltr">All conditions met</strong><dl><dt>قاعدة أكسيوم</dt><dd><code lang="en" dir="ltr">determination = open_source_consideration_required; judgments = holds</code></dd><dt>إل 4</dt><dd><code lang="en" dir="ltr">OpenSourceConsiderationRequired</code></dd></dl></li><li><strong lang="en" dir="ltr">Scope condition not met</strong><dl><dt>قاعدة أكسيوم</dt><dd><code lang="en" dir="ltr">determination = outside_scope; judgments = not_holds</code></dd><dt>إل 4</dt><dd><code lang="en" dir="ltr">OutsideScope</code></dd></dl></li><li><strong lang="en" dir="ltr">Exception applies</strong><dl><dt>قاعدة أكسيوم</dt><dd><code lang="en" dir="ltr">determination = exception_applies; judgments = not_holds</code></dd><dt>إل 4</dt><dd><code lang="en" dir="ltr">ExceptionApplies</code></dd></dl></li><li><strong lang="en" dir="ltr">Missing required input</strong><dl><dt>قاعدة أكسيوم</dt><dd><code lang="en" dir="ltr">error: missing input covered_body</code></dd><dt>إل 4</dt><dd><code lang="en" dir="ltr">Indeterminate</code></dd></dl></li><li><strong lang="en" dir="ltr">Boundary USD 100,000</strong><dl><dt>قاعدة أكسيوم</dt><dd><code lang="en" dir="ltr">determination = open_source_consideration_required; judgments = holds</code></dd><dt>إل 4</dt><dd><code lang="en" dir="ltr">OpenSourceConsiderationRequired</code></dd></dl></li><li><strong lang="en" dir="ltr">Facts incomplete</strong><dl><dt>قاعدة أكسيوم</dt><dd><code lang="en" dir="ltr">determination = indeterminate; judgments = not_holds</code></dd><dt>إل 4</dt><dd><code lang="en" dir="ltr">Indeterminate</code></dd></dl></li><li><strong lang="en" dir="ltr">Contradictory scope and exception</strong><dl><dt>قاعدة أكسيوم</dt><dd><code lang="en" dir="ltr">determination = outside_scope; judgments = not_holds</code></dd><dt>إل 4</dt><dd><code lang="en" dir="ltr">OutsideScope</code></dd></dl></li></ul></section>
 <section aria-labelledby="synthetic-semantics-h"><h2 id="synthetic-semantics-h">الفروق الدلالية المعروفة</h2><p>يعامل أكسيوم المدخل المطلوب الناقص كخطأ تنفيذ؛ ويعرض إصدار إل 4 الوقائع الناقصة على أنها غير محددة. ولا توجد في قاعدة أكسيوم جهة إلزامية؛ وأحكامها ليست واجبات. ولا يدعي المثال الاصطناعي التكافؤ خارج الحالات المختبرة.</p></section>

@@ -82,3 +82,18 @@ body{overflow-wrap:anywhere}
  .home-paths ul,.stat-grid{grid-template-columns:1fr}
 }
 section.synthetic-card{border:3px solid CanvasText;padding:1rem;margin-block-start:1.75rem}
+/* Rules as Code examples */
+.rules-code{border:2px solid CanvasText;padding:1rem;margin-block-start:1.75rem}
+.code-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));gap:1rem;margin-block:1rem}
+.code-card{border:1px solid GrayText;padding:1rem;min-width:0}
+.code-card h3{margin-block-start:0}
+.code-scroll{max-width:100%;overflow-x:auto;border:1px solid GrayText;background:Canvas;padding:.75rem;margin-block:.5rem}
+.code-scroll:focus-visible{outline:3px solid Highlight;outline-offset:3px}
+.code-scroll pre{margin:0;white-space:pre;font-size:.85rem;line-height:1.45}
+.code-scroll code{display:block;min-width:max-content}
+.ladder-preview{list-style:none;padding:0;margin:1rem 0}
+.ladder-preview li{border:1px solid GrayText;padding:.75rem 1rem;margin-block-end:.75rem}
+.ladder-preview p{margin-block:.35rem 0}
+@media(max-width:40rem){.rules-code{padding:.75rem}.code-grid{grid-template-columns:1fr}}
+.node-input rect,.node-constant rect,.node-computed rect{fill:Canvas;stroke:CanvasText;stroke-width:2}
+.edge{fill:none}

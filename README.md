@@ -67,6 +67,12 @@ The public [visualizations](https://mgifford.github.io/mena-policy-observatory/m
 
 A source-linked briefing for the UAE conversation is in [docs/UAE-ACCESSIBILITY-DEEPDIVE.md](docs/UAE-ACCESSIBILITY-DEEPDIVE.md). It distinguishes federal law, policy, technical guidance, self-description and the observatory's candidate records. It is a prototype, not legal advice.
 
+## Rules as Code
+
+The homepage now includes a visible **Rules as Code** section with short, exact excerpts from the synthetic Axiom RuleSpec and Legalese L4 sources, plus a three-step Legalese-style evaluation ladder. The full synthetic page adds the machine-readable sources, dependency graph, complete ladder, accessible text equivalent and recorded engine outputs. The navigation exposes **Rules as Code** on every page.
+
+This is still synthetic only. No real instrument has an approved executable encoding, Axiom has not been selected as a permanent engine, and Axiom/L4 semantics are not interchangeable. See [docs/RULES-ENGINE-COMPARISON.md](docs/RULES-ENGINE-COMPARISON.md).
+
 ## Rule presentation (synthetic only)
 
 `framework/rule_presentation.py` validates and statically renders a reviewed `rule-presentation/v1` artifact. It is intentionally not attached to the public site; the only artifact is a synthetic fixture. See [docs/RULE-PRESENTATION.md](docs/RULE-PRESENTATION.md).

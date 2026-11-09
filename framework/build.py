@@ -21,6 +21,7 @@ try:  # imported as framework.build
         synthetic_page_body,
         visualization_body,
     )
+    from .rules_examples import code_excerpts, ladder_excerpt
 except ImportError:  # run as a script
     from coverage import build_view, load_coverage
     from research import RESEARCH_FILENAME, load_research
@@ -32,6 +33,7 @@ except ImportError:  # run as a script
         synthetic_page_body,
         visualization_body,
     )
+    from rules_examples import code_excerpts, ladder_excerpt
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_URL = 'https://github.com/mgifford/mena-policy-observatory'
@@ -511,6 +513,7 @@ def page(catalogues, lang, title, body, depth, alt_hrefs, description,
 <ul>
 <li><a href="{home_href}">{esc(strings['nav.home'])}</a></li>
 <li><a href="{home_href}#method">{esc(strings['nav.method'])}</a></li>
+<li><a href="{home_href}#rules-as-code">{esc(strings['nav.rules'])}</a></li>
 <li><a href="{home_href}#records">{esc(strings['nav.records'])}</a></li>
 <li><a href="{local}coverage/index.html">{esc(strings['nav.coverage'])}</a></li>
 <li><a href="{local}countries/index.html">{esc(strings['nav.countries'])}</a></li>
@@ -640,6 +643,60 @@ def home_body(catalogues, lang, cfg, policies, view, stats=None):
         for label_key, value_key in stat_rows
     )
 
+    excerpts = code_excerpts()
+    ladder = ladder_excerpt()
+
+    def fixture_text(value):
+        if isinstance(value, dict):
+            text = value.get(lang) or value.get('en', '')
+            return foreign(text, lang, lang if lang in value else 'en')
+        return esc(value)
+
+    def code_card(label_key, note_key, code, source_url, source_label):
+        return (
+            f'<article class="code-card"><h3>{esc(strings[label_key])}</h3>'
+            f'<p>{esc(strings[note_key])}</p>'
+            f'<div class="code-scroll" role="region" aria-label="{esc(strings[label_key])}" tabindex="0">'
+            f'<pre><code lang="en" dir="ltr">{esc(code)}</code></pre></div>'
+            f'<p><a href="{source_url}">{esc(source_label)}</a></p></article>'
+        )
+
+    ladder_items = ''.join(
+        f'<li><strong>{esc(strings["rule.presentation.step"])} {esc(step.get("step"))}</strong> '
+        f'{fixture_text(step.get("condition"))}'
+        f'<p><strong>{esc(strings["rule.presentation.if_true"])}:</strong> '
+        f'{fixture_text(step.get("true"))} · '
+        f'<strong>{esc(strings["rule.presentation.if_false"])}:</strong> '
+        f'{fixture_text(step.get("false"))}</p>'
+        f'<p class="meta"><code lang="en" dir="ltr">{esc(step.get("citation", ""))}</code></p></li>'
+        for step in ladder
+    )
+    rules_section = (
+        f'<section id="rules-as-code" class="rules-code"><h2>{esc(strings["home.rules.heading"])}</h2>'
+        f'<p>{esc(strings["home.rules.body"])}</p>'
+        f'<div class="code-grid">'
+        + code_card(
+            'home.rules.axiom_label', 'home.rules.axiom_note', excerpts['axiom'],
+            REPOSITORY_URL + '/blob/main/research/rules-visualization/axiom/procurement.rulespec.yaml',
+            strings['visualizations.synthetic_source_axiom'],
+        )
+        + code_card(
+            'home.rules.l4_label', 'home.rules.l4_note', excerpts['l4'],
+            REPOSITORY_URL + '/blob/main/research/rules-visualization/l4/procurement.l4',
+            strings['visualizations.synthetic_source_l4'],
+        )
+        + '</div>'
+        f'<p class="meta">{esc(strings["home.rules.code_note"])}</p>'
+        f'<h3>{esc(strings["home.rules.ladder_heading"])}</h3>'
+        f'<ol class="ladder-preview">{ladder_items}</ol>'
+        f'<p class="meta">{esc(strings["home.rules.ladder_note"])}</p>'
+        f'<p><a href="visualizations/synthetic.html#legalese-visualization">{esc(strings["home.rules.visual_link"])}</a> · '
+        f'<a href="{RULES_DOC_URL}">{esc(strings["home.rules.comparison_link"])}</a></p>'
+        f'<p class="notice"><strong>{esc(strings["home.rules.synthetic"])}</strong> '
+        f'{esc(strings["home.rules.no_real_law"])}</p>'
+        f'<p>{esc(strings["home.rules.engine_note"])}</p></section>'
+    )
+
     parts = [
         f'<h1>{esc(cfg["title"][lang])}</h1>',
         f'<p class="lede">{esc(strings["home.lede"])}</p>',
@@ -647,6 +704,7 @@ def home_body(catalogues, lang, cfg, policies, view, stats=None):
         f'<p>{esc(strings["home.what.body"])}</p></section>',
         f'<section class="home-paths"><h2>{esc(strings["home.paths.heading"])}</h2>'
         f'<nav aria-label="{esc(strings["home.paths.label"])}"><ul>{path_items}</ul></nav></section>',
+        rules_section,
         f'<section id="records"><h2>{esc(strings["home.snapshot.heading"])}</h2>'
         f'<p>{esc(strings["home.snapshot.summary"])}</p>'
         f'<dl class="stat-grid">{stat_items}</dl>'
@@ -678,19 +736,6 @@ def home_body(catalogues, lang, cfg, policies, view, stats=None):
             f'{esc(strings["home.featured.link"])}</a> · '
             f'<a href="visualizations/index.html">{esc(strings["home.featured.catalogue_link"])}</a></p></section>'
         )
-
-    parts.append(
-        f'<section class="synthetic-card"><h2>{esc(strings["home.synthetic.heading"])}</h2>'
-        f'<p class="notice"><strong>{esc(strings["home.synthetic.status"])}</strong></p>'
-        f'<p>{esc(strings["home.synthetic.body"])}</p><ul>'
-        + ''.join(
-            f'<li>{esc(strings[f"home.synthetic.item{index}"])}</li>'
-            for index in range(1, 5)
-        )
-        + f'</ul><p><a href="visualizations/synthetic.html">{esc(strings["home.synthetic.link"])}</a> · '
-        f'<a href="{RULES_DOC_URL}">{esc(strings["home.synthetic.doc_link"])}</a></p>'
-        f'<p>{esc(strings["home.synthetic.engine_note"])}</p></section>'
-    )
 
     stages = ('source', 'capture', 'provision', 'interpretation', 'review', 'encoding')
     stage_items = ''.join(
@@ -1885,6 +1930,7 @@ def build_root(region='mena'):
 <ul>
 <li><a href="{default_url}">{esc(default['nav.home'])}</a></li>
 <li><a href="{default_url}#method">{esc(default['nav.method'])}</a></li>
+<li><a href="{default_url}#rules-as-code">{esc(default['nav.rules'])}</a></li>
 <li><a href="{default_url}#records">{esc(default['nav.records'])}</a></li>
 <li><a href="mena/{default_lang}/visualizations/">{esc(default['nav.visualizations'])}</a></li>
 <li><a href="{REPOSITORY_URL}">{esc(default['nav.repository'])}</a></li>

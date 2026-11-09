@@ -136,10 +136,36 @@ class HomepageResearchDiscoveryTests(unittest.TestCase):
 
     def test_synthetic_example_is_separate_and_clearly_labeled(self):
         body = self.body()
-        self.assertIn('href="visualizations/synthetic.html"', body)
-        self.assertIn(self.catalogues['en']['home.synthetic.status'], body)
-        self.assertIn(self.catalogues['en']['home.synthetic.engine_note'], body)
+        self.assertIn('href="visualizations/synthetic.html#legalese-visualization"', body)
+        self.assertIn(self.catalogues['en']['home.rules.synthetic'], body)
+        self.assertIn(self.catalogues['en']['home.rules.engine_note'], body)
         self.assertIn('docs/RULES-ENGINE-COMPARISON.md', body)
+
+    def test_rules_as_code_section_shows_machine_readable_examples_and_ladder(self):
+        body = self.body()
+        self.assertIn(self.catalogues['en']['home.rules.heading'], body)
+        self.assertIn('procurement_obligation', body)
+        self.assertIn('procurement outcome', body)
+        self.assertIn(self.catalogues['en']['home.rules.axiom_label'], body)
+        self.assertIn(self.catalogues['en']['home.rules.l4_label'], body)
+        self.assertIn(self.catalogues['en']['home.rules.ladder_heading'], body)
+        self.assertIn('SP-3', body)
+        self.assertIn('visualizations/synthetic.html#legalese-visualization', body)
+        self.assertIn('docs/RULES-ENGINE-COMPARISON.md', body)
+        self.assertIn(self.catalogues['en']['home.rules.synthetic'], body)
+        self.assertIn('No real legal instrument is encoded', body)
+
+    def test_rules_navigation_link_is_present(self):
+        strings = self.catalogues['en']
+        html = page(
+            self.catalogues, 'en', strings['home.title'], self.body(),
+            1, {'fr': '../fr/', 'ar': '../ar/'},
+            t(strings, 'home.description', **{
+                key: self.stats[key] for key in ('records', 'covered', 'total', 'domains')
+            }),
+        )
+        self.assertIn('#rules-as-code', html)
+        self.assertIn(strings['nav.rules'], html)
 
     def test_comparison_and_source_links_resolve(self):
         body = self.body()
