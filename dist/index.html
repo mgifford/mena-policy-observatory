@@ -8,6 +8,7 @@
 <link rel="alternate" hreflang="en" href="mena/en/">
 <link rel="alternate" hreflang="fr" href="mena/fr/">
 <link rel="alternate" hreflang="ar" href="mena/ar/">
+<link rel="alternate" hreflang="x-default" href="mena/en/">
 <link rel="stylesheet" href="mena/assets/site.css">
 </head>
 <body>
@@ -24,32 +25,36 @@
 </ul>
 </nav>
 <nav class="language" aria-label="Language">
-<ul>
-<li><a href="mena/fr/" hreflang="fr" lang="fr" dir="ltr">Français</a></li>
-<li><a href="mena/ar/" hreflang="ar" lang="ar" dir="rtl">العربية</a></li>
-</ul>
+<ul><li><a href="mena/fr/" hreflang="fr" lang="fr" dir="ltr">Français</a></li><li><a href="mena/ar/" hreflang="ar" lang="ar" dir="rtl">العربية</a></li></ul>
 </nav>
 </header>
 <main id="main" tabindex="-1">
 <h1>MENA Policy Observatory</h1>
 <p class="lede">This site records what official sources and recorded research say about legislation and public policy, where each claim comes from, and what still needs review. It is research, not legal advice.</p>
 <h2>Choose a language</h2>
-<p><a href="mena/en/">Continue in English</a></p>
-<section lang="fr" dir="ltr">
-<h2>Observatoire des politiques MENA</h2>
-<p>Ce site consigne ce que disent les sources officielles et la recherche consignée sur la législation et les politiques publiques, l&#x27;origine de chaque affirmation et ce qui reste à vérifier. Il s&#x27;agit de recherche, pas de conseil juridique.</p>
-<p><a href="mena/fr/">Continuer en français</a></p>
-</section>
-<section lang="ar" dir="rtl">
-<h2>مرصد سياسات الشرق الأوسط وشمال أفريقيا</h2>
-<p>يسجل هذا الموقع ما تقوله المصادر الرسمية والبحث المسجل عن التشريعات والسياسات العامة، ومصدر كل عبارة، وما لا يزال بحاجة إلى مراجعة. وهو بحث، وليس نصيحة قانونية.</p>
-<p><a href="mena/ar/">المتابعة بالعربية</a></p>
-</section>
+<p><a href="mena/en/" hreflang="en" lang="en" dir="ltr">Continue in English</a></p>
+<section lang="fr" dir="ltr"><h2>Observatoire des politiques MENA</h2><p>Ce site consigne ce que disent les sources officielles et la recherche consignée sur la législation et les politiques publiques, l&#x27;origine de chaque affirmation et ce qui reste à vérifier. Il s&#x27;agit de recherche, pas de conseil juridique.</p><p><a href="mena/fr/" hreflang="fr" lang="fr" dir="ltr">Continuer en français</a></p></section><section lang="ar" dir="rtl"><h2>مرصد سياسات الشرق الأوسط وشمال أفريقيا</h2><p>يسجل هذا الموقع ما تقوله المصادر الرسمية والبحث المسجل عن التشريعات والسياسات العامة، ومصدر كل عبارة، وما لا يزال بحاجة إلى مراجعة. وهو بحث، وليس نصيحة قانونية.</p><p><a href="mena/ar/" hreflang="ar" lang="ar" dir="rtl">المتابعة بالعربية</a></p></section>
 <p class="note">Research and comparison only. Not legal advice, and not evidence that a rule is in force.</p>
 <p><a href="https://github.com/mgifford/mena-policy-observatory">Repository and research notes</a></p>
 </main>
 <footer>
 <p>Independent research, not legal advice or an official interpretation.</p>
 </footer>
+<script>
+(function () {
+  var supported = {"en": "mena/en/", "fr": "mena/fr/", "ar": "mena/ar/"};
+  var defaultTarget = supported["en"];
+  var requested = new URLSearchParams(location.search).get('lang');
+  var candidates = requested ? [requested] : (navigator.languages || [navigator.language || '']);
+  var target = null;
+  for (var i = 0; i < candidates.length; i += 1) {
+    var code = String(candidates[i] || '').toLowerCase().split('-')[0];
+    if (supported[code]) { target = supported[code]; break; }
+  }
+  if (target && (requested || target !== defaultTarget) && !location.hash) {
+    location.replace(target);
+  }
+})();
+</script>
 </body>
 </html>

@@ -36,6 +36,8 @@ npm run test:a11y
 
 Interface and homepage strings live in `regions/mena/i18n/en.json`, `fr.json` and `ar.json`. Policy records can also record optional language expressions (original, additional authoritative, official translation, research translation, machine draft, pending, unavailable or unresolved) with per-text authority, method and review provenance. Candidate terminology lives in `regions/mena/data/terminology.json` and is explicitly draft, not a legal glossary. The build fails if the three catalogues declare different keys, and unit tests check placeholders and value hygiene. French and Arabic page copy are drafts pending native-speaker review. Policy record fields have no French or Arabic translation; on those pages they are shown in their source language with `lang`/`dir` marking and an explicit notice.
 
+The root page detects the browser language for supported locales and sends French and Arabic visitors to the matching localized homepage; English visitors see the English chooser. Unsupported languages fall back to the English chooser, and `?lang=en`, `?lang=fr` or `?lang=ar` overrides detection. The localized URLs remain stable; the redirect is progressive enhancement and the chooser stays usable without JavaScript.
+
 ## Research coverage views
 
 The site publishes trilingual (EN/FR/AR) coverage views generated from recorded evidence only. Tranche 02 is imported through `research-toolkit/scripts/import_tranche.py`, which is deterministic and idempotent and writes a reconciliation report:
