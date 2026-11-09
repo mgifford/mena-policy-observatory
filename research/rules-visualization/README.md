@@ -1,6 +1,6 @@
 # Rules-visualization prototype (isolated)
 
-**Status:** exploratory research, synthetic only. This directory is intentionally outside the production generator, data model and legal records. Nothing here is legal advice, existing law, or an approved encoding.
+**Status:** exploratory research, synthetic only. This directory is intentionally outside the production generator, data model and legal records. The public observatory links this synthetic demonstration and shows short source excerpts; engine execution and real encodings remain isolated. Nothing here is legal advice, existing law, or an approved encoding.
 
 This prototype compares how Axiom RuleSpec and Legalese L4 represent one fictional procurement policy, then renders the same presentation model as static, accessible HTML.
 

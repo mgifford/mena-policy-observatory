@@ -136,10 +136,36 @@ class HomepageResearchDiscoveryTests(unittest.TestCase):
 
     def test_synthetic_example_is_separate_and_clearly_labeled(self):
         body = self.body()
-        self.assertIn('href="visualizations/synthetic.html"', body)
-        self.assertIn(self.catalogues['en']['home.synthetic.status'], body)
-        self.assertIn(self.catalogues['en']['home.synthetic.engine_note'], body)
+        self.assertIn('href="visualizations/synthetic.html#legalese-visualization"', body)
+        self.assertIn(self.catalogues['en']['home.rules.synthetic'], body)
+        self.assertIn(self.catalogues['en']['home.rules.engine_note'], body)
         self.assertIn('docs/RULES-ENGINE-COMPARISON.md', body)
+
+    def test_rules_as_code_section_shows_machine_readable_examples_and_ladder(self):
+        body = self.body()
+        self.assertIn(self.catalogues['en']['home.rules.heading'], body)
+        self.assertIn('procurement_obligation', body)
+        self.assertIn('procurement outcome', body)
+        self.assertIn(self.catalogues['en']['home.rules.axiom_label'], body)
+        self.assertIn(self.catalogues['en']['home.rules.l4_label'], body)
+        self.assertIn(self.catalogues['en']['home.rules.ladder_heading'], body)
+        self.assertIn('SP-3', body)
+        self.assertIn('visualizations/synthetic.html#legalese-visualization', body)
+        self.assertIn('docs/RULES-ENGINE-COMPARISON.md', body)
+        self.assertIn(self.catalogues['en']['home.rules.synthetic'], body)
+        self.assertIn('No real legal instrument is encoded', body)
+
+    def test_rules_navigation_link_is_present(self):
+        strings = self.catalogues['en']
+        html = page(
+            self.catalogues, 'en', strings['home.title'], self.body(),
+            1, {'fr': '../fr/', 'ar': '../ar/'},
+            t(strings, 'home.description', **{
+                key: self.stats[key] for key in ('records', 'covered', 'total', 'domains')
+            }),
+        )
+        self.assertIn('#rules-as-code', html)
+        self.assertIn(strings['nav.rules'], html)
 
     def test_comparison_and_source_links_resolve(self):
         body = self.body()
@@ -162,6 +188,39 @@ class HomepageResearchDiscoveryTests(unittest.TestCase):
         body = self.body()
         self.assertNotIn('<table', body)
         self.assertIn('<dl class="stat-grid">', body)
+
+    def test_homepage_has_a_short_start_here_orientation(self):
+        body = self.body()
+        self.assertIn(self.catalogues['en']['home.start.heading'], body)
+        self.assertIn(self.catalogues['en']['home.start.rules'], body)
+        self.assertIn('href="visualizations/synthetic.html"', body)
+        self.assertIn('href="countries/index.html"', body)
+        self.assertIn('href="index.html#method"', body)
+
+    def test_root_is_a_short_start_here_and_language_chooser(self):
+        root = (REPO_ROOT / 'dist' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('<html lang="en"', root)
+        self.assertIn(self.catalogues['en']['root.start_heading'], root)
+        self.assertIn(self.catalogues['en']['root.start_rules'], root)
+        self.assertIn('mena/en/visualizations/synthetic.html', root)
+        self.assertIn('mena/fr/', root)
+        self.assertIn('mena/ar/', root)
+        self.assertNotIn('class="site-nav"', root)
+        self.assertIn('location.replace', root)
+
+    def test_favicon_is_copied_and_linked_at_every_depth(self):
+        svg = REPO_ROOT / 'dist' / 'favicon.svg'
+        self.assertTrue(svg.is_file())
+        markup = svg.read_text(encoding='utf-8')
+        self.assertIn('<title id="title">MENA Policy Observatory</title>', markup)
+        self.assertIn('role="img"', markup)
+        root = (REPO_ROOT / 'dist' / 'index.html').read_text(encoding='utf-8')
+        home = (DIST / 'en' / 'index.html').read_text(encoding='utf-8')
+        record = (DIST / 'en' / 'records' / 'ae-national-digital-accessibility.html').read_text(encoding='utf-8')
+        self.assertIn('href="favicon.svg"', root)
+        self.assertIn('href="../../favicon.svg"', home)
+        self.assertIn('href="../../../favicon.svg"', record)
+        self.assertIn('name="theme-color" content="#0B2A4A"', home)
 
     def test_metadata_is_trilingual_and_uses_derived_counts(self):
         for lang in ('en', 'fr', 'ar'):

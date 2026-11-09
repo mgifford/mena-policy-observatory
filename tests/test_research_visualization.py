@@ -216,6 +216,11 @@ class SourceStructureRenderTests(unittest.TestCase):
         for case in ('Missing required input', 'Boundary USD 100,000', 'Facts incomplete'):
             self.assertIn(case, body)
         self.assertIn(self.catalogues['en']['visualizations.synthetic_semantics_text'], body)
+        self.assertIn(self.catalogues['en']['visualizations.rules_machine_heading'], body)
+        self.assertIn(self.catalogues['en']['visualizations.legalese_visual_heading'], body)
+        self.assertIn('procurement_obligation', body)
+        self.assertIn('procurement outcome', body)
+        self.assertIn('Dependency graph', body)
 
     def test_synthetic_fixture_is_not_a_real_record(self):
         fixture = json.loads(FIXTURE.read_text(encoding='utf-8'))

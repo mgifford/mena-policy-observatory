@@ -2,7 +2,7 @@
 
 **Status:** exploratory research, isolated from production. **Not a legal opinion, not an approved encoding and not a Rules-as-Code deployment.**
 
-**Baseline:** `main` at `4257c1f` (WP5 merged; pilot PR #20 open). The active milestone is the three-source verification and monitoring pilot (`docs/CURRENT-MILESTONE.md`). That milestone does **not** authorize Axiom integration, new legal encodings or a rules engine in the public application. This work therefore adds only a standalone report, synthetic examples and an isolated static prototype under `research/rules-visualization/`. It does not change the milestone, production generator, legal records, legal-effect status or public site.
+**Baseline:** `main` at `4257c1f` (WP5 merged; pilot PR #20 open). The active milestone is the three-source verification and monitoring pilot (`docs/CURRENT-MILESTONE.md`). That milestone does **not** authorize Axiom integration, new legal encodings or a rules engine in the public application. This work adds the standalone report, synthetic examples and the isolated prototype under `research/rules-visualization/`. The public observatory now surfaces short excerpts of the synthetic Axiom/L4 sources and a readable Legalese-style ladder on the homepage and synthetic visualization page. Engine execution, reviewed real encodings and legal-effect changes remain out of production.
 
 **Prototype:** [`research/rules-visualization/prototype/index.html`](../research/rules-visualization/prototype/index.html).
 

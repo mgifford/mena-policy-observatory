@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">MENA Policy Observatory</title>
+  <rect width="64" height="64" rx="14" fill="#0B2A4A"/>
+  <path d="M12 48V16h10l10 17 10-17h10v32H43V31L32 49 21 31v17z" fill="#F5C542"/>
+  <circle cx="52" cy="12" r="4" fill="#FFFFFF"/>
+</svg>

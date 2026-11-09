@@ -36,7 +36,7 @@ npm run test:a11y
 
 Interface and homepage strings live in `regions/mena/i18n/en.json`, `fr.json` and `ar.json`. Policy records can also record optional language expressions (original, additional authoritative, official translation, research translation, machine draft, pending, unavailable or unresolved) with per-text authority, method and review provenance. Candidate terminology lives in `regions/mena/data/terminology.json` and is explicitly draft, not a legal glossary. The build fails if the three catalogues declare different keys, and unit tests check placeholders and value hygiene. French and Arabic page copy are drafts pending native-speaker review. Policy record fields have no French or Arabic translation; on those pages they are shown in their source language with `lang`/`dir` marking and an explicit notice.
 
-The root page detects the browser language for supported locales and sends French and Arabic visitors to the matching localized homepage; English visitors see the English chooser. Unsupported languages fall back to the English chooser, and `?lang=en`, `?lang=fr` or `?lang=ar` overrides detection. The localized URLs remain stable; the redirect is progressive enhancement and the chooser stays usable without JavaScript.
+The root page is a short **Start here** page: it points first-time visitors to Rules as Code, the research records and the evidence method, then offers the three languages. It also detects supported browser languages and sends French and Arabic visitors to the matching localized homepage; English visitors stay on the English start page. Unsupported languages fall back to the English start page, and `?lang=en`, `?lang=fr` or `?lang=ar` overrides detection. The localized URLs remain stable; the redirect is progressive enhancement and the start page stays usable without JavaScript.
 
 ## Research coverage views
 
@@ -66,6 +66,16 @@ The public [visualizations](https://mgifford.github.io/mena-policy-observatory/m
 ## UAE accessibility deep dive
 
 A source-linked briefing for the UAE conversation is in [docs/UAE-ACCESSIBILITY-DEEPDIVE.md](docs/UAE-ACCESSIBILITY-DEEPDIVE.md). It distinguishes federal law, policy, technical guidance, self-description and the observatory's candidate records. It is a prototype, not legal advice.
+
+## Project mark
+
+A navy-and-amber **M** favicon identifies the project in browser tabs. It is committed as [`framework/favicon.svg`](framework/favicon.svg) and copied to `dist/favicon.svg`; every generated page links to it with a depth-correct relative path. The SVG includes an accessible `<title>` and is also used as the `theme-color` source. See the [favicon size preview](docs/favicon-preview.png).
+
+## Rules as Code
+
+The homepage now includes a visible **Rules as Code** section with short, exact excerpts from the synthetic Axiom RuleSpec and Legalese L4 sources, plus a three-step Legalese-style evaluation ladder. The full synthetic page adds the machine-readable sources, dependency graph, complete ladder, accessible text equivalent and recorded engine outputs. The navigation exposes **Rules as Code** on every page.
+
+This is still synthetic only. No real instrument has an approved executable encoding, Axiom has not been selected as a permanent engine, and Axiom/L4 semantics are not interchangeable. See [docs/RULES-ENGINE-COMPARISON.md](docs/RULES-ENGINE-COMPARISON.md).
 
 ## Rule presentation (synthetic only)
 

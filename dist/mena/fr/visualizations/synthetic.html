@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Démonstration synthétique de passation — Observatoire des politiques MENA</title>
+<title>Rules as Code : démonstration synthétique de passation — Observatoire des politiques MENA</title>
 <meta name="description" content="Il s&#x27;agit d&#x27;une politique de passation fictive avec des citations fictives. Elle n&#x27;est du droit d&#x27;aucune juridiction, n&#x27;a pas été révisée juridiquement et n&#x27;est pas un service de décision.">
 <link rel="alternate" hreflang="en" href="../../en/visualizations/synthetic.html">
 <link rel="alternate" hreflang="ar" href="../../ar/visualizations/synthetic.html">
 <link rel="alternate" hreflang="x-default" href="../../../index.html">
 <link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<meta name="theme-color" content="#0B2A4A">
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu principal</a>
@@ -18,6 +20,7 @@
 <ul>
 <li><a href="../index.html">Accueil</a></li>
 <li><a href="../index.html#method">Comment cela fonctionne</a></li>
+<li><a href="../index.html#rules-as-code">Règles as Code</a></li>
 <li><a href="../index.html#records">Fiches de politiques</a></li>
 <li><a href="../coverage/index.html">Couverture</a></li>
 <li><a href="../countries/index.html">Pays</a></li>
@@ -33,12 +36,43 @@
 </nav>
 </header>
 <main id="main" tabindex="-1">
-<nav class="breadcrumb" aria-label="Fil d&#x27;Ariane"><ol><li><a href="../index.html">Accueil</a></li><li><span class="breadcrumb-separator" aria-hidden="true">/</span><a href="index.html">Visualisations législatives</a></li><li><span class="breadcrumb-separator" aria-hidden="true">/</span><span aria-current="page">Démonstration synthétique de passation</span></li></ol></nav>
-<h1>Démonstration synthétique de passation</h1>
+<nav class="breadcrumb" aria-label="Fil d&#x27;Ariane"><ol><li><a href="../index.html">Accueil</a></li><li><span class="breadcrumb-separator" aria-hidden="true">/</span><a href="index.html">Visualisations législatives</a></li><li><span class="breadcrumb-separator" aria-hidden="true">/</span><span aria-current="page">Rules as Code : démonstration synthétique de passation</span></li></ol></nav>
+<h1>Rules as Code : démonstration synthétique de passation</h1>
 <p class="notice"><strong>Prototype de comparaison de législations. Non autoritatif. La revue juridique, linguistique et d&#x27;accessibilité manuelle a été reportée et n&#x27;a pas été effectuée ; ne pas utiliser pour une décision de conformité.</strong></p>
 <p class="notice"><strong>Exemple synthétique. Ne constitue pas une législation réelle.</strong></p>
 <p>Une table de décision fictive servant à tester le moteur de présentation statique. Elle n&#x27;est du droit d&#x27;aucune juridiction.</p>
 <p>Il s&#x27;agit d&#x27;une politique de passation fictive avec des citations fictives. Elle n&#x27;est du droit d&#x27;aucune juridiction, n&#x27;a pas été révisée juridiquement et n&#x27;est pas un service de décision.</p>
+<section aria-labelledby="rules-machine-h"><h2 id="rules-machine-h">Sources lisibles par machine</h2><p>Courts extraits des sources synthétiques du dépôt. Aucune législation réelle n’est encodée.</p><div class="code-grid"><article class="code-card"><h3>Axiom RuleSpec — extrait lisible par machine</h3><p>Les entrées et jugements dérivés sont déclarés en YAML structuré. La source complète se compile en artefact Axiom ; cette page statique ne l&#x27;exécute pas.</p><div class="code-scroll" role="region" aria-label="Axiom RuleSpec — extrait lisible par machine" tabindex="0"><pre><code lang="en" dir="ltr">- name: procurement_obligation
+    kind: derived
+    entity: Procurement
+    dtype: Judgment
+    sources:
+      - citation: &quot;Synthetic procurement policy s.1 (fictional)&quot;
+        url: https://example.org/synthetic-procurement-policy
+    versions:
+      - effective_from: &#x27;2026-01-01&#x27;
+        formula: facts_complete and covered_body and contract_scope_met and not exception_applies
+  - name: open_source_consideration_required
+    kind: derived
+    entity: Procurement</code></pre></div><p><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/axiom/procurement.rulespec.yaml">Source RuleSpec Axiom</a></p></article><article class="code-card"><h3>Legalese L4 — extrait lisible par machine</h3><p>Des étapes CONSIDER/WHEN, des valeurs MAYBE et un devoir déontique MUST sont exprimés directement. La page synthétique complète montre l&#x27;échelle et le graphe de dépendances.</p><div class="code-scroll" role="region" aria-label="Legalese L4 — extrait lisible par machine" tabindex="0"><pre><code lang="en" dir="ltr">`procurement outcome` covered_body contract_scope_met exception_applies contract_value MEANS
+    CONSIDER covered_body
+    WHEN NOTHING THEN Indeterminate
+    WHEN JUST FALSE THEN NotApplicable
+    WHEN JUST TRUE THEN
+        CONSIDER contract_scope_met
+        WHEN NOTHING THEN Indeterminate
+        WHEN JUST FALSE THEN OutsideScope
+        WHEN JUST TRUE THEN
+            CONSIDER exception_applies
+            WHEN NOTHING THEN Indeterminate
+            WHEN JUST TRUE THEN ExceptionApplies
+            WHEN JUST FALSE THEN
+                IF contract_value &gt;= 100000
+                THEN OpenSourceConsiderationRequired
+                ELSE RequirementWithoutOpenSource
+
+DECLARE Party IS ONE OF ContractingAuthority</code></pre></div><p><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/l4/procurement.l4">Source Legalese L4</a></p></article></div></section>
+<section id="legalese-visualization" aria-labelledby="legalese-visual-h"><h2 id="legalese-visual-h">Visualisation de style Legalese</h2><p>L&#x27;échelle et le graphe ci-dessous sont rendus depuis un modèle de présentation organisé, non générés automatiquement à partir du fichier L4. Ils montrent la même structure de décision synthétique, non une exécution du droit réel.</p>
 <p class="disclaimer">Démonstration synthétique uniquement. Sans effet juridique. Les citations sont fictives.</p>
 
   <section aria-labelledby="rule-graph-h">
@@ -100,6 +134,7 @@
     <h2 id="rule-limits-h">Limites</h2>
     <p>Fixture synthétique. La présentation est statique et ne constitue pas un moteur d’exécution ; aucun instrument ni effet juridique réel n’est représenté.</p>
   </section>
+</section>
 <section aria-labelledby="synthetic-evidence-h"><h2 id="synthetic-evidence-h">Sources et preuves de test</h2><ul><li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/axiom/procurement.rulespec.yaml">Source RuleSpec Axiom</a></li><li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/l4/procurement.l4">Source Legalese L4</a></li><li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/research/rules-visualization/results/axiom-cases.json">Scénarios et sorties de test consignés</a></li><li><a href="https://github.com/mgifford/mena-policy-observatory/blob/main/docs/RULES-ENGINE-COMPARISON.md">Comparaison Axiom / L4</a></li></ul></section>
 <section aria-labelledby="synthetic-results-h"><h2 id="synthetic-results-h">Résultats réels des moteurs</h2><p>Sorties réelles des essais synthétiques épinglés. Le cas de fait manquant est une erreur Axiom et un résultat Indéterminé L4 ; les modèles ne sont pas équivalents.</p><ul class="synthetic-results"><li><strong lang="en" dir="ltr">All conditions met</strong><dl><dt>Axiom RuleSpec</dt><dd><code lang="en" dir="ltr">determination = open_source_consideration_required; judgments = holds</code></dd><dt>Legalese L4</dt><dd><code lang="en" dir="ltr">OpenSourceConsiderationRequired</code></dd></dl></li><li><strong lang="en" dir="ltr">Scope condition not met</strong><dl><dt>Axiom RuleSpec</dt><dd><code lang="en" dir="ltr">determination = outside_scope; judgments = not_holds</code></dd><dt>Legalese L4</dt><dd><code lang="en" dir="ltr">OutsideScope</code></dd></dl></li><li><strong lang="en" dir="ltr">Exception applies</strong><dl><dt>Axiom RuleSpec</dt><dd><code lang="en" dir="ltr">determination = exception_applies; judgments = not_holds</code></dd><dt>Legalese L4</dt><dd><code lang="en" dir="ltr">ExceptionApplies</code></dd></dl></li><li><strong lang="en" dir="ltr">Missing required input</strong><dl><dt>Axiom RuleSpec</dt><dd><code lang="en" dir="ltr">error: missing input covered_body</code></dd><dt>Legalese L4</dt><dd><code lang="en" dir="ltr">Indeterminate</code></dd></dl></li><li><strong lang="en" dir="ltr">Boundary USD 100,000</strong><dl><dt>Axiom RuleSpec</dt><dd><code lang="en" dir="ltr">determination = open_source_consideration_required; judgments = holds</code></dd><dt>Legalese L4</dt><dd><code lang="en" dir="ltr">OpenSourceConsiderationRequired</code></dd></dl></li><li><strong lang="en" dir="ltr">Facts incomplete</strong><dl><dt>Axiom RuleSpec</dt><dd><code lang="en" dir="ltr">determination = indeterminate; judgments = not_holds</code></dd><dt>Legalese L4</dt><dd><code lang="en" dir="ltr">Indeterminate</code></dd></dl></li><li><strong lang="en" dir="ltr">Contradictory scope and exception</strong><dl><dt>Axiom RuleSpec</dt><dd><code lang="en" dir="ltr">determination = outside_scope; judgments = not_holds</code></dd><dt>Legalese L4</dt><dd><code lang="en" dir="ltr">OutsideScope</code></dd></dl></li></ul></section>
 <section aria-labelledby="synthetic-semantics-h"><h2 id="synthetic-semantics-h">Différences sémantiques connues</h2><p>Axiom traite une entrée requise manquante comme une erreur d&#x27;exécution ; la version L4 modélise les faits manquants comme Indéterminé. RuleSpec Axiom n&#x27;a pas de modalité déontique ; ses jugements ne sont pas des obligations. L&#x27;exemple synthétique ne revendique pas d&#x27;équivalence au-delà des cas testés.</p></section>
