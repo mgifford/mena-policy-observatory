@@ -37,6 +37,7 @@ except ImportError:  # run as a script
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_URL = 'https://github.com/mgifford/mena-policy-observatory'
+FAVICON_SOURCE = ROOT / 'framework' / 'favicon.svg'
 WORKFLOW_URL = REPOSITORY_URL + '/blob/main/docs/WORKFLOW.md'
 AUDIT_URL = REPOSITORY_URL + '/blob/main/docs/BASELINE-AUDIT.md'
 RESEARCH_MODEL_URL = REPOSITORY_URL + '/blob/main/docs/RESEARCH-MODEL.md'
@@ -504,6 +505,8 @@ def page(catalogues, lang, title, body, depth, alt_hrefs, description,
 <meta name="description" content="{esc(description)}">
 {alternates}<link rel="alternate" hreflang="x-default" href="{esc(root_href)}">
 <link rel="stylesheet" href="{prefix}assets/site.css">
+<link rel="icon" type="image/svg+xml" href="{prefix}../favicon.svg">
+<meta name="theme-color" content="#0B2A4A">
 </head>
 <body>
 <a class="skip" href="#main">{esc(strings['skip'])}</a>
@@ -1701,6 +1704,7 @@ def build(region):
         shutil.rmtree(out)
     (out / 'assets').mkdir(parents=True)
     (out / 'assets' / 'site.css').write_text((ROOT / 'framework' / 'site.css').read_text())
+    (ROOT / 'dist' / 'favicon.svg').write_text(FAVICON_SOURCE.read_text(encoding='utf-8'), encoding='utf-8')
 
     cfg = load(base / 'region.json')
     policies = load(base / 'data' / 'policies.json')
@@ -1925,6 +1929,8 @@ def build_root(region='mena'):
 <meta name="description" content="{esc(default['site.description'])}">
 {alternates}<link rel="alternate" hreflang="x-default" href="{default_url}">
 <link rel="stylesheet" href="mena/assets/site.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#0B2A4A">
 </head>
 <body>
 <a class="skip" href="#main">{esc(default['skip'])}</a>

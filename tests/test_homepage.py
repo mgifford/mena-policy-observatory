@@ -208,6 +208,20 @@ class HomepageResearchDiscoveryTests(unittest.TestCase):
         self.assertNotIn('class="site-nav"', root)
         self.assertIn('location.replace', root)
 
+    def test_favicon_is_copied_and_linked_at_every_depth(self):
+        svg = REPO_ROOT / 'dist' / 'favicon.svg'
+        self.assertTrue(svg.is_file())
+        markup = svg.read_text(encoding='utf-8')
+        self.assertIn('<title id="title">MENA Policy Observatory</title>', markup)
+        self.assertIn('role="img"', markup)
+        root = (REPO_ROOT / 'dist' / 'index.html').read_text(encoding='utf-8')
+        home = (DIST / 'en' / 'index.html').read_text(encoding='utf-8')
+        record = (DIST / 'en' / 'records' / 'ae-national-digital-accessibility.html').read_text(encoding='utf-8')
+        self.assertIn('href="favicon.svg"', root)
+        self.assertIn('href="../../favicon.svg"', home)
+        self.assertIn('href="../../../favicon.svg"', record)
+        self.assertIn('name="theme-color" content="#0B2A4A"', home)
+
     def test_metadata_is_trilingual_and_uses_derived_counts(self):
         for lang in ('en', 'fr', 'ar'):
             strings = self.catalogues[lang]

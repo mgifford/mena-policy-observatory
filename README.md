@@ -67,6 +67,10 @@ The public [visualizations](https://mgifford.github.io/mena-policy-observatory/m
 
 A source-linked briefing for the UAE conversation is in [docs/UAE-ACCESSIBILITY-DEEPDIVE.md](docs/UAE-ACCESSIBILITY-DEEPDIVE.md). It distinguishes federal law, policy, technical guidance, self-description and the observatory's candidate records. It is a prototype, not legal advice.
 
+## Project mark
+
+A navy-and-amber **M** favicon identifies the project in browser tabs. It is committed as [`framework/favicon.svg`](framework/favicon.svg) and copied to `dist/favicon.svg`; every generated page links to it with a depth-correct relative path. The SVG includes an accessible `<title>` and is also used as the `theme-color` source. See the [favicon size preview](docs/favicon-preview.png).
+
 ## Rules as Code
 
 The homepage now includes a visible **Rules as Code** section with short, exact excerpts from the synthetic Axiom RuleSpec and Legalese L4 sources, plus a three-step Legalese-style evaluation ladder. The full synthetic page adds the machine-readable sources, dependency graph, complete ladder, accessible text equivalent and recorded engine outputs. The navigation exposes **Rules as Code** on every page.
