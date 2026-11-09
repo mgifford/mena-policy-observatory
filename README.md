@@ -73,7 +73,7 @@ A navy-and-amber **M** favicon identifies the project in browser tabs. It is com
 
 ## Rules as Code
 
-The homepage now includes a visible **Rules as Code** section with short, exact excerpts from the synthetic Axiom RuleSpec and Legalese L4 sources, plus a three-step Legalese-style evaluation ladder. The full synthetic page adds the machine-readable sources, dependency graph, complete ladder, accessible text equivalent and recorded engine outputs. The navigation exposes **Rules as Code** on every page.
+The homepage now includes a visible **Rules as Code** section with short, exact excerpts from the synthetic Axiom RuleSpec and Legalese L4 sources, plus a three-step Legalese-style evaluation ladder. The full synthetic page follows the public Axiom workspace pattern — machine-readable sources, selected-rule inspector, dependency graph, ladder, smoke-test table and provenance — while remaining a static, synthetic example. The navigation exposes **Rules as Code** on every page.
 
 This is still synthetic only. No real instrument has an approved executable encoding, Axiom has not been selected as a permanent engine, and Axiom/L4 semantics are not interchangeable. See [docs/RULES-ENGINE-COMPARISON.md](docs/RULES-ENGINE-COMPARISON.md).
 
