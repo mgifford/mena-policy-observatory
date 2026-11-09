@@ -98,6 +98,7 @@ Screenshots (1280 px browser width, full page):
 - [Synthetic demonstration](visualizations/synthetic.png)
 - [Rules as Code homepage section](rules-as-code-home.png)
 - [Legalese-style dependency graph](legalese-graph.png)
+- [Selected-rule inspector](rule-inspector.png)
 - [Full synthetic Rules as Code page](rules-as-code-synthetic.png)
 
 Automated verification at the time of this work:

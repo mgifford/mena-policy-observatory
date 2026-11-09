@@ -56,6 +56,19 @@ Exact source links are in the source register at the end. Status vocabulary for 
 | 14. Testability and reproducibility | **S** — pinned source build, Cargo tests, compiled artifact, actual requests/responses committed. | **S** — `l4 check`, JSON run envelope and DOT trace committed; release binary provenance recorded. | **P** — tests exist, but the engine wrapper targets an older API and the app was not run. |
 | 15. Compatibility with research identifiers | **S** — durable IDs such as `xx:policies/procurement#procurement_obligation`. | **P** — names and `@ref` citations; no observatory instrument/source/version IDs. | **P** — parser emits its own Model JSON; no observatory IDs. |
 
+## Public Axiom workspace pattern
+
+The public [Axiom rule graph workspace](https://axiom.org/app?compose=us-wi%3Apolicies%2Fincome_tax%2F2026_form1es_estimated_schedule) organizes a rule around four views — **Graph**, **Read**, **Relationships** and **Run** — with a selected-rule inspector showing built-from/used-by links, entity, value type, verification status, source and effective dates.
+
+The synthetic page now adopts that information architecture as static HTML:
+
+- a workbench navigation strip with the same four entry points;
+- a selected-output inspector for `N9` with built-from, used-by, entity, value type, verification status, source and effective period;
+- the existing dependency graph and evaluation ladder;
+- a table of recorded smoke-test cases comparing Axiom and Legalese outputs.
+
+This is a design alignment, not an Axiom deployment. It does not copy Axiom's application code, does not run an engine in the browser, and does not imply integration or endorsement.
+
 ## Existing visualization approaches
 
 ### A. Axiom RuleSpec Graph Viewer
@@ -289,6 +302,7 @@ That is intentionally smaller than embedding either engine. It tests the durable
 - S4. Axiom WASM crate (documented, not tested): <https://github.com/TheAxiomFoundation/axiom-rules-engine/blob/d41d29d251b6eb0de6542f5899a93d317f3f0dcf/wasm/README.md>
 - S5. Axiom RuleSpec Graph Viewer (API/proxy, no bundled graph artifact): <https://github.com/TheAxiomFoundation/rulespec-graph-viewer/blob/880af3d8234f1eb8704bcab7f3e2fc8494556fba/README.md>
 - S6. Axiom licence (MIT): <https://github.com/TheAxiomFoundation/axiom-rules-engine/blob/d41d29d251b6eb0de6542f5899a93d317f3f0dcf/LICENSE>
+- S6b. Axiom public rule graph workspace (Graph/Read/Relationships/Run pattern): <https://axiom.org/app?compose=us-wi%3Apolicies%2Fincome_tax%2F2026_form1es_estimated_schedule>
 
 **Legalese L4**
 

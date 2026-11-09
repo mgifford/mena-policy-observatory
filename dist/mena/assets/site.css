@@ -105,3 +105,14 @@ section.synthetic-card{border:3px solid CanvasText;padding:1rem;margin-block-sta
 .language-grid{display:flex;flex-wrap:wrap;gap:.75rem;list-style:none;margin:1rem 0;padding:0}
 .language-grid a{display:inline-block;border:1px solid CanvasText;padding:.5rem .9rem;color:LinkText;text-decoration:none}
 @media(max-width:40rem){.start-paths{grid-template-columns:1fr}}
+/* Rule workspace */
+.workbench-nav ul{display:flex;flex-wrap:wrap;gap:.4rem 1rem;list-style:none;margin:1rem 0;padding:0;border-block:1px solid GrayText;padding-block:.6rem}
+.workbench-nav a{display:inline-block;padding:.15rem .25rem}
+.workbench-nav a:focus-visible{outline:3px solid Highlight;outline-offset:3px}
+.rule-inspector{border:2px solid CanvasText;padding:1rem;margin-block-start:1.75rem}
+.inspector-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:1rem}
+.inspector-grid h3{margin-block-start:0}
+.inspector-grid dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:.25rem .75rem}
+.inspector-grid dt{font-weight:700;margin-block-start:0}
+@media(max-width:40rem){.inspector-grid dl{grid-template-columns:1fr}}
+@media(max-width:40rem){.inspector-grid{grid-template-columns:1fr}}
