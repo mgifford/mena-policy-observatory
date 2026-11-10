@@ -601,6 +601,13 @@ def index_body(strings: dict, lang: str, selected: list[tuple[dict, dict]]) -> s
 def synthetic_page_body(strings: dict, lang: str, fixture: dict, catalogues: dict) -> str:
     fragment = render_fragment(fixture, lang, catalogues[lang])
     excerpts = code_excerpts()
+    output_source = next(
+        (item for item in fixture.get('sources', []) if item.get('id') == 'SP-3'),
+        {'label': {}, 'url': 'https://example.org/synthetic-procurement-policy#s3'},
+    )
+    output_label = output_source.get('label', {})
+    output_label = output_label.get(lang) or output_label.get('en') or 'SP-3'
+    output_url = output_source.get('url', 'https://example.org/synthetic-procurement-policy#s3')
     axiom_url = ('https://github.com/mgifford/mena-policy-observatory/blob/main/'
                  'research/rules-visualization/axiom/procurement.rulespec.yaml')
     l4_url = ('https://github.com/mgifford/mena-policy-observatory/blob/main/'
@@ -621,6 +628,12 @@ def synthetic_page_body(strings: dict, lang: str, fixture: dict, catalogues: dic
         f'<p class="notice"><strong>{esc(strings["visualizations.synthetic_notice"])}</strong></p>',
         f'<p>{esc(fixture["summary"][lang])}</p>',
         f'<p>{esc(strings["visualizations.synthetic_demo_notice"])}</p>',
+        f'<nav class="workbench-nav" aria-label="{esc(strings["visualizations.workbench_label"])}"><ul>'
+        f'<li><a href="#rules-machine-h">{esc(strings["visualizations.workbench_machine"])}</a></li>'
+        f'<li><a href="#rule-graph-h">{esc(strings["visualizations.workbench_graph"])}</a></li>'
+        f'<li><a href="#rule-ladder-h">{esc(strings["visualizations.workbench_ladder"])}</a></li>'
+        f'<li><a href="#synthetic-results-h">{esc(strings["visualizations.workbench_run"])}</a></li>'
+        f'</ul></nav>',
         f'<section aria-labelledby="rules-machine-h"><h2 id="rules-machine-h">{esc(strings["visualizations.rules_machine_heading"])}</h2>'
         f'<p>{esc(strings["visualizations.code_excerpt_note"])}</p><div class="code-grid">'
         + code_card('visualizations.axiom_code_heading', 'visualizations.axiom_code_note',
@@ -628,6 +641,20 @@ def synthetic_page_body(strings: dict, lang: str, fixture: dict, catalogues: dic
         + code_card('visualizations.l4_code_heading', 'visualizations.l4_code_note',
                     excerpts['l4'], l4_url, 'visualizations.synthetic_source_l4')
         + '</div></section>',
+        f'<section class="rule-inspector" aria-labelledby="rule-inspector-h">'
+        f'<h2 id="rule-inspector-h">{esc(strings["visualizations.rule_inspector_heading"])}</h2>'
+        f'<div class="inspector-grid"><div><h3>{esc(strings["visualizations.rule_inspector_heading"])} — <code lang="en" dir="ltr">N9</code></h3>'
+        f'<p><strong>{esc(strings["visualizations.built_from"])}:</strong> '
+        f'{(" " + "·" + " ").join("<code lang=\"en\" dir=\"ltr\">" + esc(item) + "</code>" for item in ["N1","N2","N3","N4","N5","N6","N7","N8"])}</p>'
+        f'<dl><dt>{esc(strings["visualizations.used_by"])}</dt><dd>{esc(strings["visualizations.final_result"])}</dd>'
+        f'<dt>{esc(strings["visualizations.entity"])}</dt><dd><code lang="en" dir="ltr">Procurement</code></dd>'
+        f'<dt>{esc(strings["visualizations.value_type"])}</dt><dd><code lang="en" dir="ltr">Text</code></dd>'
+        f'<dt>{esc(strings["visualizations.verification_status"])}</dt><dd>{esc(strings["visualizations.synthetic_not_reviewed"])}</dd>'
+        f'<dt>{esc(strings["visualizations.source"])}</dt><dd><a href="{esc(output_url)}">SP-3 — {esc(output_label)}</a></dd>'
+        f'<dt>{esc(strings["visualizations.effective_period"])}</dt><dd><span lang="en" dir="ltr">2026-01-01 – —</span></dd></dl>'
+        f'<p><a href="#synthetic-results-h">{esc(strings["visualizations.jump_run"])}</a></p></div>'
+        f'<div><h3>{esc(strings["visualizations.synthetic_results_heading"])}</h3>'
+        f'<p>{esc(strings["visualizations.smoke_summary"])}</p><p><a href="#synthetic-results-h">{esc(strings["visualizations.jump_run"])}</a></p></div></div></section>',
         f'<section id="legalese-visualization" aria-labelledby="legalese-visual-h">'
         f'<h2 id="legalese-visual-h">{esc(strings["visualizations.legalese_visual_heading"])}</h2>'
         f'<p>{esc(strings["visualizations.legalese_visual_note"])}</p>',
@@ -642,9 +669,14 @@ def synthetic_page_body(strings: dict, lang: str, fixture: dict, catalogues: dic
         f'</ul></section>',
         f'<section aria-labelledby="synthetic-results-h"><h2 id="synthetic-results-h">{esc(strings["visualizations.synthetic_results_heading"])}</h2>'
         f'<p>{esc(strings["visualizations.synthetic_results_note"])}</p>'
-        f'<ul class="synthetic-results">'
-        + ''.join(_case_item(strings, case) for case in SYNTHETIC_CASES)
-        + '</ul></section>',
+        f'<div class="table-scroll" role="region" aria-label="{esc(strings["visualizations.smoke_caption"])}" tabindex="0">'
+        f'<table><caption>{esc(strings["visualizations.smoke_caption"])}</caption><thead><tr>'
+        f'<th scope="col">{esc(strings["visualizations.synthetic_case"])}</th>'
+        f'<th scope="col">{esc(strings["visualizations.synthetic_axiom"])}</th>'
+        f'<th scope="col">{esc(strings["visualizations.synthetic_l4"])}</th>'
+        f'</tr></thead><tbody>'
+        + ''.join(_case_row(case) for case in SYNTHETIC_CASES)
+        + '</tbody></table></div></section>',
         f'<section aria-labelledby="synthetic-semantics-h"><h2 id="synthetic-semantics-h">{esc(strings["visualizations.synthetic_semantics"])}</h2>'
         f'<p>{esc(strings["visualizations.synthetic_semantics_text"])}</p></section>',
         f'<p><a href="index.html">{esc(strings["visualizations.back"])}</a></p>',
@@ -662,10 +694,8 @@ SYNTHETIC_CASES = (
 )
 
 
-def _case_item(strings: dict, case: tuple[str, str, str]) -> str:
+def _case_row(case: tuple[str, str, str]) -> str:
     label, axiom, l4 = case
-    return (f'<li><strong lang="en" dir="ltr">{esc(label)}</strong>'
-            f'<dl><dt>{esc(strings["visualizations.synthetic_axiom"])}</dt>'
-            f'<dd><code lang="en" dir="ltr">{esc(axiom)}</code></dd>'
-            f'<dt>{esc(strings["visualizations.synthetic_l4"])}</dt>'
-            f'<dd><code lang="en" dir="ltr">{esc(l4)}</code></dd></dl></li>')
+    return (f'<tr><th scope="row" lang="en" dir="ltr">{esc(label)}</th>'
+            f'<td><code lang="en" dir="ltr">{esc(axiom)}</code></td>'
+            f'<td><code lang="en" dir="ltr">{esc(l4)}</code></td></tr>')
